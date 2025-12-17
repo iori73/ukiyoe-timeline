@@ -32,10 +32,6 @@ export default function HorizontalScroll({ children, onSectionChange, totalSecti
     const sectionWidth = container.clientWidth
     const targetScroll = sectionIndex * sectionWidth
 
-    // #region agent log
-    fetch('http://127.0.0.1:7243/ingest/e6cf158e-65f9-47b6-9575-46412c08ce62',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'HorizontalScroll.jsx:27',message:'scrollToSection called',data:{sectionIndex,currentSection,targetScroll,isTransitioning:isTransitioning.current},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-    // #endregion
-
     isTransitioning.current = true
     setIsScrolling(true)
 
@@ -47,10 +43,6 @@ export default function HorizontalScroll({ children, onSectionChange, totalSecti
     if (updateState && sectionIndex !== currentSection) {
       setCurrentSection(sectionIndex)
       onSectionChange?.(sectionIndex)
-      
-      // #region agent log
-      fetch('http://127.0.0.1:7243/ingest/e6cf158e-65f9-47b6-9575-46412c08ce62',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'HorizontalScroll.jsx:45',message:'setCurrentSection called in scrollToSection',data:{sectionIndex,previousSection:currentSection},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-      // #endregion
     }
 
     // Update scroll progress
@@ -64,10 +56,6 @@ export default function HorizontalScroll({ children, onSectionChange, totalSecti
       setIsScrolling(false)
       accumulatedDelta.current = 0
       lastScrollTime.current = Date.now()
-      
-      // #region agent log
-      fetch('http://127.0.0.1:7243/ingest/e6cf158e-65f9-47b6-9575-46412c08ce62',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'HorizontalScroll.jsx:59',message:'isTransitioning set to false',data:{sectionIndex,currentSection:containerRef.current?Math.round(containerRef.current.scrollLeft/containerRef.current.clientWidth):'unknown'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
-      // #endregion
     }, 800) // 少し長めのクールダウン
   }, [currentSection, totalSections, onSectionChange, scrollProgress])
 
@@ -163,10 +151,6 @@ export default function HorizontalScroll({ children, onSectionChange, totalSecti
       const direction = accumulatedDelta.current > 0 ? 1 : -1
       const targetSection = currentSection + direction
 
-      // #region agent log
-      fetch('http://127.0.0.1:7243/ingest/e6cf158e-65f9-47b6-9575-46412c08ce62',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'HorizontalScroll.jsx:126',message:'handleWheel triggering navigation',data:{accumulatedDelta:accumulatedDelta.current,threshold,direction,targetSection,currentSection,isTransitioning:isTransitioning.current},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'G'})}).catch(()=>{});
-      // #endregion
-
       if (targetSection >= 0 && targetSection < totalSections) {
         // Immediately reset to prevent multiple triggers
         accumulatedDelta.current = 0
@@ -193,15 +177,6 @@ export default function HorizontalScroll({ children, onSectionChange, totalSecti
   // Handle native scroll event (for programmatic scrolls and touch)
   const handleScroll = useCallback(() => {
     if (!containerRef.current || isTransitioning.current) {
-      // #region agent log
-      if (containerRef.current) {
-        const container = containerRef.current
-        const scrollLeft = container.scrollLeft
-        const sectionWidth = container.clientWidth
-        const newSection = Math.round(scrollLeft / sectionWidth)
-        fetch('http://127.0.0.1:7243/ingest/e6cf158e-65f9-47b6-9575-46412c08ce62',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'HorizontalScroll.jsx:151',message:'handleScroll early return',data:{isTransitioning:isTransitioning.current,scrollLeft,newSection,currentSection},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-      }
-      // #endregion
       return
     }
 
@@ -209,10 +184,6 @@ export default function HorizontalScroll({ children, onSectionChange, totalSecti
     const scrollLeft = container.scrollLeft
     const sectionWidth = container.clientWidth
     const newSection = Math.round(scrollLeft / sectionWidth)
-
-    // #region agent log
-    fetch('http://127.0.0.1:7243/ingest/e6cf158e-65f9-47b6-9575-46412c08ce62',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'HorizontalScroll.jsx:156',message:'handleScroll processing',data:{scrollLeft,sectionWidth,newSection,currentSection,isTransitioning:isTransitioning.current},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
-    // #endregion
 
     if (newSection !== currentSection && newSection >= 0 && newSection < totalSections) {
       // Only allow one section change at a time
@@ -222,10 +193,6 @@ export default function HorizontalScroll({ children, onSectionChange, totalSecti
       if (sectionDiff > 1) {
         const direction = newSection > currentSection ? 1 : -1
         const adjacentSection = currentSection + direction
-        
-        // #region agent log
-        fetch('http://127.0.0.1:7243/ingest/e6cf158e-65f9-47b6-9575-46412c08ce62',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'HorizontalScroll.jsx:163',message:'handleScroll sectionDiff > 1',data:{newSection,currentSection,sectionDiff,adjacentSection},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
-        // #endregion
         
         // Directly scroll to adjacent section without calling scrollToSection
         const targetScroll = adjacentSection * sectionWidth
@@ -238,10 +205,6 @@ export default function HorizontalScroll({ children, onSectionChange, totalSecti
         onSectionChange?.(adjacentSection)
         return
       }
-      
-      // #region agent log
-      fetch('http://127.0.0.1:7243/ingest/e6cf158e-65f9-47b6-9575-46412c08ce62',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'HorizontalScroll.jsx:179',message:'handleScroll setting newSection',data:{newSection,currentSection,scrollLeft},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'F'})}).catch(()=>{});
-      // #endregion
       
       setCurrentSection(newSection)
       onSectionChange?.(newSection)
