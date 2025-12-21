@@ -212,7 +212,6 @@ function AppContent() {
                     />
                     <span className="logo-yo-e">世絵</span>
                   </span>
-                  <h1 className="logo-title">Ukiyo-e Timeline</h1>
                 </div>
                 <LanguageToggle />
               </motion.div>

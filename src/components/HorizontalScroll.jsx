@@ -62,13 +62,8 @@ export default function HorizontalScroll({ children, onSectionChange, totalSecti
   // Handle wheel event - convert horizontal scroll to section navigation
   // Allow vertical scroll in scrollable panels
   const handleWheel = useCallback((e) => {
-    // Check if scrolling over image panel - completely ignore scroll events on images
+    // Check if scrolling over image panel
     const imagePanel = e.target.closest('.image-panel')
-    if (imagePanel) {
-      // Ignore all scroll events on image panel to prevent any shifting
-      e.preventDefault()
-      return
-    }
     
     // Check if scrolling within a scrollable area (text-panel or intro-section)
     const scrollablePanel = e.target.closest('.text-panel, .intro-section-ukiyoe')
@@ -99,7 +94,17 @@ export default function HorizontalScroll({ children, onSectionChange, totalSecti
     const isHorizontalScroll = Math.abs(e.deltaX) > Math.abs(e.deltaY)
     
     // If it's primarily vertical scroll and not in a scrollable area, ignore it
+    // But allow horizontal scroll even on image panel
     if (!isHorizontalScroll && Math.abs(e.deltaX) < 30) {
+      // If on image panel and vertical scroll, ignore it
+      if (imagePanel) {
+        return
+      }
+      return
+    }
+    
+    // If on image panel, only allow horizontal scroll for navigation
+    if (imagePanel && !isHorizontalScroll) {
       return
     }
 
@@ -296,14 +301,7 @@ export default function HorizontalScroll({ children, onSectionChange, totalSecti
     let touchTarget = null
 
     const handleTouchStart = (e) => {
-      // Check if touch started on image panel - ignore if so
-      const imagePanel = e.target.closest('.image-panel')
-      if (imagePanel) {
-        isSwiping = false
-        touchTarget = null
-        return
-      }
-      
+      // Allow touch on image panel too - we'll check direction later
       touchStartX = e.touches[0].clientX
       touchStartY = e.touches[0].clientY
       touchTarget = e.target
@@ -311,13 +309,6 @@ export default function HorizontalScroll({ children, onSectionChange, totalSecti
     }
 
     const handleTouchMove = (e) => {
-      // Check if touch is on image panel - prevent scroll
-      const imagePanel = e.target.closest('.image-panel')
-      if (imagePanel) {
-        if (e.cancelable) e.preventDefault()
-        return
-      }
-
       if (!isSwiping) return
 
       const touchCurrentX = e.touches[0].clientX
@@ -325,6 +316,9 @@ export default function HorizontalScroll({ children, onSectionChange, totalSecti
       const deltaX = touchStartX - touchCurrentX
       const deltaY = touchStartY - touchCurrentY
 
+      // Check if touch started on image panel
+      const imagePanel = touchTarget?.closest('.image-panel')
+      
       // Check if touch started in a scrollable panel
       const scrollablePanel = touchTarget?.closest('.text-panel, .intro-section-ukiyoe')
       
@@ -341,10 +335,18 @@ export default function HorizontalScroll({ children, onSectionChange, totalSecti
           }
         }
       }
+      
+      // If on image panel, only allow horizontal swipes for navigation
+      if (imagePanel) {
+        // If vertical swipe is more significant, ignore it
+        if (Math.abs(deltaY) > Math.abs(deltaX)) {
+          return
+        }
+      }
 
       // If horizontal swipe is more significant than vertical, prevent default
       if (Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
-        e.preventDefault()
+        if (e.cancelable) e.preventDefault()
       }
     }
 

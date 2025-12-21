@@ -187,6 +187,9 @@ function FullscreenSection({ period, index, isActive }) {
         variants={childVariants}
       >
         <div className="text-panel-inner">
+          {/* Section Title (h2 for accessibility) */}
+          <h2 className="section-title-h2 visually-hidden">{periodName}</h2>
+
           {/* Section Number and Date Range - Horizontal Layout */}
           <motion.div 
             className="section-header-row"
