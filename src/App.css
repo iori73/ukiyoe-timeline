@@ -730,11 +730,13 @@ body {
 
 .ukiyoe-loading-wrapper {
   position: relative;
-  /* 親要素いっぱいに表示 */
-  width: 50vw;
-  height: 50vh;
-  /* max-width: 600px;
-  max-height: 600px; */
+  /* ローディングアニメーションとして適切なサイズに調整 */
+  width: 25vw;
+  height: 25vh;
+  min-width: 200px;
+  min-height: 200px;
+  max-width: 400px;
+  max-height: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -744,9 +746,9 @@ body {
 /* PCの時はSVG全体を表示 */
 @media (min-width: 769px) {
   .ukiyoe-loading-wrapper {
-    width: 40vw;
+    width: 20vw;
     height: auto;
-    max-height: 60vh;
+    max-height: 30vh;
   }
   
   .ukiyoe-loading-svg {
@@ -764,6 +766,10 @@ body {
   max-width: 100%;
   max-height: 100%;
   pointer-events: none;
+  /* 和紙の質感を背景に追加 */
+  background: radial-gradient(circle at 30% 40%, rgba(255, 250, 240, 0.3) 0%, transparent 60%),
+              radial-gradient(circle at 70% 60%, rgba(255, 250, 235, 0.2) 0%, transparent 60%);
+  border-radius: 4px;
   /* preserveAspectRatio="xMidYMid slice"により、中央配置で親要素いっぱいに表示 */
 }
 
@@ -773,8 +779,25 @@ body {
 .ukiyoe-layer-4,
 .ukiyoe-layer-5,
 .ukiyoe-layer-6 {
-  will-change: opacity;
-  
+  will-change: opacity, transform;
+  /* 和紙の質感を表現 */
+  filter: contrast(1.05) brightness(1.02);
+}
+
+/* 摺り工程メッセージ */
+.ukiyoe-loading-message {
+  position: absolute;
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-serif);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+  white-space: nowrap;
+  text-align: center;
+  pointer-events: none;
 }
 
 .loading-placeholder {
@@ -802,6 +825,12 @@ body {
     height: 70vw;
     max-width: 320px;
     max-height: 320px;
+  }
+  
+  .ukiyoe-loading-message {
+    bottom: -40px;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
   }
   
   .loading-text {
@@ -869,8 +898,7 @@ body {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(122.13deg, rgba(214, 78, 78, 0.05) 0%, rgba(214, 78, 78, 0) 50%, rgba(30, 58, 95, 0.05) 100%), 
-              linear-gradient(90deg, rgba(245, 240, 230, 1) 0%, rgba(245, 240, 230, 1) 100%);
+  background: linear-gradient(122.13deg, rgba(214, 78, 78, 0.05) 0%, rgba(214, 78, 78, 0) 50%, rgba(30, 58, 95, 0.05) 100%);
 }
 
 .intro-bg-layer-gradient {
@@ -974,7 +1002,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: var(--space-lg);
-  align-items: center;
+  align-items: flex-start;
 }
 
 /* タイトルと副題のグループ */
@@ -1597,7 +1625,7 @@ body {
 }
 
 /* セクション下部の白グラデーション（Figma: Background Color） */
-.intro-section-ukiyoe::after {
+/* .intro-section-ukiyoe::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -1612,7 +1640,7 @@ body {
   );
   pointer-events: none;
   z-index: 5;
-}
+} */
 
 /* ヘッダー（タイトル・説明） */
 .intro-header {
@@ -3657,6 +3685,361 @@ body {
 
   .modal-title {
     font-size: 1.5rem;
+  }
+}
+
+/* ========================================
+   インタラクティブスライダー（IntroSection用）- 2カラムレイアウト
+   ======================================== */
+
+.intro-content-wrapper {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 3rem 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+/* 左カラム: テキストとコントロール */
+.intro-left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.intro-text-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.intro-title-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.intro-text-content .intro-title {
+  font-family: var(--font-serif, 'Noto Serif JP', serif);
+  font-size: 3rem;
+  font-weight: 600;
+  color: var(--beni-iro, #d64e4e);
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.intro-text-content .intro-subtitle {
+  font-family: var(--font-serif, 'Noto Serif JP', serif);
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--text-primary, #2d2a26);
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.intro-text-content .intro-description {
+  font-family: var(--font-sans, 'Noto Sans JP', sans-serif);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--text-primary, #2d2a26);
+  margin: 0.5rem 0 0;
+}
+
+/* 右カラム: 画像 */
+.intro-right-column {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider-image-stack {
+  position: relative;
+  width: 100%;
+  max-width: 28vw;
+  aspect-ratio: 2/3;
+}
+
+.slider-image-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 4px;
+}
+
+/* 現在の技法情報 */
+.current-technique-info {
+  margin-top: 0;
+}
+
+.current-technique-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.current-technique-header .technique-name {
+  font-family: var(--font-serif, 'Noto Serif JP', serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.current-technique-header .technique-year {
+  font-family: var(--font-sans, 'Noto Sans JP', sans-serif);
+  font-size: 0.85rem;
+  color: var(--text-secondary, #6b6560);
+}
+
+/* スライダーと技法情報のコンテナ */
+.slider-technique-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* スライダーコントロール */
+.slider-control {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* プログレスバーと再生ボタンの行 */
+.slider-bar-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+/* プログレスバーのラッパー */
+.slider-bar-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* プログレスバー（ドラッグ可能） */
+.slider-track-container {
+  position: relative;
+  height: 40px;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.slider-track-container:hover .slider-track {
+  height: 8px;
+}
+
+.slider-track-container.dragging .slider-track {
+  height: 10px;
+}
+
+.slider-track {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 3px;
+  transform: translateY(-50%);
+  transition: height 0.15s ease;
+  overflow: visible;
+}
+
+/* 期間セグメント */
+.slider-segments {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.slider-segment {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.slider-segment:first-child {
+  border-radius: 3px 0 0 3px;
+}
+
+.slider-segment:last-child {
+  border-radius: 0 3px 3px 0;
+}
+
+/* スライダーのつまみ（縦線スタイル） - Appleスタイルでは非表示 */
+.slider-thumb {
+  display: none;
+}
+
+/* Appleスタイルのプログレスバー fill */
+.segment-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  transition: none;
+  border-radius: inherit;
+  z-index: 1;
+}
+
+/* 年代ラベル（絶対配置） */
+.slider-years-positioned {
+  position: relative;
+  height: 1.5rem;
+  margin-top: 0.5rem;
+  font-family: var(--font-sans, 'Noto Sans JP', sans-serif);
+  font-size: 0.8rem;
+  color: var(--text-tertiary, #999);
+}
+
+.slider-years-positioned span {
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+.slider-years-positioned span:first-child {
+  transform: translateX(0);
+}
+
+.slider-years-positioned span:last-child {
+  transform: translateX(-100%);
+}
+
+/* 再生/一時停止ボタン */
+.play-pause-button {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 50%;
+  border: 2px solid var(--ai-iro, #1e3a5f);
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ai-iro, #1e3a5f);
+  transition: all 0.2s ease;
+}
+
+.play-pause-button:hover {
+  background: rgba(30, 58, 95, 0.05);
+  transform: scale(1.05);
+}
+
+.play-pause-button:active {
+  transform: scale(0.98);
+}
+
+/* 説明テキスト */
+.technique-description {
+  font-family: var(--font-sans, 'Noto Sans JP', sans-serif);
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--text-primary, #2d2a26);
+  margin: 0;
+  text-align: left;
+}
+
+/* レスポンシブ */
+@media (max-width: 1200px) {
+  .intro-content-wrapper {
+    padding: 2rem 2rem;
+    gap: 3rem;
+  }
+
+  .intro-text-content .intro-title {
+    font-size: 2.5rem;
+  }
+
+  .slider-image-stack {
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 900px) {
+  .intro-content-wrapper {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 2rem 1.5rem;
+  }
+
+  .intro-right-column {
+    order: -1;
+  }
+
+  .slider-image-stack {
+    max-width: 350px;
+  }
+
+  .intro-text-content .intro-title {
+    font-size: 2rem;
+  }
+
+  .intro-text-content .intro-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .intro-text-content .intro-description {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .intro-content-wrapper {
+    padding: 1.5rem 1rem;
+  }
+
+  .slider-image-stack {
+    max-width: 300px;
+  }
+
+  .intro-text-content .intro-title {
+    font-size: 1.75rem;
+  }
+
+  .intro-text-content .intro-subtitle {
+    font-size: 1rem;
+  }
+
+  .current-technique-header .technique-name {
+    font-size: 1.25rem;
+  }
+
+  .current-technique-header .technique-year {
+    font-size: 0.75rem;
+  }
+
+  .technique-description {
+    font-size: 0.85rem;
+  }
+
+  .play-pause-button {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+  }
+
+  .slider-bar-row {
+    gap: 0.75rem;
   }
 }
 
