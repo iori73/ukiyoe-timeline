@@ -97,6 +97,39 @@ export default function DawnPage() {
     }
   }, [activePeriod, isTransitioning])
   
+  // Handle play/pause button click
+  const handlePlayPauseClick = useCallback(() => {
+    if (isAutoAnimating) {
+      // Pause animation
+      setIsAutoAnimating(false)
+      userInteractedRef.current = true
+      if (timerRef.current) {
+        clearTimeout(timerRef.current)
+      }
+    } else {
+      // Resume or restart animation
+      if (isComplete) {
+        // Animation finished - restart from beginning
+        setActivePeriod(0)
+        setIsComplete(false)
+        userInteractedRef.current = false
+        
+        // Scroll to top, then start animation
+        if (galleryRef.current) {
+          galleryRef.current.scrollTo({ top: 0, behavior: 'smooth' })
+        }
+        
+        setTimeout(() => {
+          setIsAutoAnimating(true)
+        }, 500)
+      } else {
+        // Animation paused in middle - resume from current position
+        userInteractedRef.current = false
+        setIsAutoAnimating(true)
+      }
+    }
+  }, [isAutoAnimating, isComplete])
+  
   // Detect user interaction - stop auto animation
   const handleUserInteraction = useCallback(() => {
     if (isAutoAnimating && !userInteractedRef.current) {
@@ -152,6 +185,8 @@ export default function DawnPage() {
       <GalleryIndicators
         activePeriod={activePeriod}
         isComplete={isComplete}
+        isAutoAnimating={isAutoAnimating}
+        onPlayPauseClick={handlePlayPauseClick}
       />
 
       {/* Scrollable Gallery */}

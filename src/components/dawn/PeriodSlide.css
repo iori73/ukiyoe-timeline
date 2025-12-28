@@ -12,8 +12,9 @@
 .period-slide__viewport {
   display: flex;
   align-items: flex-start;
-  padding: 60px 40px;
-  padding-left: 120px; /* Space for indicators */
+  width: 100%;
+  padding: 80px 40px;
+  padding-left: 10rem; /* Space for indicators */
 }
 
 .period-slide__content {
@@ -80,7 +81,46 @@
   margin: 0;
 }
 
-/* Period-specific styles */
+/* ========================================
+   PERIOD-SPECIFIC POSITIONING
+   Each period has different vertical spacing
+   ======================================== */
+
+/* 墨摺絵 - First period, follows title section */
+.period-slide--sumizuri {
+  /* No min-height, flows naturally after title */
+}
+
+.period-slide--sumizuri .period-slide__viewport {
+  padding-top: 40px;
+  padding-bottom: 120px;
+}
+
+/* 紅摺絵 - Second period, centered in viewport */
+.period-slide--benizuri {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.period-slide--benizuri .period-slide__viewport {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+/* 錦絵 - Third period, centered in viewport */
+.period-slide--nishiki {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+}
+
+.period-slide--nishiki .period-slide__viewport {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+/* Period-specific text colors */
 .period-slide--sumizuri .period-slide__title {
   color: #1a1a1a;
 }
@@ -119,6 +159,11 @@
     padding-left: 80px;
     padding-top: 48px;
     padding-bottom: 48px;
+  }
+  
+  .period-slide--sumizuri .period-slide__viewport {
+    padding-top: 32px;
+    padding-bottom: 80px;
   }
   
   .period-slide__title {
