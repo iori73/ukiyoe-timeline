@@ -33,8 +33,8 @@ export default function IntroSection({ isActive }) {
       color: '#1a1a1a',
       image: '/sumizuri-e.png',
       desc: { 
-        ja: '墨（黒）一色のみで摺った木版画。菱川師宣の流麗な線描により、浮世絵は独立した芸術形式として確立された。',
-        en: 'Woodblock prints using only black ink. Through Moronobu\'s fluid linework, ukiyo-e was established as an independent art form.'
+        ja: '墨（黒）一色のみで摺りました木版画です。菱川師宣の流麗な線描により、浮世絵は独立した芸術形式として確立されました。線の強弱と濃淡で豊かな表現を追求しました。',
+        en: 'Woodblock prints using only black ink. Through Moronobu\'s fluid linework, ukiyo-e was established as an independent art form. Rich expressions were pursued through line variation and tonal gradation.'
       }
     },
     { 
@@ -47,8 +47,8 @@ export default function IntroSection({ isActive }) {
       color: '#95a078',
       image: '/benizuri-e.png',
       desc: { 
-        ja: '紅色と緑色の版木を追加し、「見当」という位置合わせ技術で重ね摺りした版画。手彩色より大量生産が可能になった。',
-        en: 'Added pink and green blocks using "kento" registration marks. Enabled mass production with improved color consistency.'
+        ja: '紅色と緑色の版木を追加し、「見当」という位置合わせ技術で重ね摺りしました版画です。手彩色より大量生産が可能になりました。2〜3色の限られた色彩ながら、華やかな印象を生み出しました。',
+        en: 'Added pink and green blocks using "kento" registration marks. Enabled mass production with improved color consistency. Despite the limited palette of 2-3 colors, it created a vibrant impression.'
       }
     },
     { 
@@ -61,8 +61,8 @@ export default function IntroSection({ isActive }) {
       color: '#f8604f',
       image: '/nishiki-e.png',
       desc: { 
-        ja: '10枚以上の版木を精密に重ね、ぼかしや空摺りなどの高度な技法を導入。浮世絵の技術的頂点である。',
-        en: 'Precisely overlaying 10+ woodblocks with advanced techniques like bokashi and karazuri. The technical peak of ukiyo-e.'
+        ja: '10枚以上の版木を精密に重ね、ぼかしや空摺りなどの高度な技法を導入しました。浮世絵の技術的頂点です。錦織のような豪華絢爛な色彩表現が可能になりました。',
+        en: 'Precisely overlaying 10+ woodblocks with advanced techniques like bokashi and karazuri. The technical peak of ukiyo-e. Achieved gorgeous, brocade-like polychrome expressions.'
       }
     }
   ]
@@ -112,7 +112,7 @@ export default function IntroSection({ isActive }) {
   }, [sliderValue])
 
   // 自動再生の速度（%/秒）
-  const AUTO_PLAY_SPEED = 10
+  const AUTO_PLAY_SPEED = 7.5
 
   // requestAnimationFrameを使った自動再生
   const animate = useCallback((currentTime) => {

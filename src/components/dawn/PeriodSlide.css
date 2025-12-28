@@ -1,0 +1,161 @@
+/* ========================================
+   PERIOD SLIDE - Full viewport centered slide
+   ======================================== */
+
+.period-slide {
+  width: 100%;
+  position: relative;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.period-slide__viewport {
+  display: flex;
+  align-items: flex-start;
+  padding: 60px 40px;
+  padding-left: 120px; /* Space for indicators */
+}
+
+.period-slide__content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1000px;
+  width: 100%;
+}
+
+/* Images */
+.period-slide__images {
+  /* Container for layered images */
+}
+
+/* Text content */
+.period-slide__text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 800px;
+}
+
+.period-slide__header {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.period-slide__title {
+  font-family: 'Shippori Mincho', serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 1;
+  margin: 0;
+}
+
+.period-slide__years {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.period-slide__years-main {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  color: var(--ai-iro, #1e3a5f);
+  line-height: 1.6;
+}
+
+.period-slide__years-note {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  color: #999;
+  line-height: 1.6;
+}
+
+.period-slide__description {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  color: var(--ai-iro, #1e3a5f);
+  line-height: 1.8;
+  margin: 0;
+}
+
+/* Period-specific styles */
+.period-slide--sumizuri .period-slide__title {
+  color: #1a1a1a;
+}
+
+.period-slide--benizuri .period-slide__title {
+  color: #95a078;
+}
+
+.period-slide--benizuri .period-slide__description,
+.period-slide--benizuri .period-slide__years-main {
+  color: #000;
+}
+
+.period-slide--nishiki .period-slide__title {
+  color: #f8604f;
+}
+
+.period-slide--nishiki .period-slide__description,
+.period-slide--nishiki .period-slide__years-main {
+  color: #000;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 1200px) {
+  .period-slide__viewport {
+    padding-left: 100px;
+    padding-right: 24px;
+  }
+}
+
+@media (max-width: 900px) {
+  .period-slide__viewport {
+    padding-left: 80px;
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+  
+  .period-slide__title {
+    font-size: 32px;
+  }
+  
+  .period-slide__description {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .period-slide__viewport {
+    padding: 40px 20px;
+    padding-left: 56px;
+  }
+  
+  .period-slide__content {
+    gap: 16px;
+  }
+  
+  .period-slide__title {
+    font-size: 28px;
+  }
+  
+  .period-slide__header {
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .period-slide__years-main {
+    font-size: 16px;
+  }
+  
+  .period-slide__description {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+}
+

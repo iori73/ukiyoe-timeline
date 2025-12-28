@@ -1,0 +1,242 @@
+/* ========================================
+   DAWN PAGE - Apple-style Centered Gallery
+   ======================================== */
+
+.dawn-page {
+  min-height: 100vh;
+  background-color: #ebdcbd;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ========================================
+   HEADER - Fixed at top
+   ======================================== */
+
+.dawn-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 24px 40px;
+  background: linear-gradient(to bottom, #ebdcbd 60%, transparent);
+  pointer-events: none;
+}
+
+.dawn-header__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 0 auto;
+  pointer-events: auto;
+}
+
+.dawn-header__logo {
+  display: block;
+  width: 89px;
+  height: 48px;
+}
+
+.dawn-header__logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ========================================
+   TITLE SECTION - First section in gallery
+   ======================================== */
+
+.dawn-title {
+  padding: 120px 40px 48px;
+  padding-left: 120px; /* Space for indicators */
+}
+
+.dawn-title__container {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.dawn-heading {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.dawn-heading__title {
+  font-family: 'Shippori Mincho', serif;
+  font-weight: 600;
+  font-size: 48px;
+  color: var(--beni-iro, #d64e4e);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  margin: 0;
+}
+
+.dawn-heading__subtitle {
+  font-family: 'Shippori Mincho', serif;
+  font-weight: 600;
+  font-size: 24px;
+  color: var(--ai-iro, #1e3a5f);
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+.dawn-intro {
+  margin-top: 8px;
+}
+
+.dawn-intro p {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  color: #2d2d2d;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 600px;
+}
+
+/* ========================================
+   GALLERY - Scrollable viewport
+   ======================================== */
+
+.dawn-gallery {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: y proximity; /* Snap but allow free scroll */
+}
+
+/* Hide scrollbar but keep functionality */
+.dawn-gallery::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.dawn-gallery {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+/* End section with button */
+.dawn-gallery__end {
+  /* min-height: 50vh; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+/* ========================================
+   BUTTON SECTION
+   ======================================== */
+
+.dawn-button-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dawn-button {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 8px;
+  text-decoration: none;
+  color: var(--ai-iro, #334e6c);
+  transition: opacity 0.2s ease;
+}
+
+.dawn-button:hover {
+  opacity: 0.7;
+}
+
+.dawn-button__text {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 1;
+}
+
+.dawn-button__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 27px;
+  height: 27px;
+}
+
+.dawn-button__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dawn-button__line {
+  width: 109px;
+  height: 2px;
+  background-image: url('/images/divider.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 1200px) {
+  .dawn-title {
+    padding-left: 100px;
+    padding-right: 24px;
+  }
+}
+
+@media (max-width: 900px) {
+  .dawn-heading__title {
+    font-size: 36px;
+  }
+  
+  .dawn-heading__subtitle {
+    font-size: 18px;
+  }
+  
+  .dawn-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .dawn-title {
+    padding-left: 80px;
+  }
+}
+
+@media (max-width: 600px) {
+  .dawn-header {
+    padding: 16px 20px;
+  }
+  
+  .dawn-title {
+    padding: 100px 20px 80px;
+    padding-left: 56px;
+  }
+  
+  .dawn-heading__title {
+    font-size: 28px;
+  }
+  
+  .dawn-heading__subtitle {
+    font-size: 16px;
+  }
+  
+  .dawn-intro p {
+    font-size: 14px;
+  }
+}

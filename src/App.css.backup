@@ -1,0 +1,2944 @@
+/* ========================================
+   UKIYO-E TIMELINE - JAPANESE AESTHETIC
+   ======================================== */
+
+/* Custom Font - HOT Tenshokk M */
+@font-face {
+  font-family: 'HOT-Tenshokk-M';
+  src: url('/fonts/HOT-Tenshokk-M.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* CSS Variables - Ukiyo-e Design System */
+:root {
+  /* 主色（摺り色） - Main Colors */
+  --sumi-iro: #2d2d2d;        /* 墨色 - Ink */
+  --beni-iro: #d64e4e;        /* 紅色 - Crimson */
+  --ai-iro: #1e3a5f;          /* 藍色 - Indigo */
+  --kin-iro: #c9a84c;         /* 金色 - Gold */
+  
+  /* 地色（紙の色） - Paper Colors */
+  --washi: #f5f0e6;           /* 和紙 - Washi paper */
+  --awayuki: #fefefe;         /* 淡雪 - Light snow */
+  
+  /* 透明度バリエーション - Transparency Variations */
+  --beni-05: rgba(214, 78, 78, 0.05);
+  --beni-10: rgba(214, 78, 78, 0.1);
+  --beni-15: rgba(214, 78, 78, 0.15);
+  --ai-05: rgba(30, 58, 95, 0.05);
+  --ai-10: rgba(30, 58, 95, 0.1);
+  --ai-15: rgba(30, 58, 95, 0.15);
+  
+  /* セマンティックカラー - Semantic Colors */
+  --text-primary: var(--sumi-iro);
+  --text-secondary: var(--ai-iro);
+  --text-accent: var(--beni-iro);
+  --text-highlight: var(--kin-iro);
+  --bg-primary: var(--washi);
+  --bg-secondary: var(--awayuki);
+  
+  /* フォントファミリー - Font Families */
+  /* 見出し用（Heading） */
+  --font-serif: 'Shippori Mincho', serif;
+  /* 本文用（Body） - 状況に合わせて Hiragino Kaku Gothic ProN または Hiragino Sans を使用 */
+  --font-sans: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
+  
+  /* 旧フォント設定（データとして保持） */
+  /* --font-serif-old: 'Shippori Mincho', 'Yuji Syuku', 'Noto Serif JP', serif; */
+  /* --font-sans-old: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Noto Sans JP', system-ui, sans-serif; */
+  
+  /* フォントサイズ - Font Sizes */
+  --text-xs: 0.75rem;      /* 12px */
+  --text-sm: 0.875rem;     /* 14px */
+  --text-base: 1rem;       /* 16px */
+  --text-lg: 1.125rem;     /* 18px */
+  --text-xl: 1.25rem;      /* 20px */
+  --text-2xl: 1.5rem;      /* 24px */
+  --text-3xl: 2rem;        /* 32px */
+  --text-4xl: 2.5rem;      /* 40px */
+  --text-5xl: 3rem;        /* 48px */
+  --text-6xl: 4rem;        /* 64px */
+  --text-7xl: 5rem;        /* 80px */
+  --text-8xl: 6rem;        /* 96px */
+  
+  /* 行間 - Line Heights */
+  --leading-tight: 1.3;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.8;
+  --leading-loose: 2.0;
+  
+  /* 字間 - Letter Spacing */
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.05em;
+  --tracking-wider: 0.1em;
+  --tracking-widest: 0.2em;
+  
+  /* スペーシング - Spacing (8の倍数) */
+  --space-xs: 8px;         /* Internal spacing within small components (padding in boxes) */
+  --space-sm: 16px;        /* Tight groupings - related elements like card text, form fields */
+  --space-md: 24px;        /* Moderate gaps between sub-sections */
+  --space-lg: 32px;        /* Section-level content gaps */
+  --space-xl: 48px;        /* Major section divisions */
+  --space-2xl: 64px;       /* Top-level container gaps */
+  --space-3xl: 96px;
+  --space-4xl: 128px;
+  --space-5xl: 192px;
+  --space-6xl: 256px;
+  
+  /* スペーシング使用ガイドライン - Spacing Usage Guidelines
+   * --space-xs:  Component internal padding, minimal gaps
+   * --space-sm:  Related content groupings (cards, forms)
+   * --space-md:  Sub-section separations
+   * --space-lg:  Major section content gaps
+   * --space-xl:  Division between distinct sections
+   * --space-2xl: Top-level layout containers
+   * Use these variables consistently throughout for professional, cohesive design
+   */
+  
+  /* ボーダー - Borders */
+  --border-thin: 1px;
+  --border-normal: 2px;
+  --border-thick: 3px;
+  --border-primary: var(--sumi-iro);
+  --border-secondary: var(--ai-iro);
+  --border-accent: var(--beni-iro);
+  --border-subtle: rgba(45, 45, 45, 0.1);
+  
+  /* シャドウ（最小限） - Shadows (Minimal) */
+  --shadow-subtle: 0 2px 8px rgba(0, 0, 0, 0.05);
+  
+  /* アニメーション - Animation */
+  --duration-fast: 0.2s;
+  --duration-normal: 0.3s;
+  --duration-slow: 0.6s;
+  --duration-slower: 1s;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-ukiyoe: cubic-bezier(0.19, 1.0, 0.22, 1.0);
+  
+  /* 後方互換性 - Backward Compatibility */
+  --ai: var(--ai-iro);
+  --shu: var(--beni-iro);
+  --kin: var(--kin-iro);
+  --sumi: var(--sumi-iro);
+  --accent: var(--beni-iro);
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  height: 100%;
+  width: 100%;
+}
+
+/* Background pattern - removed */
+
+/* App container */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ========================================
+   HEADER
+   ======================================== */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 1rem 2rem;
+  background: linear-gradient(to bottom, var(--bg-primary), transparent);
+}
+
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+/* 浮世絵ロゴ - 「浮」画像 + 「世絵」テキスト */
+.logo-kanji {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.logo-uki-image {
+  height: 40px;
+  width: 40px;
+  object-fit: contain;
+}
+
+.logo-yo-e {
+  font-family: 'HOT-Tenshokk-M', var(--font-serif);
+  font-size: 40px;
+  font-weight: 400;
+  color: var(--ai);
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+.logo-title {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  /* transform: translateY(-1rem); */
+}
+
+/* ========================================
+   HANKO (STAMP) BUTTON STYLES
+   ======================================== */
+
+/* SVG filters for hanko texture - creates realistic stamp effect */
+.hanko-filter-container {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* Base hanko button style */
+.hanko-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1px solid var(--sumi-iro);
+  cursor: pointer;
+  font-family: var(--font-serif);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--sumi-iro);
+  transition: all var(--duration-normal) var(--ease-ukiyoe);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  filter: url(#hanko-texture);
+  overflow: hidden;
+}
+
+.hanko-button:hover {
+  background: var(--ai-iro);
+  color: #FFFFFF;
+  border-color: var(--ai-iro);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(30, 58, 95, 0.3);
+}
+
+.hanko-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Hanko button variants */
+.hanko-button.large {
+  width: 56px;
+  height: 56px;
+  font-size: 1rem;
+}
+
+.hanko-button.small {
+  width: 40px;
+  height: 40px;
+  font-size: 0.75rem;
+  border-width: 2px;
+}
+
+/* Hanko button active state (for language toggle) */
+.hanko-button.active {
+  background: var(--ai-iro);
+  color: #FFFFFF;
+  border-color: var(--ai-iro);
+}
+
+/* Modal close button */
+.hanko-button.modal-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 10;
+}
+
+/* Language toggle */
+.language-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.language-toggle .hanko-button {
+  transition: all var(--duration-normal) var(--ease-ukiyoe);
+}
+
+/* 障子効果 - 谷崎潤一郎『陰翳礼讃』に着想を得た半透明の和紙のような質感 */
+.language-toggle .hanko-button:not(.active) {
+  /* 和紙のようなわずかにクリーム色の半透明背景 */
+  background: rgba(255, 252, 245, 0.5);
+  /* 背景をぼかして透け感を演出 */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  /* 柔らかな影 - 障子が放つ光 */
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.08),
+    inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  opacity: 1;
+  /* overflow: hiddenを解除して疑似要素を表示 */
+  overflow: visible;
+}
+
+/* 障子の紙の質感を疑似要素で表現（丸い形に沿って適用） */
+.language-toggle .hanko-button:not(.active)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  background-image: 
+    /* 微細な紙の繊維テクスチャ */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.01) 2px,
+      rgba(0, 0, 0, 0.01) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.01) 2px,
+      rgba(0, 0, 0, 0.01) 4px
+    );
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  opacity: 0.3;
+  z-index: -1;
+}
+
+/* ボタンのテキストを前面に表示 */
+.language-toggle .hanko-button:not(.active) span {
+  position: relative;
+  z-index: 1;
+}
+
+.language-toggle .hanko-button:not(.active):hover {
+  background: rgba(255, 252, 245, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.12),
+    inset 0 1px 2px rgba(255, 255, 255, 0.6);
+  opacity: 1;
+}
+
+/* ========================================
+   MAIN / TIMELINE
+   ======================================== */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 100px;
+}
+
+.timeline-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 0;
+}
+
+/* Era bar */
+.era-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0 var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.era-label {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ai);
+  min-width: 60px;
+}
+
+.era-label.end {
+  text-align: right;
+}
+
+.era-progress {
+  flex: 1;
+  height: 4px;
+  background: var(--bg-secondary);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.era-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ai), var(--shu));
+  border-radius: 2px;
+}
+
+/* Scroll container */
+.timeline-scroll {
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2rem 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.timeline-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.timeline-track {
+  display: flex;
+  flex-direction: column;
+  min-width: max-content;
+  padding: 0 4rem;
+  position: relative;
+}
+
+/* Timeline line */
+.timeline-line {
+  position: absolute;
+  top: 50%;
+  left: 2rem;
+  right: 2rem;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent,
+    var(--ai) 5%,
+    var(--ai) 95%,
+    transparent
+  );
+  transform: translateY(-50%);
+}
+
+/* Cards container */
+.timeline-cards {
+  display: flex;
+  gap: var(--space-lg);
+  padding: var(--space-lg) 0;
+}
+
+/* ========================================
+   PERIOD CARD
+   ======================================== */
+.period-card {
+  width: 320px;
+  background: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* Year marker */
+.year-marker {
+  position: absolute;
+  top: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+}
+
+.year-dot {
+  width: 16px;
+  height: 16px;
+  background: var(--shu);
+  border: 3px solid white;
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+}
+
+.year-text {
+  margin-top: 0.5rem;
+  font-family: var(--font-serif);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ai);
+  background: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+}
+
+/* Card image */
+.card-image-container {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.period-card:hover .card-image {
+  transform: scale(1.05);
+}
+
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, 
+    transparent 0%,
+    transparent 50%,
+    rgba(0,0,0,0.3) 100%
+  );
+}
+
+/* Japanese vertical text on image */
+.vertical-text {
+  position: absolute;
+  writing-mode: vertical-rl;
+  font-family: var(--font-serif);
+  color: white;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  z-index: 5;
+  padding: 0.5rem 0.75rem;
+  background: rgba(30, 58, 95, 0.75);
+  backdrop-filter: blur(4px);
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.05em;
+}
+
+.vertical-text.artist-name {
+  bottom: 1rem;
+  left: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.vertical-text.work-title {
+  top: 1rem;
+  right: 1rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  background: rgba(199, 62, 58, 0.85);
+}
+
+/* Card content */
+.card-content {
+  padding: 1.5rem;
+}
+
+.card-title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-artists {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--bg-secondary);
+}
+
+.artists-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.artists-names {
+  font-size: 0.875rem;
+  color: var(--ai);
+  font-weight: 500;
+}
+
+.card-cta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: 0.875rem;
+  color: var(--shu);
+  font-weight: 500;
+  transition: gap 0.2s;
+}
+
+.period-card:hover .card-cta {
+  gap: var(--space-sm);
+}
+
+/* ========================================
+   SCROLL HINT
+   ======================================== */
+.scroll-hint {
+  text-align: center;
+  padding: 1rem;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+}
+
+/* ========================================
+   LOADING - UKIYO-E PRINTING PROCESS
+   ======================================== */
+.loading {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xl);
+  position: relative;
+  background: var(--washi);
+  overflow: hidden;
+}
+
+/* 和紙の背景（極めて控えめ） */
+.washi-bg {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(30, 58, 95, 0.02) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(214, 78, 78, 0.02) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 版画制作のコンテナ */
+.printing-container {
+  position: relative;
+  z-index: 1;
+  width: min(75vw, 400px);
+  height: min(75vw, 400px);
+  max-width: 450px;
+  max-height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ukiyoe-print {
+  width: 100%;
+  height: 100%;
+}
+
+/* 各版のレイヤー */
+.layer-sumi,
+.layer-ai,
+.layer-beni,
+.layer-kin {
+  will-change: opacity;
+}
+
+/* 新しい浮世絵ローディング - 6色版 */
+.ukiyoe-loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  cursor: default;
+  pointer-events: none;
+}
+
+.ukiyoe-loading-wrapper {
+  position: relative;
+  /* 親要素いっぱいに表示 */
+  width: 50vw;
+  height: 50vh;
+  /* max-width: 600px;
+  max-height: 600px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* PCの時はSVG全体を表示 */
+@media (min-width: 769px) {
+  .ukiyoe-loading-wrapper {
+    width: 40vw;
+    height: auto;
+    max-height: 60vh;
+  }
+  
+  .ukiyoe-loading-svg {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    pointer-events: none;
+  }
+}
+
+.ukiyoe-loading-svg {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  pointer-events: none;
+  /* preserveAspectRatio="xMidYMid slice"により、中央配置で親要素いっぱいに表示 */
+}
+
+.ukiyoe-layer-1,
+.ukiyoe-layer-2,
+.ukiyoe-layer-3,
+.ukiyoe-layer-4,
+.ukiyoe-layer-5,
+.ukiyoe-layer-6 {
+  will-change: opacity;
+  
+}
+
+.loading-placeholder {
+  font-family: var(--font-serif);
+  color: var(--text-secondary);
+}
+
+/* ローディングテキスト */
+.loading-text {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  font-weight: 400;
+  color: var(--text-secondary);
+  letter-spacing: var(--tracking-wider);
+  opacity: 0.75;
+  margin-top: var(--space-lg);
+}
+
+/* モバイル対応 */
+@media (max-width: 768px) {
+  .printing-container {
+    width: 70vw;
+    height: 70vw;
+    max-width: 320px;
+    max-height: 320px;
+  }
+  
+  .loading-text {
+    font-size: var(--text-sm);
+    letter-spacing: var(--tracking-wide);
+  }
+}
+
+@media (max-width: 480px) {
+  .printing-container {
+    width: 65vw;
+    height: 65vw;
+    max-width: 280px;
+    max-height: 280px;
+  }
+}
+
+/* ========================================
+   DECORATIVE ELEMENTS
+   ======================================== */
+.decoration {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 80px;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.wave-top {
+  top: 0;
+  background: linear-gradient(to bottom, var(--bg-primary), transparent);
+}
+
+.wave-bottom {
+  bottom: 0;
+  background: 
+    linear-gradient(to top, var(--bg-primary), transparent),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 30 Q 360 0, 720 30 T 1440 30 V 60 H 0 Z' fill='%231e3a5f' opacity='0.05'/%3E%3C/svg%3E");
+  background-size: 100% 100%;
+}
+
+/* ========================================
+   INTRO SECTION - 浮世絵美学
+   ======================================== */
+
+/* セクションコンテナ - フラットデザイン */
+.intro-section-ukiyoe {
+  position: relative;
+  background: var(--bg-primary);
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Scrollbar hidden for intro section */
+.intro-section-ukiyoe::-webkit-scrollbar {
+  display: none;
+}
+
+/* 背景レイヤー構造 - Figmaデザインに合わせて */
+.intro-bg-layer-base {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(122.13deg, rgba(214, 78, 78, 0.05) 0%, rgba(214, 78, 78, 0) 50%, rgba(30, 58, 95, 0.05) 100%), 
+              linear-gradient(90deg, rgba(245, 240, 230, 1) 0%, rgba(245, 240, 230, 1) 100%);
+}
+
+.intro-bg-layer-gradient {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: 
+    radial-gradient(circle 131.3px at 20% 30%, rgba(30, 58, 95, 0.03) 0%, rgba(30, 58, 95, 0) 50%),
+    radial-gradient(circle 131.3px at 80% 70%, rgba(199, 62, 58, 0.03) 0%, rgba(199, 62, 58, 0) 50%);
+}
+
+/* コンテンツコンテナ - 70%の余白 */
+.intro-content-minimal {
+  position: relative;
+  z-index: 10;
+  max-width: 900px;
+  width: 85%;
+  margin: 0 auto;
+  padding: 15vh var(--space-xl) 15vh;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+  min-height: min-content;
+}
+
+/* 大見出し - Figmaデザインに合わせて */
+.intro-title-large {
+  font-family: var(--font-serif);
+  font-size: 80px;
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: 0.05em;
+  color: var(--text-accent);
+  margin: 0;
+  text-align: left;
+}
+
+/* 副題 - Figmaデザインに合わせて */
+.intro-subtitle-thin {
+  font-family: var(--font-serif);
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  margin: 0;
+  /* margin-bottom: var(--space-lg); */
+}
+
+/* テキストブロック */
+.intro-text-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  width: 100%;
+}
+
+/* 説明文 - Figmaデザインに合わせて */
+.intro-description-text {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: var(--text-primary);
+  margin: 0;
+  width: 100%;
+}
+
+/* 詳細文 - Figmaデザインに合わせて */
+.intro-detail-text {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: var(--text-primary);
+  margin: 0;
+  width: 100%;
+}
+
+/* 新しいコンテンツコンテナ - Figmaデザインに合わせて */
+.intro-content-new {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  margin: 0 auto;
+  padding: 80px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2xl);
+  justify-content: flex-start;
+  min-height: 100vh;
+}
+
+/* テキストコンテンツ - フルワイド、中央揃え */
+.intro-text-content {
+  width: 100%;
+  max-width: 846px; /* 3つのカード(250px × 3) + 2つのgap(48px × 2) = 846px */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  align-items: center;
+}
+
+/* タイトルと副題のグループ */
+.intro-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+}
+
+/* 技法の進化カード - 横並び、幅制限なし */
+.intro-evolution-cards {
+  display: flex;
+  gap: var(--space-xl);
+  align-items: flex-end;
+  justify-content: center;
+  flex-wrap: nowrap; /* 横並びを維持 */
+}
+
+/* 各カード */
+.evolution-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 250px;
+}
+
+/* タイトルと年代のヘッダー（横並び） */
+.evolution-card-header {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+/* タイトル */
+.evolution-card-name {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: 2.8px;
+  line-height: 1;
+  margin: 0;
+}
+
+/* 年代とdividerのコンテナ */
+.evolution-card-period-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+}
+
+/* 年代ラベル（Figmaデザイン） */
+.evolution-card-period {
+  display: flex;
+  align-items: flex-start;
+  overflow: hidden;
+  padding: 0;
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 400;
+  color: #1e3a5f;
+  line-height: 1;
+  width: fit-content;
+  white-space: nowrap;
+  margin-bottom: 0;
+}
+
+/* 年代の下の線 */
+.evolution-card-period-divider {
+  width: 100%;
+  height: 2px;
+  background-image: url('/images/divider.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+
+/* 説明テキスト */
+.evolution-card-description {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--ai-iro);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* 画像コンテナ */
+.evolution-card-image-container {
+  width: 250px;
+  height: 373px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 4px;
+}
+
+.evolution-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* 日本画風の手描きボーダー（Adobe Fresco ライブブラシ） */
+.evolution-card-image-container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/fude-border.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 技法の進化 - テキストのみで表現（旧スタイル - 後方互換性のため残す） */
+.intro-evolution {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xl);
+  margin-top: var(--space-2xl);
+  flex-wrap: wrap;
+}
+
+.evolution-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.evolution-label {
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wider);
+  color: var(--text-primary);
+}
+
+.evolution-desc {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  letter-spacing: var(--tracking-normal);
+}
+
+.evolution-item-highlight .evolution-label {
+  color: var(--text-highlight);
+}
+
+/* 矢印 - シンプルな記号 */
+.evolution-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.arrow-symbol {
+  font-family: var(--font-sans);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  color: var(--text-accent);
+  font-weight: 300;
+}
+
+.arrow-year {
+  font-family: var(--font-serif);
+  font-size: var(--text-sm);
+  color: var(--text-accent);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* スクロール誘導 - 記号のみ */
+.intro-scroll-hint {
+  margin-top: var(--space-3xl);
+  font-family: var(--font-sans);
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--text-primary);
+  opacity: 0.6;
+  cursor: pointer;
+  transition: opacity var(--duration-normal) var(--ease-out);
+  align-self: flex-end;
+}
+
+.intro-scroll-hint:hover {
+  opacity: 1;
+}
+
+/* カードが横並びにならない場合のメディアクエリ */
+@media (max-width: 1100px) {
+  .intro-evolution-cards {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
+  .evolution-card {
+    width: 100%;
+    max-width: 250px;
+  }
+
+  .evolution-card-image-container {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 250 / 373;
+  }
+}
+
+/* ========================================
+   HORIZONTAL SCROLL - SAWATAYA STYLE
+   ======================================== */
+
+/* Horizontal App Container */
+.horizontal-app {
+  min-height: 100vh;
+  width: 100vw;
+}
+
+.horizontal-main {
+  padding-top: 0;
+  min-height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+
+/* Horizontal Scroll Container */
+.horizontal-scroll-container {
+  width: 100vw;
+  height: 100vh;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+/* When on first section, allow inner scroll */
+.horizontal-scroll-container[data-current-section="0"] {
+  overflow-y: visible;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.sections-track {
+  display: flex;
+  height: 100vh;
+  width: max-content;
+  gap: 0;
+}
+
+/* ========================================
+   FULLSCREEN SECTION - SPLIT LAYOUT
+   ======================================== */
+.fullscreen-section {
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  position: relative;
+  overflow: hidden;
+  /* Prevent layout shift during animations */
+  contain: layout style paint;
+}
+
+.fullscreen-section.split-layout {
+  display: flex;
+  flex-direction: row;
+}
+
+/* First section allows internal scrolling */
+.fullscreen-section.first-section {
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* For split layout (artwork sections), strictly hide overflow even if it's the first section 
+   to prevent unwanted scrollbars on the image side */
+.fullscreen-section.split-layout.first-section {
+  overflow: hidden;
+}
+
+/* ========================================
+   IMAGE PANEL (Left Side)
+   ======================================== */
+.image-panel {
+  flex: 0 0 55%;
+  height: 100vh;
+  position: relative;
+  background-color: var(--sumi);
+  overflow: hidden;
+}
+
+.image-panel-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.panel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* Vignette effect for image edges */
+.image-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 50%,
+    rgba(45, 45, 45, 0.3) 80%,
+    rgba(45, 45, 45, 0.6) 100%
+  );
+}
+
+/* ========================================
+   TEXT PANEL (Right Side)
+   ======================================== */
+.text-panel {
+  flex: 0 0 45%;
+  height: 100vh;
+  max-height: 100vh;
+  position: relative;
+  background: rgba(245, 240, 230, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  /* Ensure consistent width during animations */
+  box-sizing: border-box;
+}
+
+/* Scrollbar hidden for text panel */
+.text-panel::-webkit-scrollbar {
+  display: none;
+}
+
+/* Decorative pattern on text panel */
+.text-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 20% 20%, rgba(30, 58, 95, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(199, 62, 58, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.text-panel-inner {
+  width: 100%;
+  max-width: 500px;
+  padding: 4rem 2rem 6rem; /* py-[64px] px-[32px] pb-[96px] - extra bottom padding for scroll */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  /* Remove min-height to allow content to expand naturally */
+  /* Prevent layout shift during animations */
+  will-change: opacity, transform;
+}
+
+/* ========================================
+   FIGMA DESIGN STYLES - Text Panel
+   ======================================== */
+
+/* Section Header Row - Number and Date Range */
+.section-header-row {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-sm);
+  padding-bottom: var(--space-xs);
+  width: 100%;
+}
+
+/* Section Number - Figma Style */
+.section-number-figma {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-xs);
+  font-family: var(--font-serif);
+}
+
+.section-number-figma .number-label {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 14px;
+  color: #1e3a5f;
+  letter-spacing: 0.14em;
+  line-height: 1.7;
+}
+
+.section-number-figma .number-value {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 40px;
+  color: #1e3a5f;
+  line-height: 1;
+}
+
+@media (max-width: 768px) {
+  .section-number-figma {
+    gap: 2px;
+  }
+  
+  .section-number-figma .number-value {
+    font-size: 32px;
+  }
+}
+
+/* Date Range - Figma Style */
+.section-date-range-figma {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  width: fit-content;
+}
+
+.section-date-range-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 4px 7.6px;
+  border-radius: 4px;
+  font-family: var(--font-serif);
+  width: fit-content;
+}
+
+.section-date-range-inner .date-start,
+.section-date-range-inner .date-end {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 16px;
+  color: #1e3a5f;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.section-date-range-inner .date-separator {
+  font-family: -apple-system, 'SF Pro Text', 'SF Pro Display', var(--font-sans);
+  font-weight: 400;
+  font-size: 14px;
+  color: #1e3a5f;
+  opacity: 0.6;
+  line-height: 1.7;
+  white-space: nowrap;
+}
+
+.section-date-range-divider {
+  width: 100%;
+  height: 2px;
+  background-image: url('/images/divider.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  margin-top: 0;
+}
+
+/* Remove padding on mobile for section-date-range-inner */
+@media (max-width: 768px) {
+  .section-date-range-inner {
+    padding: 0;
+  }
+}
+
+/* Meta Container - Two Column Layout */
+.section-meta-container {
+  display: flex;
+  gap: var(--space-sm);
+  width: 100%;
+}
+
+.section-meta-item {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  min-width: 0;
+  filter: blur(0px); /* Figma has blur filter but set to 0 */
+}
+
+.section-meta-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: fit-content;
+}
+
+.section-meta-label {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 16px;
+  color: #1e3a5f;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.section-meta-divider {
+  width: fit-content;
+  min-width: 100%;
+  height: 2px;
+  background-image: url('/images/divider.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+
+.section-meta-text {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 16px;
+  color: #2d2d2d;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.section-meta-text-accent {
+  color: #1e3a5f;
+}
+
+/* Detail Sections - Figma Style */
+.section-details-figma {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  width: 100%;
+}
+
+.detail-section-figma {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  width: 100%;
+  filter: blur(0px); /* Figma has blur filter but set to 0 */
+}
+
+.detail-section-header-figma {
+  margin-bottom: 0;
+}
+
+.detail-section-double-lines-figma {
+  border: 0.5px solid #000000;
+  padding: 2px;
+  width: fit-content;
+}
+
+.detail-section-title-box-figma {
+  border: 0.5px solid #000000;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.detail-section-title-figma {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 16px;
+  color: #1e3a5f;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.detail-section-content-figma {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 16px;
+  color: #2d2d2d;
+  line-height: 1.6;
+  margin: 0;
+  padding-left: 0;
+}
+
+/* Section Number */
+.section-number {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-xs);
+}
+
+.number-label {
+  font-family: var(--font-serif);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.1em;
+}
+
+.number-value {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--ai);
+  line-height: 1;
+}
+
+
+/* Year Display - Old Style (kept for backward compatibility) */
+.section-year {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: white;
+  padding: 4px var(--space-xs);
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--ai-iro);
+  width: fit-content;
+  margin-bottom: 0;
+}
+
+.year-divider {
+  font-size: 14px;
+  opacity: 0.6;
+  color: var(--ai-iro);
+}
+
+/* Year Display - Figma Style */
+.section-year-figma {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+
+.section-year-figma-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 4px 7.6px;
+  border-radius: 4px;
+  width: fit-content;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--ai-iro);
+}
+
+.section-year-figma-inner .year-start,
+.section-year-figma-inner .year-end {
+  font-size: 0.875rem;
+  color: var(--ai-iro);
+  line-height: 1;
+}
+
+.section-year-figma-inner .year-divider {
+  font-size: 0.875rem;
+  color: var(--ai-iro);
+  opacity: 0.6;
+  line-height: 1;
+}
+
+.section-year-figma-divider {
+  width: 109px;
+  height: 2px;
+  background: var(--ai);
+  opacity: 0.3;
+}
+
+/* Period Title */
+.section-title-wrapper {
+  margin: 0.5rem 0;
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: 2.75rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+  position: relative;
+}
+
+/* Artists */
+.section-artists {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.artists-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.artists-names {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ai);
+  line-height: 1.6;
+}
+
+/* Key Event - Old Style (kept for backward compatibility) */
+.section-key-event {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.key-event-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.key-event-text {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Example Works - Old Style (kept for backward compatibility) */
+.section-example-works {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.example-works-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.example-works-text {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ai);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Meta Items - Two Column Layout (Figma Style) */
+.section-meta-blur-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.section-meta-blur-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.section-meta-blur-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: var(--space-xs);
+}
+
+.section-meta-blur-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-family: var(--font-sans);
+  line-height: 1.25;
+}
+
+.section-meta-blur-divider {
+  width: 100%;
+  height: 2px;
+  background: var(--ai);
+  opacity: 0.2;
+}
+
+.section-meta-blur-text {
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin: 0;
+  font-family: var(--font-sans);
+  padding-left: 0;
+}
+
+/* Detail Sections - Figma Style */
+.section-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+/* Detail Section - Old Style (kept for backward compatibility) */
+.detail-section-title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--shu);
+  margin: 0;
+  padding-left: 0.75rem;
+  border-left: 3px solid var(--shu);
+  line-height: 1.4;
+}
+
+.detail-section-content {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.9;
+  margin: 0;
+  padding-left: 0.75rem;
+}
+
+/* Detail Section - Figma Style with Double Lines */
+.detail-section-header {
+  margin-bottom: 0.5rem;
+}
+
+.detail-section-double-lines {
+  position: relative;
+  width: fit-content;
+  border: 0.5px solid var(--sumi-iro);
+  padding: 2px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.detail-section-title-box {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.detail-section-double-lines .detail-section-title {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ai);
+  letter-spacing: 0;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Update detail-section-content for Figma style */
+.detail-section .detail-section-content {
+  font-size: 16px;
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin: 0;
+  padding-left: 0.75rem;
+  font-family: var(--font-sans);
+  font-weight: 300;
+}
+
+/* ========================================
+   SCROLL INDICATORS
+   ======================================== */
+
+/* Scroll Hint - "scroll → ↓" */
+.scroll-hint-indicator {
+  position: fixed;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 80;
+  pointer-events: none;
+}
+
+.scroll-hint-content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--ai);
+  border: none;
+  border-radius: 999px;
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  box-shadow: 0 4px 16px rgba(30, 58, 95, 0.3);
+}
+
+.scroll-arrows {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 1.25rem;
+}
+
+.arrow-horizontal {
+  display: inline-block;
+  animation: pulse-horizontal 2s ease-in-out infinite;
+}
+
+.arrow-vertical {
+  display: inline-block;
+  transform: rotate(90deg);
+  opacity: 0.5;
+}
+
+@keyframes pulse-horizontal {
+  0%, 100% { transform: translateX(0); opacity: 1; }
+  50% { transform: translateX(5px); opacity: 0.7; }
+}
+
+/* Dot Navigation */
+.dot-navigation {
+  position: fixed;
+  left: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.dot-nav-item {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dot-inner {
+  width: 8px;
+  height: 8px;
+  background: rgba(245, 240, 230, 0.7);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(201, 168, 76, 0.6);
+}
+
+.dot-nav-item:hover .dot-inner,
+.dot-nav-item.active .dot-inner {
+  background: var(--kin-iro);
+  transform: scale(1.5);
+  box-shadow: 0 0 16px rgba(201, 168, 76, 0.6);
+  border-color: var(--kin-iro);
+}
+
+.dot-label {
+  position: absolute;
+  left: 2rem;
+  font-size: 0.75rem;
+  color: var(--washi);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+/* Progress Bar */
+.progress-bar-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  z-index: 90;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  /* 
+     日本の色彩と浮世絵の進化を表現したグラデーション
+     0% - 20%: 墨摺絵 (Sumizuri-e) - 墨色から濃鼠へ
+     20% - 45%: 紅摺絵 (Benizuri-e) - 紅色の登場
+     45% - 75%: 錦絵 (Nishiki-e) - 藍色の深みと多色刷り
+     75% - 100%: 黄金期 - 江戸紫から金色への昇華
+  */
+  background: linear-gradient(90deg, 
+    var(--sumi-iro) 0%, 
+    #595857 20%, 
+    var(--beni-iro) 45%, 
+    var(--ai-iro) 70%, 
+    #745399 88%, 
+    var(--kin-iro) 100%
+  );
+  transform-origin: left;
+}
+
+/* Section Counter */
+.section-counter {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  z-index: 90;
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-xs);
+  font-family: var(--font-serif);
+  color: var(--washi);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.counter-divider {
+  font-size: 1rem;
+  opacity: 0.8;
+  color: var(--washi);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.counter-total {
+  font-size: 1.25rem;
+  opacity: 0.9;
+  color: var(--washi);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+/* Navigation Arrows */
+.navigation-arrows {
+  position: fixed;
+  bottom: 1rem;
+  right: 2rem;
+  z-index: 90;
+  display: flex;
+  gap: var(--space-sm);
+}
+
+/* 障子効果をナビゲーション矢印ボタンに適用 */
+.navigation-arrows .hanko-button.large {
+  /* シンプルで視認性の高い和紙風背景 */
+  background: rgba(255, 252, 245, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  overflow: visible;
+  position: relative;
+}
+
+/* 軽量化した和紙テクスチャ - 視認性を優先 */
+.navigation-arrows .hanko-button.large::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  background-image: 
+    radial-gradient(
+      circle at 30% 30%,
+      rgba(255, 255, 255, 0.3) 0%,
+      transparent 60%
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ボタンのテキストを前面に明確に表示 */
+.navigation-arrows .hanko-button.large span {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  color: var(--sumi-iro);
+  font-weight: bold;
+}
+
+.navigation-arrows .hanko-button.large:hover {
+  background: var(--ai-iro);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 
+    0 4px 12px rgba(30, 58, 95, 0.25),
+    inset 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.navigation-arrows .hanko-button.large:hover span {
+  color: #FFFFFF;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 768px) {
+  .header {
+    padding: 1rem;
+  }
+
+  .header-content {
+    max-width: 100%;
+  }
+
+  .logo-kanji {
+    font-size: 1.75rem;
+  }
+
+  .logo-uki-image {
+    height: 28px;
+    width: 28px;
+  }
+
+  .logo-yo-e {
+    font-size: 28px;
+    letter-spacing: 1px;
+  }
+
+  .logo-title {
+    display: none;
+  }
+
+  .period-card {
+    width: 280px;
+  }
+
+  .card-image-container {
+    height: 160px;
+  }
+
+  /* Split Layout Responsive - Stack Vertically */
+  .fullscreen-section.split-layout {
+    flex-direction: column;
+  }
+
+  .image-panel {
+    flex: 0 0 45vh;
+    height: 45vh;
+    width: 100%;
+  }
+
+  .text-panel {
+    flex: 0 0 55vh;
+    height: 55vh;
+    max-height: 55vh;
+    width: 100%;
+  }
+
+  .text-panel-inner {
+    padding: var(--space-md) var(--space-md) calc(var(--space-md) + var(--space-xl));
+    gap: var(--space-md);
+    max-width: 100%;
+  }
+
+  .section-number {
+    margin-bottom: 0;
+  }
+
+  .number-value {
+    font-size: 2rem;
+  }
+
+  .section-year {
+    font-size: 13px;
+    padding: 3px 6px;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+    letter-spacing: 0.05em;
+  }
+
+  .artists-names {
+    font-size: 0.9rem;
+  }
+
+  .section-meta-container {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .section-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  .section-date-range-divider {
+    width: 100%;
+    background-size: contain;
+  }
+
+  .section-key-event,
+  .section-example-works {
+    gap: 6px;
+  }
+
+  .key-event-text,
+  .example-works-text {
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .detail-section {
+    gap: var(--space-xs);
+  }
+
+  .detail-section-title {
+    font-size: 1rem;
+  }
+
+  .detail-section-content {
+    font-size: 0.85rem;
+    line-height: 1.7;
+  }
+
+  .detail-section-content-figma {
+    font-size: 14px;
+  }
+
+  .section-details-figma {
+    padding-bottom: 3rem;
+  }
+
+  /* Intro Section Responsive */
+  .intro-content-minimal {
+    padding: 15vh var(--space-lg) 25vh;
+    gap: var(--space-xl);
+  }
+
+  .intro-content-new {
+    padding-top: 100px;
+    padding-bottom: 24px;
+    padding-left: 16px;
+    padding-right: 16px;
+    gap: var(--space-xl);
+  }
+
+  .intro-title-large {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .intro-subtitle-thin {
+    font-size: 16px;
+  }
+
+  .evolution-card-name {
+    font-size: clamp(20px, 6vw, 24px);
+  }
+
+  .evolution-card-description {
+    font-size: 14px;
+  }
+
+  .evolution-card-period {
+    font-size: 14px;
+  }
+
+  .intro-description-text {
+    font-size: 16px;
+  }
+
+  .intro-detail-text {
+    font-size: 16px;
+  }
+
+  .intro-text-block {
+    max-width: 100%;
+  }
+
+  .intro-evolution {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xl);
+  }
+
+  .intro-text-content {
+    max-width: 100%;
+    padding: 0;
+    gap: var(--space-md);
+  }
+
+  .intro-title-group {
+    gap: 0;
+  }
+
+  .intro-evolution-cards {
+    gap: var(--space-lg);
+  }
+
+  .intro-text-block {
+    gap: var(--space-xs);
+  }
+
+  .evolution-card {
+    width: 100%;
+    max-width: 280px;
+    gap: var(--space-xs);
+  }
+
+  .evolution-card-image-container {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 250 / 373;
+  }
+
+  .evolution-arrow {
+    flex-direction: row;
+    gap: var(--space-sm);
+  }
+
+  .arrow-symbol {
+    transform: rotate(90deg);
+  }
+
+  .scroll-hint-indicator {
+    right: 1rem;
+    bottom: 8rem;
+    top: auto;
+    transform: none;
+  }
+
+  .dot-navigation {
+    left: 1rem;
+    top: 42vh;
+    bottom: auto;
+    flex-direction: row;
+    transform: none;
+    gap: 0.5rem;
+  }
+
+  .section-counter {
+    top: 40vh;
+    right: 1rem;
+    bottom: auto;
+    left: auto;
+    font-size: 1.25rem;
+  }
+
+  .navigation-arrows {
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  /* ナビゲーション矢印ボタンをSPサイズで小さく */
+  .navigation-arrows .hanko-button.large {
+    width: 40px;
+    height: 40px;
+    font-size: 0.875rem;
+    overflow: visible; /* 障子効果の疑似要素を表示 */
+  }
+
+  .navigation-arrows .hanko-button.large span {
+    font-size: 1rem !important; /* インラインスタイルを上書き */
+  }
+
+  /* 言語切り替えボタンをSPサイズで小さく */
+  .language-toggle {
+    gap: var(--space-xs);
+  }
+
+  .language-toggle .hanko-button {
+    width: 40px;
+    height: 40px;
+    font-size: 0.75rem;
+    overflow: visible; /* 障子効果の疑似要素を表示 */
+  }
+}
+
+@media (max-width: 480px) {
+  /* Split Layout - Extra Small Screens */
+  .image-panel {
+    flex: 0 0 45vh;
+    height: 45vh;
+  }
+
+  .text-panel {
+    flex: 0 0 60vh;
+    height: 60vh;
+    max-height: 60vh;
+  }
+
+  .text-panel-inner {
+    padding: 20px 20px calc(20px + var(--space-lg));
+    gap: var(--space-md);
+  }
+
+  .number-value {
+    font-size: 1.75rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .section-year {
+    font-size: 12px;
+    padding: 2px 6px;
+  }
+
+  .key-event-text,
+  .example-works-text {
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .detail-section-title {
+    font-size: 0.95rem;
+  }
+
+  .detail-section-double-lines .detail-section-title {
+    font-size: 0.875rem;
+  }
+
+  .detail-section-content {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .detail-section .detail-section-content {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* Intro Section Mobile */
+  .intro-content-minimal {
+    padding: 10vh var(--space-md) 20vh;
+  }
+
+  .intro-content-new {
+    padding-top: 100px;
+    padding-bottom: 24px;
+    padding-left: 12px;
+    padding-right: 12px;
+    gap: var(--space-xl);
+  }
+
+  .intro-title-large {
+    font-size: clamp(2rem, 15vw, 3rem);
+  }
+
+  .intro-subtitle-thin {
+    font-size: 16px;
+  }
+
+  .intro-description-text {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .intro-detail-text {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .evolution-card-name {
+    font-size: 24px;
+  }
+
+  .evolution-card-description {
+    font-size: 14px;
+  }
+
+  .intro-scroll-hint {
+    margin-top: var(--space-2xl);
+  }
+
+  /* ナビゲーション矢印ボタンをさらに小さく（480px以下） */
+  .navigation-arrows .hanko-button.large {
+    width: 36px;
+    height: 36px;
+    font-size: 0.75rem;
+    overflow: visible; /* 障子効果の疑似要素を表示 */
+  }
+
+  .navigation-arrows .hanko-button.large span {
+    font-size: 1rem !important; /* インラインスタイルを上書き */
+  }
+
+  /* 言語切り替えボタンをさらに小さく（480px以下） */
+  .language-toggle .hanko-button {
+    width: 36px;
+    height: 36px;
+    font-size: 0.6875rem;
+    overflow: visible; /* 障子効果の疑似要素を表示 */
+  }
+}
+
+/* Performance Optimizations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Hardware acceleration for smooth animations */
+.horizontal-scroll-container,
+.section-image-wrapper,
+.section-image,
+.fullscreen-section {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Smooth scrolling optimization */
+.horizontal-scroll-container {
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+}
+
+/* Improved touch targets for mobile */
+@media (max-width: 768px) {
+  .dot-nav-item {
+    width: 12px;
+    height: 12px;
+    /* padding: 8px; */
+  }
+
+  .dot-inner {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+}
+
+/* Loading performance improvements */
+.section-image {
+  content-visibility: auto;
+  contain: layout style paint;
+}
+
+/* Prevent text selection during interactions */
+.horizontal-scroll-container,
+.dot-navigation,
+.navigation-arrows,
+.scroll-hint-indicator {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Tablet optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .section-title {
+    font-size: 3rem;
+  }
+
+  .section-content {
+    max-width: 800px;
+  }
+
+  .section-description {
+    font-size: 1rem;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .section-image {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Image Placeholder Styles */
+.image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--washi);
+  border: var(--border-normal) dashed var(--border-subtle);
+  color: var(--text-secondary);
+  padding: var(--space-2xl);
+  text-align: center;
+}
+
+.placeholder-text {
+  font-family: var(--font-sans);
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
+  opacity: 0.7;
+}
+
+.placeholder-subtext {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  color: var(--text-primary);
+  opacity: 0.8;
+}
+
+.card-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--washi);
+  border: var(--border-thin) solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  opacity: 0.6;
+}
+
+.modal-hero-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--washi);
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: var(--text-lg);
+  opacity: 0.7;
+}
+
+/* ========================================
+   MODAL - DETAIL PAGE
+   ======================================== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.modal {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  max-height: 90vh;
+  background: var(--bg-primary);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.modal-hero {
+  position: relative;
+  width: 55%;
+  min-height: 600px;
+  background: var(--washi);
+  overflow: hidden;
+}
+
+.modal-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.modal-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(245, 240, 230, 0) 0%,
+    rgba(245, 240, 230, 0.3) 50%,
+    rgba(245, 240, 230, 0.8) 100%
+  );
+  pointer-events: none;
+}
+
+.modal-hero-content {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  right: 2rem;
+  z-index: 2;
+}
+
+.modal-year {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.modal-title {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* Text Panel - Figma Design Style */
+.modal-text-panel {
+  width: 45%;
+  background: rgba(245, 240, 230, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  overflow-y: auto;
+  position: relative;
+}
+
+.modal-text-panel-inner {
+  padding: 4rem 2rem;
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+/* Section Number */
+.modal-section-number {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-xs);
+}
+
+.modal-section-number-label {
+  font-family: var(--font-serif);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.1em;
+}
+
+.modal-section-number-value {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--ai);
+  line-height: 1;
+}
+
+/* Date Range */
+.modal-date-range {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+
+.modal-date-range-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 4px 7.6px;
+  border-radius: 4px;
+  width: fit-content;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--ai-iro);
+}
+
+.modal-date-start,
+.modal-date-end {
+  font-size: 0.875rem;
+  color: var(--ai-iro);
+  line-height: 1;
+}
+
+.modal-date-separator {
+  font-size: 0.875rem;
+  color: var(--ai-iro);
+  opacity: 0.6;
+  line-height: 1;
+}
+
+.modal-date-divider {
+  width: 109px;
+  height: 2px;
+  background: var(--ai);
+  opacity: 0.3;
+}
+
+/* Meta Items - Two Column Layout */
+.modal-meta-blur-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.modal-meta-blur-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.modal-meta-blur-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: var(--space-xs);
+}
+
+.modal-meta-blur-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-family: var(--font-sans);
+  line-height: 1.25;
+}
+
+.modal-meta-blur-divider {
+  width: 100%;
+  height: 2px;
+  background: var(--ai);
+  opacity: 0.2;
+}
+
+.modal-meta-blur-text {
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin: 0;
+  font-family: var(--font-sans);
+  padding-left: 0;
+}
+
+/* Detail Sections */
+.modal-detail-sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+}
+
+.modal-detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.modal-detail-section-header {
+  margin-bottom: 0.5rem;
+}
+
+.modal-detail-section-double-lines {
+  position: relative;
+  width: fit-content;
+  border: 0.5px solid var(--sumi-iro);
+  padding: 2px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.modal-detail-section-title-box {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.modal-detail-section-title {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ai);
+  letter-spacing: 0;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.modal-detail-section-content {
+  font-size: 16px;
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin: 0;
+  padding-left: 0.75rem;
+  font-family: var(--font-sans);
+  font-weight: 300;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .modal {
+    flex-direction: column;
+    max-height: 95vh;
+  }
+
+  .modal-hero {
+    width: 100%;
+    min-height: 300px;
+    max-height: 40vh;
+  }
+
+  .modal-text-panel {
+    width: 100%;
+    max-height: 60vh;
+  }
+
+  .modal-text-panel-inner {
+    padding: 2rem 1.5rem;
+    max-width: 100%;
+  }
+
+  .modal-meta-blur-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding: 1rem;
+  }
+
+  .modal-text-panel-inner {
+    padding: 1.5rem 1rem;
+    gap: 1.5rem;
+  }
+
+  .modal-section-number-value {
+    font-size: 2rem;
+  }
+
+  .modal-title {
+    font-size: 1.5rem;
+  }
+}
+

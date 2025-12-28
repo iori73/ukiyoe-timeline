@@ -242,31 +242,59 @@ function FullscreenSection({ period, index, isActive }) {
             )}
           </motion.div>
 
-          {/* Detail Sections */}
+          {/* Detail Sections - 2x2 Grid with Dividers */}
           <motion.div className="section-details-figma" variants={childVariants}>
-            {detailSections.map((section, idx) => {
-              const content = getLocalizedField(period, section.key, language)
-              if (!content) return null
-              
-              return (
-                <motion.div
-                  key={section.key}
-                  className="detail-section-figma"
-                  variants={childVariants}
-                >
-                  <div className="detail-section-header-figma">
-                    <div className="detail-section-double-lines-figma">
-                      <div className="detail-section-title-box-figma">
-                        <span className="detail-section-title-figma">
-                          {language === 'ja' ? section.labelJa : section.labelEn}
-                        </span>
-                      </div>
+            <div className="details-grid-cards">
+              {/* Row 1 */}
+              <div className="details-grid-row">
+                {detailSections.slice(0, 2).map((section, idx) => {
+                  const content = getLocalizedField(period, section.key, language)
+                  if (!content) return null
+                  
+                  return (
+                    <div
+                      key={section.key}
+                      className={`details-grid-card ${idx === 0 ? 'left' : 'right'}`}
+                    >
+                      <h4 className="details-card-title">
+                        {language === 'ja' ? section.labelJa : section.labelEn}
+                      </h4>
+                      <p className="details-card-content">{content}</p>
                     </div>
-                  </div>
-                  <p className="detail-section-content-figma">{content}</p>
-                </motion.div>
-              )
-            })}
+                  )
+                })}
+              </div>
+              
+              {/* Horizontal Divider */}
+              <div className="details-grid-divider-horizontal">
+                <div className="divider-line"></div>
+              </div>
+              
+              {/* Row 2 */}
+              <div className="details-grid-row">
+                {detailSections.slice(2, 4).map((section, idx) => {
+                  const content = getLocalizedField(period, section.key, language)
+                  if (!content) return null
+                  
+                  return (
+                    <div
+                      key={section.key}
+                      className={`details-grid-card ${idx === 0 ? 'left' : 'right'}`}
+                    >
+                      <h4 className="details-card-title">
+                        {language === 'ja' ? section.labelJa : section.labelEn}
+                      </h4>
+                      <p className="details-card-content">{content}</p>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+            
+            {/* Vertical Divider */}
+            <div className="details-grid-divider-vertical">
+              <div className="divider-line"></div>
+            </div>
           </motion.div>
         </div>
       </motion.div>

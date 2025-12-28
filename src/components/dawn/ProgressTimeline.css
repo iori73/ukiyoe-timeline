@@ -1,0 +1,26 @@
+/* ========================================
+   PROGRESS TIMELINE - Auto-advancing Progress Bars
+   Inspired by Apple iPhone Air page dotnav
+   ======================================== */
+
+.progress-timeline {
+  width: 100%;
+}
+
+.progress-bar {
+  width: 4px;
+  height: 400px;
+  position: relative;
+  border-radius: 2px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.progress-bar__fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  will-change: height;
+}
+

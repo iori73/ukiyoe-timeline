@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Routes, Route } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { LanguageProvider } from './context/LanguageContext'
 import { loadUkiyoeData } from './data/ukiyoe'
@@ -8,6 +9,8 @@ import IntroSection from './components/IntroSection'
 import ScrollIndicators from './components/ScrollIndicators'
 import LanguageToggle from './components/LanguageToggle'
 import { UkiyoeLoadingContainer, SURI_TIMING, SURI_MESSAGES } from './components/UkiyoeLoading'
+import CardPlayground from './components/CardPlayground'
+import DawnPage from './pages/DawnPage'
 
 function AppContent() {
   const [data, setData] = useState([])
@@ -206,11 +209,10 @@ function AppContent() {
                 >
                   <span className="logo-kanji">
                     <img 
-                      src="/images/uki-character.svg" 
-                      alt="浮" 
-                      className="logo-uki-image"
+                      src="/images/logo_v2.svg" 
+                      alt="浮世絵" 
+                      className="logo-kanji-image"
                     />
-                    <span className="logo-yo-e">世絵</span>
                   </span>
                 </div>
                 <LanguageToggle />
@@ -257,10 +259,35 @@ function AppContent() {
   )
 }
 
+// Hash-based routing for playground (backwards compatibility)
+function MainPageWithHashRouting() {
+  const [currentPage, setCurrentPage] = useState(() => {
+    return window.location.hash === '#playground' ? 'playground' : 'main'
+  })
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      setCurrentPage(window.location.hash === '#playground' ? 'playground' : 'main')
+    }
+    
+    window.addEventListener('hashchange', handleHashChange)
+    return () => window.removeEventListener('hashchange', handleHashChange)
+  }, [])
+
+  if (currentPage === 'playground') {
+    return <CardPlayground />
+  }
+
+  return <AppContent />
+}
+
 export default function App() {
   return (
     <LanguageProvider>
-      <AppContent />
+      <Routes>
+        <Route path="/" element={<MainPageWithHashRouting />} />
+        <Route path="/dawn" element={<DawnPage />} />
+      </Routes>
     </LanguageProvider>
   )
 }

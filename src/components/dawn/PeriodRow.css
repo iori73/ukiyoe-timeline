@@ -1,0 +1,104 @@
+/* ========================================
+   PERIOD ROW - Individual era section
+   ======================================== */
+
+.period-row {
+  width: 100%;
+}
+
+.period-row__container {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.period-row__content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.period-row__images {
+  /* Images container */
+}
+
+.period-row__text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.period-row__header {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.period-row__title {
+  font-family: 'Shippori Mincho', serif;
+  font-weight: 700;
+  font-size: 28px; /* Scaled up from 24px to maintain hierarchy */
+  line-height: 1;
+  margin: 0;
+}
+
+.period-row__years {
+  display: flex;
+  gap: 4px;
+  align-items: baseline;
+}
+
+.period-row__years-main {
+  font-family: var(--font-sans);
+  font-size: 16px; /* Minimum 16px (was 12.8px) */
+  color: var(--ai-iro, #1e3a5f);
+  line-height: 1.6;
+}
+
+.period-row__years-note {
+  font-family: var(--font-sans);
+  font-size: 16px; /* Minimum 16px (was 11.2px) */
+  color: #999;
+  line-height: 1.6;
+}
+
+.period-row__description {
+  font-family: var(--font-sans);
+  font-size: 16px; /* Minimum 16px (was 12.8px) */
+  color: var(--ai-iro, #1e3a5f);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Nishiki-e specific */
+.period-row--nishiki .period-row__description {
+  color: #000;
+  max-width: 100%;
+}
+
+.period-row--nishiki .period-row__title {
+  color: #f8604f;
+}
+
+.period-row--nishiki .period-row__years-main {
+  color: #000;
+}
+
+/* Benizuri-e specific */
+.period-row--benizuri .period-row__title {
+  color: #95a078;
+}
+
+.period-row--benizuri .period-row__description {
+  color: #000;
+}
+
+.period-row--benizuri .period-row__years-main {
+  color: #000;
+}
+
+/* Hidden state for fade-in animation */
+.period-row--hidden {
+  opacity: 0;
+}
+

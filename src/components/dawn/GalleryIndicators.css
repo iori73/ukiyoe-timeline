@@ -1,0 +1,137 @@
+/* ========================================
+   GALLERY INDICATORS - Apple-style progress
+   
+   Single element morphing via height transition:
+   - Active: tall bar (100px) with fill animating top → bottom
+   - Past: small circle (10px) fully filled
+   - Future: small circle (10px) dim
+   ======================================== */
+
+.gallery-indicators {
+  position: fixed;
+  left: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 80;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Single indicator element - morphs via height */
+.gallery-indicator {
+  width: 16px;
+  border-radius: 100px;
+  position: relative;
+  overflow: hidden;
+  /* Smooth height morphing between states */
+  transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Height states */
+.gallery-indicator--active {
+  height: 100px;
+}
+
+.gallery-indicator--past,
+.gallery-indicator--future {
+  height: 16px;
+  /* Keep same border-radius, don't change to circle */
+}
+
+/* Fill element inside */
+.gallery-indicator__fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0%;
+  border-radius: 50px;
+  transition: opacity 0.3s ease;
+}
+
+/* Past state: fill is 100% */
+.gallery-indicator--past .gallery-indicator__fill {
+  height: 100%;
+}
+
+/* Active state: fill animates from 0% to 100% */
+.gallery-indicator--active .gallery-indicator__fill {
+  animation: fillProgress 3333ms linear forwards;
+}
+
+@keyframes fillProgress {
+  from {
+    height: 0%;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+/* Fill matches parent border-radius */
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 1200px) {
+  .gallery-indicators {
+    left: 24px;
+  }
+  
+  .gallery-indicator--active {
+    height: 80px;
+  }
+}
+
+@media (max-width: 900px) {
+  .gallery-indicators {
+    left: 16px;
+    gap: 10px;
+  }
+  
+  .gallery-indicator {
+    width: 8px;
+    border-radius: 4px;
+  }
+  
+  .gallery-indicator--active {
+    height: 60px;
+  }
+  
+  .gallery-indicator--past,
+  .gallery-indicator--future {
+    height: 8px;
+  }
+  
+  .gallery-indicator__fill {
+    border-radius: 4px;
+  }
+}
+
+@media (max-width: 600px) {
+  .gallery-indicators {
+    left: 12px;
+    gap: 8px;
+  }
+  
+  .gallery-indicator {
+    width: 6px;
+    border-radius: 3px;
+  }
+  
+  .gallery-indicator--active {
+    height: 50px;
+  }
+  
+  .gallery-indicator--past,
+  .gallery-indicator--future {
+    height: 6px;
+  }
+  
+  .gallery-indicator__fill {
+    border-radius: 3px;
+  }
+}

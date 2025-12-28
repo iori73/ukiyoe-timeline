@@ -180,39 +180,28 @@ export default function HorizontalScroll({ children, onSectionChange, totalSecti
   }, [currentSection, totalSections, scrollToSection])
 
   // Handle native scroll event (for programmatic scrolls and touch)
+  // This is mainly for sync after programmatic scrollTo completes
   const handleScroll = useCallback(() => {
-    if (!containerRef.current || isTransitioning.current) {
+    if (!containerRef.current) return
+    
+    // Strictly block scroll handling during transition to prevent glitches
+    if (isTransitioning.current) {
       return
     }
 
     const container = containerRef.current
     const scrollLeft = container.scrollLeft
     const sectionWidth = container.clientWidth
-    const newSection = Math.round(scrollLeft / sectionWidth)
-
-    if (newSection !== currentSection && newSection >= 0 && newSection < totalSections) {
-      // Only allow one section change at a time
-      const sectionDiff = Math.abs(newSection - currentSection)
-      
-      // If trying to skip multiple sections, force to adjacent section
-      if (sectionDiff > 1) {
-        const direction = newSection > currentSection ? 1 : -1
-        const adjacentSection = currentSection + direction
-        
-        // Directly scroll to adjacent section without calling scrollToSection
-        const targetScroll = adjacentSection * sectionWidth
-        container.scrollTo({
-          left: targetScroll,
-          behavior: 'smooth'
-        })
-        
-        setCurrentSection(adjacentSection)
-        onSectionChange?.(adjacentSection)
-        return
-      }
-      
-      setCurrentSection(newSection)
-      onSectionChange?.(newSection)
+    
+    // Only update if scroll position is very close to a section boundary
+    // This prevents mid-scroll updates from causing glitches
+    const exactSection = scrollLeft / sectionWidth
+    const roundedSection = Math.round(exactSection)
+    const isAtSectionBoundary = Math.abs(exactSection - roundedSection) < 0.05
+    
+    if (isAtSectionBoundary && roundedSection !== currentSection && roundedSection >= 0 && roundedSection < totalSections) {
+      setCurrentSection(roundedSection)
+      onSectionChange?.(roundedSection)
     }
   }, [currentSection, totalSections, onSectionChange])
 
@@ -297,69 +286,112 @@ export default function HorizontalScroll({ children, onSectionChange, totalSecti
 
     let touchStartX = 0
     let touchStartY = 0
+    let touchStartScrollLeft = 0
     let isSwiping = false
+    let swipeDirection = null // 'horizontal' | 'vertical' | null
     let touchTarget = null
 
     const handleTouchStart = (e) => {
-      // Allow touch on image panel too - we'll check direction later
+      // Don't start new swipe if transitioning
+      if (isTransitioning.current) return
+      
       touchStartX = e.touches[0].clientX
       touchStartY = e.touches[0].clientY
+      touchStartScrollLeft = container.scrollLeft
       touchTarget = e.target
       isSwiping = true
+      swipeDirection = null // Reset direction detection
     }
 
     const handleTouchMove = (e) => {
       if (!isSwiping) return
+      
+      // Block all touch moves during transition
+      if (isTransitioning.current) {
+        if (e.cancelable) e.preventDefault()
+        return
+      }
 
       const touchCurrentX = e.touches[0].clientX
       const touchCurrentY = e.touches[0].clientY
       const deltaX = touchStartX - touchCurrentX
       const deltaY = touchStartY - touchCurrentY
 
-      // Check if touch started on image panel
-      const imagePanel = touchTarget?.closest('.image-panel')
-      
+      // Determine swipe direction on first significant movement (lock direction)
+      if (swipeDirection === null && (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10)) {
+        swipeDirection = Math.abs(deltaX) > Math.abs(deltaY) ? 'horizontal' : 'vertical'
+      }
+
       // Check if touch started in a scrollable panel
       const scrollablePanel = touchTarget?.closest('.text-panel, .intro-section-ukiyoe')
       
-      if (scrollablePanel) {
+      if (scrollablePanel && swipeDirection === 'vertical') {
         const { scrollTop, scrollHeight, clientHeight } = scrollablePanel
         const isAtTop = scrollTop <= 1
         const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1
         
-        // If vertical swipe is more significant and panel can scroll
-        if (Math.abs(deltaY) > Math.abs(deltaX)) {
-          // Allow vertical scroll within panel
-          if ((deltaY < 0 && !isAtTop) || (deltaY > 0 && !isAtBottom)) {
-            return // Let native scroll happen
-          }
-        }
-      }
-      
-      // If on image panel, only allow horizontal swipes for navigation
-      if (imagePanel) {
-        // If vertical swipe is more significant, ignore it
-        if (Math.abs(deltaY) > Math.abs(deltaX)) {
-          return
+        // Allow vertical scroll within panel if not at boundary
+        if ((deltaY < 0 && !isAtTop) || (deltaY > 0 && !isAtBottom)) {
+          return // Let native scroll happen
         }
       }
 
-      // If horizontal swipe is more significant than vertical, prevent default
-      if (Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
+      // For horizontal swipes, always prevent default to stop native scroll
+      if (swipeDirection === 'horizontal') {
         if (e.cancelable) e.preventDefault()
+        
+        // Manually update scroll position for visual feedback (optional rubber-banding)
+        // This gives immediate feedback while swiping
+        const newScrollLeft = touchStartScrollLeft + deltaX * 0.3 // Reduced multiplier for subtle effect
+        const sectionWidth = container.clientWidth
+        const currentSectionStart = currentSection * sectionWidth
+        
+        // Limit drag to 20% of section width for rubber-band effect
+        const maxDrag = sectionWidth * 0.2
+        const clampedScroll = Math.max(
+          currentSectionStart - maxDrag,
+          Math.min(currentSectionStart + maxDrag, newScrollLeft)
+        )
+        
+        // Only apply visual drag if not at boundaries
+        const targetSection = deltaX > 0 ? currentSection + 1 : currentSection - 1
+        if (targetSection >= 0 && targetSection < totalSections) {
+          container.scrollLeft = clampedScroll
+        }
       }
     }
 
     const handleTouchEnd = (e) => {
       if (!isSwiping) return
       
+      const wasHorizontalSwipe = swipeDirection === 'horizontal'
+      
+      // Reset swipe state
+      isSwiping = false
+      swipeDirection = null
+      touchTarget = null
+      
+      // If transitioning, snap back to current section
+      if (isTransitioning.current) {
+        const sectionWidth = container.clientWidth
+        container.scrollTo({
+          left: currentSection * sectionWidth,
+          behavior: 'smooth'
+        })
+        return
+      }
+      
       // Check if still in cooldown period
       const now = Date.now()
       const timeSinceLastScroll = now - lastScrollTime.current
-      if (timeSinceLastScroll < 800) {
-        isSwiping = false
-        touchTarget = null
-        return // Still in cooldown, ignore this swipe
+      if (timeSinceLastScroll < 600) {
+        // Snap back to current section
+        const sectionWidth = container.clientWidth
+        container.scrollTo({
+          left: currentSection * sectionWidth,
+          behavior: 'smooth'
+        })
+        return
       }
 
       const touchEndX = e.changedTouches[0].clientX
@@ -368,10 +400,8 @@ export default function HorizontalScroll({ children, onSectionChange, totalSecti
       const deltaY = touchStartY - touchEndY
       const threshold = 50 // minimum swipe distance
 
-      // Only navigate if horizontal swipe is dominant
-      const isHorizontalSwipe = Math.abs(deltaX) > Math.abs(deltaY) * 1.5
-
-      if (isHorizontalSwipe && Math.abs(deltaX) > threshold) {
+      // Only navigate if it was a horizontal swipe
+      if (wasHorizontalSwipe && Math.abs(deltaX) > threshold) {
         if (deltaX > 0 && currentSection < totalSections - 1) {
           // Swipe left - go to next section
           lastScrollTime.current = now
@@ -380,11 +410,25 @@ export default function HorizontalScroll({ children, onSectionChange, totalSecti
           // Swipe right - go to previous section
           lastScrollTime.current = now
           scrollToSection(currentSection - 1)
+        } else {
+          // At boundary, snap back
+          const sectionWidth = container.clientWidth
+          container.scrollTo({
+            left: currentSection * sectionWidth,
+            behavior: 'smooth'
+          })
+        }
+      } else {
+        // Not a valid navigation swipe, snap back to current section
+        const sectionWidth = container.clientWidth
+        const scrollDiff = Math.abs(container.scrollLeft - currentSection * sectionWidth)
+        if (scrollDiff > 5) {
+          container.scrollTo({
+            left: currentSection * sectionWidth,
+            behavior: 'smooth'
+          })
         }
       }
-
-      isSwiping = false
-      touchTarget = null
     }
 
     container.addEventListener('touchstart', handleTouchStart, { passive: true })

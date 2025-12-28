@@ -88,6 +88,12 @@
   --space-5xl: 192px;
   --space-6xl: 256px;
   
+  /* 角丸 - Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+  
   /* スペーシング使用ガイドライン - Spacing Usage Guidelines
    * --space-xs:  Component internal padding, minimal gaps
    * --space-sm:  Related content groupings (cards, forms)
@@ -220,6 +226,12 @@ body {
 .logo-uki-image {
   height: 40px;
   width: 40px;
+  object-fit: contain;
+}
+
+.logo-kanji-image {
+  height: 48px;
+  width: auto;
   object-fit: contain;
 }
 
@@ -1933,8 +1945,7 @@ body {
   height: 100vh;
   overflow-x: auto;
   overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
+  /* scroll-snap disabled - JS handles navigation to prevent glitches */
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
@@ -1966,7 +1977,7 @@ body {
   width: 100vw;
   height: 100vh;
   flex-shrink: 0;
-  scroll-snap-align: start;
+  /* scroll-snap-align disabled - JS handles navigation */
   position: relative;
   overflow: hidden;
   /* Prevent layout shift during animations */
@@ -2075,10 +2086,10 @@ body {
 .text-panel-inner {
   width: 100%;
   max-width: 500px;
-  padding: 4rem 2rem 6rem; /* py-[64px] px-[32px] pb-[96px] - extra bottom padding for scroll */
+  padding: 4rem 0rem 6rem; /* py-[64px] px-[32px] pb-[96px] - extra bottom padding for scroll */
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: var(--space-md);
   position: relative;
   z-index: 1;
   flex-shrink: 0;
@@ -2246,20 +2257,116 @@ body {
   color: #1e3a5f;
 }
 
-/* Detail Sections - Figma Style */
+/* Detail Sections - Figma Style - 2x2 Grid Layout */
 .section-details-figma {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
+  position: relative;
   width: 100%;
 }
 
+.details-grid-cards {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+}
+
+.details-grid-row {
+  display: flex;
+  width: 100%;
+}
+
+.details-grid-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 0;
+  max-width: 50%;
+}
+
+.details-grid-card.left {
+  padding-right: 32px;
+}
+
+.details-grid-card.right {
+  padding-left: 32px;
+}
+
+.details-card-title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 21px;
+  color: #1e3a5f;
+  line-height: 1;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.details-card-content {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 16px;
+  color: #2d2d2d;
+  line-height: 2;
+  margin: 0;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: anywhere;
+  word-wrap: break-word;
+}
+
+/* Horizontal Divider */
+.details-grid-divider-horizontal {
+  width: 100%;
+  height: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  overflow: visible;
+}
+
+.details-grid-divider-horizontal .divider-line {
+  width: 2px;
+  height: 420px;
+  background-image: url('/images/divider_lg.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 2px 420px;
+  transform: rotate(90deg);
+  opacity: 0.6;
+}
+
+/* Vertical Divider */
+.details-grid-divider-vertical {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2px;
+  height: 420px;
+}
+
+.details-grid-divider-vertical .divider-line {
+  width: 2px;
+  height: 100%;
+  background-image: url('/images/divider_lg.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 2px 420px;
+  opacity: 0.6;
+}
+
+/* Legacy styles kept for backward compatibility */
 .detail-section-figma {
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
   width: 100%;
-  filter: blur(0px); /* Figma has blur filter but set to 0 */
+  filter: blur(0px);
 }
 
 .detail-section-header-figma {
@@ -2853,6 +2960,11 @@ body {
     width: 28px;
   }
 
+  .logo-kanji-image {
+    height: 36px;
+    width: auto;
+  }
+
   .logo-yo-e {
     font-size: 28px;
     letter-spacing: 1px;
@@ -2962,6 +3074,36 @@ body {
 
   .section-details-figma {
     padding-bottom: 3rem;
+  }
+
+  /* Details Grid - Mobile */
+  .details-grid-row {
+    flex-direction: column;
+  }
+
+  .details-grid-card.left,
+  .details-grid-card.right {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .details-card-title {
+    font-size: 18px;
+  }
+
+  .details-card-content {
+    font-size: 14px;
+    line-height: 2;
+  }
+
+  .details-grid-divider-vertical {
+    display: none;
+  }
+
+  .details-grid-divider-horizontal {
+    display: flex;
   }
 
   /* Intro Section Responsive */
@@ -3226,6 +3368,14 @@ body {
     font-size: 0.6875rem;
     overflow: visible; /* 障子効果の疑似要素を表示 */
   }
+
+  /* 再生/一時停止ボタンもさらに小さく（480px以下） - navigation-arrowsと統一 */
+  .play-pause-button {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    overflow: visible; /* 障子効果の疑似要素を表示 */
+  }
 }
 
 /* Performance Optimizations */
@@ -3253,8 +3403,7 @@ body {
 /* Smooth scrolling optimization */
 .horizontal-scroll-container {
   -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
+  /* scroll-snap disabled - JS handles navigation to prevent glitches */
 }
 
 /* Improved touch targets for mobile */
@@ -3807,6 +3956,12 @@ body {
   gap: 0;
 }
 
+@media (max-width: 768px) {
+  .slider-technique-container {
+    gap: 2rem;
+  }
+}
+
 /* スライダーコントロール */
 .slider-control {
   width: 100%;
@@ -3828,6 +3983,12 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .slider-bar-wrapper {
+    gap: 0;
+  }
 }
 
 /* プログレスバー（ドラッグ可能） */
@@ -3853,7 +4014,7 @@ body {
   top: 50%;
   left: 0;
   right: 0;
-  height: 6px;
+  height: 4px;
   background: rgba(0, 0, 0, 0.08);
   border-radius: 3px;
   transform: translateY(-50%);
@@ -3924,29 +4085,87 @@ body {
   transform: translateX(-100%);
 }
 
-/* 再生/一時停止ボタン */
+/* Unified Play/Pause Button Style - 完全にhanko-button large nav-arrowと統一 */
 .play-pause-button {
-  width: 48px;
-  height: 48px;
-  min-width: 48px;
-  border-radius: 50%;
-  border: 2px solid var(--ai-iro, #1e3a5f);
-  background: transparent;
-  cursor: pointer;
-  display: flex;
+  position: relative;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--ai-iro, #1e3a5f);
-  transition: all 0.2s ease;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  
+  /* 障子効果 - navigation-arrowsと完全に同じスタイル */
+  background: rgba(255, 252, 245, 0.5);
+  border: 1px solid var(--sumi-iro);
+  color: var(--sumi-iro);
+  
+  /* backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6); */
+  
+  transition: all var(--duration-normal) var(--ease-ukiyoe);
+  overflow: visible;
+}
+
+/* 和紙テクスチャ効果 - navigation-arrowsと完全に同じ */
+.play-pause-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  /* background-image: 
+    radial-gradient(
+      circle at 30% 30%,
+      rgba(255, 255, 255, 0.3) 0%,
+      transparent 60%
+    ); */
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* アイコンを前面に表示 */
+.play-pause-button svg {
+  position: relative;
+  z-index: 2;
 }
 
 .play-pause-button:hover {
-  background: rgba(30, 58, 95, 0.05);
+  background: var(--ai-iro);
+  color: #FFFFFF;
+  border-color: var(--ai-iro);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  /* box-shadow: 
+    0 4px 12px rgba(30, 58, 95, 0.25),
+    inset 0 1px 2px rgba(255, 255, 255, 0.3); */
   transform: scale(1.05);
 }
 
 .play-pause-button:active {
-  transform: scale(0.98);
+  transform: scale(0.95);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* 一時停止状態 - 障子効果 */
+.play-pause-button.paused {
+  background: rgba(255, 252, 245, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.08),
+    inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  opacity: 1;
+  overflow: visible;
 }
 
 /* 説明テキスト */
@@ -4008,6 +4227,10 @@ body {
     padding: 1.5rem 1rem;
   }
 
+  .intro-left-column {
+    gap: 2rem;
+  }
+
   .slider-image-stack {
     max-width: 300px;
   }
@@ -4033,9 +4256,10 @@ body {
   }
 
   .play-pause-button {
-    width: 44px;
-    height: 44px;
-    min-width: 44px;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    overflow: visible; /* 障子効果の疑似要素を表示 */
   }
 
   .slider-bar-row {
