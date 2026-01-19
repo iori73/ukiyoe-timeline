@@ -16,7 +16,7 @@
 
 .playground-header h1 {
   font-family: var(--font-serif);
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-size: clamp(2rem, 3vw, 2.875rem);
   font-weight: 600;
   color: var(--text-primary);
   margin: 0 0 var(--space-xs);
@@ -25,7 +25,7 @@
 
 .playground-header p {
   font-family: var(--font-sans);
-  font-size: clamp(0.875rem, 1.2vw, 1rem);
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
   color: var(--text-secondary);
   margin: 0;
 }
@@ -70,7 +70,7 @@
 
 .concept-header h3 {
   font-family: var(--font-serif);
-  font-size: 1.25rem;
+  font-size: var(--text-xl);
   font-weight: 600;
   color: var(--text-primary);
   margin: 0 0 4px;
@@ -78,14 +78,14 @@
 
 .concept-subtitle {
   font-family: var(--font-sans);
-  font-size: 0.8rem;
+  font-size: var(--text-xs);
   color: var(--text-secondary);
   margin: 0;
 }
 
 .technique-description {
   font-family: var(--font-sans);
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   color: var(--text-secondary);
   text-align: center;
   margin: var(--space-sm) 0 0;
@@ -132,14 +132,14 @@
 
 .current-technique-label .technique-name {
   font-family: var(--font-serif);
-  font-size: 1.5rem;
+  font-size: var(--text-2xl);
   font-weight: 600;
   letter-spacing: 0.1em;
 }
 
 .current-technique-label .technique-year {
   font-family: var(--font-sans);
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   color: var(--text-secondary);
 }
 
@@ -171,7 +171,7 @@
 .slider-label .label-name {
   display: block;
   font-family: var(--font-serif);
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   font-weight: 500;
   color: var(--text-primary);
 }
@@ -179,7 +179,7 @@
 .slider-label .label-year {
   display: block;
   font-family: var(--font-sans);
-  font-size: 0.7rem;
+  font-size: var(--text-xs);
   color: var(--text-secondary);
 }
 
@@ -283,7 +283,7 @@
   height: 1.5rem;
   margin-top: var(--space-xs);
   font-family: var(--font-sans);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   color: var(--text-secondary);
   opacity: 0.8;
 }
@@ -400,7 +400,7 @@
 
 .year-value {
   font-family: var(--font-serif);
-  font-size: 2rem;
+  font-size: var(--text-3xl);
   font-weight: 700;
   color: var(--text-primary);
   line-height: 1;
@@ -411,7 +411,7 @@
   display: inline-block;
   padding: 4px var(--space-xs);
   font-family: var(--font-serif);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   color: #fff;
   border-radius: 2px;
   width: fit-content;
@@ -450,7 +450,7 @@
 
 .period-label {
   font-family: var(--font-serif);
-  font-size: 0.7rem;
+  font-size: var(--text-xs);
   color: #fff;
   white-space: nowrap;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -501,7 +501,7 @@
 
 .tick-label {
   font-family: var(--font-sans);
-  font-size: 0.65rem;
+  font-size: var(--text-xs);
   color: var(--text-secondary);
   opacity: 0.8;
 }
@@ -523,26 +523,26 @@
 
 .info-name {
   font-family: var(--font-serif);
-  font-size: 1.25rem;
+  font-size: var(--text-xl);
   font-weight: 600;
 }
 
 .info-period {
   font-family: var(--font-sans);
-  font-size: 0.8rem;
+  font-size: var(--text-xs);
   color: var(--text-secondary);
 }
 
 .info-period .duration {
   margin-left: 4px;
-  font-size: 0.7rem;
+  font-size: var(--text-xs);
   color: var(--text-secondary);
   opacity: 0.8;
 }
 
 .info-desc {
   font-family: var(--font-sans);
-  font-size: 0.8rem;
+  font-size: var(--text-xs);
   color: var(--text-secondary);
   line-height: 1.6;
   margin: 0;
@@ -609,13 +609,13 @@
 
 .layer-name {
   font-family: var(--font-serif);
-  font-size: 1rem;
+  font-size: var(--text-base);
   font-weight: 600;
 }
 
 .layer-year {
   font-family: var(--font-sans);
-  font-size: 0.7rem;
+  font-size: var(--text-xs);
   color: var(--text-secondary);
 }
 
@@ -636,7 +636,7 @@
 
 .layer-details p {
   font-family: var(--font-sans);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   color: var(--text-secondary);
   line-height: 1.5;
   margin: 0;
@@ -646,7 +646,7 @@
 .interaction-hint {
   margin-top: var(--space-lg);
   font-family: var(--font-sans);
-  font-size: 0.7rem;
+  font-size: var(--text-xs);
   color: var(--text-secondary);
   opacity: 0.8;
 }
@@ -685,7 +685,7 @@
 
 .legend-name {
   font-family: var(--font-serif);
-  font-size: 0.8rem;
+  font-size: var(--text-xs);
   color: var(--text-primary);
 }
 

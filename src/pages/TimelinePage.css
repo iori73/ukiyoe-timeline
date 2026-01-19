@@ -1,0 +1,106 @@
+/* ========================================
+   TIMELINE PAGE
+   浮世絵の時代を垂直スクロールで巡る
+   ======================================== */
+
+.timeline-page {
+  width: 100vw;
+  min-height: 100vh;
+  background: var(--bg-primary);
+  position: relative;
+}
+
+/* ========================================
+   LOADING STATE
+   ======================================== */
+
+.timeline-page--loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.timeline-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.timeline-loading__spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid var(--ai-10);
+  border-top-color: var(--ai-iro);
+  border-radius: 50%;
+  animation: timeline-spin 1s linear infinite;
+}
+
+@keyframes timeline-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.timeline-loading__text {
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  letter-spacing: 0.1em;
+}
+
+/* ========================================
+   ERROR STATE
+   ======================================== */
+
+.timeline-page--error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.timeline-error {
+  text-align: center;
+  padding: 48px;
+  background: var(--washi);
+  border-radius: 8px;
+  box-shadow: var(--shadow-subtle);
+}
+
+.timeline-error p {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  color: var(--text-primary);
+  margin: 8px 0;
+}
+
+.timeline-error p:first-child {
+  font-weight: 600;
+  color: var(--beni-iro);
+}
+
+/* ========================================
+   LANGUAGE TOGGLE - 白ベース
+   黒背景に合わせて白色にする
+   ======================================== */
+
+.timeline-page .language-toggle .language-button {
+  color: #ffffff;
+  border-color: transparent;
+}
+
+.timeline-page .language-toggle .language-button.active {
+  border-color: #ffffff;
+}
+
+.timeline-page .language-toggle .language-button:hover {
+  opacity: 0.7;
+}
+
+.timeline-page .language-underline {
+  /* 下線も白系に */
+  filter: brightness(0) invert(1);
+}
+

@@ -1,5 +1,12 @@
 # Cursor Rules for Ukiyoe Project
 
+> **重要**: 詳細なガイドラインは [CLAUDE.md](./CLAUDE.md) を参照してください。
+> このファイルは Cursor 専用の最小限のルールのみを記載しています。
+
+## Primary Reference
+- **CLAUDE.md** - 開発ワークフロー、コーディング規約、プロジェクト固有のルールを定義
+- **docs/DESIGN_SYSTEM.md** - デザインシステム（色、フォント、スペーシング）
+
 ## File Deletion Policy
 - NEVER delete files in agent mode
 - NEVER use the delete_file tool
@@ -11,3 +18,6 @@
 - Always read files before making changes
 - Preserve existing code structure and patterns
 
+## Package Manager
+- Use **pnpm** (not npm)
+- Commands: `pnpm dev`, `pnpm build`, `pnpm test`

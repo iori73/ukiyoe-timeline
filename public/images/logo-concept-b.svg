@@ -1,0 +1,58 @@
+<svg width="160" height="48" viewBox="0 0 160 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 
+    Logo Concept B: 時代進化グラデーション
+    左から右へ時代の進化を表現
+    墨 → 紅 → 藍 のグラデーション
+    版画の「摺り」の重なりを横方向で表現
+  -->
+  
+  <defs>
+    <!-- 3色グラデーション: 時代の進化 -->
+    <linearGradient id="eraGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1a1a1a"/>
+      <stop offset="50%" stop-color="#C33433"/>
+      <stop offset="100%" stop-color="#1B3E5B"/>
+    </linearGradient>
+    
+    <!-- 縦グラデーション: 版画の奥行き -->
+    <linearGradient id="depthGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F5F1E6" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.2"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- メインロゴバー -->
+  <rect x="0" y="12" width="120" height="24" rx="2" fill="url(#eraGradient)"/>
+  <rect x="0" y="12" width="120" height="24" rx="2" fill="url(#depthGradient)"/>
+  
+  <!-- 3つの時代マーカー -->
+  <circle cx="20" cy="24" r="3" fill="#F5F1E6" opacity="0.9"/>
+  <circle cx="60" cy="24" r="3" fill="#F5F1E6" opacity="0.9"/>
+  <circle cx="100" cy="24" r="3" fill="#F5F1E6" opacity="0.9"/>
+  
+  <!-- 浮世絵 テキスト -->
+  <text x="60" y="28" 
+        font-family="serif" 
+        font-size="14" 
+        font-weight="500"
+        fill="#F5F1E6" 
+        text-anchor="middle">
+    浮世絵
+  </text>
+  
+  <!-- 時代ラベル -->
+  <text x="20" y="46" font-family="sans-serif" font-size="5" fill="#1a1a1a" text-anchor="middle" opacity="0.7">墨摺絵</text>
+  <text x="60" y="46" font-family="sans-serif" font-size="5" fill="#C33433" text-anchor="middle" opacity="0.7">紅摺絵</text>
+  <text x="100" y="46" font-family="sans-serif" font-size="5" fill="#1B3E5B" text-anchor="middle" opacity="0.7">錦絵</text>
+  
+  <!-- TIMELINE サブテキスト -->
+  <text x="145" y="28" 
+        font-family="sans-serif" 
+        font-size="8" 
+        font-weight="300"
+        letter-spacing="0.05em"
+        fill="#1a1a1a" 
+        text-anchor="middle">
+    TIMELINE
+  </text>
+</svg>

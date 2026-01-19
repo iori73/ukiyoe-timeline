@@ -1,0 +1,373 @@
+/* ========================================
+   TIMELINE SECTION COMPONENT
+   作品レイヤーのみがスクロール、パネルは固定
+   ======================================== */
+
+.timeline-section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  /* 非アクティブ時は非表示 */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.timeline-section--active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ========================================
+   固定ビューポート - 100vh
+   ======================================== */
+
+.timeline-section__viewport {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--sumi-iro);
+}
+
+/* ========================================
+   作品レイヤー - スクロールで上に移動
+   ======================================== */
+
+.timeline-section__artwork-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* height は JS で動的に設定（200vh） */
+  will-change: transform;
+}
+
+/* ========================================
+   グラデーションオーバーレイ
+   ======================================== */
+
+.timeline-section__gradient-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(
+    to top,
+    rgba(45, 45, 45, 0.75) 0%,
+    rgba(45, 45, 45, 0.4) 40%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 25;
+}
+
+/* ========================================
+   左下オーバーレイテキストパネル
+   Glassmorphism スタイル - 常に固定表示
+   ======================================== */
+
+.timeline-section__panel {
+  position: absolute;
+  left: 40px;
+  bottom: 40px;
+  width: 100%;
+  max-width: 630px;
+  padding: 16px;
+  background: rgba(45, 45, 45, 0.25);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 4px;
+  z-index: 50;
+}
+
+.timeline-section__panel::before {
+  display: none;
+}
+
+/* ========================================
+   ヘッダー（セクション番号 + 年代）
+   ======================================== */
+
+.timeline-section__header {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.timeline-section__number {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: var(--text-4xl);
+  color: white;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.timeline-section__date-range {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding-bottom: 4px;
+  width: fit-content;
+}
+
+.timeline-section__date-inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  font-family: var(--font-serif);
+}
+
+.timeline-section__date-start,
+.timeline-section__date-end {
+  font-weight: 600;
+  font-size: var(--text-lg);
+  color: white;
+  line-height: 1.2;
+}
+
+.timeline-section__date-separator {
+  font-weight: 400;
+  font-size: var(--text-lg);
+  color: white;
+  line-height: 1;
+}
+
+.timeline-section__date-divider {
+  width: calc(100% - 16px);
+  height: 2px;
+  margin-left: 8px;
+  background-image: url('/images/divider.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left center;
+  transform: scaleY(1.5);
+}
+
+/* ========================================
+   メタ情報（重要な出来事・代表作品）
+   ======================================== */
+
+.timeline-section__meta {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.timeline-section__meta-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timeline-section__meta-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: fit-content;
+}
+
+.timeline-section__meta-label {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: var(--text-2xl);
+  color: white;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.timeline-section__meta-divider {
+  width: 100%;
+  height: 2px;
+  background-image: url('/images/divider.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left center;
+  transform: scaleY(1.5);
+}
+
+.timeline-section__meta-text {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: var(--text-base);
+  color: white;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ========================================
+   時代背景の要約
+   ======================================== */
+
+.timeline-section__summary {
+  padding-top: 0;
+}
+
+.timeline-section__summary-text {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: var(--text-base);
+  color: white;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ========================================
+   RESPONSIVE - タブレット
+   ======================================== */
+
+@media (max-width: 1200px) {
+  .timeline-section__panel {
+    max-width: 560px;
+    left: 32px;
+    bottom: 32px;
+    padding: 16px;
+  }
+
+  .timeline-section__number {
+    font-size: var(--text-4xl);
+  }
+
+  .timeline-section__date-start,
+  .timeline-section__date-end {
+    font-size: var(--text-xl);
+  }
+
+  .timeline-section__meta-label {
+    font-size: var(--text-xl);
+  }
+}
+
+/* ========================================
+   RESPONSIVE - モバイル（大）
+   ======================================== */
+
+@media (max-width: 900px) {
+  .timeline-section__panel {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    max-width: calc(100% - 32px);
+    padding: 16px;
+  }
+
+  .timeline-section__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .timeline-section__number {
+    font-size: var(--text-3xl);
+  }
+
+  .timeline-section__meta {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .timeline-section__meta-label {
+    font-size: var(--text-lg);
+  }
+
+  .timeline-section__gradient-overlay {
+    height: 55%;
+  }
+}
+
+/* ========================================
+   RESPONSIVE - モバイル（小）
+   ======================================== */
+
+@media (max-width: 600px) {
+  .timeline-section__panel {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    max-width: calc(100% - 24px);
+    padding: 12px;
+  }
+
+  .timeline-section__header {
+    margin-bottom: 12px;
+  }
+
+  .timeline-section__number {
+    font-size: var(--text-2xl);
+  }
+
+  .timeline-section__date-start,
+  .timeline-section__date-end {
+    font-size: var(--text-base);
+  }
+
+  .timeline-section__date-separator {
+    font-size: var(--text-base);
+  }
+
+  .timeline-section__meta {
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .timeline-section__meta-label {
+    font-size: var(--text-base);
+  }
+
+  .timeline-section__meta-text {
+    font-size: var(--text-sm);
+  }
+
+  .timeline-section__summary-text {
+    font-size: var(--text-sm);
+  }
+
+  .timeline-section__gradient-overlay {
+    height: 60%;
+  }
+}
+
+/* ========================================
+   PERFORMANCE OPTIMIZATIONS
+   ======================================== */
+
+.timeline-section {
+  will-change: opacity;
+  contain: layout style;
+}
+
+.timeline-section__panel {
+  will-change: opacity, transform;
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline-section {
+    transition: none;
+  }
+
+  .timeline-section__panel {
+    transition: none;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .timeline-section__panel {
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid white;
+  }
+}

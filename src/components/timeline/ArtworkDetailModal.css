@@ -1,0 +1,256 @@
+/* ========================================
+   ARTWORK DETAIL MODAL
+   作品詳細表示モーダル
+   ======================================== */
+
+.artwork-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+/* 背景オーバーレイ - パネル風半透明ブラー + 黒を少し追加 */
+.artwork-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(30, 30, 30, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* コンテンツコンテナ - 横並びレイアウト、画面中央配置 */
+.artwork-modal__content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  max-width: 1200px;
+  max-height: 80vh;
+  z-index: 1;
+  overflow: hidden; /* スクロールなし */
+}
+
+/* 画像コンテナ */
+.artwork-modal__image-container {
+  flex-shrink: 0;
+  position: relative;
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.5),
+    0 8px 24px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.artwork-modal__image {
+  display: block;
+  max-width: 50vw;
+  max-height: 70vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* 作品情報パネル */
+.artwork-modal__info {
+  flex: 1;
+  min-width: 280px;
+  max-width: 400px;
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: var(--washi-iro, #f5f0e6);
+  overflow: hidden; /* スクロールなし */
+}
+
+.artwork-modal__year {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  color: rgba(245, 240, 230, 0.6);
+  letter-spacing: 0.05em;
+}
+
+.artwork-modal__title {
+  font-family: var(--font-serif);
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 0;
+  color: rgba(245, 240, 230, 1);
+}
+
+.artwork-modal__artist {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: 400;
+  color: rgba(245, 240, 230, 0.8);
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(245, 240, 230, 0.15);
+}
+
+.artwork-modal__description {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: 300;
+  line-height: 1.8;
+  color: rgba(245, 240, 230, 0.85);
+  margin: 0;
+}
+
+/* 閉じるボタン - dawn-buttonスタイル準拠 */
+.artwork-modal__close-btn {
+  margin-top: auto;
+  padding-top: 24px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(245, 240, 230, 0.7);
+  transition: opacity 0.2s ease;
+}
+
+.artwork-modal__close-btn:hover {
+  opacity: 0.7;
+}
+
+.artwork-modal__close-text {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1;
+}
+
+.artwork-modal__close-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 27px;
+  height: 27px;
+}
+
+.artwork-modal__close-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ========================================
+   RESPONSIVE - タブレット
+   ======================================== */
+
+@media (max-width: 1024px) {
+  .artwork-modal {
+    padding: 24px;
+  }
+
+  .artwork-modal__content {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    overflow: hidden; /* スクロールなし */
+    max-height: 90vh;
+  }
+
+  .artwork-modal__image {
+    max-width: 70vw;
+    max-height: 45vh;
+  }
+
+  .artwork-modal__info {
+    max-width: 600px;
+    max-height: 40vh;
+    text-align: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .artwork-modal__title {
+    font-size: var(--text-2xl);
+  }
+
+  .artwork-modal__description {
+    /* 長い説明文は切り詰め */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .artwork-modal__close-hint {
+    text-align: center;
+  }
+}
+
+/* ========================================
+   RESPONSIVE - モバイル
+   ======================================== */
+
+@media (max-width: 600px) {
+  .artwork-modal {
+    padding: 16px;
+  }
+
+  .artwork-modal__content {
+    gap: 16px;
+    max-height: 95vh;
+  }
+
+  .artwork-modal__image {
+    max-width: 85vw;
+    max-height: 40vh;
+  }
+
+  .artwork-modal__info {
+    min-width: unset;
+    max-height: 35vh;
+    gap: 10px;
+  }
+
+  .artwork-modal__title {
+    font-size: var(--text-xl);
+  }
+
+  .artwork-modal__description {
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    -webkit-line-clamp: 2;
+  }
+
+  .artwork-modal__close-hint {
+    padding-top: 12px;
+  }
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .artwork-modal,
+  .artwork-modal__backdrop,
+  .artwork-modal__content,
+  .artwork-modal__info {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .artwork-modal__backdrop {
+    background: rgba(0, 0, 0, 0.95);
+  }
+
+  .artwork-modal__info {
+    color: #fff;
+  }
+
+  .artwork-modal__image-container {
+    border: 2px solid #fff;
+  }
+}

@@ -1,0 +1,56 @@
+<svg width="140" height="52" viewBox="0 0 140 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 
+    Logo Concept C: 版木摺りプロセス
+    3つの円形レイヤーが重なり合うVennダイアグラム風
+    版画の色の重なりを直感的に表現
+  -->
+  
+  <defs>
+    <!-- 墨のブレンド -->
+    <filter id="blendSumi">
+      <feGaussianBlur stdDeviation="0.5"/>
+    </filter>
+  </defs>
+  
+  <!-- 3つの重なる円 (版木の重なり) -->
+  <g style="mix-blend-mode: multiply;">
+    <!-- 墨摺絵 円 -->
+    <circle cx="26" cy="22" r="18" fill="#1a1a1a" opacity="0.85"/>
+    
+    <!-- 紅摺絵 円 -->
+    <circle cx="42" cy="22" r="18" fill="#C33433" opacity="0.75"/>
+    
+    <!-- 錦絵 円 -->
+    <circle cx="34" cy="36" r="18" fill="#1B3E5B" opacity="0.7"/>
+  </g>
+  
+  <!-- 中心のハイライト -->
+  <circle cx="34" cy="26" r="6" fill="#F5F1E6" opacity="0.15"/>
+  
+  <!-- 浮世絵 テキスト -->
+  <text x="100" y="22" 
+        font-family="serif" 
+        font-size="18" 
+        font-weight="500"
+        fill="#1a1a1a">
+    浮世絵
+  </text>
+  
+  <!-- サブテキスト -->
+  <text x="100" y="38" 
+        font-family="sans-serif" 
+        font-size="7" 
+        font-weight="300"
+        letter-spacing="0.15em"
+        fill="#666">
+    UKIYO-E
+  </text>
+  <text x="100" y="48" 
+        font-family="sans-serif" 
+        font-size="6" 
+        font-weight="300"
+        letter-spacing="0.1em"
+        fill="#999">
+    TIMELINE
+  </text>
+</svg>

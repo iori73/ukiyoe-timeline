@@ -34,3 +34,6 @@ yarn-error.log*
 # Vite
 .vite
 
+# Conversation history
+/Users/iorikawano/Documents/Ukiyoe/docs/conversation-history
+

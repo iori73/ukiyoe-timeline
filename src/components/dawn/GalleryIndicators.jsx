@@ -9,14 +9,20 @@ import './GalleryIndicators.css'
  * - PAST period: Small filled dot
  * - FUTURE period: Small dim dot
  * 
- * Uses a single element that morphs via CSS height transition
+ * Uses JS-controlled progress for perfect sync with animation timer
  */
 export default function GalleryIndicators({ 
   activePeriod, 
   isComplete, 
   isAutoAnimating, 
-  onPlayPauseClick 
+  onPlayPauseClick,
+  periodDuration = 3333, // Animation duration in ms
+  elapsedTime = 0, // Current elapsed time in ms (for JS-controlled progress)
 }) {
+  // Calculate progress percentage (0-100)
+  const progress = periodDuration > 0 
+    ? Math.min((elapsedTime / periodDuration) * 100, 100) 
+    : 0
   return (
     <div className="gallery-controls">
       {/* Play/Pause Button - 2rem above indicators */}
@@ -85,19 +91,23 @@ export default function GalleryIndicators({
               ? 'gallery-indicator--past' 
               : 'gallery-indicator--future'
           
+          // Calculate fill height based on state
+          // Active: use JS-controlled progress, Past: 100%, Future: 0%
+          const fillHeight = isPast ? 100 : isActive ? progress : 0
+          
           return (
             <div 
               key={period.id}
               className={`gallery-indicator ${stateClass}`}
               style={{ backgroundColor: period.bgColor }}
             >
-              {/* Fill element - CSS handles animation */}
+              {/* Fill element - JS controlled height for perfect sync */}
               <div 
                 className="gallery-indicator__fill"
                 style={{ 
                   backgroundColor: period.color,
                   opacity: isFuture ? 0.4 : 1,
-                  animationPlayState: isAutoAnimating ? 'running' : 'paused',
+                  height: `${fillHeight}%`,
                 }}
               />
             </div>
