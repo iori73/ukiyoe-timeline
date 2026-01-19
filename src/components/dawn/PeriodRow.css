@@ -37,7 +37,7 @@
 .period-row__title {
   font-family: 'Shippori Mincho', serif;
   font-weight: 700;
-  font-size: 28px; /* Scaled up from 24px to maintain hierarchy */
+  font-size: var(--text-2xl); /* Scaled up from 24px to maintain hierarchy */
   line-height: 1;
   margin: 0;
 }
@@ -50,21 +50,21 @@
 
 .period-row__years-main {
   font-family: var(--font-sans);
-  font-size: 16px; /* Minimum 16px (was 12.8px) */
+  font-size: var(--text-base); /* Minimum 16px (was 12.8px) */
   color: var(--ai-iro, #1e3a5f);
   line-height: 1.6;
 }
 
 .period-row__years-note {
   font-family: var(--font-sans);
-  font-size: 16px; /* Minimum 16px (was 11.2px) */
+  font-size: var(--text-base); /* Minimum 16px (was 11.2px) */
   color: #999;
   line-height: 1.6;
 }
 
 .period-row__description {
   font-family: var(--font-sans);
-  font-size: 16px; /* Minimum 16px (was 12.8px) */
+  font-size: var(--text-base); /* Minimum 16px (was 12.8px) */
   color: var(--ai-iro, #1e3a5f);
   line-height: 1.6;
   margin: 0;

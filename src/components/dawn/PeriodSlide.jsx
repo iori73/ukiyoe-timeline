@@ -11,6 +11,9 @@ export default function PeriodSlide({
   isPast,
   isFirstVisit,
   isComplete,
+  isAutoAnimating = false,
+  periodDuration = 3333,
+  syncElapsedTime = 0,
 }) {
   // For sumizuri-e, show single image; for others, show layered images
   const isSingleImage = period.id === 'sumizuri'
@@ -30,7 +33,7 @@ export default function PeriodSlide({
           style={{
             opacity: contentOpacity,
             transform: contentTransform,
-            transition: 'opacity 0.6s ease-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+            transition: 'opacity 1s ease-out, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
           }}
         >
           {/* Images */}
@@ -42,6 +45,9 @@ export default function PeriodSlide({
               isFirstVisit={isFirstVisit}
               isActive={isActive}
               isPast={isPast}
+              isAutoAnimating={isAutoAnimating}
+              periodDuration={periodDuration}
+              syncElapsedTime={syncElapsedTime}
             />
           </div>
           
@@ -60,6 +66,19 @@ export default function PeriodSlide({
                   <span className="period-slide__years-note">{period.yearsNote}</span>
                 )}
               </div>
+              {/* カラーパレット */}
+              {period.palette && period.palette.length > 0 && (
+                <div className="period-slide__palette">
+                  {period.palette.map((color, index) => (
+                    <span 
+                      key={index}
+                      className="period-slide__palette-dot"
+                      style={{ backgroundColor: color }}
+                      title={color}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
             <p className="period-slide__description">
               {period.description}

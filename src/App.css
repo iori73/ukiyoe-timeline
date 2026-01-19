@@ -49,19 +49,19 @@
   /* --font-serif-old: 'Shippori Mincho', 'Yuji Syuku', 'Noto Serif JP', serif; */
   /* --font-sans-old: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Noto Sans JP', system-ui, sans-serif; */
   
-  /* フォントサイズ - Font Sizes */
-  --text-xs: 0.75rem;      /* 12px */
-  --text-sm: 0.875rem;     /* 14px */
-  --text-base: 1rem;       /* 16px */
-  --text-lg: 1.125rem;     /* 18px */
-  --text-xl: 1.25rem;      /* 20px */
-  --text-2xl: 1.5rem;      /* 24px */
-  --text-3xl: 2rem;        /* 32px */
-  --text-4xl: 2.5rem;      /* 40px */
-  --text-5xl: 3rem;        /* 48px */
-  --text-6xl: 4rem;        /* 64px */
-  --text-7xl: 5rem;        /* 80px */
-  --text-8xl: 6rem;        /* 96px */
+  /* フォントサイズ - Font Sizes (16px minimum for PC) */
+  --text-xs: 0.875rem;     /* 14px (was 12px) */
+  --text-sm: 1rem;         /* 16px (was 14px) - minimum */
+  --text-base: 1.125rem;   /* 18px (was 16px) */
+  --text-lg: 1.25rem;      /* 20px (was 18px) */
+  --text-xl: 1.4375rem;    /* 23px (was 20px) */
+  --text-2xl: 1.75rem;     /* 28px (was 24px) */
+  --text-3xl: 2.25rem;     /* 36px (was 32px) */
+  --text-4xl: 2.875rem;    /* 46px (was 40px) */
+  --text-5xl: 3.4375rem;   /* 55px (was 48px) */
+  --text-6xl: 4.5rem;      /* 72px (was 64px) */
+  --text-7xl: 5.75rem;     /* 92px (was 80px) */
+  --text-8xl: 6.875rem;    /* 110px (was 96px) */
   
   /* 行間 - Line Heights */
   --leading-tight: 1.3;
@@ -148,7 +148,7 @@ html {
 
 body {
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: var(--text-base);
   background: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.6;
@@ -192,10 +192,9 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: 1100; /* モーダル（1000）より上に表示 */
   /* padding: 1rem 2rem; */
   padding: 1% 2%;
-  background: linear-gradient(to bottom, var(--bg-primary), transparent);
   width: 100%;
   margin: 0 auto;
   display: flex;
@@ -237,7 +236,7 @@ body {
 
 .logo-yo-e {
   font-family: 'HOT-Tenshokk-M', var(--font-serif);
-  font-size: 40px;
+  font-size: var(--text-4xl);
   font-weight: 400;
   color: var(--ai);
   letter-spacing: 2px;
@@ -246,7 +245,7 @@ body {
 
 .logo-title {
   font-family: var(--font-serif);
-  font-size: 1rem;
+  font-size: var(--text-base);
   font-weight: 400;
   color: var(--text-secondary);
   letter-spacing: 0.15em;
@@ -279,7 +278,7 @@ body {
   border: 1px solid var(--sumi-iro);
   cursor: pointer;
   font-family: var(--font-serif);
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   font-weight: 600;
   color: var(--sumi-iro);
   transition: all var(--duration-normal) var(--ease-ukiyoe);
@@ -305,13 +304,13 @@ body {
 .hanko-button.large {
   width: 56px;
   height: 56px;
-  font-size: 1rem;
+  font-size: var(--text-base);
 }
 
 .hanko-button.small {
   width: 40px;
   height: 40px;
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   border-width: 2px;
 }
 
@@ -330,79 +329,56 @@ body {
   z-index: 10;
 }
 
-/* Language toggle */
+/* Language toggle - Figmaデザイン準拠（シンプルテキストボタン） */
 .language-toggle {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: 8px;
+  padding: 8px;
 }
 
-.language-toggle .hanko-button {
-  transition: all var(--duration-normal) var(--ease-ukiyoe);
-}
-
-/* 障子効果 - 谷崎潤一郎『陰翳礼讃』に着想を得た半透明の和紙のような質感 */
-.language-toggle .hanko-button:not(.active) {
-  /* 和紙のようなわずかにクリーム色の半透明背景 */
-  background: rgba(255, 252, 245, 0.5);
-  /* 背景をぼかして透け感を演出 */
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  /* 柔らかな影 - 障子が放つ光 */
-  box-shadow: 
-    0 2px 8px rgba(0, 0, 0, 0.08),
-    inset 0 1px 1px rgba(255, 255, 255, 0.5);
-  opacity: 1;
-  /* overflow: hiddenを解除して疑似要素を表示 */
-  overflow: visible;
-}
-
-/* 障子の紙の質感を疑似要素で表現（丸い形に沿って適用） */
-.language-toggle .hanko-button:not(.active)::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+/* 言語切り替えボタン - シンプルなテキストボタン */
+.language-toggle .language-button {
+  /* ボタンのリセット */
+  background: none;
+  border: 1.5px solid transparent;
+  padding: 4px;
+  cursor: pointer;
+  
+  /* サイズ - 丸いボタン（ENの2文字が収まるよう大きめに） */
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  background-image: 
-    /* 微細な紙の繊維テクスチャ */
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.01) 2px,
-      rgba(0, 0, 0, 0.01) 4px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.01) 2px,
-      rgba(0, 0, 0, 0.01) 4px
-    );
-  pointer-events: none;
-  mix-blend-mode: multiply;
-  opacity: 0.3;
-  z-index: -1;
+  
+  /* テキストスタイル */
+  font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
+  font-size: var(--text-lg);
+  font-weight: 300;
+  font-style: normal;
+  color: #334e6c;
+  text-align: center;
+  line-height: 0;
+  
+  /* レイアウト */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  
+  /* トランジション */
+  transition: border-color var(--duration-normal) var(--ease-ukiyoe),
+              opacity var(--duration-normal) var(--ease-ukiyoe);
 }
 
-/* ボタンのテキストを前面に表示 */
-.language-toggle .hanko-button:not(.active) span {
-  position: relative;
-  z-index: 1;
+/* アクティブボタン - 丸い枠線で囲む */
+.language-toggle .language-button.active {
+  font-weight: 600;
+  border-color: #334e6c;
 }
 
-.language-toggle .hanko-button:not(.active):hover {
-  background: rgba(255, 252, 245, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 
-    0 4px 12px rgba(0, 0, 0, 0.12),
-    inset 0 1px 2px rgba(255, 255, 255, 0.6);
-  opacity: 1;
-  color: var(--sumi-iro);
+/* ホバー時の透明度変化 */
+.language-toggle .language-button:hover {
+  opacity: 0.7;
 }
 
 /* ========================================
@@ -433,7 +409,7 @@ body {
 
 .era-label {
   font-family: var(--font-serif);
-  font-size: 1.25rem;
+  font-size: var(--text-xl);
   font-weight: 600;
   color: var(--ai);
   min-width: 60px;
@@ -540,7 +516,7 @@ body {
 .year-text {
   margin-top: 0.5rem;
   font-family: var(--font-serif);
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   font-weight: 600;
   color: var(--ai);
   background: white;
@@ -596,14 +572,14 @@ body {
 .vertical-text.artist-name {
   bottom: 1rem;
   left: 1rem;
-  font-size: 1rem;
+  font-size: var(--text-base);
   font-weight: 500;
 }
 
 .vertical-text.work-title {
   top: 1rem;
   right: 1rem;
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   font-weight: 400;
   background: rgba(199, 62, 58, 0.85);
 }
@@ -615,7 +591,7 @@ body {
 
 .card-title {
   font-family: var(--font-serif);
-  font-size: 1.1rem;
+  font-size: var(--text-lg);
   font-weight: 600;
   color: var(--text-primary);
   line-height: 1.5;
@@ -637,14 +613,14 @@ body {
 }
 
 .artists-label {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
 
 .artists-names {
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   color: var(--ai);
   font-weight: 500;
 }
@@ -653,7 +629,7 @@ body {
   display: flex;
   align-items: center;
   gap: var(--space-xs);
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   color: var(--shu);
   font-weight: 500;
   transition: gap 0.2s;
@@ -670,7 +646,7 @@ body {
   text-align: center;
   padding: 1rem;
   color: var(--text-secondary);
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   letter-spacing: 0.1em;
 }
 
@@ -803,7 +779,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   font-family: var(--font-serif);
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   color: var(--text-secondary);
   letter-spacing: 0.1em;
   opacity: 0.8;
@@ -841,7 +817,7 @@ body {
   
   .ukiyoe-loading-message {
     bottom: -40px;
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
     letter-spacing: 0.08em;
   }
   
@@ -939,7 +915,7 @@ body {
 /* 大見出し - Figmaデザインに合わせて */
 .intro-title-large {
   font-family: var(--font-serif);
-  font-size: 80px;
+  font-size: var(--text-7xl);
   font-weight: 400;
   line-height: 1.3;
   letter-spacing: 0.05em;
@@ -951,7 +927,7 @@ body {
 /* 副題 - Figmaデザインに合わせて */
 .intro-subtitle-thin {
   font-family: var(--font-serif);
-  font-size: clamp(24px, 3vw, 32px);
+  font-size: clamp(27px, 3vw, 37px);
   font-weight: 400;
   line-height: 1.6;
   letter-spacing: 0.05em;
@@ -971,7 +947,7 @@ body {
 /* 説明文 - Figmaデザインに合わせて */
 .intro-description-text {
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: var(--text-base);
   font-weight: 300;
   line-height: 1.5;
   letter-spacing: 0;
@@ -983,7 +959,7 @@ body {
 /* 詳細文 - Figmaデザインに合わせて */
 .intro-detail-text {
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: var(--text-base);
   font-weight: 300;
   line-height: 1.5;
   letter-spacing: 0;
@@ -1053,7 +1029,7 @@ body {
 /* タイトル */
 .evolution-card-name {
   font-family: var(--font-serif);
-  font-size: 32px;
+  font-size: var(--text-3xl);
   font-weight: 600;
   letter-spacing: 2.8px;
   line-height: 1;
@@ -1075,7 +1051,7 @@ body {
   overflow: hidden;
   padding: 0;
   font-family: var(--font-serif);
-  font-size: 16px;
+  font-size: var(--text-base);
   font-weight: 400;
   color: #1e3a5f;
   line-height: 1;
@@ -1097,7 +1073,7 @@ body {
 /* 説明テキスト */
 .evolution-card-description {
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: var(--text-base);
   font-weight: 300;
   color: var(--ai-iro);
   line-height: 1.6;
@@ -1152,7 +1128,7 @@ body {
 
 .evolution-label {
   font-family: var(--font-serif);
-  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  font-size: clamp(1.4375rem, 2vw, 2rem);
   font-weight: 600;
   letter-spacing: var(--tracking-wider);
   color: var(--text-primary);
@@ -1179,7 +1155,7 @@ body {
 
 .arrow-symbol {
   font-family: var(--font-sans);
-  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-size: clamp(1.75rem, 3vw, 2.875rem);
   color: var(--text-accent);
   font-weight: 300;
 }
@@ -1195,7 +1171,7 @@ body {
 .intro-scroll-hint {
   margin-top: var(--space-3xl);
   font-family: var(--font-sans);
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2.25rem, 4vw, 3.4375rem);
   color: var(--text-primary);
   opacity: 0.6;
   cursor: pointer;
@@ -1408,7 +1384,7 @@ body {
 .intro-title-large-pattern-c {
   font-family: var(--font-serif);
   /* clampで最小・推奨・最大を設定 */
-  font-size: clamp(3rem, 4vw, 5rem);
+  font-size: clamp(3.4375rem, 4vw, 5.75rem);
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: 0.04em;
@@ -1420,7 +1396,7 @@ body {
 /* 副題 - clampで流動的 */
 .intro-subtitle-pattern-c {
   font-family: var(--font-serif);
-  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-size: clamp(1.4375rem, 2vw, 1.75rem);
   font-weight: 600;
   line-height: 1.5;
   letter-spacing: 0.05em;
@@ -1440,7 +1416,7 @@ body {
 .intro-description-text-pattern-c,
 .intro-detail-text-pattern-c {
   font-family: var(--font-sans);
-  font-size: clamp(0.875rem, 1.1vw, 1rem);
+  font-size: clamp(1rem, 1.1vw, 1.125rem);
   font-weight: 300;
   line-height: 1.5;
   letter-spacing: 0;
@@ -1481,7 +1457,7 @@ body {
 /* 技法名 - clampで流動的 */
 .technique-card-name-pattern-c {
   font-family: var(--font-serif);
-  font-size: clamp(1.25rem, 2.22vw, 2rem);
+  font-size: clamp(1.4375rem, 2.22vw, 2.25rem);
   font-weight: 600;
   letter-spacing: 0.175rem;
   line-height: 1;
@@ -1499,7 +1475,7 @@ body {
 /* 年代ラベル - clampで流動的 */
 .technique-card-period-pattern-c {
   font-family: var(--font-serif);
-  font-size: clamp(0.75rem, 1.1vw, 1rem);
+  font-size: clamp(0.875rem, 1.1vw, 1.125rem);
   font-weight: 400;
   color: var(--text-primary);
   line-height: 1;
@@ -1519,7 +1495,7 @@ body {
 /* 説明テキスト - clampで流動的 */
 .technique-card-description-pattern-c {
   font-family: var(--font-sans);
-  font-size: clamp(0.75rem, 1.1vw, 1rem);
+  font-size: clamp(0.875rem, 1.1vw, 1.125rem);
   font-weight: 300;
   color: var(--text-primary);
   line-height: 1.6;
@@ -1673,7 +1649,7 @@ body {
 
 .intro-title {
   font-family: var(--font-serif);
-  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-size: clamp(2.875rem, 4vw, 4.5rem);
   font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--text-accent, #d64e4e);
@@ -1683,7 +1659,7 @@ body {
 
 .intro-subtitle {
   font-family: var(--font-serif);
-  font-size: clamp(1.25rem, 2vw, 2rem);
+  font-size: clamp(1.4375rem, 2vw, 2.25rem);
   font-weight: 600;
   letter-spacing: 0.05em;
   color: var(--text-secondary, #1e3a5f);
@@ -1692,7 +1668,7 @@ body {
 
 .intro-description {
   font-family: var(--font-sans);
-  font-size: clamp(0.8rem, 1vw, 0.95rem);
+  font-size: clamp(0.9rem, 1vw, 1.0625rem);
   font-weight: 300;
   line-height: 1.6;
   color: var(--text-primary, #2d2d2d);
@@ -1755,7 +1731,7 @@ body {
 
 .technique-card h3 {
   font-family: var(--font-serif);
-  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  font-size: clamp(1.4375rem, 2vw, 2rem);
   font-weight: 600;
   letter-spacing: 0.1em;
   margin: 0;
@@ -1763,13 +1739,13 @@ body {
 
 .technique-period {
   font-family: var(--font-serif);
-  font-size: clamp(0.7rem, 0.9vw, 0.9rem);
+  font-size: clamp(0.8rem, 0.9vw, 1rem);
   color: var(--text-primary);
 }
 
 .technique-card p {
   font-family: var(--font-sans);
-  font-size: clamp(0.7rem, 0.85vw, 0.85rem);
+  font-size: clamp(0.8rem, 0.85vw, 1rem);
   font-weight: 300;
   line-height: 1.5;
   color: var(--text-primary);
@@ -1845,20 +1821,20 @@ body {
   }
   
   .technique-card h3 { 
-    font-size: 1.25rem; 
+    font-size: var(--text-xl); 
   }
   
   .technique-period { 
-    font-size: 0.8rem;
+    font-size: var(--text-xs);
   }
   
   .technique-card p { 
-    font-size: 0.8rem; 
+    font-size: var(--text-xs); 
     -webkit-line-clamp: 3;
   }
   
   .intro-description {
-    font-size: 0.85rem;
+    font-size: var(--text-sm);
   }
 }
 
@@ -1874,11 +1850,11 @@ body {
   }
   
   .intro-title {
-    font-size: 1.75rem;
+    font-size: var(--text-2xl);
   }
   
   .intro-subtitle {
-    font-size: 0.95rem;
+    font-size: var(--text-base);
   }
   
   .intro-description { 
@@ -1908,15 +1884,15 @@ body {
   }
   
   .technique-card h3 {
-    font-size: 1rem;
+    font-size: var(--text-base);
   }
   
   .technique-period {
-    font-size: 0.7rem;
+    font-size: var(--text-xs);
   }
   
   .technique-card p { 
-    font-size: 0.7rem;
+    font-size: var(--text-xs);
     -webkit-line-clamp: 2;
     line-height: 1.4;
   }
@@ -2122,7 +2098,7 @@ body {
 .section-number-figma .number-label {
   font-family: var(--font-serif);
   font-weight: 700;
-  font-size: 14px;
+  font-size: var(--text-sm);
   color: #1e3a5f;
   letter-spacing: 0.14em;
   line-height: 1.7;
@@ -2131,7 +2107,7 @@ body {
 .section-number-figma .number-value {
   font-family: var(--font-serif);
   font-weight: 700;
-  font-size: 40px;
+  font-size: var(--text-4xl);
   color: #1e3a5f;
   line-height: 1;
 }
@@ -2142,7 +2118,7 @@ body {
   }
   
   .section-number-figma .number-value {
-    font-size: 32px;
+    font-size: var(--text-3xl);
   }
 }
 
@@ -2169,7 +2145,7 @@ body {
 .section-date-range-inner .date-end {
   font-family: var(--font-serif);
   font-weight: 700;
-  font-size: 16px;
+  font-size: var(--text-base);
   color: #1e3a5f;
   line-height: 1;
   white-space: nowrap;
@@ -2178,7 +2154,7 @@ body {
 .section-date-range-inner .date-separator {
   font-family: -apple-system, 'SF Pro Text', 'SF Pro Display', var(--font-sans);
   font-weight: 400;
-  font-size: 14px;
+  font-size: var(--text-sm);
   color: #1e3a5f;
   opacity: 0.6;
   line-height: 1.7;
@@ -2228,7 +2204,7 @@ body {
 .section-meta-label {
   font-family: var(--font-serif);
   font-weight: 700;
-  font-size: 16px;
+  font-size: var(--text-base);
   color: #1e3a5f;
   line-height: 1;
   white-space: nowrap;
@@ -2247,7 +2223,7 @@ body {
 .section-meta-text {
   font-family: var(--font-sans);
   font-weight: 300;
-  font-size: 16px;
+  font-size: var(--text-base);
   color: #2d2d2d;
   line-height: 1.6;
   margin: 0;
@@ -2295,7 +2271,7 @@ body {
 .details-card-title {
   font-family: var(--font-serif);
   font-weight: 700;
-  font-size: 21px;
+  font-size: var(--text-xl);
   color: #1e3a5f;
   line-height: 1;
   margin: 0;
@@ -2305,7 +2281,7 @@ body {
 .details-card-content {
   font-family: var(--font-sans);
   font-weight: 300;
-  font-size: 16px;
+  font-size: var(--text-base);
   color: #2d2d2d;
   line-height: 2;
   margin: 0;
@@ -2391,7 +2367,7 @@ body {
 .detail-section-title-figma {
   font-family: var(--font-serif);
   font-weight: 700;
-  font-size: 16px;
+  font-size: var(--text-base);
   color: #1e3a5f;
   line-height: 1;
   white-space: nowrap;
@@ -2400,7 +2376,7 @@ body {
 .detail-section-content-figma {
   font-family: var(--font-sans);
   font-weight: 300;
-  font-size: 16px;
+  font-size: var(--text-base);
   color: #2d2d2d;
   line-height: 1.6;
   margin: 0;
@@ -2417,14 +2393,14 @@ body {
 
 .number-label {
   font-family: var(--font-serif);
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   color: var(--text-secondary);
   letter-spacing: 0.1em;
 }
 
 .number-value {
   font-family: var(--font-serif);
-  font-size: 2.5rem;
+  font-size: var(--text-4xl);
   font-weight: 700;
   color: var(--ai);
   line-height: 1;
@@ -2440,14 +2416,14 @@ body {
   padding: 4px var(--space-xs);
   border-radius: 8px;
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: var(--text-sm);
   color: var(--ai-iro);
   width: fit-content;
   margin-bottom: 0;
 }
 
 .year-divider {
-  font-size: 14px;
+  font-size: var(--text-sm);
   opacity: 0.6;
   color: var(--ai-iro);
 }
@@ -2471,19 +2447,19 @@ body {
   border-radius: 4px;
   width: fit-content;
   font-family: var(--font-sans);
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   color: var(--ai-iro);
 }
 
 .section-year-figma-inner .year-start,
 .section-year-figma-inner .year-end {
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   color: var(--ai-iro);
   line-height: 1;
 }
 
 .section-year-figma-inner .year-divider {
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   color: var(--ai-iro);
   opacity: 0.6;
   line-height: 1;
@@ -2503,7 +2479,7 @@ body {
 
 .section-title {
   font-family: var(--font-serif);
-  font-size: 2.75rem;
+  font-size: var(--text-4xl);
   font-weight: 700;
   line-height: 1.3;
   letter-spacing: 0.08em;
@@ -2519,7 +2495,7 @@ body {
 }
 
 .artists-label {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--text-secondary);
@@ -2527,7 +2503,7 @@ body {
 }
 
 .artists-names {
-  font-size: 1rem;
+  font-size: var(--text-base);
   font-weight: 600;
   color: var(--ai);
   line-height: 1.6;
@@ -2541,7 +2517,7 @@ body {
 }
 
 .key-event-label {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--text-secondary);
@@ -2549,7 +2525,7 @@ body {
 }
 
 .key-event-text {
-  font-size: 0.95rem;
+  font-size: var(--text-base);
   font-weight: 500;
   color: var(--text-primary);
   line-height: 1.7;
@@ -2564,7 +2540,7 @@ body {
 }
 
 .example-works-label {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--text-secondary);
@@ -2572,7 +2548,7 @@ body {
 }
 
 .example-works-text {
-  font-size: 0.95rem;
+  font-size: var(--text-base);
   font-weight: 500;
   color: var(--ai);
   line-height: 1.7;
@@ -2601,7 +2577,7 @@ body {
 }
 
 .section-meta-blur-label {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--text-secondary);
@@ -2618,7 +2594,7 @@ body {
 }
 
 .section-meta-blur-text {
-  font-size: 16px;
+  font-size: var(--text-base);
   font-weight: 300;
   color: var(--text-primary);
   line-height: 1.6;
@@ -2644,7 +2620,7 @@ body {
 /* Detail Section - Old Style (kept for backward compatibility) */
 .detail-section-title {
   font-family: var(--font-serif);
-  font-size: 1.1rem;
+  font-size: var(--text-lg);
   font-weight: 600;
   color: var(--shu);
   margin: 0;
@@ -2654,7 +2630,7 @@ body {
 }
 
 .detail-section-content {
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   color: var(--text-primary);
   line-height: 1.9;
   margin: 0;
@@ -2686,7 +2662,7 @@ body {
 
 .detail-section-double-lines .detail-section-title {
   font-family: var(--font-serif);
-  font-size: 1rem;
+  font-size: var(--text-base);
   font-weight: 700;
   color: var(--ai);
   letter-spacing: 0;
@@ -2696,7 +2672,7 @@ body {
 
 /* Update detail-section-content for Figma style */
 .detail-section .detail-section-content {
-  font-size: 16px;
+  font-size: var(--text-base);
   color: var(--text-primary);
   line-height: 1.6;
   margin: 0;
@@ -2729,7 +2705,7 @@ body {
   border-radius: 999px;
   color: white;
   font-family: var(--font-sans);
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   letter-spacing: 0.1em;
   text-transform: lowercase;
   box-shadow: 0 4px 16px rgba(30, 58, 95, 0.3);
@@ -2739,7 +2715,7 @@ body {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 1.25rem;
+  font-size: var(--text-xl);
 }
 
 .arrow-horizontal {
@@ -2758,7 +2734,7 @@ body {
   50% { transform: translateX(5px); opacity: 0.7; }
 }
 
-/* Dot Navigation */
+/* Dot Navigation - 串団子スタイル */
 .dot-navigation {
   position: fixed;
   left: 2rem;
@@ -2768,6 +2744,21 @@ body {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
+  /* position: fixed でも ::before は正しく配置される */
+}
+
+/* 串（Kushi）- 中心を貫く白い線（黒背景用） */
+.dot-navigation::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: -16px;
+  bottom: -16px;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.6);
+  transform: translateX(-50%);
+  z-index: 0;
+  border-radius: 1px;
 }
 
 .dot-nav-item {
@@ -2781,12 +2772,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  /* 串の上に表示 */
+  z-index: 1;
 }
 
 .dot-inner {
   width: 8px;
   height: 8px;
-  background: rgba(245, 240, 230, 0.7);
+  background: #f5f0e6; /* 和紙色（不透明）で串を隠す */
   border-radius: 50%;
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -2804,7 +2797,7 @@ body {
 .dot-label {
   position: absolute;
   left: 2rem;
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   color: var(--washi);
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
   font-weight: 600;
@@ -2856,20 +2849,20 @@ body {
   gap: var(--space-xs);
   font-family: var(--font-serif);
   color: var(--washi);
-  font-size: 1.5rem;
+  font-size: var(--text-2xl);
   font-weight: 700;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
 }
 
 .counter-divider {
-  font-size: 1rem;
+  font-size: var(--text-base);
   opacity: 0.8;
   color: var(--washi);
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
 }
 
 .counter-total {
-  font-size: 1.25rem;
+  font-size: var(--text-xl);
   opacity: 0.9;
   color: var(--washi);
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
@@ -2952,7 +2945,7 @@ body {
   }
 
   .logo-kanji {
-    font-size: 1.75rem;
+    font-size: var(--text-2xl);
   }
 
   .logo-uki-image {
@@ -2966,7 +2959,7 @@ body {
   }
 
   .logo-yo-e {
-    font-size: 28px;
+    font-size: var(--text-2xl);
     letter-spacing: 1px;
   }
 
@@ -3011,21 +3004,21 @@ body {
   }
 
   .number-value {
-    font-size: 2rem;
+    font-size: var(--text-3xl);
   }
 
   .section-year {
-    font-size: 13px;
+    font-size: var(--text-xs);
     padding: 3px 6px;
   }
 
   .section-title {
-    font-size: 1.75rem;
+    font-size: var(--text-2xl);
     letter-spacing: 0.05em;
   }
 
   .artists-names {
-    font-size: 0.9rem;
+    font-size: var(--text-sm);
   }
 
   .section-meta-container {
@@ -3051,7 +3044,7 @@ body {
 
   .key-event-text,
   .example-works-text {
-    font-size: 0.85rem;
+    font-size: var(--text-sm);
     line-height: 1.6;
   }
 
@@ -3060,16 +3053,16 @@ body {
   }
 
   .detail-section-title {
-    font-size: 1rem;
+    font-size: var(--text-base);
   }
 
   .detail-section-content {
-    font-size: 0.85rem;
+    font-size: var(--text-sm);
     line-height: 1.7;
   }
 
   .detail-section-content-figma {
-    font-size: 14px;
+    font-size: var(--text-sm);
   }
 
   .section-details-figma {
@@ -3090,11 +3083,11 @@ body {
   }
 
   .details-card-title {
-    font-size: 18px;
+    font-size: var(--text-lg);
   }
 
   .details-card-content {
-    font-size: 14px;
+    font-size: var(--text-sm);
     line-height: 2;
   }
 
@@ -3121,31 +3114,31 @@ body {
   }
 
   .intro-title-large {
-    font-size: clamp(2rem, 10vw, 3rem);
+    font-size: clamp(2.25rem, 10vw, 3.4375rem);
   }
 
   .intro-subtitle-thin {
-    font-size: 16px;
+    font-size: var(--text-base);
   }
 
   .evolution-card-name {
-    font-size: clamp(20px, 6vw, 24px);
+    font-size: clamp(23px, 6vw, 27px);
   }
 
   .evolution-card-description {
-    font-size: 14px;
+    font-size: var(--text-sm);
   }
 
   .evolution-card-period {
-    font-size: 14px;
+    font-size: var(--text-sm);
   }
 
   .intro-description-text {
-    font-size: 16px;
+    font-size: var(--text-base);
   }
 
   .intro-detail-text {
-    font-size: 16px;
+    font-size: var(--text-base);
   }
 
   .intro-text-block {
@@ -3212,13 +3205,24 @@ body {
     transform: none;
     gap: 0.5rem;
   }
+  
+  /* モバイルでは串を横向きに */
+  .dot-navigation::before {
+    top: 50%;
+    bottom: auto;
+    left: -12px;
+    right: -12px;
+    width: auto;
+    height: 2px;
+    transform: translateY(-50%);
+  }
 
   .section-counter {
     top: 40vh;
     right: 1rem;
     bottom: auto;
     left: auto;
-    font-size: 1.25rem;
+    font-size: var(--text-xl);
   }
 
   .navigation-arrows {
@@ -3230,24 +3234,25 @@ body {
   .navigation-arrows .hanko-button.large {
     width: 40px;
     height: 40px;
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     overflow: visible; /* 障子効果の疑似要素を表示 */
   }
 
   .navigation-arrows .hanko-button.large span {
-    font-size: 1rem !important; /* インラインスタイルを上書き */
+    font-size: var(--text-base) !important; /* インラインスタイルを上書き */
   }
 
   /* 言語切り替えボタンをSPサイズで小さく */
   .language-toggle {
-    gap: var(--space-xs);
+    gap: 8px;
+    padding: 8px;
   }
 
-  .language-toggle .hanko-button {
-    width: 40px;
-    height: 40px;
-    font-size: 0.75rem;
-    overflow: visible; /* 障子効果の疑似要素を表示 */
+  .language-toggle .language-button {
+    width: 44px;
+    height: 44px;
+    padding: 4px;
+    font-size: var(--text-base);
   }
 }
 
@@ -3270,39 +3275,39 @@ body {
   }
 
   .number-value {
-    font-size: 1.75rem;
+    font-size: var(--text-2xl);
   }
 
   .section-title {
-    font-size: 1.5rem;
+    font-size: var(--text-2xl);
   }
 
   .section-year {
-    font-size: 12px;
+    font-size: var(--text-xs);
     padding: 2px 6px;
   }
 
   .key-event-text,
   .example-works-text {
-    font-size: 0.8rem;
+    font-size: var(--text-xs);
     line-height: 1.5;
   }
 
   .detail-section-title {
-    font-size: 0.95rem;
+    font-size: var(--text-base);
   }
 
   .detail-section-double-lines .detail-section-title {
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
   }
 
   .detail-section-content {
-    font-size: 14px;
+    font-size: var(--text-sm);
     line-height: 1.6;
   }
 
   .detail-section .detail-section-content {
-    font-size: 14px;
+    font-size: var(--text-sm);
     line-height: 1.6;
   }
 
@@ -3320,29 +3325,29 @@ body {
   }
 
   .intro-title-large {
-    font-size: clamp(2rem, 15vw, 3rem);
+    font-size: clamp(2.25rem, 15vw, 3.4375rem);
   }
 
   .intro-subtitle-thin {
-    font-size: 16px;
+    font-size: var(--text-base);
   }
 
   .intro-description-text {
-    font-size: 14px;
+    font-size: var(--text-sm);
     width: 100%;
   }
 
   .intro-detail-text {
-    font-size: 14px;
+    font-size: var(--text-sm);
     width: 100%;
   }
 
   .evolution-card-name {
-    font-size: 24px;
+    font-size: var(--text-2xl);
   }
 
   .evolution-card-description {
-    font-size: 14px;
+    font-size: var(--text-sm);
   }
 
   .intro-scroll-hint {
@@ -3353,20 +3358,25 @@ body {
   .navigation-arrows .hanko-button.large {
     width: 36px;
     height: 36px;
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
     overflow: visible; /* 障子効果の疑似要素を表示 */
   }
 
   .navigation-arrows .hanko-button.large span {
-    font-size: 1rem !important; /* インラインスタイルを上書き */
+    font-size: var(--text-base) !important; /* インラインスタイルを上書き */
   }
 
   /* 言語切り替えボタンをさらに小さく（480px以下） */
-  .language-toggle .hanko-button {
-    width: 36px;
-    height: 36px;
-    font-size: 0.6875rem;
-    overflow: visible; /* 障子効果の疑似要素を表示 */
+  .language-toggle .language-button {
+    width: 40px;
+    height: 40px;
+    padding: 4px;
+    font-size: var(--text-sm);
+  }
+  
+  .language-underline {
+    width: 40px;
+    height: 3px;
   }
 
   /* 再生/一時停止ボタンもさらに小さく（480px以下） - navigation-arrowsと統一 */
@@ -3441,7 +3451,7 @@ body {
 /* Tablet optimizations */
 @media (min-width: 769px) and (max-width: 1024px) {
   .section-title {
-    font-size: 3rem;
+    font-size: var(--text-5xl);
   }
 
   .section-content {
@@ -3449,7 +3459,7 @@ body {
   }
 
   .section-description {
-    font-size: 1rem;
+    font-size: var(--text-base);
   }
 }
 
@@ -3585,14 +3595,14 @@ body {
 .modal-year {
   display: inline-block;
   font-family: var(--font-sans);
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   color: var(--text-secondary);
   margin-bottom: 0.5rem;
 }
 
 .modal-title {
   font-family: var(--font-serif);
-  font-size: 2rem;
+  font-size: var(--text-3xl);
   font-weight: 600;
   color: var(--text-primary);
   margin: 0;
@@ -3628,14 +3638,14 @@ body {
 
 .modal-section-number-label {
   font-family: var(--font-serif);
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   color: var(--text-secondary);
   letter-spacing: 0.1em;
 }
 
 .modal-section-number-value {
   font-family: var(--font-serif);
-  font-size: 2.5rem;
+  font-size: var(--text-4xl);
   font-weight: 700;
   color: var(--ai);
   line-height: 1;
@@ -3660,19 +3670,19 @@ body {
   border-radius: 4px;
   width: fit-content;
   font-family: var(--font-sans);
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   color: var(--ai-iro);
 }
 
 .modal-date-start,
 .modal-date-end {
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   color: var(--ai-iro);
   line-height: 1;
 }
 
 .modal-date-separator {
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   color: var(--ai-iro);
   opacity: 0.6;
   line-height: 1;
@@ -3707,7 +3717,7 @@ body {
 }
 
 .modal-meta-blur-label {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--text-secondary);
@@ -3724,7 +3734,7 @@ body {
 }
 
 .modal-meta-blur-text {
-  font-size: 16px;
+  font-size: var(--text-base);
   font-weight: 300;
   color: var(--text-primary);
   line-height: 1.6;
@@ -3771,7 +3781,7 @@ body {
 
 .modal-detail-section-title {
   font-family: var(--font-serif);
-  font-size: 1rem;
+  font-size: var(--text-base);
   font-weight: 700;
   color: var(--ai);
   letter-spacing: 0;
@@ -3780,7 +3790,7 @@ body {
 }
 
 .modal-detail-section-content {
-  font-size: 16px;
+  font-size: var(--text-base);
   color: var(--text-primary);
   line-height: 1.6;
   margin: 0;
@@ -3829,11 +3839,11 @@ body {
   }
 
   .modal-section-number-value {
-    font-size: 2rem;
+    font-size: var(--text-3xl);
   }
 
   .modal-title {
-    font-size: 1.5rem;
+    font-size: var(--text-2xl);
   }
 }
 
@@ -3873,7 +3883,7 @@ body {
 
 .intro-text-content .intro-title {
   font-family: var(--font-serif, 'Noto Serif JP', serif);
-  font-size: 3rem;
+  font-size: var(--text-5xl);
   font-weight: 600;
   color: var(--beni-iro, #d64e4e);
   letter-spacing: 0.1em;
@@ -3883,7 +3893,7 @@ body {
 
 .intro-text-content .intro-subtitle {
   font-family: var(--font-serif, 'Noto Serif JP', serif);
-  font-size: 1.25rem;
+  font-size: var(--text-xl);
   font-weight: 400;
   color: var(--text-primary, #2d2a26);
   letter-spacing: 0.05em;
@@ -3893,7 +3903,7 @@ body {
 
 .intro-text-content .intro-description {
   font-family: var(--font-sans, 'Noto Sans JP', sans-serif);
-  font-size: 0.95rem;
+  font-size: var(--text-base);
   line-height: 1.8;
   color: var(--text-primary, #2d2a26);
   margin: 0.5rem 0 0;
@@ -3938,14 +3948,14 @@ body {
 
 .current-technique-header .technique-name {
   font-family: var(--font-serif, 'Noto Serif JP', serif);
-  font-size: 1.5rem;
+  font-size: var(--text-2xl);
   font-weight: 600;
   letter-spacing: 0.1em;
 }
 
 .current-technique-header .technique-year {
   font-family: var(--font-sans, 'Noto Sans JP', sans-serif);
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   color: var(--text-secondary, #6b6560);
 }
 
@@ -4068,7 +4078,7 @@ body {
   height: 1.5rem;
   margin-top: 0.5rem;
   font-family: var(--font-sans, 'Noto Sans JP', sans-serif);
-  font-size: 0.8rem;
+  font-size: var(--text-xs);
   color: var(--text-tertiary, #999);
 }
 
@@ -4171,7 +4181,7 @@ body {
 /* 説明テキスト */
 .technique-description {
   font-family: var(--font-sans, 'Noto Sans JP', sans-serif);
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   line-height: 1.8;
   color: var(--text-primary, #2d2a26);
   margin: 0;
@@ -4186,7 +4196,7 @@ body {
   }
 
   .intro-text-content .intro-title {
-    font-size: 2.5rem;
+    font-size: var(--text-4xl);
   }
 
   .slider-image-stack {
@@ -4210,15 +4220,15 @@ body {
   }
 
   .intro-text-content .intro-title {
-    font-size: 2rem;
+    font-size: var(--text-3xl);
   }
 
   .intro-text-content .intro-subtitle {
-    font-size: 1.1rem;
+    font-size: var(--text-lg);
   }
 
   .intro-text-content .intro-description {
-    font-size: 0.9rem;
+    font-size: var(--text-sm);
   }
 }
 
@@ -4236,23 +4246,23 @@ body {
   }
 
   .intro-text-content .intro-title {
-    font-size: 1.75rem;
+    font-size: var(--text-2xl);
   }
 
   .intro-text-content .intro-subtitle {
-    font-size: 1rem;
+    font-size: var(--text-base);
   }
 
   .current-technique-header .technique-name {
-    font-size: 1.25rem;
+    font-size: var(--text-xl);
   }
 
   .current-technique-header .technique-year {
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
   }
 
   .technique-description {
-    font-size: 0.85rem;
+    font-size: var(--text-sm);
   }
 
   .play-pause-button {

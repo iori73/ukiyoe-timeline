@@ -1,0 +1,38 @@
+/* ========================================
+   VERTICAL SCROLL CONTAINER
+   ホイールキャプチャでセクション内スクロールを制御
+   ======================================== */
+
+.vertical-scroll-container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: var(--sumi-iro);
+}
+
+/* セクションスタック - 全セクションが同じ位置に重なる */
+.vertical-sections-stack {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* ========================================
+   PERFORMANCE OPTIMIZATIONS
+   ======================================== */
+
+.vertical-scroll-container {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .vertical-scroll-container {
+    scroll-behavior: auto;
+  }
+}

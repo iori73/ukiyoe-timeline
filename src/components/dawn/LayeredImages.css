@@ -23,33 +23,33 @@
 .layered-images__frame {
   width: 200px;
   height: 298px;
-  border: 4px solid rgba(51, 78, 108, 0.8);
+  border: 2px solid rgba(51, 78, 108, 0.8);
+  border-radius: 4px;
   position: relative;
   overflow: hidden;
   background-color: var(--washi, #f5f0e6);
 }
 
-.layered-images__placeholder {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(
-    135deg,
-    var(--washi, #f5f0e6) 0%,
-    rgba(201, 168, 76, 0.1) 50%,
-    var(--washi, #f5f0e6) 100%
-  );
+/* ========================================
+   PERIOD-SPECIFIC FRAME COLORS
+   時代別フレーム色 - COLOR_GUIDELINES.md準拠
+   ======================================== */
+
+/* 墨摺絵 (Sumizuri-e) - 墨色 */
+.period-slide--sumizuri .layered-images__frame {
+  border-color: #1a1a1a;
 }
 
-.layered-images__placeholder-text {
-  font-family: var(--font-sans);
-  font-size: 16px; /* Minimum 16px (was 12px) */
-  color: rgba(30, 58, 95, 0.4);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+/* 紅摺絵 (Benizuri-e) - 紅色 */
+.period-slide--benizuri .layered-images__frame {
+  border-color: #C33433;
 }
+
+/* 錦絵 (Nishiki-e) - 藍色（ベロ藍） */
+.period-slide--nishiki .layered-images__frame {
+  border-color: #1B3E5B;
+}
+
 
 .layered-images__img {
   position: absolute;
@@ -58,5 +58,47 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
+}
+
+/* ========================================
+   RESPONSIVE - Mobile horizontal scroll
+   ======================================== */
+
+@media (max-width: 900px) {
+  .layered-images {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    padding-bottom: 8px; /* Space for scroll indicator if needed */
+  }
+  
+  /* Hide scrollbar but keep functionality */
+  .layered-images::-webkit-scrollbar {
+    height: 0;
+    display: none;
+  }
+  
+  .layered-images {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+  }
+  
+  .layered-images__frame {
+    width: 180px;
+    height: 268px;
+  }
+}
+
+@media (max-width: 600px) {
+  .layered-images {
+    gap: 16px;
+  }
+  
+  .layered-images__frame {
+    width: 200px;
+    height: 298px;
+    border-width: 3px;
+  }
 }
 

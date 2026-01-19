@@ -1,0 +1,183 @@
+/* ========================================
+   DETAIL CARDS COMPONENT
+   4つの詳細カード（時代背景、主題、市場、技法）
+   ======================================== */
+
+.detail-cards {
+  position: relative;
+  width: 100%;
+  padding: 0;
+}
+
+/* 2x2 グリッドレイアウト */
+.detail-cards__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  position: relative;
+}
+
+/* 個別カード */
+.detail-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 0;
+}
+
+/* カードの配置に応じたパディング調整 */
+.detail-card:nth-child(1) {
+  padding-right: 32px;
+  padding-bottom: 32px;
+}
+
+.detail-card:nth-child(2) {
+  padding-left: 32px;
+  padding-bottom: 32px;
+}
+
+.detail-card:nth-child(3) {
+  padding-right: 32px;
+  padding-top: 32px;
+}
+
+.detail-card:nth-child(4) {
+  padding-left: 32px;
+  padding-top: 32px;
+}
+
+/* カードヘッダー */
+.detail-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-card__title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--text-lg);
+  color: var(--ai-iro);
+  line-height: 1.2;
+  margin: 0;
+  /* white-space: nowrap を削除 - 英語タイトルが長い場合に折り返し可能に */
+}
+
+.detail-card__divider {
+  width: 60px;
+  height: 2px;
+  background-image: url('/images/divider.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+
+/* カード内容 */
+.detail-card__content {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: var(--text-sm);
+  color: var(--sumi-iro);
+  line-height: 1.8;
+  margin: 0;
+  /* line-clamp を削除 - テキスト全文表示 */
+}
+
+/* グリッド区切り線 */
+.detail-cards__dividers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* 水平区切り線 */
+.detail-cards__divider-horizontal {
+  position: absolute;
+  top: 50%;
+  left: 24px;
+  right: 24px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(30, 58, 95, 0.2) 10%,
+    rgba(30, 58, 95, 0.2) 90%,
+    transparent
+  );
+  transform: translateY(-50%);
+}
+
+/* 垂直区切り線 */
+.detail-cards__divider-vertical {
+  position: absolute;
+  left: 50%;
+  top: 24px;
+  bottom: 24px;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(30, 58, 95, 0.2) 10%,
+    rgba(30, 58, 95, 0.2) 90%,
+    transparent
+  );
+  transform: translateX(-50%);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 900px) {
+  .detail-cards__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-card {
+    padding: 20px 16px;
+  }
+
+  .detail-card:nth-child(1),
+  .detail-card:nth-child(2),
+  .detail-card:nth-child(3),
+  .detail-card:nth-child(4) {
+    padding: 20px 16px;
+    border-bottom: 1px solid rgba(30, 58, 95, 0.1);
+  }
+
+  .detail-card:last-child {
+    border-bottom: none;
+  }
+
+  .detail-cards__dividers {
+    display: none;
+  }
+
+  .detail-card__title {
+    font-size: var(--text-base);
+  }
+
+  .detail-card__content {
+    font-size: var(--text-xs);
+  }
+}
+
+@media (max-width: 600px) {
+  .detail-card {
+    padding: 16px 12px;
+  }
+
+  .detail-card__title {
+    font-size: var(--text-sm);
+  }
+
+  .detail-card__content {
+    font-size: var(--text-xs);
+    line-height: 1.7;
+  }
+
+  .detail-card__divider {
+    width: 40px;
+  }
+}
+

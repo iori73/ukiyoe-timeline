@@ -139,18 +139,22 @@ Navigate through different periods using:
 
 ## 🎭 Historical Periods Covered | 対象時代
 
-1. **1660s - Sumizuri-e (墨摺絵)**
+1. **1660s - Sumizuri-e (墨摺絵)** `#1a1a1a`
    - Single-color black ink prints
    - Hishikawa Moronobu's contributions
 
-2. **1740s - Benizuri-e (紅摺絵)**
+2. **1740s - Benizuri-e (紅摺絵)** `#C33433`
    - Two to three-color prints
    - Introduction of "kento" registration marks
+   - Named after "beni" (紅) red pigment
 
-3. **1765+ - Nishiki-e (錦絵)**
+3. **1765+ - Nishiki-e (錦絵)** `#1B3E5B`
    - Full multicolor printing (10+ blocks)
    - Suzuki Harunobu's innovations
    - Advanced techniques: bokashi, karazuri
+   - Iconic use of "Bero-ai" (Prussian blue)
+
+📎 **詳細なカラーガイドラインは [docs/COLOR_GUIDELINES.md](docs/COLOR_GUIDELINES.md) を参照してください。**
 
 ## 🤝 Contributing | 貢献
 

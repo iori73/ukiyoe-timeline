@@ -20,6 +20,8 @@ export const PERIODS = {
     titleColor: '#1a1a1a',
     imageCount: 1,
     duration: PERIOD_DURATION,
+    // カラーパレット: 墨（黒）のみ
+    palette: ['#1a1a1a'],
   },
   benizuri: {
     id: 'benizuri',
@@ -29,11 +31,13 @@ export const PERIODS = {
     yearsNote: '',
     description: '墨（黒）一色のみで摺った木版画。菱川師宣の流麗な線描により、浮世絵は独立した芸術形式として確立された。',
     descriptionEn: 'Woodblock prints using only black ink. Through the elegant line drawings of Hishikawa Moronobu, ukiyo-e was established as an independent art form.',
-    color: 'rgba(149, 160, 120, 0.5)',
-    bgColor: 'rgba(149, 160, 120, 0.2)',
-    titleColor: '#95a078',
+    color: 'rgba(195, 52, 51, 0.5)',
+    bgColor: 'rgba(195, 52, 51, 0.2)',
+    titleColor: '#C33433',
     imageCount: 4,
     duration: PERIOD_DURATION,
+    // カラーパレット: 墨＋草＋紅（2-3色）
+    palette: ['#2D2D2D', '#51AF7B', '#FF7372'],
   },
   nishiki: {
     id: 'nishiki',
@@ -43,11 +47,13 @@ export const PERIODS = {
     yearsNote: '',
     description: '10枚以上の版木を精密に重ね、ぼかしや空摺りなどの高度な技法を導入しました。浮世絵の技術的頂点です。錦織のような豪華絢爛な色彩表現が可能になりました。',
     descriptionEn: 'More than 10 woodblocks were precisely layered, introducing advanced techniques such as gradation and embossing. This was the technical pinnacle of ukiyo-e, enabling gorgeous color expression like brocade.',
-    color: 'rgba(248, 96, 79, 0.5)',
-    bgColor: 'rgba(248, 96, 79, 0.2)',
-    titleColor: '#f8604f',
-    imageCount: 5,
+    color: 'rgba(27, 62, 91, 0.5)',
+    bgColor: 'rgba(27, 62, 91, 0.2)',
+    titleColor: '#1B3E5B',
+    imageCount: 4,
     duration: PERIOD_DURATION,
+    // カラーパレット: 多色（墨・藍・紅・黄・草）
+    palette: ['#1a1a1a', '#1B3E5B', '#C33433', '#FBC546', '#A2C461'],
   },
 }
 

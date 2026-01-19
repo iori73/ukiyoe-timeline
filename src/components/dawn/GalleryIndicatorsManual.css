@@ -1,0 +1,163 @@
+/* ========================================
+   GALLERY INDICATORS MANUAL - No play button
+   
+   Single element morphing via height transition:
+   - Active: tall bar (100px) fully filled
+   - Past: small circle (10px) fully filled
+   - Future: small circle (10px) dim
+   ======================================== */
+
+/* Wrapper - contains only indicators (no button) */
+.gallery-controls-manual {
+  position: fixed;
+  left: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 80;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gallery-indicators-manual {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  position: relative;
+}
+
+/* 串（Kushi）- 中心を貫く線 */
+.gallery-indicators-manual::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: -16px;
+  bottom: -16px;
+  width: 2px;
+  background: var(--sumi-iro, #2d2d2d);
+  transform: translateX(-50%);
+  z-index: 0;
+  border-radius: 1px;
+}
+
+/* Single indicator element - morphs via height */
+.gallery-indicator-manual {
+  width: 12px;
+  border-radius: 6px; /* 幅の半分 = 常に適切な丸み */
+  position: relative;
+  overflow: hidden;
+  /* heightのみアニメーション（border-radiusは即座に変わる） */
+  transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  /* 串の上に表示 */
+  z-index: 1;
+}
+
+/* Height states */
+.gallery-indicator-manual--active {
+  height: 100px;
+}
+
+.gallery-indicator-manual--past,
+.gallery-indicator-manual--future {
+  height: 12px;
+  /* border-radiusは親から継承（6px = 完全な円） */
+}
+
+/* Fill element inside */
+.gallery-indicator-manual__fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  border-radius: 50px;
+  transition: opacity 0.3s ease, height 0.3s ease;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 1200px) {
+  .gallery-controls-manual {
+    left: 24px;
+  }
+  
+  .gallery-indicator-manual--active {
+    height: 80px;
+  }
+  
+  .gallery-indicators-manual::before {
+    top: -12px;
+    bottom: -12px;
+  }
+}
+
+@media (max-width: 900px) {
+  .gallery-controls-manual {
+    left: 16px;
+  }
+  
+  .gallery-indicators-manual {
+    gap: 10px;
+  }
+  
+  .gallery-indicators-manual::before {
+    top: -10px;
+    bottom: -10px;
+    width: 1.5px;
+  }
+  
+  .gallery-indicator-manual {
+    width: 10px;
+    border-radius: 5px; /* 幅の半分 */
+  }
+  
+  .gallery-indicator-manual--active {
+    height: 60px;
+  }
+  
+  .gallery-indicator-manual--past,
+  .gallery-indicator-manual--future {
+    height: 10px;
+  }
+  
+  .gallery-indicator-manual__fill {
+    border-radius: 4px;
+  }
+}
+
+@media (max-width: 600px) {
+  .gallery-controls-manual {
+    left: 12px;
+  }
+  
+  .gallery-indicators-manual {
+    gap: 8px;
+  }
+  
+  .gallery-indicators-manual::before {
+    top: -8px;
+    bottom: -8px;
+    width: 1.5px;
+  }
+  
+  .gallery-indicator-manual {
+    width: 10px;
+    border-radius: 5px; /* 幅の半分 */
+  }
+  
+  .gallery-indicator-manual--active {
+    height: 50px;
+  }
+  
+  .gallery-indicator-manual--past,
+  .gallery-indicator-manual--future {
+    height: 10px;
+  }
+  
+  .gallery-indicator-manual__fill {
+    border-radius: 5px;
+  }
+}
+

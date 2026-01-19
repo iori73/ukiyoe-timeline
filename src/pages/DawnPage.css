@@ -4,9 +4,28 @@
 
 .dawn-page {
   min-height: 100vh;
-  background-color: #ebdcbd;
+  background-image: url('/images/washi-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   position: relative;
   overflow: hidden;
+}
+
+/* 古びた和紙の効果 - セピア調オーバーレイ */
+.dawn-page::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(139, 119, 87, 0.15) 0%,
+    rgba(180, 155, 115, 0.12) 50%,
+    rgba(120, 100, 70, 0.18) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* ========================================
@@ -20,7 +39,7 @@
   right: 0;
   z-index: 100;
   padding: 24px 40px;
-  background: linear-gradient(to bottom, #ebdcbd 60%, transparent);
+  background: linear-gradient(to bottom, rgba(245, 243, 240, 0.95) 40%, transparent);
   pointer-events: none;
 }
 
@@ -70,7 +89,7 @@
 .dawn-heading__title {
   font-family: 'Shippori Mincho', serif;
   font-weight: 600;
-  font-size: 48px;
+  font-size: var(--text-5xl);
   color: var(--beni-iro, #d64e4e);
   letter-spacing: 0.04em;
   line-height: 1;
@@ -80,7 +99,7 @@
 .dawn-heading__subtitle {
   font-family: 'Shippori Mincho', serif;
   font-weight: 600;
-  font-size: 24px;
+  font-size: var(--text-2xl);
   color: var(--ai-iro, #1e3a5f);
   letter-spacing: 0.05em;
   line-height: 1;
@@ -92,11 +111,10 @@
 
 .dawn-intro p {
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: var(--text-base);
   color: #2d2d2d;
   line-height: 1.6;
   margin: 0;
-  max-width: 600px;
 }
 
 /* ========================================
@@ -113,6 +131,11 @@
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: y proximity; /* Snap but allow free scroll */
+}
+
+/* Controlled scroll mode - disable CSS snap, JS handles navigation */
+.dawn-gallery--controlled {
+  scroll-snap-type: none;
 }
 
 /* Hide scrollbar but keep functionality */
@@ -162,7 +185,7 @@
 
 .dawn-button__text {
   font-family: var(--font-sans);
-  font-size: 18px;
+  font-size: var(--text-lg);
   line-height: 1;
 }
 
@@ -186,6 +209,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  transform: scaleY(1.5);
 }
 
 /* ========================================
@@ -201,11 +225,11 @@
 
 @media (max-width: 900px) {
   .dawn-heading__title {
-    font-size: 36px;
+    font-size: var(--text-4xl);
   }
   
   .dawn-heading__subtitle {
-    font-size: 18px;
+    font-size: var(--text-lg);
   }
   
   .dawn-heading {
@@ -230,14 +254,14 @@
   }
   
   .dawn-heading__title {
-    font-size: 28px;
+    font-size: var(--text-2xl);
   }
   
   .dawn-heading__subtitle {
-    font-size: 16px;
+    font-size: var(--text-base);
   }
   
   .dawn-intro p {
-    font-size: 14px;
+    font-size: var(--text-sm);
   }
 }

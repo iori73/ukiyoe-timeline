@@ -1,0 +1,171 @@
+/* ========================================
+   TIMELINE GALLERY INDICATORS
+   
+   GalleryIndicatorsManualスタイルを踏襲
+   - Active: 高いバー（100px）
+   - Past: 小さい円（12px）塗りつぶし
+   - Future: 小さい円（12px）薄い
+   ======================================== */
+
+/* コントロールラッパー */
+.timeline-gallery-controls {
+  position: fixed;
+  left: 40px;
+  top: 32%;
+  transform: translateY(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* インジケーターコンテナ */
+.timeline-gallery-indicators {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+/* 個別インジケーター */
+.timeline-gallery-indicator {
+  width: 12px;
+  border-radius: 100px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  /* 高さのモーフィングトランジション */
+  transition: 
+    height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.2s ease;
+}
+
+/* .timeline-gallery-indicator:hover {
+  transform: scale(1.2);
+} */
+
+.timeline-gallery-indicator:focus {
+  outline: 2px solid var(--ai-iro);
+  outline-offset: 2px;
+}
+
+/* 高さの状態 */
+.timeline-gallery-indicator--active {
+  height: 100px;
+}
+
+.timeline-gallery-indicator--past,
+.timeline-gallery-indicator--future {
+  height: 12px;
+}
+
+/* フィル要素 */
+.timeline-gallery-indicator__fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  border-radius: 50px;
+  transition: 
+    opacity 0.3s ease, 
+    height 0.3s ease;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 1200px) {
+  .timeline-gallery-controls {
+    left: 24px;
+  }
+  
+  .timeline-gallery-indicator--active {
+    height: 80px;
+  }
+}
+
+@media (max-width: 900px) {
+  .timeline-gallery-controls {
+    left: 16px;
+  }
+  
+  .timeline-gallery-indicators {
+    gap: 10px;
+  }
+  
+  .timeline-gallery-indicator {
+    width: 10px;
+    border-radius: 5px;
+  }
+  
+  .timeline-gallery-indicator--active {
+    height: 60px;
+  }
+  
+  .timeline-gallery-indicator--past,
+  .timeline-gallery-indicator--future {
+    height: 10px;
+  }
+  
+  .timeline-gallery-indicator__fill {
+    border-radius: 5px;
+  }
+}
+
+@media (max-width: 600px) {
+  .timeline-gallery-controls {
+    left: 12px;
+  }
+  
+  .timeline-gallery-indicators {
+    gap: 8px;
+  }
+  
+  .timeline-gallery-indicator {
+    width: 8px;
+    border-radius: 4px;
+  }
+  
+  .timeline-gallery-indicator--active {
+    height: 50px;
+  }
+  
+  .timeline-gallery-indicator--past,
+  .timeline-gallery-indicator--future {
+    height: 8px;
+  }
+  
+  .timeline-gallery-indicator__fill {
+    border-radius: 4px;
+  }
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .timeline-gallery-indicator {
+    transition: none;
+  }
+  
+  .timeline-gallery-indicator__fill {
+    transition: none;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .timeline-gallery-indicator {
+    border: 2px solid currentColor;
+  }
+  
+  .timeline-gallery-indicator:focus {
+    outline-width: 3px;
+  }
+}
+

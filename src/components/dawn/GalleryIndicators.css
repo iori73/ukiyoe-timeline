@@ -60,6 +60,21 @@
   flex-direction: column;
   gap: 12px;
   align-items: center;
+  position: relative;
+}
+
+/* 串（Kushi）- 中心を貫く線 */
+.gallery-indicators::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: -16px;
+  bottom: -16px;
+  width: 2px;
+  background: var(--sumi-iro, #2d2d2d);
+  transform: translateX(-50%);
+  z-index: 0;
+  border-radius: 1px;
 }
 
 /* Single indicator element - morphs via height */
@@ -70,6 +85,8 @@
   overflow: hidden;
   /* Smooth height morphing between states */
   transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  /* 串の上に表示 */
+  z-index: 1;
 }
 
 /* Height states */
@@ -80,37 +97,19 @@
 .gallery-indicator--past,
 .gallery-indicator--future {
   height: 16px;
-  /* Keep same border-radius, don't change to circle */
+  border-radius: 50%; /* 円形の団子 */
 }
 
-/* Fill element inside */
+/* Fill element inside - JS controlled height for perfect sync */
 .gallery-indicator__fill {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 0%;
+  /* Height is set via inline style from JS */
   border-radius: 50px;
   transition: opacity 0.3s ease;
-}
-
-/* Past state: fill is 100% */
-.gallery-indicator--past .gallery-indicator__fill {
-  height: 100%;
-}
-
-/* Active state: fill animates from 0% to 100% */
-.gallery-indicator--active .gallery-indicator__fill {
-  animation: fillProgress 3333ms linear forwards;
-}
-
-@keyframes fillProgress {
-  from {
-    height: 0%;
-  }
-  to {
-    height: 100%;
-  }
+  /* No height transition - we want instant sync with timer */
 }
 
 /* Fill matches parent border-radius */
@@ -126,6 +125,11 @@
   
   .gallery-indicator--active {
     height: 80px;
+  }
+  
+  .gallery-indicators::before {
+    top: -12px;
+    bottom: -12px;
   }
 }
 
@@ -144,18 +148,25 @@
     gap: 10px;
   }
   
+  .gallery-indicators::before {
+    top: -10px;
+    bottom: -10px;
+    width: 1.5px;
+  }
+  
   .gallery-indicator {
-    width: 8px;
-    border-radius: 4px;
+    width: 10px;
+    border-radius: 50%;
   }
   
   .gallery-indicator--active {
     height: 60px;
+    border-radius: 5px;
   }
   
   .gallery-indicator--past,
   .gallery-indicator--future {
-    height: 8px;
+    height: 10px;
   }
   
   .gallery-indicator__fill {
@@ -178,21 +189,28 @@
     gap: 8px;
   }
   
+  .gallery-indicators::before {
+    top: -8px;
+    bottom: -8px;
+    width: 1.5px;
+  }
+  
   .gallery-indicator {
-    width: 6px;
-    border-radius: 3px;
+    width: 10px;
+    border-radius: 50%;
   }
   
   .gallery-indicator--active {
     height: 50px;
+    border-radius: 5px;
   }
   
   .gallery-indicator--past,
   .gallery-indicator--future {
-    height: 6px;
+    height: 10px;
   }
   
   .gallery-indicator__fill {
-    border-radius: 3px;
+    border-radius: 5px;
   }
 }

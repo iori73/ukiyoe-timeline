@@ -1,0 +1,20 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 
+    Favicon: 版木レイヤー重なり (正方形版)
+    3つの時代の色が重なり合う
+    - 藍 (錦絵) #1B3E5B - 最背面
+    - 紅 (紅摺絵) #C33433 - 中間
+    - 墨 (墨摺絵) #1a1a1a - 最前面
+  -->
+  
+  <!-- 藍レイヤー (錦絵 - 最背面) -->
+  <rect x="8" y="8" width="22" height="22" rx="2" fill="#1B3E5B" opacity="0.9"/>
+  
+  <!-- 紅レイヤー (紅摺絵 - 中間) -->
+  <rect x="4" y="4" width="22" height="22" rx="2" fill="#C33433" opacity="0.85"/>
+  
+  <!-- 墨レイヤー (墨摺絵 - 最前面) -->
+  <rect x="0" y="0" width="22" height="22" rx="2" fill="#1a1a1a"/>
+</svg>
+
+

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { LanguageProvider } from './context/LanguageContext'
 import { loadUkiyoeData } from './data/ukiyoe'
@@ -11,12 +11,17 @@ import LanguageToggle from './components/LanguageToggle'
 import { UkiyoeLoadingContainer, SURI_TIMING, SURI_MESSAGES } from './components/UkiyoeLoading'
 import CardPlayground from './components/CardPlayground'
 import DawnPage from './pages/DawnPage'
+import DawnManualPage from './pages/DawnManualPage'
+import TimelinePage from './pages/TimelinePage'
+import LogoPreview from './pages/LogoPreview'
 
-function AppContent() {
+function AppContent({ skipIntro = false }) {
   const [data, setData] = useState([])
-  const [loading, setLoading] = useState(true)
+  // skipIntro時はローディング画面をスキップ
+  const [loading, setLoading] = useState(!skipIntro)
+  // skipIntro時は最初から作品詳細（section 0）を表示
   const [currentSection, setCurrentSection] = useState(0)
-  const [showScrollHint, setShowScrollHint] = useState(true)
+  const [showScrollHint, setShowScrollHint] = useState(!skipIntro)
   const [suriStep, setSuriStep] = useState(0) // 現在の摺り工程ステップ
 
   useEffect(() => {
@@ -24,6 +29,14 @@ function AppContent() {
     const loadData = async () => {
       // データ読み込みを開始
       const dataPromise = loadUkiyoeData()
+      
+      // skipIntro時はローディングアニメーションをスキップ
+      if (skipIntro) {
+        const data = await dataPromise
+        setData(data)
+        setLoading(false)
+        return
+      }
       
       // 摺り工程のメッセージを段階的に変更（3色版：薄い色→濃い色の順）
       const stepTimers = [
@@ -49,7 +62,7 @@ function AppContent() {
     }
     
     loadData().catch(console.error)
-  }, [])
+  }, [skipIntro])
 
   // Hide scroll hint after first interaction
   useEffect(() => {
@@ -202,10 +215,10 @@ function AppContent() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                <div 
+                <Link 
+                  to="/"
                   className="logo" 
-                  onClick={() => handleNavigate(0)}
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: 'pointer', textDecoration: 'none' }}
                 >
                   <span className="logo-kanji">
                     <img 
@@ -214,7 +227,7 @@ function AppContent() {
                       className="logo-kanji-image"
                     />
                   </span>
-                </div>
+                </Link>
                 <LanguageToggle />
               </motion.div>
             </header>
@@ -222,15 +235,17 @@ function AppContent() {
             {/* Main horizontal scroll content */}
             <main className="main horizontal-main">
               <HorizontalScroll 
-                totalSections={data.length + 1}
+                totalSections={skipIntro ? data.length : data.length + 1}
                 onSectionChange={setCurrentSection}
               >
                 <div className="sections-track">
-                  {/* Intro Section */}
-                  <IntroSection
-                    isActive={currentSection === 0}
-                    onStart={handleStartTimeline}
-                  />
+                  {/* Intro Section - skipIntro時は非表示 */}
+                  {!skipIntro && (
+                    <IntroSection
+                      isActive={currentSection === 0}
+                      onStart={handleStartTimeline}
+                    />
+                  )}
                   
                   {/* Period Sections */}
                   {data.map((period, index) => (
@@ -238,7 +253,7 @@ function AppContent() {
                       key={period.id || index}
                       period={period}
                       index={index}
-                      isActive={index + 1 === currentSection}
+                      isActive={skipIntro ? index === currentSection : index + 1 === currentSection}
                     />
                   ))}
                 </div>
@@ -248,7 +263,7 @@ function AppContent() {
             {/* Scroll Indicators */}
             <ScrollIndicators
               currentSection={currentSection}
-              totalSections={data.length + 1}
+              totalSections={skipIntro ? data.length : data.length + 1}
               onNavigate={handleNavigate}
               showHint={showScrollHint}
             />
@@ -260,7 +275,7 @@ function AppContent() {
 }
 
 // Hash-based routing for playground (backwards compatibility)
-function MainPageWithHashRouting() {
+function MainPageWithHashRouting({ skipIntro = false }) {
   const [currentPage, setCurrentPage] = useState(() => {
     return window.location.hash === '#playground' ? 'playground' : 'main'
   })
@@ -278,15 +293,18 @@ function MainPageWithHashRouting() {
     return <CardPlayground />
   }
 
-  return <AppContent />
+  return <AppContent skipIntro={skipIntro} />
 }
 
 export default function App() {
   return (
     <LanguageProvider>
       <Routes>
-        <Route path="/" element={<MainPageWithHashRouting />} />
-        <Route path="/dawn" element={<DawnPage />} />
+        <Route path="/" element={<DawnManualPage />} />
+        <Route path="/timeline" element={<TimelinePage />} />
+        <Route path="/logo-preview" element={<LogoPreview />} />
+        {/* 旧実装をアーカイブ: /timeline-old で水平スクロール版にアクセス可能 */}
+        <Route path="/timeline-old" element={<MainPageWithHashRouting skipIntro />} />
       </Routes>
     </LanguageProvider>
   )
