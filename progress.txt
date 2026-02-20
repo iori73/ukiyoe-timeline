@@ -1,0 +1,90 @@
+# Progress - Ukiyoe Project
+# このファイルはセッション間の文脈を維持するための外部メモリです。
+# 機能完成後、セッション終了時に必ず更新してください。
+
+## 現在のステータス
+- フェーズ: Phase 3 完了 → Phase 4 検討中
+- 最終更新: 2026-02-18
+
+## 完了済み
+
+### Phase 1: 基盤構築
+- プロジェクト基盤構築（React 18.3 + Vite 6 + pnpm）
+- デザインシステム策定（CSS変数ベース、和風カラーパレット）
+- Framer Motion アニメーション定数の JS モジュール化（src/constants/motion.js）
+- バイリンガル対応（日本語/英語切り替え、LanguageContext）
+- ルーティング設定（React Router DOM 7）
+- ロゴデザイン（SVG）
+
+### Phase 2: ページ実装
+- **ホームページ（`/`）**: 3技法時代のレイヤーアニメーション（LayerAnimationPage）
+  - Figma レイヤー構造の忠実な再現（墨摺絵・紅摺絵・錦絵）
+  - スクロール連動アニメーション
+  - 技法解説テキスト（src/data/techniques.js）
+- **Dawn ページ（`/dawn`）**: 錦絵の黎明（DawnManualPage）
+  - セクション単位のスクロール制御
+  - PeriodSlide、LayeredImages、ProgressTimeline
+  - LayerStackAnimation
+- **タイムラインページ（`/timeline`）**: 時代別作品ギャラリー（TimelinePage）
+  - ネイティブスクロール方式に移行済み（旧ホイールキャプチャ方式を廃止）
+  - FixedPeriodPanel（左下固定テキストパネル）
+  - ParallaxArtworks（パララックス作品画像）
+  - ArtworkDetailModal（作品詳細モーダル）
+  - ArtworkGalleryGrid（全作品一覧グリッド）
+  - 5時代 × 複数作品のデータ整備
+- **旧タイムライン（`/timeline-old`）**: 水平スクロール版をアーカイブ
+
+### タイムライン色彩可視化（2026-02-18）
+- ArtworkGalleryGrid の各セクションヘッダーに時代別カラースウォッチを実装
+- periodColors.js 新規作成: 時代ごとの代表色パレット（Python で実画像から抽出）
+- 正規スロット方式に進化: 9つの固定スロット（墨→紅→金→緑→青灰→藍→ベロ藍→銀灰→肌）
+  - activeSlots で使用/未使用を宣言する構造
+  - 未使用スロットはゴースト表示（opacity 0.12）で位置を保持
+  - 黒は常に左端 → 時代が進むにつれ色が右に増えていく構造
+
+### Phase 3: デザインQA・品質改善
+- Figma MCP によるデザインQAワークフロー確立
+- デザインシステム整合性の確保
+- DESIGN_SYSTEM.md のトークン精査・更新
+
+### ドキュメント整備（2026-02-17）
+- Global Dev Protocol 導入
+- CLAUDE.md 強化（User Discipline Protocol、確認必要操作リスト、開発サイクル、ドキュメント相互参照マップ）
+- docs/SCOPE.md 新規作成
+- docs/TECH_STACK.md 新規作成
+- docs/APP_FLOW.md 新規作成
+- docs/IMPLEMENTATION_PLAN.md 新規作成
+
+## 進行中
+- Phase 4: 本番公開準備
+
+### 本番公開準備（2026-02-19 完了分）
+- [x] Figma MCPスクリプト（`capture.js`）を index.html から削除
+- [x] `vercel.json` 作成（SPA ルーティングフォールバック）
+- [x] `public/robots.txt` 作成
+- [x] `puppeteer` / `jsdom` を devDependencies へ移動（本番バンドル削減）
+- [x] ホーム → `/dawn` ナビリンク追加（フッターに「錦絵の黎明へ」）
+- [x] モバイルレイアウト修正（LayerAnimationPage）:
+  - 無効な CSS `scale(clamp(0.38, calc(0.18 + 0.036vw), 0.65))` → 媒体クエリ方式に変更
+  - `.layer-anim__description-inner` に `width: 100%` 追加（タイムライン幅による左ずれを解消）
+  - 480px 以下でタイムライン非表示（802px 固定幅のレイアウト破綻を防止）
+  - シーンセクションに `overflow: hidden` 追加（アイソメのはみ出しをクリップ）
+
+## 次にやること
+- [ ] **デプロイ**: Vercel に push（vercel.json 設定済み）
+- [ ] **デプロイ後**: `index.html` の `og:url` と `og:image` を本番の絶対 URL に変更
+  - og:url → `https://your-domain.com`
+  - og:image → `https://your-domain.com/images/og-image.jpg`
+  - twitter:image → `https://your-domain.com/images/og-image.jpg`
+- [ ] iPhone 実機での最終確認（PRODUCTION_QA.md 参照）
+- [ ] パフォーマンス最適化（画像 WebP 変換、外部画像の自前ホスト化）
+
+### 完了済み（2026-02-19 追加）
+- [x] OG 画像: `public/images/og-image.jpg` (1200×630px, 138KB) に変換・配置
+- [x] apple-touch-icon: `public/images/apple-touch-icon.png` (180×180px) を ImageMagick で生成
+  → `index.html` の `<link rel="apple-touch-icon">` を PNG 参照に更新
+
+## 既知の問題
+- 外部画像（Wikimedia Commons）への依存があり、可用性リスクあり
+- `ukiyoe-loading-layers` バンドルが約 1.7MB（gzip 658KB）— CDN キャッシュで軽減
+- `LayerAnimationPage.css` の `.layer-anim__description::before` が Figma API URL を参照（本番で404になるが装飾のため実害なし）

@@ -1,0 +1,804 @@
+/* ========================================
+   LAYER ANIMATION PAGE
+   Figma Make リファレンス再現
+   ======================================== */
+
+.layer-anim-page {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--washi, #f5f0e6);
+  background-image: url('/images/washi-texture.png');
+  background-repeat: repeat;
+  background-blend-mode: multiply;
+  background-size: auto;
+}
+
+/* ========================================
+   HEADER
+   ======================================== */
+
+.layer-anim-page__header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-dropdown);
+  padding: var(--space-md);
+  padding-top: max(var(--space-md), env(safe-area-inset-top));
+  padding-left: max(var(--space-md), env(safe-area-inset-left));
+  padding-right: max(var(--space-md), env(safe-area-inset-right));
+  background: transparent;
+  pointer-events: none;
+}
+
+.layer-anim-page__header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 0 auto;
+  pointer-events: auto;
+}
+
+.layer-anim-page__logo {
+  display: block;
+  text-decoration: none;
+}
+
+/* ========================================
+   HERO SECTION（2カラム: 左＝タイトル＋サブ、右＝制作風景）
+   ======================================== */
+
+.layer-anim__hero {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: var(--washi, #f5f0e6);
+  background-image: url('/images/washi-texture.png');
+  background-repeat: repeat;
+  background-blend-mode: multiply;
+  background-size: auto;
+  color: var(--sumi-iro, #2d2d2d);
+  padding: var(--space-3xl, 96px) 0 var(--space-3xl, 96px) var(--space-xl, 48px);
+  /* 上 96px、右 0、下 96px、左 48px — 画像を右端まで表示 */
+}
+
+.layer-anim__hero-content {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 80px;
+  align-items: center;
+  width: 100%;
+  /* max-width を設けず、画像列が右端まで届くようにする */
+}
+
+.layer-anim__hero-text {
+  max-width: 480px;
+  min-width: 0;
+}
+
+.layer-anim__hero-title {
+  font-family: var(--font-serif, 'Shippori Mincho', serif);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 400;
+  line-height: 1.3;
+  margin-bottom: var(--space-lg, 32px);
+  letter-spacing: 0.12em;
+}
+
+.layer-anim__hero-sub {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm, 1rem);
+  color: rgba(45, 45, 45, 0.6);
+  letter-spacing: 0.06em;
+  line-height: 1.7;
+}
+
+.layer-anim__hero-visual-wrap {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* 画像は右端まで表示（グリッドの2列目が残り幅を占有） */
+.layer-anim__hero-visual {
+  position: relative;
+  aspect-ratio: 4/3;
+  max-height: 70vh;
+  width: 100%;
+  border-radius: 0px;
+  overflow: hidden;
+}
+
+.layer-anim__hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.layer-anim__hero-placeholder {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--ai-10, rgba(30, 58, 95, 0.1)) 0%, var(--beni-05, rgba(214, 78, 78, 0.05)) 100%);
+  border: 2px dashed rgba(45, 45, 45, 0.15);
+}
+
+.layer-anim__hero-placeholder.is-visible {
+  display: block;
+}
+
+/* ヒーロー画像の出典（ToMuCo 利用規約に基づく表示） */
+.layer-anim__hero-credit {
+  margin-top: var(--space-sm, 16px);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs, 0.875rem);
+  color: rgba(45, 45, 45, 0.5);
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+}
+
+.layer-anim__hero-credit a {
+  color: var(--ai-iro, #1e3a5f);
+  text-decoration: none;
+}
+
+.layer-anim__hero-credit a:hover {
+  text-decoration: underline;
+}
+
+.layer-anim__hero-credit-source {
+  color: rgba(45, 45, 45, 0.4);
+}
+
+/* ========================================
+   DESCRIPTION SECTION（説明文＋8技法タイムライン）
+   ======================================== */
+
+.layer-anim__description {
+  position: relative;
+  padding: 80px 40px;
+  background: var(--color-white);
+  min-height: 668px;
+  overflow: hidden;
+  overflow-x: clip;
+}
+
+.layer-anim__description::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Figmaの26411284 1画像をmix-blend-overlayで適用 */
+  background-image: url('https://www.figma.com/api/mcp/asset/0b4d56dc-6a77-4f49-bee9-555a7f5575ef');
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: overlay;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.layer-anim__description-inner {
+  position: relative;
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+  align-items: center;
+}
+
+/* 説明文の行の長さを読みやすい幅に制限（日本語・英語ともに約35〜45文字/行） */
+.layer-anim__description-prose {
+  max-width: 40em;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.layer-anim__description-text {
+  font-family: var(--font-serif, 'Shippori Mincho', serif);
+  font-size: var(--text-xl);
+  line-height: 1.7;
+  color: var(--sumi-iro, #2d2d2d);
+  text-align: center;
+  letter-spacing: 0.03em;
+  width: 100%;
+}
+
+/* タイムライン（左から右への時系列順） */
+/* Figma構造: 225px高さのコンテナ内に、色サンプル（top:0〜56px）と横線（bottom:-3px起点、中央寄せで約80px位置） */
+.layer-anim__timeline {
+  position: relative;
+  width: 802px;
+  height: 225px;
+  margin: 0 auto;
+}
+
+/* 横線とマイルストーンのコンテナ（Figmaでは bottom: -3px, height: 161px → 実質 top: 67px 付近） */
+.layer-anim__timeline-line {
+  position: absolute;
+  left: 14px;
+  top: 80px;  /* 横線を下の方に配置（Figma準拠） */
+  width: 788px;
+  height: 1px;
+  background: var(--sumi-iro, #2d2d2d);
+}
+
+/* マイルストーン（円）- 横線上に配置 */
+.layer-anim__timeline-milestone {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--sumi-iro, #2d2d2d);
+  top: 74px;  /* 横線（80px）の中心に配置（80 - 6 = 74） */
+}
+
+.layer-anim__timeline-milestone--major {
+  width: var(--space-sm);
+  height: var(--space-sm);
+  top: 72px;  /* 横線（80px）の中心に配置（80 - 8 = 72） */
+}
+
+/* 技法名ラベル（縦書き）- 横線の下に配置 */
+.layer-anim__timeline-label {
+  position: absolute;
+  font-family: var(--font-serif, 'Shippori Mincho', serif);
+  color: var(--sumi-iro, #2d2d2d);
+  text-align: center;
+  transform: translateX(-50%) translateY(-50%);
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+}
+
+/* major技法のラベル（横線から約100px下） */
+.layer-anim__timeline-label--major {
+  font-size: var(--text-3xl);
+  font-weight: 600;
+}
+
+/* major技法のラベル（英語版：縦書きでも収まるようにフォントサイズを縮小） */
+.layer-anim__timeline-label--major[lang="en"],
+html[lang="en"] .layer-anim__timeline-label--major {
+  font-size: var(--text-xl);
+  letter-spacing: 0.03em;
+}
+
+/* minor技法のラベル（横線から約60px下） */
+.layer-anim__timeline-label--minor {
+  font-size: var(--text-2xl);
+  font-weight: 400;
+}
+
+/* minor技法のラベル（英語版：縦書きでも収まるようにフォントサイズを縮小） */
+.layer-anim__timeline-label--minor[lang="en"],
+html[lang="en"] .layer-anim__timeline-label--minor {
+  font-size: var(--text-lg);
+  letter-spacing: 0.02em;
+}
+
+/* 色サンプル（3箇所） */
+.layer-anim__timeline-colors {
+  position: absolute;
+  display: flex;
+  gap: var(--space-xs);
+}
+
+/* 黒摺絵の色サンプル（マイルストーン6px中心=14px上、1個） */
+.layer-anim__timeline-colors--sumizuri {
+  left: 14px;
+  top: var(--space-lg);
+  transform: translateX(-50%);
+}
+
+/* 紅摺絵の色サンプル（マイルストーン438px中心=446px上、2個縦並び） */
+.layer-anim__timeline-colors--benizuri {
+  left: 446px;
+  top: 0;
+  flex-direction: column;
+  transform: translateX(-50%);
+}
+
+/* 錦絵の色サンプル（マイルストーン546px中心=554px上、4個グリッド 2x2レイアウト） */
+.layer-anim__timeline-colors--nishiki {
+  left: 554px;
+  top: 0;
+  flex-wrap: wrap;
+  width: 56px;
+  transform: translateX(-50%);
+}
+
+.layer-anim__timeline-color {
+  width: var(--space-md);
+  height: var(--space-md);
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+.layer-anim__description-summary {
+  font-family: var(--font-serif, 'Shippori Mincho', serif);
+  font-size: var(--text-xl);
+  line-height: 1.7;
+  color: var(--sumi-iro, #2d2d2d);
+  text-align: center;
+  letter-spacing: 0.03em;
+  max-width: 40em;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+/* ========================================
+   OVERVIEW SECTION（藍色背景＋白オーバーレイ＋技法インジケーター）
+   ======================================== */
+
+.layer-anim__overview {
+  position: relative;
+  padding: var(--space-3xl, 96px) var(--space-xl, 48px);
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.layer-anim__overview-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--ai-iro, #1e3a5f);
+  opacity: 0.92;
+}
+
+.layer-anim__overview-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.35) 100%);
+  pointer-events: none;
+}
+
+.layer-anim__overview-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  text-align: center;
+}
+
+.layer-anim__overview-text {
+  font-family: var(--font-sans);
+  font-size: var(--text-base, 1.125rem);
+  color: var(--color-white);
+  line-height: 1.8;
+  letter-spacing: 0.04em;
+  margin-bottom: var(--space-2xl, 64px);
+}
+
+.layer-anim__overview-indicators {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xl, 48px);
+  flex-wrap: wrap;
+}
+
+.layer-anim__overview-dot {
+  font-family: var(--font-serif);
+  font-size: var(--text-sm, 1rem);
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  padding: var(--space-xs, 8px) 0;
+  border-bottom: 2px solid transparent;
+  transition: color var(--duration-normal) var(--ease-ukiyoe), border-color var(--duration-normal) var(--ease-ukiyoe);
+}
+
+.layer-anim__overview-dot:hover {
+  color: var(--color-white);
+}
+
+.layer-anim__overview-dot--current {
+  color: var(--color-white);
+  border-bottom-color: var(--color-white);
+  font-weight: 500;
+}
+
+/* ========================================
+   ANIMATION SCENE
+   ======================================== */
+
+.layer-anim__scene {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--washi, #f5f0e6);
+  background-image: url('/images/washi-texture.png');
+  background-repeat: repeat;
+  background-blend-mode: multiply;
+  background-size: auto;
+  padding: var(--space-3xl, 96px) var(--space-xl, 48px);
+  /* 左右に 48px の余白を確保してイラストが端に詰まらないようにする */
+}
+
+/* 2カラム: 左＝イラスト、右＝タイトル＋説明 */
+.layer-anim__scene-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3xl, 96px);
+  align-items: center;
+  max-width: 1100px;
+  width: 100%;
+}
+
+/* アイソメトリック ラッパー（センタリング用）
+   デスクトップ 0.65 → タブレット 0.55 → モバイル 0.38 と段階的に縮小
+   ※ calc(number + length) は無効なため media query で指定 */
+.layer-anim__isometric-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: visible;
+  transform: scale(0.65);
+  transform-origin: center center;
+}
+
+/* キャンバス: Figma Make 準拠の pre-transform サイズ */
+.layer-anim__canvas {
+  position: relative;
+  width: 237.595px;
+  height: 354.25px;
+}
+
+/* 各レイヤー: 絶対配置で重なる */
+.layer-anim__layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  will-change: transform, opacity;
+}
+
+/* アイソメトリック変形（Figma Make準拠）
+   Tailwind v4 の合成順序: rotate → skewX → scaleY
+   ※ CSS transform は右から順に適用されるため、記述順が重要 */
+.layer-anim__isometric-transform {
+  transform: rotate(30deg) skewX(-30deg) scaleY(0.87);
+}
+
+/* フレーム: Figma Make 準拠 — overflow なし（コンテンツが枠外にはみ出して OK） */
+.layer-anim__frame {
+  width: 237.595px;
+  height: 354.25px;
+  position: relative;
+}
+
+/* ========================================
+   FRAGMENT LAYER - 各色版のフラグメント配置
+   Figma のピクセル座標をそのまま使用
+   ======================================== */
+
+/* カラー版のフラグメントコンテナ — overflow-clip あり（Figma Make 準拠） */
+.layer-frag {
+  position: absolute;
+  left: 5px;
+  top: 4.56px;
+  overflow: hidden;
+}
+
+/* 墨版（original）のコンテナ — overflow なし（Figma Make 準拠） */
+.layer-frag--no-clip {
+  position: absolute;
+  left: 5px;
+  top: 4.56px;
+}
+
+/* 黒摺絵：白い背景の上に濃い墨（Figma 準拠 #FFFFFF + #010101） */
+.layer-anim__frame--sumizuri {
+  background: var(--color-white);
+  box-shadow: 0 1px 3px rgba(1, 1, 1, 0.08);
+}
+
+.layer-anim__frame--sumizuri .layer-frag--no-clip > div[aria-hidden="true"] {
+  border-color: rgba(1, 1, 1, 0.18);
+}
+
+.layer-anim__sumizuri-img {
+  /* 墨を濃い黒に寄せる（SVG が #010101 に近いトーンの場合の補正） */
+  filter: contrast(1.05) brightness(0.97);
+}
+
+.layer-frag__img {
+  position: absolute;
+  max-width: none;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* ========================================
+   TITLE (appears after layers settle)
+   ======================================== */
+
+.layer-anim__title-area {
+  text-align: left;
+}
+
+.layer-anim__title {
+  font-family: var(--font-serif, 'Shippori Mincho', serif);
+  font-size: var(--text-2xl, 1.75rem);
+  font-weight: 400;
+  color: var(--sumi-iro, #2d2d2d);
+  margin-bottom: var(--space-xs, 8px);
+  letter-spacing: 0.15em;
+}
+
+.layer-anim__subtitle {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs, 0.875rem);
+  color: rgba(45, 45, 45, 0.4);
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-md, 24px);
+}
+
+.layer-anim__body {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm, 1rem);
+  color: rgba(45, 45, 45, 0.75);
+  line-height: 1.8;
+  letter-spacing: 0.03em;
+}
+
+/* ========================================
+   FOOTER SECTION
+   ======================================== */
+
+.layer-anim__footer {
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--washi, #f5f0e6);
+  background-image: url('/images/washi-texture.png');
+  background-repeat: repeat;
+  background-blend-mode: multiply;
+  background-size: auto;
+  color: var(--sumi-iro, #2d2d2d);
+  padding: var(--space-3xl, 96px) var(--space-xl, 48px);
+}
+
+.layer-anim__footer-inner {
+  text-align: center;
+  max-width: 640px;
+}
+
+/* フッター：8色スウォッチ（Figma 新デザイン） */
+.layer-anim__footer-swatches {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: var(--space-2xl, 64px);
+  flex-wrap: wrap;
+}
+
+.layer-anim__footer-swatch {
+  width: var(--space-md);
+  height: var(--space-md);
+  border-radius: 0;
+  flex-shrink: 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.layer-anim__footer-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm, 16px);
+}
+
+.layer-anim__nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: rgba(45, 45, 45, 0.45);
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  transition: color var(--duration-normal) var(--ease-ukiyoe);
+}
+
+.layer-anim__nav-link-text {
+  font-family: var(--font-serif, 'Shippori Mincho', serif);
+  font-size: var(--text-xl, 1.4rem);
+}
+
+.layer-anim__nav-link:hover {
+  color: var(--sumi-iro, #2d2d2d);
+}
+
+.layer-anim__nav-link-visual {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.layer-anim__nav-link-line {
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.45;
+}
+
+.layer-anim__nav-link:hover .layer-anim__nav-link-line {
+  opacity: 1;
+}
+
+.layer-anim__nav-link-dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* 見当マーク (Kento lock-in): 同心円が版木の位置合わせのように現れて定位し、静かに消える */
+.layer-anim__nav-link-dot::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  background: transparent;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.layer-anim__nav-link:hover .layer-anim__nav-link-dot::after {
+  animation: kento-align 1.1s var(--ease-ukiyoe) forwards;
+}
+
+@keyframes kento-align {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  40% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+/* ── タブレット (≤1199px) ── */
+@media (max-width: 1199px) {
+  .layer-anim__isometric-wrap {
+    transform: scale(0.60);
+  }
+}
+
+/* ── 小さめデスクトップ / 大きめタブレット (≤900px) ── */
+@media (max-width: 900px) {
+  .layer-anim__isometric-wrap {
+    transform: scale(0.55);
+  }
+
+  .layer-anim__timeline {
+    /* scale()はレイアウトボックスを変えないため overflow-x で隠す */
+    overflow-x: hidden;
+  }
+}
+
+/* ── タブレット縦 / 大きめモバイル (≤768px) ── */
+@media (max-width: 768px) {
+  .layer-anim__isometric-wrap {
+    transform: scale(0.48);
+    overflow: hidden; /* モバイルでははみ出しをクリップ */
+  }
+
+  .layer-anim__description {
+    padding: 60px 24px;
+    min-height: auto;
+  }
+
+  /* タイムラインは802px固定幅のため640px以下で非表示 */
+  .layer-anim__timeline {
+    display: none;
+  }
+
+  .layer-anim__description-text {
+    font-size: var(--text-base);
+  }
+
+  .layer-anim__description-summary {
+    font-size: var(--text-base);
+  }
+
+  .layer-anim__hero {
+    padding: var(--space-3xl, 96px) var(--space-md, 24px) var(--space-3xl, 96px);
+    min-height: auto;
+  }
+
+  .layer-anim__hero-content {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+    text-align: center;
+  }
+
+  .layer-anim__hero-text {
+    max-width: none;
+  }
+
+  .layer-anim__scene {
+    padding: var(--space-3xl, 96px) var(--space-md, 24px);
+    overflow: hidden; /* アイソメのはみ出しを親でクリップ */
+  }
+
+  .layer-anim__scene-inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+
+  .layer-anim__title-area {
+    text-align: center;
+  }
+
+  .layer-anim-page__header {
+    padding: 16px 20px;
+  }
+}
+
+/* ── モバイル (≤480px) ── */
+@media (max-width: 480px) {
+  .layer-anim__isometric-wrap {
+    transform: scale(0.38);
+    overflow: hidden;
+  }
+
+  /* 802px固定幅タイムラインをモバイルでは非表示（代わりにsummary文で説明） */
+  .layer-anim__timeline {
+    display: none;
+  }
+
+  .layer-anim__description {
+    padding: 48px 20px;
+  }
+
+  .layer-anim__hero {
+    padding: var(--space-2xl, 64px) var(--space-sm, 16px) var(--space-2xl, 64px);
+  }
+
+  .layer-anim__hero-title {
+    font-size: clamp(2rem, 8vw, 2.5rem);
+  }
+
+  .layer-anim__scene {
+    padding: 64px 20px;
+  }
+
+  .layer-anim__footer {
+    padding: 64px 20px;
+  }
+
+  .layer-anim__footer-swatches {
+    gap: 20px;
+  }
+}
