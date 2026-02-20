@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import { duration, easing, transition as motionTransition } from './constants/motion'
 import { LanguageProvider } from './context/LanguageContext'
 import { loadUkiyoeData } from './data/ukiyoe'
+import ErrorBoundary from './components/common/ErrorBoundary'
 import HorizontalScroll from './components/HorizontalScroll'
 import FullscreenSection from './components/FullscreenSection'
 import IntroSection from './components/IntroSection'
@@ -10,10 +12,12 @@ import ScrollIndicators from './components/ScrollIndicators'
 import LanguageToggle from './components/LanguageToggle'
 import { UkiyoeLoadingContainer, SURI_TIMING, SURI_MESSAGES } from './components/UkiyoeLoading'
 import CardPlayground from './components/CardPlayground'
-import DawnPage from './pages/DawnPage'
-import DawnManualPage from './pages/DawnManualPage'
-import TimelinePage from './pages/TimelinePage'
-import LogoPreview from './pages/LogoPreview'
+
+// ルートレベルのコード分割: 各ページを遅延読み込み
+const DawnManualPage = lazy(() => import('./pages/DawnManualPage'))
+const TimelinePage = lazy(() => import('./pages/TimelinePage'))
+const LogoPreview = lazy(() => import('./pages/LogoPreview'))
+const LayerAnimationPage = lazy(() => import('./pages/LayerAnimationPage'))
 
 function AppContent({ skipIntro = false }) {
   const [data, setData] = useState([])
@@ -100,8 +104,8 @@ function AppContent({ skipIntro = false }) {
               opacity: 0,
               scale: 0.98,
               transition: { 
-                duration: 1.2, 
-                ease: [0.4, 0, 0.2, 1] // easeInOut
+                duration: duration.slower, 
+                ease: easing.ukiyoe
               }
             }}
           >
@@ -120,9 +124,9 @@ function AppContent({ skipIntro = false }) {
               opacity: 1,
               scale: 1,
               transition: { 
-                duration: 1.2, 
-                ease: [0.4, 0, 0.2, 1], // easeInOut
-                delay: 0.3 // ローディングが少し消えてから表示開始
+                duration: duration.slower, 
+                ease: easing.ukiyoe,
+                delay: duration.normal // ローディングが少し消えてから表示開始
               }
             }}
           >
@@ -213,7 +217,7 @@ function AppContent({ skipIntro = false }) {
                 className="header-content"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
+                transition={{ duration: duration.slow }}
               >
                 <Link 
                   to="/"
@@ -222,7 +226,7 @@ function AppContent({ skipIntro = false }) {
                 >
                   <span className="logo-kanji">
                     <img 
-                      src="/images/logo_v2.svg" 
+                      src="/images/logo-square.svg" 
                       alt="浮世絵" 
                       className="logo-kanji-image"
                     />
@@ -299,13 +303,19 @@ function MainPageWithHashRouting({ skipIntro = false }) {
 export default function App() {
   return (
     <LanguageProvider>
-      <Routes>
-        <Route path="/" element={<DawnManualPage />} />
-        <Route path="/timeline" element={<TimelinePage />} />
-        <Route path="/logo-preview" element={<LogoPreview />} />
-        {/* 旧実装をアーカイブ: /timeline-old で水平スクロール版にアクセス可能 */}
-        <Route path="/timeline-old" element={<MainPageWithHashRouting skipIntro />} />
-      </Routes>
+      <ErrorBoundary>
+        <Suspense fallback={<UkiyoeLoadingContainer />}>
+          <Routes>
+            <Route path="/" element={<LayerAnimationPage />} />
+            <Route path="/dawn" element={<DawnManualPage />} />
+            <Route path="/timeline" element={<TimelinePage />} />
+            <Route path="/logo-preview" element={<LogoPreview />} />
+            <Route path="/layer-animation" element={<LayerAnimationPage />} />
+            {/* 旧実装をアーカイブ: /timeline-old で水平スクロール版にアクセス可能 */}
+            <Route path="/timeline-old" element={<MainPageWithHashRouting skipIntro />} />
+          </Routes>
+        </Suspense>
+      </ErrorBoundary>
     </LanguageProvider>
   )
 }

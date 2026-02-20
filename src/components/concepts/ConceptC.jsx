@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { periodDecorKusa, periodDecorAkane } from '../../constants/colors'
+import { spring } from '../../constants/motion'
 
 /**
  * Concept C: 透過レイヤー型
@@ -25,7 +27,7 @@ export default function ConceptC() {
       id: 'benizuri', 
       name: '紅摺絵', 
       year: '1740年代',
-      color: '#95a078',
+      color: periodDecorKusa,
       image: '/benizuri-e.png',
       desc: '紅色と緑色の版木を追加し、「見当」という位置合わせ技術で重ね摺りした版画。',
       zOffset: 1 // 中間
@@ -34,7 +36,7 @@ export default function ConceptC() {
       id: 'nishiki', 
       name: '錦絵', 
       year: '1765年以降',
-      color: '#f8604f',
+      color: periodDecorAkane,
       image: '/nishiki-e.png',
       desc: '10枚以上の版木を精密に重ね、ぼかしや空摺りなどの高度な技法を導入。浮世絵の技術的頂点。',
       zOffset: 2 // 最も手前
@@ -131,11 +133,7 @@ export default function ConceptC() {
                   scale: style.scale,
                   opacity: style.opacity
                 }}
-                transition={{
-                  type: 'spring',
-                  stiffness: 300,
-                  damping: 30
-                }}
+                transition={spring.snappy}
                 onMouseEnter={() => {
                   if (selectedIndex === null) {
                     setHoveredIndex(index)

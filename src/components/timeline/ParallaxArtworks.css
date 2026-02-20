@@ -17,6 +17,7 @@
   width: 100%;
   height: 100%;
   background: var(--sumi-iro);
+  overflow: hidden;
 }
 
 /* 「散らし」コンテナ
@@ -53,17 +54,13 @@
   box-shadow: 
     0 12px 40px rgba(0, 0, 0, 0.4),
     0 4px 12px rgba(0, 0, 0, 0.25);
-  border-radius: 2px;
+  border-radius: var(--radius-xs);
   overflow: hidden;
-  transition: 
-    box-shadow 0.4s cubic-bezier(0.19, 1, 0.22, 1),
-    transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: transform 2s var(--ease-ukiyoe);
 }
 
+/* ホバー時のシャドウ強化は廃止（縦長など画像幅が狭い時にコンテナ幅で影が出て不自然なため） */
 .parallax-artwork:hover .parallax-artwork__frame {
-  box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.5),
-    0 8px 24px rgba(0, 0, 0, 0.35);
   transform: scale(1.03);
 }
 
@@ -77,14 +74,25 @@
   opacity: 0.6;
 }
 
-/* 画像本体 - Figmaプロトタイプ準拠で大きめに */
+/* 画像本体
+   ビューポート相対単位で画面サイズに応じてスケール
+   clamp() で最小・最大の安全範囲を設定
+   
+   【設計思想】
+   - 絶対値ではなく vw/vh で画面サイズに自動適応
+   - 縦長・横長どちらの作品も同程度の「存在感」を持つ
+   - clamp(最小値, 推奨値, 最大値) で極端なサイズを防止 */
 .parallax-artwork__image {
   display: block;
   width: auto;
   height: auto;
-  max-width: 360px;
-  max-height: 480px;
+  /* デスクトップ: 画面幅の25%程度、280-400pxの範囲 */
+  max-width: clamp(280px, 25vw, 400px);
+  /* 高さは画面高さの45%程度、350-520pxの範囲 */
+  max-height: clamp(350px, 45vh, 520px);
   object-fit: contain;
+  /* CLS防止: 画像読み込み前に最低限のサイズ枠を確保 */
+  min-height: 200px;
 }
 
 /* ========================================
@@ -130,12 +138,14 @@
 
 @media (max-width: 1200px) {
   .parallax-artwork {
-    max-width: 320px;
+    /* vw ベースで画面に応じてスケール */
+    max-width: clamp(260px, 30vw, 340px);
   }
 
   .parallax-artwork__image {
-    max-width: 280px;
-    max-height: 380px;
+    /* タブレット: 画面幅の28%程度 */
+    max-width: clamp(220px, 28vw, 320px);
+    max-height: clamp(300px, 42vh, 420px);
   }
 
   .parallax-artwork__title {
@@ -154,12 +164,13 @@
 
 @media (max-width: 900px) {
   .parallax-artwork {
-    max-width: 220px;
+    max-width: clamp(200px, 45vw, 280px);
   }
 
   .parallax-artwork__image {
-    max-width: 180px;
-    max-height: 260px;
+    /* モバイル大: 画面幅の40%程度でより大きく表示 */
+    max-width: clamp(180px, 40vw, 260px);
+    max-height: clamp(240px, 38vh, 360px);
   }
 
   .parallax-artwork__info {
@@ -181,17 +192,26 @@
 
 /* ========================================
    RESPONSIVE - モバイル（小）
-   最小限の要素で本質を表現
+   画面幅の60%を使って存在感を確保
    ======================================== */
 
 @media (max-width: 600px) {
   .parallax-artwork {
-    max-width: 160px;
+    max-width: clamp(200px, 75vw, 320px);
   }
 
   .parallax-artwork__image {
-    max-width: 140px;
-    max-height: 200px;
+    /* モバイル小: 画面幅の60%（縦長画像）
+       430px幅なら約258px、375px幅なら約225px */
+    max-width: clamp(180px, 60vw, 280px);
+    /* 高さは画面高さの40%程度 */
+    max-height: clamp(240px, 40vh, 360px);
+  }
+
+  /* 横長画像: 画面幅の70%でより大きく表示 */
+  .parallax-artwork__image--landscape {
+    max-width: clamp(220px, 70vw, 320px);
+    max-height: clamp(180px, 35vh, 280px);
   }
 
   .parallax-artwork__frame {
@@ -251,7 +271,7 @@
   }
 
   .parallax-artwork__info {
-    color: #fff;
+    color: var(--color-white);
   }
 
   .parallax-artwork__year,

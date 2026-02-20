@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nav Hover Prototype — 落款印 vs 見当マーク</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #f5f0e6;
+    font-family: 'Shippori Mincho', 'Hiragino Mincho ProN', serif;
+    color: #2d2d2d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    gap: 120px;
+    padding: 80px 40px;
+  }
+
+  .proto-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .proto-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(45, 45, 45, 0.35);
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  .proto-sublabel {
+    font-size: 12px;
+    color: rgba(45, 45, 45, 0.3);
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    max-width: 360px;
+    text-align: center;
+    line-height: 1.6;
+    margin-top: -4px;
+  }
+
+  /* =============================================
+     Common link styles
+     ============================================= */
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', sans-serif;
+    font-size: 15px;
+    color: rgba(45, 45, 45, 0.45);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    transition: color 0.3s cubic-bezier(0.19, 1.0, 0.22, 1.0);
+    cursor: pointer;
+  }
+
+  .nav-link:hover {
+    color: #2d2d2d;
+  }
+
+  .nav-link__visual {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .nav-link__line {
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+    transition: opacity 0.3s cubic-bezier(0.19, 1.0, 0.22, 1.0);
+  }
+
+  /* =============================================
+     A: 落款印 (Rakkan — Artist's Seal)
+     ============================================= */
+  .nav-link--rakkan .nav-link__dot {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    transition: background 0.3s cubic-bezier(0.19, 1.0, 0.22, 1.0);
+  }
+
+  /* Hover: dot turns vermillion like a seal stamp */
+  .nav-link--rakkan:hover .nav-link__dot {
+    background: #c25a3c;
+  }
+
+  /* Ink bleed ring — like fresh stamp ink spreading on washi */
+  .nav-link--rakkan .nav-link__dot::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 50%;
+    background: rgba(194, 90, 60, 0.25);
+    transform: scale(1);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .nav-link--rakkan:hover .nav-link__dot::after {
+    animation: rakkan-bleed 0.8s cubic-bezier(0.19, 1.0, 0.22, 1.0) forwards;
+  }
+
+  @keyframes rakkan-bleed {
+    0% {
+      transform: scale(1);
+      opacity: 0.6;
+    }
+    100% {
+      transform: scale(3.5);
+      opacity: 0;
+    }
+  }
+
+  /* =============================================
+     B: 見当マーク (Kento — Registration Mark)
+     ============================================= */
+  .nav-link--kento .nav-link__dot {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    transition: all 0.3s cubic-bezier(0.19, 1.0, 0.22, 1.0);
+  }
+
+  /* 
+    Registration mark concept:
+    On hover, two concentric rings appear — representing 
+    the alignment of multiple printing blocks (版木).
+    The rings "lock in" like layers aligning on the kento mark,
+    then the outer one softly fades as alignment completes.
+  */
+  .nav-link--kento .nav-link__dot::before,
+  .nav-link--kento .nav-link__dot::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    background: transparent;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Inner ring — first layer aligns */
+  .nav-link--kento .nav-link__dot::before {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* Outer ring — second layer aligns, slightly delayed */
+  .nav-link--kento .nav-link__dot::after {
+    width: 38px;
+    height: 38px;
+  }
+
+  .nav-link--kento:hover .nav-link__dot::before {
+    animation: kento-align 0.7s cubic-bezier(0.19, 1.0, 0.22, 1.0) forwards;
+  }
+
+  .nav-link--kento:hover .nav-link__dot::after {
+    animation: kento-align 0.9s cubic-bezier(0.19, 1.0, 0.22, 1.0) 0.1s forwards;
+  }
+
+  @keyframes kento-align {
+    0% {
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+    }
+    40% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0;
+    }
+  }
+
+  /* =============================================
+     C: 見当マーク variant 2 — rings expand outward
+     ============================================= */
+  .nav-link--kento-expand .nav-link__dot {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    transition: all 0.3s cubic-bezier(0.19, 1.0, 0.22, 1.0);
+  }
+
+  .nav-link--kento-expand .nav-link__dot::before,
+  .nav-link--kento-expand .nav-link__dot::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    background: transparent;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .nav-link--kento-expand:hover .nav-link__dot::before {
+    animation: kento-ripple 1s cubic-bezier(0.19, 1.0, 0.22, 1.0) forwards;
+  }
+
+  .nav-link--kento-expand:hover .nav-link__dot::after {
+    animation: kento-ripple 1s cubic-bezier(0.19, 1.0, 0.22, 1.0) 0.15s forwards;
+  }
+
+  @keyframes kento-ripple {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0.6;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(5);
+      opacity: 0;
+    }
+  }
+
+  /* =============================================
+     D: 見当マーク variant 3 — crosshair hint
+     ============================================= */
+  .nav-link--kento-cross .nav-link__dot-wrap {
+    position: relative;
+    width: 8px;
+    height: 8px;
+  }
+
+  .nav-link--kento-cross .nav-link__dot {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    z-index: 1;
+  }
+
+  /* Crosshair lines — appear on hover like alignment guides */
+  .nav-link--kento-cross .nav-link__dot-wrap::before,
+  .nav-link--kento-cross .nav-link__dot-wrap::after {
+    content: '';
+    position: absolute;
+    background: currentColor;
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.19, 1.0, 0.22, 1.0);
+  }
+
+  /* Horizontal crosshair */
+  .nav-link--kento-cross .nav-link__dot-wrap::before {
+    width: 28px;
+    height: 1px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Vertical crosshair */
+  .nav-link--kento-cross .nav-link__dot-wrap::after {
+    width: 1px;
+    height: 28px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .nav-link--kento-cross:hover .nav-link__dot-wrap::before,
+  .nav-link--kento-cross:hover .nav-link__dot-wrap::after {
+    opacity: 0.2;
+    animation: kento-cross-fade 1.2s cubic-bezier(0.19, 1.0, 0.22, 1.0) forwards;
+  }
+
+  @keyframes kento-cross-fade {
+    0% { opacity: 0; }
+    30% { opacity: 0.25; }
+    100% { opacity: 0; }
+  }
+
+  /* Ring around the dot for the crosshair variant */
+  .nav-link--kento-cross .nav-link__dot::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    background: transparent;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .nav-link--kento-cross:hover .nav-link__dot::after {
+    animation: kento-cross-ring 0.8s cubic-bezier(0.19, 1.0, 0.22, 1.0) forwards;
+  }
+
+  @keyframes kento-cross-ring {
+    0% {
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+    }
+    40% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0.35;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1.2);
+      opacity: 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <!-- A: 落款印 -->
+  <div class="proto-section">
+    <span class="proto-label">A — 落款印 / Rakkan (Artist's Seal)</span>
+    <span class="proto-sublabel">
+      ホバーで朱色に変わり、墨が和紙に滲むように広がる。<br>
+      「絵師の印＝完成の署名」の暗示。
+    </span>
+    <a class="nav-link nav-link--rakkan" href="#">
+      <span>浮世絵の歴史をたどる</span>
+      <span class="nav-link__visual" aria-hidden="true">
+        <span class="nav-link__line"></span>
+        <span class="nav-link__dot"></span>
+      </span>
+    </a>
+  </div>
+
+  <!-- B: 見当マーク — lock-in -->
+  <div class="proto-section">
+    <span class="proto-label">B — 見当マーク / Kento (Lock-in)</span>
+    <span class="proto-sublabel">
+      2つの同心円が「版木のレイヤーが位置合わせされる」ように<br>
+      現れて定位し、静かに消える。
+    </span>
+    <a class="nav-link nav-link--kento" href="#">
+      <span>浮世絵の歴史をたどる</span>
+      <span class="nav-link__visual" aria-hidden="true">
+        <span class="nav-link__line"></span>
+        <span class="nav-link__dot"></span>
+      </span>
+    </a>
+  </div>
+
+  <!-- C: 見当マーク — ripple expand -->
+  <div class="proto-section">
+    <span class="proto-label">C — 見当マーク / Kento (Ripple)</span>
+    <span class="proto-sublabel">
+      中心の点から2つのリングが時間差で広がって消える。<br>
+      摺りのたびに位置合わせの「波」が走るイメージ。
+    </span>
+    <a class="nav-link nav-link--kento-expand" href="#">
+      <span>浮世絵の歴史をたどる</span>
+      <span class="nav-link__visual" aria-hidden="true">
+        <span class="nav-link__line"></span>
+        <span class="nav-link__dot"></span>
+      </span>
+    </a>
+  </div>
+
+  <!-- D: 見当マーク — crosshair -->
+  <div class="proto-section">
+    <span class="proto-label">D — 見当マーク / Kento (Crosshair)</span>
+    <span class="proto-sublabel">
+      十字の位置合わせガイドが一瞬現れ、<br>
+      同時にリングが「合わせ完了」を示して消える。
+    </span>
+    <a class="nav-link nav-link--kento-cross" href="#">
+      <span>浮世絵の歴史をたどる</span>
+      <span class="nav-link__visual" aria-hidden="true">
+        <span class="nav-link__line"></span>
+        <span class="nav-link__dot-wrap">
+          <span class="nav-link__dot"></span>
+        </span>
+      </span>
+    </a>
+  </div>
+
+</body>
+</html>

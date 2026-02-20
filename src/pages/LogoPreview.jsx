@@ -206,7 +206,7 @@ const LogoPreview = () => {
             <div className="logo-item">
               <span className="size-label">128x128 (Apple Touch)</span>
               <svg width="128" height="128" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ borderRadius: '16px' }}>
-                <rect width="180" height="180" fill="#F5F1E6"/>
+                <rect width="180" height="180" fill="var(--washi)"/>
                 <rect x="56" y="56" width="100" height="100" rx="4" fill="#1B3E5B" opacity="0.9"/>
                 <rect x="38" y="38" width="100" height="100" rx="4" fill="#C33433" opacity="0.85"/>
                 <rect x="20" y="20" width="100" height="100" rx="4" fill="#1a1a1a"/>

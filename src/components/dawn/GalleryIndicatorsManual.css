@@ -48,7 +48,7 @@
   position: relative;
   overflow: hidden;
   /* heightのみアニメーション（border-radiusは即座に変わる） */
-  transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: height var(--duration-slow) var(--ease-in-out);
   /* 串の上に表示 */
   z-index: 1;
 }
@@ -71,7 +71,7 @@
   left: 0;
   right: 0;
   border-radius: 50px;
-  transition: opacity 0.3s ease, height 0.3s ease;
+  transition: opacity var(--duration-normal) var(--ease-ukiyoe), height var(--duration-normal) var(--ease-ukiyoe);
 }
 
 /* ========================================
@@ -133,31 +133,31 @@
   }
   
   .gallery-indicators-manual {
-    gap: 8px;
+    gap: 10px;
   }
   
   .gallery-indicators-manual::before {
-    top: -8px;
-    bottom: -8px;
+    top: -10px;
+    bottom: -10px;
     width: 1.5px;
   }
   
   .gallery-indicator-manual {
-    width: 10px;
-    border-radius: 5px; /* 幅の半分 */
+    width: 16px;
+    border-radius: 8px; /* 幅の半分 = 完全な円 */
   }
   
   .gallery-indicator-manual--active {
-    height: 50px;
+    height: 60px;
   }
   
   .gallery-indicator-manual--past,
   .gallery-indicator-manual--future {
-    height: 10px;
+    height: 16px;
   }
   
   .gallery-indicator-manual__fill {
-    border-radius: 5px;
+    border-radius: 8px;
   }
 }
 

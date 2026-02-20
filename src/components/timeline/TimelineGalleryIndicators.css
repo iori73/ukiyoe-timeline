@@ -1,29 +1,31 @@
 /* ========================================
    TIMELINE GALLERY INDICATORS
    
-   GalleryIndicatorsManualスタイルを踏襲
-   - Active: 高いバー（100px）
-   - Past: 小さい円（12px）塗りつぶし
-   - Future: 小さい円（12px）薄い
+   Figmaデザインに準拠
+   - Active: 長い白い縦棒（100px）
+   - Past: 小さい灰色の丸（12px）、不透明度0.6
+   - Future: 小さい灰色の丸（12px）、不透明度0.3
    ======================================== */
 
-/* コントロールラッパー */
+/* コントロールラッパー（タイムライン・ギャラリー両方で常に表示・クリック可能） */
 .timeline-gallery-controls {
   position: fixed;
-  left: 40px;
+  left: clamp(16px, 2vw, 40px);
+  left: max(clamp(16px, 2vw, 40px), env(safe-area-inset-left));
   top: 32%;
   transform: translateY(-50%);
-  z-index: 100;
+  z-index: var(--z-dropdown);
   display: flex;
   flex-direction: column;
   align-items: center;
+  pointer-events: auto;
 }
 
 /* インジケーターコンテナ */
 .timeline-gallery-indicators {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: clamp(6px, 1vh, 12px);
   align-items: center;
 }
 
@@ -31,115 +33,89 @@
 .timeline-gallery-indicator {
   width: 12px;
   border-radius: 100px;
-  position: relative;
-  overflow: hidden;
   cursor: pointer;
   border: none;
   padding: 0;
   /* 高さのモーフィングトランジション */
   transition: 
-    height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.2s ease;
+    height var(--duration-slow) var(--ease-in-out),
+    opacity var(--duration-normal) var(--ease-ukiyoe),
+    transform var(--duration-fast) var(--ease-ukiyoe);
 }
-
-/* .timeline-gallery-indicator:hover {
-  transform: scale(1.2);
-} */
 
 .timeline-gallery-indicator:focus {
   outline: 2px solid var(--ai-iro);
   outline-offset: 2px;
 }
 
-/* 高さの状態 */
+/* アクティブ状態: 長い白い縦棒 */
 .timeline-gallery-indicator--active {
-  height: 100px;
+  height: clamp(50px, 10vh, 100px);
+  background-color: var(--washi);
+  opacity: 1;
 }
 
-.timeline-gallery-indicator--past,
-.timeline-gallery-indicator--future {
+/* 非アクティブ状態: 小さい丸（不透明度はJSで動的に設定） */
+.timeline-gallery-indicator--inactive {
+  width: 12px;
   height: 12px;
+  background-color: var(--washi);
 }
 
-/* フィル要素 */
-.timeline-gallery-indicator__fill {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  border-radius: 50px;
-  transition: 
-    opacity 0.3s ease, 
-    height 0.3s ease;
+/* ギャラリーモード時: すべてのインジケーターを小さい丸で表示 */
+.timeline-gallery-controls--gallery-mode .timeline-gallery-indicator--active {
+  height: 12px;
+  opacity: 0.4;
 }
 
 /* ========================================
    RESPONSIVE
    ======================================== */
 
-@media (max-width: 1200px) {
-  .timeline-gallery-controls {
-    left: 24px;
-  }
-  
-  .timeline-gallery-indicator--active {
-    height: 80px;
-  }
-}
-
 @media (max-width: 900px) {
-  .timeline-gallery-controls {
-    left: 16px;
-  }
-  
-  .timeline-gallery-indicators {
-    gap: 10px;
-  }
-  
   .timeline-gallery-indicator {
     width: 10px;
     border-radius: 5px;
   }
-  
-  .timeline-gallery-indicator--active {
-    height: 60px;
-  }
-  
-  .timeline-gallery-indicator--past,
-  .timeline-gallery-indicator--future {
+
+  .timeline-gallery-indicator--inactive {
+    width: 10px;
     height: 10px;
-  }
-  
-  .timeline-gallery-indicator__fill {
-    border-radius: 5px;
   }
 }
 
 @media (max-width: 600px) {
   .timeline-gallery-controls {
-    left: 12px;
+    /* モバイルではインジケーター群を画面下部に横並びで配置 */
+    left: 50%;
+    top: auto;
+    bottom: 16px;
+    bottom: max(16px, env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    flex-direction: row;
   }
-  
+
   .timeline-gallery-indicators {
-    gap: 8px;
+    flex-direction: row;
+    gap: 4px;
   }
-  
+
   .timeline-gallery-indicator {
     width: 8px;
     border-radius: 4px;
+    /* タッチターゲット44px確保: paddingで透明な当たり判定を拡張 */
+    padding: 18px;
+    background-clip: content-box;
   }
-  
+
   .timeline-gallery-indicator--active {
-    height: 50px;
-  }
-  
-  .timeline-gallery-indicator--past,
-  .timeline-gallery-indicator--future {
     height: 8px;
+    width: clamp(32px, 6vw, 50px);
   }
-  
-  .timeline-gallery-indicator__fill {
-    border-radius: 4px;
+
+  .timeline-gallery-indicator--inactive {
+    width: 8px;
+    height: 8px;
   }
 }
 
@@ -150,10 +126,6 @@
 /* Reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
   .timeline-gallery-indicator {
-    transition: none;
-  }
-  
-  .timeline-gallery-indicator__fill {
     transition: none;
   }
 }

@@ -1,5 +1,7 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 import { motion } from 'framer-motion'
+import { periodDecorKusa, periodDecorAkane } from '../../constants/colors'
+import { duration, easing } from '../../constants/motion'
 
 /**
  * Concept A: スライダー型（摺りの重ね体験）
@@ -41,7 +43,7 @@ export default function ConceptA() {
       yearEn: 'c. 1740s',
       yearStart: 1740,
       yearEnd: 1765,
-      color: '#95a078',
+      color: periodDecorKusa,
       image: '/benizuri-e.png',
       desc: '紅色と緑色を追加しました版画です。2〜3色程度の限られた色彩で華やかさを演出しました'
     },
@@ -53,7 +55,7 @@ export default function ConceptA() {
       yearEn: '1765+',
       yearStart: 1765,
       yearEnd: 1800,
-      color: '#f8604f',
+      color: periodDecorAkane,
       image: '/nishiki-e.png',
       desc: '10色以上の多色摺り木版画です。錦織のような豪華絢爛な色彩表現を実現しました'
     }
@@ -263,7 +265,7 @@ export default function ConceptA() {
               animate={{
                 opacity: opacities[tech.id]
               }}
-              transition={{ duration: isDragging ? 0.05 : 0.15, ease: 'easeOut' }}
+              transition={{ duration: isDragging ? 0.05 : duration.fast, ease: easing.easeOut }}
               draggable={false}
             />
           ))}
@@ -275,7 +277,7 @@ export default function ConceptA() {
           key={activeTechnique}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: duration.normal }}
         >
           <span 
             className="technique-name"
@@ -373,7 +375,7 @@ export default function ConceptA() {
         key={activeTechnique}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.4 }}
+        transition={{ duration: duration.normal }}
       >
         {techniques[activeTechnique].desc}
       </motion.p>

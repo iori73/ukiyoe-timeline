@@ -1,11 +1,23 @@
 import { motion, AnimatePresence } from 'framer-motion'
+import { spring } from '../constants/motion'
 import { useLanguage } from '../context/LanguageContext'
 import { getLocalizedField } from '../data/ukiyoe'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function DetailModal({ period, isOpen, onClose }) {
   const { language } = useLanguage()
   const [imageError, setImageError] = useState(false)
+
+  // ESCキーで閉じる
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose()
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isOpen, onClose])
 
   if (!period) return null
 
@@ -26,14 +38,14 @@ export default function DetailModal({ period, isOpen, onClose }) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="modal-overlay" onClick={onClose}>
+        <div className="modal-overlay" onClick={onClose} role="dialog" aria-modal="true">
           {/* Modal */}
           <motion.div
             className="modal"
             initial={{ opacity: 0, y: 50, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.95 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            transition={spring.snappy}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close button - Hanko Style */}

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { duration, easing } from '../../constants/motion'
 import { useLanguage } from '../../context/LanguageContext'
 import { getLocalizedField } from '../../data/ukiyoe'
 import './DetailCards.css'
@@ -48,9 +49,9 @@ export default function DetailCards({ period, isActive }) {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
+        duration: duration.slow,
         delay: index * 0.1,
-        ease: [0.19, 1.0, 0.22, 1.0]
+        ease: easing.ukiyoe
       }
     })
   }

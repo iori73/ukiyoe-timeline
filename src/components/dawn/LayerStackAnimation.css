@@ -1,0 +1,77 @@
+/* ========================================
+   LAYER STACK ANIMATION - 印刷版が重なる表現
+   スクロールで画面に入ったら開始、一度だけ再生
+   ======================================== */
+
+.layer-stack {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl, 32px) var(--space-lg, 24px);
+  scroll-margin-top: 0;
+}
+
+.layer-stack__inner {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg, 24px);
+}
+
+/* アイソメ（3D遠近感）を保持 - Figmaのような傾き */
+.layer-stack__isometric {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.layer-stack__frame {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 3 / 4;
+  transform: rotateX(6deg) rotateY(-4deg);
+  transform-style: preserve-3d;
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.12),
+    0 8px 16px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--washi, #f5f0e6);
+}
+
+.layer-stack__layer {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.layer-stack__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  pointer-events: none;
+}
+
+.layer-stack__caption {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--sumi-iro, #2d2d2d);
+  opacity: 0.85;
+  margin: 0;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .layer-stack__frame {
+    max-width: 280px;
+  }
+}

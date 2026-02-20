@@ -6,11 +6,11 @@
 .artwork-modal {
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  z-index: var(--z-modal);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px;
+  padding: var(--space-xl);
 }
 
 /* 背景オーバーレイ - パネル風半透明ブラー + 黒を少し追加 */
@@ -28,7 +28,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 48px;
+  gap: var(--space-xl);
   max-width: 1200px;
   max-height: 80vh;
   z-index: 1;
@@ -42,7 +42,7 @@
   box-shadow:
     0 24px 80px rgba(0, 0, 0, 0.5),
     0 8px 24px rgba(0, 0, 0, 0.3);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   overflow: hidden;
 }
 
@@ -63,9 +63,9 @@
   max-height: 70vh;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--space-sm);
   color: var(--washi-iro, #f5f0e6);
-  overflow: hidden; /* スクロールなし */
+  overflow: visible; /* 説明文のスクロールを許可 */
 }
 
 .artwork-modal__year {
@@ -114,7 +114,9 @@
   border: none;
   cursor: pointer;
   color: rgba(245, 240, 230, 0.7);
-  transition: opacity 0.2s ease;
+  transition: opacity var(--duration-fast) var(--ease-ukiyoe);
+  min-height: 44px;
+  min-width: 44px;
 }
 
 .artwork-modal__close-btn:hover {
@@ -175,11 +177,9 @@
   }
 
   .artwork-modal__description {
-    /* 長い説明文は切り詰め */
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    /* スクロール可能にして全文表示 */
+    overflow-y: auto;
+    max-height: 180px;
   }
 
   .artwork-modal__close-hint {
@@ -193,23 +193,44 @@
 
 @media (max-width: 600px) {
   .artwork-modal {
-    padding: 16px;
+    padding: 0;
+    align-items: stretch;
   }
 
   .artwork-modal__content {
-    gap: 16px;
-    max-height: 95vh;
+    gap: 0;
+    max-height: none;
+    height: 100%;
+    width: 100%;
+    border-radius: 0;
+    flex-direction: column;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .artwork-modal__image-container {
+    border-radius: 0;
+    box-shadow: none;
+    flex-shrink: 0;
   }
 
   .artwork-modal__image {
-    max-width: 85vw;
-    max-height: 40vh;
+    max-width: 100vw;
+    max-height: 50vh;
+    width: 100%;
+    object-fit: contain;
+    background: rgba(0, 0, 0, 0.3);
   }
 
   .artwork-modal__info {
     min-width: unset;
-    max-height: 35vh;
-    gap: 10px;
+    max-width: none;
+    max-height: none;
+    gap: 12px;
+    padding: 24px 20px;
+    text-align: left;
+    align-items: flex-start;
+    overflow: visible;
   }
 
   .artwork-modal__title {
@@ -218,8 +239,14 @@
 
   .artwork-modal__description {
     font-size: var(--text-sm);
-    line-height: 1.6;
-    -webkit-line-clamp: 2;
+    line-height: 1.7;
+    overflow: visible;
+    max-height: none;
+  }
+
+  .artwork-modal__close-btn {
+    padding-top: 16px;
+    padding-bottom: env(safe-area-inset-bottom, 16px);
   }
 
   .artwork-modal__close-hint {
@@ -247,10 +274,10 @@
   }
 
   .artwork-modal__info {
-    color: #fff;
+    color: var(--color-white);
   }
 
   .artwork-modal__image-container {
-    border: 2px solid #fff;
+    border: 2px solid var(--color-white);
   }
 }

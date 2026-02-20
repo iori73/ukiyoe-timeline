@@ -5,24 +5,26 @@ import './TimelineGalleryIndicators.css'
  * 
  * /timeline用のギャラリーインジケーター
  * - 9つの時代に対応
- * - GalleryIndicatorsManualスタイルを踏襲
+ * - Figmaデザインに準拠
  * - クリックで該当時代へスクロール
  * 
  * 状態:
- * - ACTIVE: 高いバー（100px）、塗りつぶし
- * - PAST: 小さい円（12px）、塗りつぶし
- * - FUTURE: 小さい円（12px）、薄い
+ * - ACTIVE: 長い白い縦棒（100px）、不透明度100%
+ * - PAST/FUTURE: 小さい灰色の丸（12px）、アクティブから離れるほど薄くなる
+ *   - アクティブから1つ離れた位置: 90%
+ *   - アクティブから2つ離れた位置: 80%
+ *   - アクティブから3つ離れた位置: 70%... と10%ずつ減少（最小10%）
  */
 export default function TimelineGalleryIndicators({ 
   currentSection, 
   totalSections,
   onSectionClick,
-  periods = []
+  periods = [],
+  isGalleryMode = false
 }) {
-  // 統一された白っぽい色（背景が暗いため）
-  const indicatorColor = {
-    color: 'rgba(245, 240, 230, 0.95)',      // washi色（クリーム白）
-    bgColor: 'rgba(245, 240, 230, 0.2)'      // 薄い背景
+  // 浮世絵作品一覧が表示されているときはインジケーターは不要
+  if (isGalleryMode) {
+    return null
   }
 
   return (
@@ -36,32 +38,25 @@ export default function TimelineGalleryIndicators({
           // 状態クラスを決定
           const stateClass = isActive 
             ? 'timeline-gallery-indicator--active' 
-            : isPast 
-              ? 'timeline-gallery-indicator--past' 
-              : 'timeline-gallery-indicator--future'
+            : 'timeline-gallery-indicator--inactive'
           
-          // フィル高さ
-          const fillHeight = isPast || isActive ? 100 : 0
+          // アクティブからの距離に基づいて不透明度を計算
+          let opacity = 1
+          if (isPast || isFuture) {
+            const distanceFromActive = Math.abs(index - currentSection)
+            // 90%, 80%, 70%... と10%ずつ減少（最小10%）
+            opacity = Math.max(0.1, 1 - (distanceFromActive * 0.1))
+          }
           
           return (
             <button
               key={index}
               className={`timeline-gallery-indicator ${stateClass}`}
-              style={{ backgroundColor: indicatorColor.bgColor }}
+              style={!isActive ? { opacity } : undefined}
               onClick={() => onSectionClick?.(index)}
               aria-label={`Go to section ${index + 1}`}
               aria-current={isActive ? 'true' : 'false'}
-            >
-              {/* フィル要素 */}
-              <div 
-                className="timeline-gallery-indicator__fill"
-                style={{ 
-                  backgroundColor: indicatorColor.color,
-                  opacity: isFuture ? 0.4 : 1,
-                  height: `${fillHeight}%`,
-                }}
-              />
-            </button>
+            />
           )
         })}
       </div>

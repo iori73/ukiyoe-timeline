@@ -9,6 +9,7 @@
  */
 
 import { motion } from 'framer-motion'
+import { duration, easing } from '../../constants/motion'
 
 // 時代カラー定義
 const ERA_COLORS = {
@@ -25,8 +26,8 @@ const layerVariants = {
     scale: 1,
     transition: {
       delay: custom.delay,
-      duration: 0.8,
-      ease: [0.25, 0.1, 0.25, 1]
+      duration: duration.slow,
+      ease: easing.easeInOut
     }
   })
 }
@@ -87,7 +88,7 @@ export const LayeredLogo = ({
         variants={animate ? layerVariants : undefined}
         initial={animate ? "hidden" : undefined}
         animate={animate ? "visible" : undefined}
-        custom={{ opacity: 0.9, delay: 0.4 }}
+        custom={{ opacity: 0.5, delay: 0.4 }}
       />
       
       {/* 紅レイヤー (紅摺絵 - 中間) */}
@@ -101,7 +102,7 @@ export const LayeredLogo = ({
         variants={animate ? layerVariants : undefined}
         initial={animate ? "hidden" : undefined}
         animate={animate ? "visible" : undefined}
-        custom={{ opacity: 0.85, delay: 0.2 }}
+        custom={{ opacity: 0.5, delay: 0.2 }}
       />
       
       {/* 墨レイヤー (墨摺絵 - 最前面) */}
@@ -109,7 +110,7 @@ export const LayeredLogo = ({
         variants={animate ? layerVariants : undefined}
         initial={animate ? "hidden" : undefined}
         animate={animate ? "visible" : undefined}
-        custom={{ opacity: 1, delay: 0 }}
+        custom={{ opacity: 0.5, delay: 0 }}
       >
         <rect 
           x={0} 
@@ -125,8 +126,8 @@ export const LayeredLogo = ({
             <path 
               key={i} 
               d={d} 
-              fill="#F5F1E6" 
-              stroke={i === 1 ? "#F5F1E6" : undefined}
+              fill="var(--washi)" 
+              stroke={i === 1 ? "var(--washi)" : undefined}
               strokeWidth={i === 1 ? 0.51282 : undefined}
             />
           ))}
@@ -138,7 +139,7 @@ export const LayeredLogo = ({
           fontFamily="'HOT-Tenshokk-M', serif" 
           fontSize={fontSize} 
           fontWeight="400"
-          fill="#F5F1E6" 
+          fill="var(--washi)" 
           textAnchor="start"
         >
           世絵
@@ -199,9 +200,9 @@ export const GradientLogo = ({
       {/* 時代マーカー */}
       {showMarkers && (
         <>
-          <circle cx={barWidth * 0.167} cy={height * 0.5} r={height * 0.06} fill="#F5F1E6" opacity="0.9"/>
-          <circle cx={barWidth * 0.5} cy={height * 0.5} r={height * 0.06} fill="#F5F1E6" opacity="0.9"/>
-          <circle cx={barWidth * 0.833} cy={height * 0.5} r={height * 0.06} fill="#F5F1E6" opacity="0.9"/>
+          <circle cx={barWidth * 0.167} cy={height * 0.5} r={height * 0.06} fill="var(--washi)" opacity="0.9"/>
+          <circle cx={barWidth * 0.5} cy={height * 0.5} r={height * 0.06} fill="var(--washi)" opacity="0.9"/>
+          <circle cx={barWidth * 0.833} cy={height * 0.5} r={height * 0.06} fill="var(--washi)" opacity="0.9"/>
         </>
       )}
       
@@ -212,7 +213,7 @@ export const GradientLogo = ({
         fontFamily="'HOT-Tenshokk-M', serif" 
         fontSize={fontSize} 
         fontWeight="500"
-        fill="#F5F1E6" 
+        fill="var(--washi)" 
         textAnchor="middle"
       >
         浮世絵
@@ -304,7 +305,7 @@ export const VennLogo = ({
         cx={centerX} 
         cy={circleR * 1.44} 
         r={circleR * 0.33} 
-        fill="#F5F1E6" 
+        fill="var(--washi)" 
         opacity="0.15"
       />
       
@@ -339,7 +340,7 @@ export const VennLogo = ({
         fontSize={circleR * 0.33} 
         fontWeight="300"
         letterSpacing="0.1em"
-        fill="#999"
+        fill="var(--text-tertiary)"
       >
         TIMELINE
       </text>
@@ -402,7 +403,7 @@ export const EraAwareLogo = ({
         rx={2} 
         fill={ERA_COLORS.nishiki}
         animate={{ opacity: getOpacity('nishiki') }}
-        transition={{ duration: 0.6, ease: 'easeInOut' }}
+        transition={{ duration: duration.slow, ease: easing.ukiyoe }}
       />
       
       {/* 紅レイヤー (紅摺絵) */}
@@ -414,13 +415,13 @@ export const EraAwareLogo = ({
         rx={2} 
         fill={ERA_COLORS.benizuri}
         animate={{ opacity: getOpacity('benizuri') }}
-        transition={{ duration: 0.6, ease: 'easeInOut' }}
+        transition={{ duration: duration.slow, ease: easing.ukiyoe }}
       />
       
       {/* 墨レイヤー (墨摺絵) */}
       <motion.g
         animate={{ opacity: getOpacity('sumizuri') }}
-        transition={{ duration: 0.6, ease: 'easeInOut' }}
+        transition={{ duration: duration.slow, ease: easing.ukiyoe }}
       >
         <rect 
           x={0} 
@@ -436,8 +437,8 @@ export const EraAwareLogo = ({
             <path 
               key={i} 
               d={d} 
-              fill="#F5F1E6" 
-              stroke={i === 1 ? "#F5F1E6" : undefined}
+              fill="var(--washi)" 
+              stroke={i === 1 ? "var(--washi)" : undefined}
               strokeWidth={i === 1 ? 0.51282 : undefined}
             />
           ))}
@@ -449,7 +450,7 @@ export const EraAwareLogo = ({
           fontFamily="'HOT-Tenshokk-M', serif" 
           fontSize={fontSize} 
           fontWeight="400"
-          fill="#F5F1E6" 
+          fill="var(--washi)" 
           textAnchor="start"
         >
           世絵

@@ -6,6 +6,8 @@ export default defineConfig({
   // Enable SPA fallback for React Router
   server: {
     historyApiFallback: true,
+    // 同一WiFiのiPhone等から実機テストするためLANでリッスン
+    host: true,
   },
   // Vitest configuration
   test: {

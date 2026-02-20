@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import { duration, easing } from '../constants/motion'
 import PeriodCard from './PeriodCard'
 import { useLanguage } from '../context/LanguageContext'
 
@@ -57,8 +58,8 @@ export default function Timeline({ data, onSelectPeriod }) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ 
                   delay: index * 0.1,
-                  duration: 0.5,
-                  ease: [0.25, 0.46, 0.45, 0.94]
+                  duration: duration.slow,
+                  ease: easing.ukiyoe
                 }}
               >
                 <PeriodCard 

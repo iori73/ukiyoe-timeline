@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { duration, stagger, easingCss } from '../../constants/motion'
 import './LayeredImages.css'
 
 /**
@@ -238,7 +239,7 @@ export default function LayeredImages({
     
     return {
       transform: isSpread ? 'translateX(0)' : `translateX(-${cardOffset}px)`,
-      transition: `transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 0.1}s`,
+      transition: `transform ${duration.slower}s ${easingCss.ukiyoe} ${index * stagger.slow}s`,
       zIndex: imageCount - index, // Higher z-index for earlier cards
     }
   }

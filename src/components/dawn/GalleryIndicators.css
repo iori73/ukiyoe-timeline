@@ -17,7 +17,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 24px; /* 8の倍数 */
 }
 
 /* Play/Pause Button - positioned above indicators via flex */
@@ -31,7 +31,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity var(--duration-fast) var(--ease-ukiyoe), transform var(--duration-fast) var(--ease-ukiyoe);
   flex-shrink: 0;
 }
 
@@ -45,7 +45,7 @@
 }
 
 .gallery-play-button:focus-visible {
-  outline: 2px solid #334E6C;
+  outline: 2px solid var(--ai-iro);
   outline-offset: 4px;
   border-radius: 50%;
 }
@@ -58,7 +58,7 @@
 .gallery-indicators {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px; /* 8の倍数 */
   align-items: center;
   position: relative;
 }
@@ -84,7 +84,7 @@
   position: relative;
   overflow: hidden;
   /* Smooth height morphing between states */
-  transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: height var(--duration-slow) var(--ease-in-out);
   /* 串の上に表示 */
   z-index: 1;
 }
@@ -108,7 +108,7 @@
   right: 0;
   /* Height is set via inline style from JS */
   border-radius: 50px;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--duration-normal) var(--ease-ukiyoe);
   /* No height transition - we want instant sync with timer */
 }
 
@@ -124,19 +124,19 @@
   }
   
   .gallery-indicator--active {
-    height: 80px;
+    height: 80px; /* 8の倍数 */
   }
   
   .gallery-indicators::before {
-    top: -12px;
-    bottom: -12px;
+    top: -16px;
+    bottom: -16px;
   }
 }
 
 @media (max-width: 900px) {
   .gallery-controls {
     left: 16px;
-    gap: 1.5rem;
+    gap: 16px; /* 8の倍数 */
   }
   
   .gallery-play-button {
@@ -145,28 +145,28 @@
   }
   
   .gallery-indicators {
-    gap: 10px;
+    gap: 8px; /* 8の倍数 */
   }
   
   .gallery-indicators::before {
-    top: -10px;
-    bottom: -10px;
-    width: 1.5px;
+    top: -8px;
+    bottom: -8px;
+    width: 2px;
   }
   
   .gallery-indicator {
-    width: 10px;
+    width: 8px; /* 8の倍数 */
     border-radius: 50%;
   }
   
   .gallery-indicator--active {
-    height: 60px;
-    border-radius: 5px;
+    height: 56px; /* 8の倍数 */
+    border-radius: 4px;
   }
   
   .gallery-indicator--past,
   .gallery-indicator--future {
-    height: 10px;
+    height: 8px; /* 8の倍数 */
   }
   
   .gallery-indicator__fill {
@@ -176,41 +176,41 @@
 
 @media (max-width: 600px) {
   .gallery-controls {
-    left: 12px;
-    gap: 1.5rem;
+    left: 8px;
+    gap: 16px; /* 8の倍数 */
   }
   
   .gallery-play-button {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
   }
   
   .gallery-indicators {
-    gap: 8px;
+    gap: 8px; /* 8の倍数 */
   }
   
   .gallery-indicators::before {
     top: -8px;
     bottom: -8px;
-    width: 1.5px;
+    width: 2px;
   }
   
   .gallery-indicator {
-    width: 10px;
+    width: 8px; /* 8の倍数 */
     border-radius: 50%;
   }
   
   .gallery-indicator--active {
-    height: 50px;
-    border-radius: 5px;
+    height: 48px; /* 8の倍数 */
+    border-radius: 4px;
   }
   
   .gallery-indicator--past,
   .gallery-indicator--future {
-    height: 10px;
+    height: 8px; /* 8の倍数 */
   }
   
   .gallery-indicator__fill {
-    border-radius: 5px;
+    border-radius: 4px;
   }
 }

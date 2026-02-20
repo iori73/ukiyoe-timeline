@@ -1,95 +1,75 @@
 import { useRef, useEffect, useState, useMemo, useCallback } from 'react'
 import { motion } from 'framer-motion'
+import { duration, easing } from '../../constants/motion'
 import { useLanguage } from '../../context/LanguageContext'
 import ArtworkDetailModal from './ArtworkDetailModal'
 import './ParallaxArtworks.css'
 
 /**
  * 「散らし」配置を生成
- * 280vhレイヤーに4作品を左右交互配置（上下にバッファあり）
+ * 280vhレイヤーに最大5作品を左右交互配置。縦は約17%間隔で重なりを防止。
  *
- * 【改善】
- * - 上部バッファ: 作品を見始める前の余白（5%）
- * - 作品エリア: 4作品を20%間隔で配置
- * - 下部バッファ: 最後の作品を見終えてから次の時代に移る余白
- *
- * 【配置計算】
- * - 280vhレイヤー、スクロールで0→-180vh移動
- * - 作品高さ: 約15% (280vh × 15% ≈ 42vh)
- * - スクロール180vhの中で全作品を十分に見れる
- *
- * 【配置】（280vhレイヤー基準）
- * Art1(5%, left:20)   - スクロール初期で見える、上部に余白
- * Art2(23%, left:55)  - 18%間隔
- * Art3(41%, left:18)  - 18%間隔
- * Art4(59%, left:52)  - 18%間隔、スクロール終盤で十分見れる
- * 
- * 最後の作品(59%)は280vh×59%=165vh位置
- * 作品高さ15%(42vh)を加えると207vh
- * スクロール180vhで作品が画面中央(50vh)にくるタイミング:
- * 165vh - 50vh = 115vh スクロール時に画面中央
- * 十分な余裕あり
+ * 【配置とスクロール】
+ * - セクション高さ280vh、progress 0→1 でレイヤーが 0→-180vh 移動
+ * - progress=1 のときビューポートはレイヤーの 180vh～280vh を表示
+ * - 5番目(top 73%) = 204.4vh → progress=1 の表示範囲(180～280vh)に含まれる
+ * - カード間: 17% × 280vh = 47.6vh → 画像最大45vh + テキスト に対して十分な余裕
  */
 const generateChirashiPositions = (count, viewportWidth, viewportHeight, layerHeight = 280) => {
+  // デスクトップ (>1200px)
+  // 画像幅 ≈ 25vw → 左(25%) 中央37.5%, 右(55%) 中央67.5% → 平均49.5% ≈ 中央
   const basePositions = [
-    // 1. 左寄り - top 5%（上部バッファ後、スクロール初期で見える）
-    {
-      top: 5, left: 20,
-      scale: 1.0,
-      zIndex: 15,
-      maOffset: { x: 0, y: 0 }
-    },
-    // 2. 右寄り - top 23%（18%間隔）
-    {
-      top: 23, left: 55,
-      scale: 0.95,
-      zIndex: 14,
-      maOffset: { x: 0, y: 0 }
-    },
-    // 3. 左寄り - top 41%（18%間隔）
-    {
-      top: 41, left: 18,
-      scale: 0.92,
-      zIndex: 13,
-      maOffset: { x: 0, y: 0 }
-    },
-    // 4. 右寄り - top 59%（18%間隔、下部に余裕あり）
-    {
-      top: 59, left: 52,
-      scale: 0.98,
-      zIndex: 12,
-      maOffset: { x: 0, y: 0 }
-    },
+    { top: 5,  left: 25, scale: 1.0,  zIndex: 15, maOffset: { x: 0, y: 0 } },
+    { top: 22, left: 55, scale: 0.95, zIndex: 14, maOffset: { x: 0, y: 0 } },
+    { top: 39, left: 22, scale: 0.92, zIndex: 13, maOffset: { x: 0, y: 0 } },
+    { top: 56, left: 55, scale: 0.98, zIndex: 12, maOffset: { x: 0, y: 0 } },
+    { top: 73, left: 25, scale: 0.9,  zIndex: 11, maOffset: { x: 0, y: 0 } },
   ]
 
   // レスポンシブ調整
-  const isMobile = viewportWidth < 900
+  const isMobileSmall = viewportWidth < 600
+  const isMobile = viewportWidth < 900 && viewportWidth >= 600
   const isTablet = viewportWidth < 1200 && viewportWidth >= 900
 
   return basePositions.slice(0, count).map((pos, index) => {
     let adjustedPos = { ...pos }
 
-    if (isMobile) {
-      // モバイル: 左右交互配置、上部バッファ + 18%縦間隔
+    if (isMobileSmall) {
+      // モバイル小 (<600px): 画像幅60vw, コンテナ幅75vw
+      // right-aligned の left は 100% - 75vw = 25% が上限
+      // left(3-5%) と right(20-22%) で交互配置し、はみ出しを防止
+      const mobileSmallPositions = [
+        { top: 5,  left: 3,  scale: 0.95, zIndex: 15 },
+        { top: 22, left: 22, scale: 0.90, zIndex: 14 },
+        { top: 39, left: 2,  scale: 0.88, zIndex: 13 },
+        { top: 56, left: 20, scale: 0.92, zIndex: 12 },
+        { top: 73, left: 3,  scale: 0.85, zIndex: 11 },
+      ]
+      adjustedPos = mobileSmallPositions[index] || adjustedPos
+    } else if (isMobile) {
+      // モバイル (600-900px): 画像幅 ≈ 40vw(35%)
+      // 左(15%) 中央32.5%, 右(48%) 中央65.5% → 平均46.3% ≈ 中央
       const mobilePositions = [
-        { top: 5, left: 12, scale: 0.95, zIndex: 15 },      // 左（上部バッファ）
-        { top: 23, left: 50, scale: 0.90, zIndex: 14 },     // 右
-        { top: 41, left: 10, scale: 0.88, zIndex: 13 },     // 左
-        { top: 59, left: 48, scale: 0.92, zIndex: 12 },     // 右
+        { top: 5,  left: 15, scale: 0.95, zIndex: 15 },
+        { top: 22, left: 48, scale: 0.90, zIndex: 14 },
+        { top: 39, left: 12, scale: 0.88, zIndex: 13 },
+        { top: 56, left: 45, scale: 0.92, zIndex: 12 },
+        { top: 73, left: 15, scale: 0.85, zIndex: 11 },
       ]
       adjustedPos = mobilePositions[index] || adjustedPos
     } else if (isTablet) {
-      // タブレット: 左右交互配置、上部バッファ + 18%縦間隔
+      // タブレット (900-1200px): 画像幅 ≈ 28vw
+      // 左(18%) 中央32%, 右(55%) 中央69% → 平均46.8% ≈ 中央
       const tabletPositions = [
-        { top: 5, left: 15, scale: 0.98, zIndex: 15 },      // 左（上部バッファ）
-        { top: 23, left: 52, scale: 0.93, zIndex: 14 },     // 右
-        { top: 41, left: 12, scale: 0.90, zIndex: 13 },     // 左
-        { top: 59, left: 50, scale: 0.95, zIndex: 12 },     // 右
+        { top: 5,  left: 18, scale: 0.98, zIndex: 15 },
+        { top: 22, left: 55, scale: 0.93, zIndex: 14 },
+        { top: 39, left: 15, scale: 0.90, zIndex: 13 },
+        { top: 56, left: 53, scale: 0.95, zIndex: 12 },
+        { top: 73, left: 18, scale: 0.88, zIndex: 11 },
       ]
       adjustedPos = tabletPositions[index] || adjustedPos
     }
 
-    // 揺らぎなしで正確な配置を維持（重なり防止のため）
     return adjustedPos
   })
 }
@@ -179,18 +159,18 @@ export default function ParallaxArtworks({
     )
   }, [artworks.length])
 
-  // 「散らし」配置の計算（メモ化）
+  // 「散らし」配置の計算（メモ化）- 各時代5作品で統一
   const chirashiPositions = useMemo(() => {
     return generateChirashiPositions(
-      Math.min(artworks.length, 4), 
-      viewportSize.width, 
+      Math.min(artworks.length, 5),
+      viewportSize.width,
       viewportSize.height,
       layerHeight
     )
   }, [artworks.length, viewportSize.width, viewportSize.height, layerHeight])
 
-  // 表示する作品数を制限（最大4つ）
-  const visibleArtworks = artworks.slice(0, 4)
+  // 表示する作品数（最大5つ）
+  const visibleArtworks = artworks.slice(0, 5)
 
   return (
     <div 
@@ -234,6 +214,9 @@ export default function ParallaxArtworks({
 /**
  * 個別のパララックス画像コンポーネント
  * 「散らし」配置で有機的な動きを実現
+ * 
+ * 【画像サイズに応じた配置調整】
+ * モバイルで右寄り配置の場合、画像幅が小さければより右に配置可能
  */
 function ParallaxImage({
   artwork,
@@ -246,9 +229,59 @@ function ParallaxImage({
   language
 }) {
   const { rotateFactor, delay } = parallaxConfig
+  const imgRef = useRef(null)
+  const [adjustedLeft, setAdjustedLeft] = useState(position.left)
+  const [isLandscape, setIsLandscape] = useState(false)
 
   const title = language === 'ja' ? artwork.title_ja : artwork.title_en
   const artist = language === 'ja' ? artwork.artist_ja : artwork.artist_en
+
+  // 右寄り配置かどうか（インデックス 1, 3 が右寄り）
+  const isRightAligned = index % 2 === 1
+
+  // 画像ロード後にサイズとアスペクト比をチェックして配置を調整
+  const handleImageLoad = useCallback(() => {
+    if (!imgRef.current) return
+    
+    const viewportWidth = window.innerWidth
+    const imageWidth = imgRef.current.offsetWidth
+    const naturalWidth = imgRef.current.naturalWidth
+    const naturalHeight = imgRef.current.naturalHeight
+    
+    // 横長判定（アスペクト比 > 1）
+    const landscape = naturalWidth > naturalHeight
+    setIsLandscape(landscape)
+    
+    // モバイル（600px以下）での配置調整
+    // overflow: hidden で切れるのを防ぐため、left + 画像幅が画面内に収まるように制約
+    if (viewportWidth <= 600) {
+      const maxLeft = Math.max(0, ((viewportWidth - imageWidth) / viewportWidth) * 100 - 2)
+      if (isRightAligned) {
+        if (landscape) {
+          // 横長画像（70vw）はやや右寄りだが画面内に収まる位置
+          setAdjustedLeft(Math.min(position.left, maxLeft))
+        } else {
+          // 縦長画像は元の位置を尊重しつつ、はみ出し防止
+          setAdjustedLeft(Math.min(position.left, maxLeft))
+        }
+      } else {
+        setAdjustedLeft(position.left)
+      }
+    } else {
+      setAdjustedLeft(position.left)
+    }
+  }, [isRightAligned, position.left])
+
+  // ビューポートサイズ変更時に再計算
+  useEffect(() => {
+    const handleResize = () => {
+      if (imgRef.current) {
+        handleImageLoad()
+      }
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [handleImageLoad])
 
   return (
     <motion.div
@@ -256,7 +289,7 @@ function ParallaxImage({
       style={{
         position: 'absolute',
         top: `${position.top}%`,
-        left: `${position.left}%`,
+        left: `${adjustedLeft}%`,
         zIndex: position.zIndex
       }}
       initial={{ opacity: 0, y: 30, rotate: rotateFactor * 2 }}
@@ -267,9 +300,9 @@ function ParallaxImage({
         scale: position.scale || 1
       }}
       transition={{ 
-        duration: 0.9, 
+        duration: duration.slower, 
         delay: delay,
-        ease: [0.19, 1.0, 0.22, 1.0]
+        ease: easing.ukiyoe
       }}
       onClick={onClick}
       tabIndex={0}
@@ -282,10 +315,12 @@ function ParallaxImage({
     >
       <div className="parallax-artwork__frame">
         <img
+          ref={imgRef}
           src={artwork.url}
           alt={`${title} - ${artist}`}
-          className="parallax-artwork__image"
+          className={`parallax-artwork__image${isLandscape ? ' parallax-artwork__image--landscape' : ''}`}
           loading="lazy"
+          onLoad={handleImageLoad}
           onError={onError}
         />
       </div>

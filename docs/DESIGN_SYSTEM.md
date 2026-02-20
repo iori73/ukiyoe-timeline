@@ -3,7 +3,7 @@
 > **「伝統と現代ウェブの融合」** - 江戸時代の版画技法を現代的に解釈したデジタル体験を創出する
 
 このドキュメントはプロジェクト全体のデザイン指針をまとめたものです。
-詳細な定義は [DESIGN_SYSTEM.yaml](./DESIGN_SYSTEM.yaml) を参照してください。
+CSS変数は `src/App.css` の `:root` で定義。Framer Motion 定数は `src/constants/motion.js` で定義。
 
 ---
 
@@ -13,9 +13,15 @@
 2. [カラーシステム](#カラーシステム)
 3. [タイポグラフィ](#タイポグラフィ)
 4. [スペーシング](#スペーシング)
-5. [アニメーション](#アニメーション)
-6. [コンポーネント](#コンポーネント)
-7. [レイアウトパターン](#レイアウトパターン)
+5. [角丸・ボーダー](#角丸ボーダー)
+6. [シャドウ](#シャドウ)
+7. [Z-Index スケール](#z-index-スケール)
+8. [不透明度](#不透明度)
+9. [アニメーション](#アニメーション)
+10. [Framer Motion 定数 (JS)](#framer-motion-定数-js)
+11. [コンポーネント](#コンポーネント)
+12. [レイアウトパターン](#レイアウトパターン)
+13. [Do / Don't](#do--dont)
 
 ---
 
@@ -33,6 +39,12 @@
 
 > **文化的, 洗練された, 静謐, 教育的, 本格派**
 
+### トークン設計方針
+
+- **CSS変数 + JSモジュール** のシンプルな構成（JSON/YAML トークンファイルは使わない）
+- **"smallest set" の原則**: 実際にコードベースで使われている値のみをトークン化
+- **Primitive + Semantic の2層**: Component層は必要な箇所のみに限定
+
 ---
 
 ## 🎨 カラーシステム
@@ -42,6 +54,13 @@
 ```
 墨摺絵（モノクロ）→ 紅摺絵（2-3色）→ 錦絵（多色）
 ```
+
+### 基本色
+
+| 色名 | Hex | CSS変数 | 用途 |
+|------|-----|---------|------|
+| **白** | `#ffffff` | `--color-white` | 純白の背景・テキスト |
+| **黒** | `#000000` | `--color-black` | 純黒のボーダー・要素 |
 
 ### 主色（摺り色）
 
@@ -58,21 +77,67 @@
 |------|-----|---------|------|
 | **和紙** | `#f5f0e6` | `--washi` | メイン背景 |
 | **淡雪** | `#fefefe` | `--awayuki` | セカンダリ背景 |
-| **越前** | `#ebdcbd` | - | Dawnページ背景 |
+| **越前** | `#ebdcbd` | `--echizen` | Dawnページ背景 |
+| **和紙（半透明）** | `rgba(245, 240, 230, 0.95)` | `--washi-translucent` | 半透明パネル |
 
-### 使用例
+### 透明度バリエーション
 
-```css
-/* タイトルに紅色を使用 */
-.title {
-  color: var(--beni-iro);
-}
+| CSS変数 | 値 | ベース色 |
+|---------|-----|---------|
+| `--beni-05` | `rgba(214, 78, 78, 0.05)` | 紅色 5% |
+| `--beni-10` | `rgba(214, 78, 78, 0.1)` | 紅色 10% |
+| `--beni-15` | `rgba(214, 78, 78, 0.15)` | 紅色 15% |
+| `--ai-05` | `rgba(30, 58, 95, 0.05)` | 藍色 5% |
+| `--ai-10` | `rgba(30, 58, 95, 0.1)` | 藍色 10% |
+| `--ai-15` | `rgba(30, 58, 95, 0.15)` | 藍色 15% |
 
-/* 背景に和紙色を使用 */
-.section {
-  background: var(--washi);
-}
-```
+### オーバーレイ
+
+| CSS変数 | 値 | 用途 |
+|---------|-----|------|
+| `--overlay-dark` | `rgba(0, 0, 0, 0.8)` | モーダル背景、暗いオーバーレイ |
+| `--overlay-light` | `rgba(255, 255, 255, 0.85)` | 明るいオーバーレイ |
+
+### 時代別カラー
+
+歴史的な版画技法に対応した色（[COLOR_GUIDELINES.md](./COLOR_GUIDELINES.md) 参照）。
+
+| 時代 | Hex | CSS変数 | 用途 |
+|------|-----|---------|------|
+| **墨摺絵** | `#1a1a1a` | `--period-sumizuri` | 墨摺絵のタイトル・ボーダー |
+| **紅摺絵** | `#C33433` | `--period-benizuri` | 紅摺絵のタイトル・ボーダー |
+| **錦絵** | `#1B3E5B` | `--period-nishiki` | 錦絵のタイトル・ボーダー（ベロ藍） |
+
+### 時代別装飾色（コンテキスト固有）
+
+| 色名 | Hex | CSS変数 | 用途 |
+|------|-----|---------|------|
+| **草色** | `#95a078` | `--period-decor-kusa` | 紅摺絵の装飾・タイトル |
+| **丹色** | `#f8604f` | `--period-decor-akane` | 錦絵の装飾・タイトル |
+
+JS で同じ値が必要な場合は `src/constants/colors.js` の `periodDecorKusa` / `periodDecorAkane` を参照。
+
+### セマンティックカラー
+
+| CSS変数 | 参照先 | 用途 |
+|---------|--------|------|
+| `--text-primary` | `var(--sumi-iro)` | 主要テキスト |
+| `--text-secondary` | `var(--ai-iro)` | セカンダリテキスト |
+| `--text-accent` | `var(--beni-iro)` | アクセントテキスト |
+| `--text-highlight` | `var(--kin-iro)` | ハイライトテキスト |
+| `--text-tertiary` | `#999999` | 補助テキスト（ミュート・ラベル等） |
+| `--bg-primary` | `var(--washi)` | メイン背景 |
+| `--bg-secondary` | `var(--awayuki)` | セカンダリ背景 |
+
+### 後方互換エイリアス
+
+| エイリアス | 参照先 |
+|-----------|--------|
+| `--ai` | `var(--ai-iro)` |
+| `--shu` | `var(--beni-iro)` |
+| `--kin` | `var(--kin-iro)` |
+| `--sumi` | `var(--sumi-iro)` |
+| `--accent` | `var(--beni-iro)` |
 
 ---
 
@@ -84,21 +149,26 @@
 |------|----------|---------|
 | **見出し** | Shippori Mincho | `--font-serif` |
 | **本文** | Hiragino Kaku Gothic ProN | `--font-sans` |
-| **ロゴ** | HOT-Tenshokk-M | カスタム |
+| **ロゴ** | HOT-Tenshokk-M | カスタム (`@font-face`) |
 
 ### フォントサイズスケール
 
-| 名前 | サイズ | CSS変数 | 用途 |
-|------|--------|---------|------|
-| xs | 12px | `--text-xs` | キャプション |
-| sm | 14px | `--text-sm` | 小さな本文 |
-| base | 16px | `--text-base` | 標準本文 |
-| lg | 18px | `--text-lg` | やや大きな本文 |
-| xl | 20px | `--text-xl` | サブ見出し |
-| 2xl | 24px | `--text-2xl` | セクション見出し |
-| 3xl | 32px | `--text-3xl` | ページ見出し |
-| 4xl | 40px | `--text-4xl` | 大見出し |
-| 5xl | 48px | `--text-5xl` | ヒーロータイトル |
+PC 向けに最小16px を基準とした rem スケール。
+
+| 名前 | rem | 実効px | CSS変数 |
+|------|-----|--------|---------|
+| xs | 0.875rem | 14px | `--text-xs` |
+| sm | 1rem | 16px | `--text-sm` |
+| base | 1.125rem | 18px | `--text-base` |
+| lg | 1.25rem | 20px | `--text-lg` |
+| xl | 1.4375rem | 23px | `--text-xl` |
+| 2xl | 1.75rem | 28px | `--text-2xl` |
+| 3xl | 2.25rem | 36px | `--text-3xl` |
+| 4xl | 2.875rem | 46px | `--text-4xl` |
+| 5xl | 3.4375rem | 55px | `--text-5xl` |
+| 6xl | 4.5rem | 72px | `--text-6xl` |
+| 7xl | 5.75rem | 92px | `--text-7xl` |
+| 8xl | 6.875rem | 110px | `--text-8xl` |
 
 ### 行間（Line Height）
 
@@ -109,23 +179,15 @@
 | relaxed | 1.8 | `--leading-relaxed` | 長文 |
 | loose | 2.0 | `--leading-loose` | 詩的なテキスト |
 
-### 使用ガイドライン
+### 字間（Letter Spacing）
 
-```yaml
-大見出し:
-  フォント: var(--font-serif)
-  サイズ: 48-80px (レスポンシブ)
-  ウェイト: 600-700
-  字間: 0.04-0.05em
-  色: var(--beni-iro)
-  
-本文:
-  フォント: var(--font-sans)
-  サイズ: 16px
-  ウェイト: 300
-  行間: 1.5-1.6
-  色: var(--sumi-iro)
-```
+| 名前 | 値 | CSS変数 |
+|------|-----|---------|
+| tight | -0.02em | `--tracking-tight` |
+| normal | 0 | `--tracking-normal` |
+| wide | 0.05em | `--tracking-wide` |
+| wider | 0.1em | `--tracking-wider` |
+| widest | 0.2em | `--tracking-widest` |
 
 ---
 
@@ -133,8 +195,6 @@
 
 **8pxグリッド**に基づいた一貫したスペーシングシステム。
 「間(Ma)」の概念を意識し、余白を重視したレイアウトを実現。
-
-### スケール
 
 | 名前 | 値 | CSS変数 | 用途 |
 |------|-----|---------|------|
@@ -146,17 +206,75 @@
 | 2xl | 64px | `--space-2xl` | トップレベルコンテナ |
 | 3xl | 96px | `--space-3xl` | 大きなセクション区切り |
 | 4xl | 128px | `--space-4xl` | ページレベルの余白 |
+| 5xl | 192px | `--space-5xl` | 特大の余白 |
+| 6xl | 256px | `--space-6xl` | 最大の余白 |
 
-### 使用階層
+---
 
-```
-コンポーネント内部  → space-xs (8px)
-関連要素間        → space-sm (16px)
-サブセクション    → space-md (24px)
-セクション内      → space-lg (32px)
-セクション間      → space-xl (48px)
-ページレベル      → space-2xl以上
-```
+## 🔲 角丸・ボーダー
+
+### 角丸（Border Radius）
+
+| 名前 | 値 | CSS変数 | 用途 |
+|------|-----|---------|------|
+| xs | 2px | `--radius-xs` | 微妙な角丸、パネル |
+| sm | 4px | `--radius-sm` | カード、画像フレーム |
+| md | 8px | `--radius-md` | コンテナ、セクション |
+| lg | 16px | `--radius-lg` | モーダル、大きなカード |
+| full | 9999px | `--radius-full` | 円形（ボタンなど） |
+
+### ボーダー
+
+| CSS変数 | 値 | 用途 |
+|---------|-----|------|
+| `--border-thin` | 1px | デフォルトのボーダー |
+| `--border-normal` | 2px | 強調ボーダー |
+| `--border-thick` | 3px | 太いボーダー |
+| `--border-primary` | `var(--sumi-iro)` | 主要ボーダー色 |
+| `--border-secondary` | `var(--ai-iro)` | セカンダリボーダー色 |
+| `--border-accent` | `var(--beni-iro)` | アクセントボーダー色 |
+| `--border-subtle` | `rgba(45, 45, 45, 0.1)` | 控えめなボーダー |
+
+---
+
+## 🌫️ シャドウ
+
+浮世絵の「控えめな美」に合わせ、シャドウは最小限に抑える。
+
+| CSS変数 | 値 | 用途 |
+|---------|-----|------|
+| `--shadow-subtle` | `0 2px 8px rgba(0, 0, 0, 0.05)` | 非常に控えめなシャドウ |
+| `--shadow-sm` | `0 1px 3px rgba(0, 0, 0, 0.08)` | 小さなシャドウ |
+| `--shadow-md` | `0 4px 16px rgba(0, 0, 0, 0.1)` | 標準シャドウ |
+| `--shadow-lg` | `0 8px 32px rgba(0, 0, 0, 0.15)` | 大きなシャドウ（モーダル等） |
+
+---
+
+## 📊 Z-Index スケール
+
+グローバルなスタッキングコンテキストを管理する。ローカルな z-index（0, 1, 2 など）は変数化しない。
+
+| CSS変数 | 値 | 用途 |
+|---------|-----|------|
+| `--z-base` | 0 | ベース |
+| `--z-above` | 10 | 直上の要素 |
+| `--z-dropdown` | 100 | ドロップダウン、ヘッダー |
+| `--z-sticky` | 500 | スティッキー要素 |
+| `--z-modal` | 900 | モーダル背景 |
+| `--z-header` | 1100 | ヘッダー（モーダルの上） |
+| `--z-overlay` | 1200 | オーバーレイ |
+| `--z-tooltip` | 1300 | ツールチップ |
+
+---
+
+## 👁️ 不透明度
+
+| CSS変数 | 値 | 用途 |
+|---------|-----|------|
+| `--opacity-subtle` | 0.05 | 背景の微かな色付け |
+| `--opacity-muted` | 0.4 | ミュートされたテキスト |
+| `--opacity-semi` | 0.6 | 半透明の要素 |
+| `--opacity-overlay` | 0.8 | オーバーレイ |
 
 ---
 
@@ -164,7 +282,7 @@
 
 版画の「摺り」を想起させる、落ち着いた動きを基調とする。
 
-### デュレーション
+### デュレーション（CSS）
 
 | 名前 | 値 | CSS変数 | 用途 |
 |------|-----|---------|------|
@@ -172,15 +290,16 @@
 | normal | 0.3s | `--duration-normal` | 標準のトランジション |
 | slow | 0.6s | `--duration-slow` | コンテンツ表示/非表示 |
 | slower | 1s | `--duration-slower` | ローディング |
+| slowest | 1.5s | `--duration-slowest` | ページ遷移 |
 
-### イージング
+### イージング（CSS）
 
-| 名前 | CSS変数 | 用途 |
-|------|---------|------|
-| ease-in | `--ease-in` | 画面外への退出 |
-| ease-out | `--ease-out` | 画面への登場 |
-| ease-in-out | `--ease-in-out` | 標準のトランジション |
-| **ease-ukiyoe** | `--ease-ukiyoe` | 浮世絵独自の優雅なイージング |
+| 名前 | CSS変数 | cubic-bezier | 用途 |
+|------|---------|-------------|------|
+| ease-in | `--ease-in` | `(0.4, 0, 1, 1)` | 画面外への退出 |
+| ease-out | `--ease-out` | `(0, 0, 0.2, 1)` | 画面への登場 |
+| ease-in-out | `--ease-in-out` | `(0.4, 0, 0.2, 1)` | 標準のトランジション |
+| **ease-ukiyoe** | `--ease-ukiyoe` | `(0.19, 1.0, 0.22, 1.0)` | 浮世絵独自の優雅なイージング |
 
 ### ease-ukiyoe について
 
@@ -189,7 +308,84 @@
 ```
 
 急速に始まり、ゆっくりと収束する。摺りの動きを想起させる独自のイージング。
-判子ボタンなど、プロジェクト特有のインタラクションに使用。
+判子ボタン、ページ遷移、モーダルなど、プロジェクト特有のインタラクションに使用。
+
+---
+
+## 🎬 Framer Motion 定数 (JS)
+
+**ファイル:** `src/constants/motion.js`
+
+CSS変数は Framer Motion から直接参照できないため、同じ値を JS 定数として定義している。
+
+### duration
+
+```js
+import { duration } from '../constants/motion'
+
+duration.fast    // 0.2  → --duration-fast
+duration.normal  // 0.3  → --duration-normal
+duration.slow    // 0.6  → --duration-slow
+duration.slower  // 1    → --duration-slower
+duration.slowest // 1.5  → --duration-slowest
+```
+
+### easing
+
+```js
+import { easing } from '../constants/motion'
+
+easing.ukiyoe   // [0.19, 1.0, 0.22, 1.0]  → --ease-ukiyoe
+easing.easeIn   // [0.4, 0, 1, 1]           → --ease-in
+easing.easeOut  // [0, 0, 0.2, 1]           → --ease-out
+easing.easeInOut // [0.4, 0, 0.2, 1]        → --ease-in-out
+```
+
+### transition（プリセット）
+
+```js
+import { transition } from '../constants/motion'
+
+transition.fast     // { duration: 0.2, ease: easeInOut }
+transition.normal   // { duration: 0.3, ease: easeInOut }
+transition.slow     // { duration: 0.6, ease: ukiyoe }
+transition.slower   // { duration: 1,   ease: ukiyoe }
+transition.pageEnter // { duration: 1.5, ease: ukiyoe }
+```
+
+### spring（バネアニメーション）
+
+```js
+import { spring } from '../constants/motion'
+
+spring.gentle // { type: 'spring', stiffness: 15, damping: 12, mass: 1.2 }
+spring.snappy // { type: 'spring', stiffness: 300, damping: 30 }
+```
+
+### stagger（子要素の遅延）
+
+```js
+import { stagger } from '../constants/motion'
+
+stagger.fast   // 0.03
+stagger.normal // 0.05
+stagger.slow   // 0.1
+```
+
+### 使用例
+
+```jsx
+import { duration, easing, transition, spring } from '../constants/motion'
+
+// トランジション指定
+<motion.div transition={{ duration: duration.slow, ease: easing.ukiyoe }} />
+
+// プリセット使用
+<motion.div transition={transition.slow} />
+
+// スプリング
+<motion.div transition={spring.gentle} />
+```
 
 ---
 
@@ -203,70 +399,23 @@
 |-----------|-----|
 | 形状 | 円形 |
 | サイズ | 48px (default), 56px (large), 40px (small) |
-| 背景色 | #FFFFFF → hover: var(--ai-iro) |
-| ボーダー | 1px solid var(--sumi-iro) |
-| トランジション | all var(--duration-normal) var(--ease-ukiyoe) |
-
-**バリエーション:**
-- **障子 (Shoji)**: 半透明の和紙風背景
-- **アクティブ**: 藍色背景、白文字
-- **一時停止**: opacity調整
+| 背景色 | `var(--color-white)` → hover: `var(--ai-iro)` |
+| ボーダー | 1px solid `var(--sumi-iro)` |
+| トランジション | all `var(--duration-normal)` `var(--ease-ukiyoe)` |
 
 ### 言語切替ボタン
 
-```yaml
-背景: transparent
-フォント: var(--font-sans)
-サイズ: 18px
-色: #334e6c
-アクティブ時: font-weight: 600 + 下線（underline.svg）
-```
-
-### 技法カード (Evolution Card)
-
-```yaml
-サイズ:
-  幅: 250px
-  画像高さ: 373px
-タイトル:
-  フォント: var(--font-serif)
-  サイズ: 32px
-  字間: 2.8px
-境界線: fude-border.svg（筆ボーダー）
-```
+| プロパティ | 値 |
+|-----------|-----|
+| 背景 | transparent |
+| フォント | `var(--font-serif)` |
+| サイズ | `var(--text-lg)` |
+| 色 | `var(--ai-iro)` |
+| アクティブ時 | font-weight: 600 + border |
 
 ---
 
 ## 📱 レイアウトパターン
-
-### 分割レイアウト (Split Layout)
-
-画像とテキストを左右に分割した没入型レイアウト。
-
-```
-┌─────────────────┬────────────────┐
-│                 │                │
-│   画像パネル     │  テキストパネル  │
-│     (55%)       │     (45%)      │
-│                 │                │
-└─────────────────┴────────────────┘
-```
-
-**レスポンシブ (768px以下):**
-```
-┌────────────────────────────────┐
-│         画像パネル (45vh)        │
-├────────────────────────────────┤
-│       テキストパネル (55vh)       │
-└────────────────────────────────┘
-```
-
-### 横スクロール (Horizontal Scroll)
-
-澤田屋スタイルの横スクロールナビゲーション。
-
-- スナップ: 無効（JSで制御）
-- セクション: 100vw × 100vh
 
 ### 3カラムギャラリー (Pattern C)
 
@@ -275,24 +424,80 @@
 - ギャップ: 2%
 - ホバー効果: scale(1.02) + shadow
 
+### ブレークポイント（参考値）
+
+CSS変数はメディアクエリの値には使えないため、コメントとして記録。
+
+| 名前 | 値 | 用途 |
+|------|-----|------|
+| sm | 600px | モバイル（小） |
+| md | 900px | モバイル（大）/ タブレット |
+| lg | 1200px | タブレット / デスクトップ |
+
+---
+
+## ✅ Do / Don't
+
+### Do
+
+```css
+/* 色はトークンを使う */
+color: var(--ai-iro);
+background: var(--washi);
+
+/* スペーシングはトークンを使う */
+padding: var(--space-md);
+gap: var(--space-sm);
+
+/* トランジションはトークンを使う */
+transition: opacity var(--duration-normal) var(--ease-ukiyoe);
+
+/* z-index（グローバル）はトークンを使う */
+z-index: var(--z-modal);
+```
+
+### Don't
+
+```css
+/* ❌ ハードコードの色 */
+color: #1e3a5f;
+background: #f5f0e6;
+
+/* ❌ ハードコードのスペーシング（トークンにマッチする値の場合） */
+padding: 24px;  /* → var(--space-md) */
+gap: 16px;      /* → var(--space-sm) */
+
+/* ❌ ハードコードのトランジション値 */
+transition: opacity 0.3s ease;
+
+/* ❌ ハードコードのグローバル z-index */
+z-index: 1000;  /* → var(--z-modal) */
+```
+
+### 例外（トークン化しなくてよい）
+
+- `clamp()` 内のレスポンシブ値（柔軟性を優先）
+- ローカルな z-index（0, 1, 2 などの相対値）
+- コンポーネント固有の `rgba()` 値（グラデーション内など）
+- `prefers-contrast: high` 内のフォールバック値
+
 ---
 
 ## 📁 ファイル参照
 
 | ファイル | 内容 |
 |----------|------|
-| `src/App.css` | CSS変数定義 (lines 14-135) |
+| `src/App.css` | CSS変数定義 (`:root` ブロック) |
+| `src/constants/motion.js` | Framer Motion アニメーション定数 |
 | `docs/COLOR_GUIDELINES.md` | 歴史的カラーガイドライン |
-| `docs/DESIGN_SYSTEM.yaml` | 完全なYAML定義 |
 
 ---
 
 ## 📚 関連ドキュメント
 
 - [COLOR_GUIDELINES.md](./COLOR_GUIDELINES.md) - 浮世絵の色彩と歴史的背景
-- [conversation-history/plans/](./conversation-history/plans/) - 設計プラン履歴
+- [CLAUDE.md](../CLAUDE.md) - AI 開発ガイドライン
 
 ---
 
-*最終更新: 2026-01-04*
-
+*最終更新: 2026-02-15*

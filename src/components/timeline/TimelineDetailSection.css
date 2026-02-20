@@ -9,16 +9,51 @@
   left: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   /* 非アクティブ時は非表示 */
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.5s ease;
+  transition: opacity var(--duration-slow) var(--ease-ukiyoe);
 }
 
 .timeline-section--active {
   opacity: 1;
   pointer-events: auto;
+}
+
+/* ========================================
+   ネイティブスクロール用セクション（俵屋方式）
+   完全に別クラス名 .timeline-ns にして
+   旧 .timeline-section との CSS cascade 衝突をゼロにする
+   ======================================== */
+
+.timeline-ns {
+  position: relative;
+  width: 100%;
+  /* height は JS 側で inline style 設定（ARTWORK_LAYER_HEIGHT_VH vh） */
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 画面に張り付くビューポート。ユーザーが section 高さ分スクロールする間、画面に留まる */
+.timeline-ns__viewport {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--sumi-iro);
+}
+
+/* 作品レイヤー: 200vh の縦長。scrollProgress に応じて translateY で上に動かす */
+.timeline-ns__artwork-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  will-change: transform;
 }
 
 /* ========================================
@@ -29,6 +64,7 @@
   position: relative;
   width: 100%;
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   background: var(--sumi-iro);
 }
@@ -58,8 +94,8 @@
   height: 50%;
   background: linear-gradient(
     to top,
-    rgba(45, 45, 45, 0.75) 0%,
-    rgba(45, 45, 45, 0.4) 40%,
+    rgba(20, 20, 20, 0.65) 0%,
+    rgba(20, 20, 20, 0.3) 40%,
     transparent 100%
   );
   pointer-events: none;
@@ -73,20 +109,25 @@
 
 .timeline-section__panel {
   position: absolute;
-  left: 40px;
-  bottom: 40px;
+  left: clamp(16px, 3vw, 40px);
+  bottom: clamp(16px, 3vw, 40px);
   width: 100%;
-  max-width: 630px;
-  padding: 16px;
-  background: rgba(45, 45, 45, 0.25);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  border-radius: 4px;
+  max-width: min(560px, 50vw);
+  padding: 24px 16px;
+  background: rgba(20, 20, 20, 0.3);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 2px;
   z-index: 50;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
 }
 
-.timeline-section__panel::before {
-  display: none;
+.timeline-section__panel-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 /* ========================================
@@ -95,48 +136,59 @@
 
 .timeline-section__header {
   display: flex;
-  align-items: flex-end;
-  gap: 8px;
-  margin-bottom: 24px;
+  align-items: center;
+  gap: var(--space-xs);
 }
 
 .timeline-section__number {
+  /* 言語切り替えボタンと同じ円形スタイル */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 1);
+  flex-shrink: 0;
+  
+  /* フォントスタイル */
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: var(--text-4xl);
+  font-size: var(--text-2xl);
   color: white;
   line-height: 1;
   letter-spacing: -0.02em;
+  opacity: 0.8;
 }
 
 .timeline-section__date-range {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 4px;
-  padding-bottom: 4px;
+  padding-bottom: 0px;
   width: fit-content;
 }
 
 .timeline-section__date-inner {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 4px 8px;
+  gap: var(--space-xs);
+  padding: 4px var(--space-xs);
   font-family: var(--font-serif);
 }
 
 .timeline-section__date-start,
 .timeline-section__date-end {
   font-weight: 600;
-  font-size: var(--text-lg);
+  font-size: var(--text-sm);
   color: white;
   line-height: 1.2;
 }
 
 .timeline-section__date-separator {
   font-weight: 400;
-  font-size: var(--text-lg);
+  font-size: var(--text-sm);
   color: white;
   line-height: 1;
 }
@@ -144,11 +196,10 @@
 .timeline-section__date-divider {
   width: calc(100% - 16px);
   height: 2px;
-  margin-left: 8px;
   background-image: url('/images/divider.svg');
   background-size: contain;
   background-repeat: no-repeat;
-  background-position: left center;
+  background-position: center;
   transform: scaleY(1.5);
 }
 
@@ -158,15 +209,14 @@
 
 .timeline-section__meta {
   display: flex;
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: var(--space-md);
 }
 
 .timeline-section__meta-item {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px; /* ラベルと本文の余白を広げて読みやすく */
 }
 
 .timeline-section__meta-header {
@@ -178,11 +228,12 @@
 
 .timeline-section__meta-label {
   font-family: var(--font-serif);
-  font-weight: 600;
-  font-size: var(--text-2xl);
+  font-weight: 400;
+  font-size: var(--text-sm);
   color: white;
   line-height: 1.4;
   white-space: nowrap;
+  letter-spacing: 0.06em;
 }
 
 .timeline-section__meta-divider {
@@ -198,9 +249,9 @@
 .timeline-section__meta-text {
   font-family: var(--font-sans);
   font-weight: 300;
-  font-size: var(--text-base);
+  font-size: var(--text-xs);
   color: white;
-  line-height: 1.5;
+  line-height: var(--leading-normal);
   margin: 0;
 }
 
@@ -215,9 +266,9 @@
 .timeline-section__summary-text {
   font-family: var(--font-sans);
   font-weight: 300;
-  font-size: var(--text-base);
+  font-size: var(--text-xs);
   color: white;
-  line-height: 1.5;
+  line-height: var(--leading-normal);
   margin: 0;
 }
 
@@ -226,25 +277,7 @@
    ======================================== */
 
 @media (max-width: 1200px) {
-  .timeline-section__panel {
-    max-width: 560px;
-    left: 32px;
-    bottom: 32px;
-    padding: 16px;
-  }
-
-  .timeline-section__number {
-    font-size: var(--text-4xl);
-  }
-
-  .timeline-section__date-start,
-  .timeline-section__date-end {
-    font-size: var(--text-xl);
-  }
-
-  .timeline-section__meta-label {
-    font-size: var(--text-xl);
-  }
+  /* clamp() handles scaling automatically */
 }
 
 /* ========================================
@@ -253,32 +286,29 @@
 
 @media (max-width: 900px) {
   .timeline-section__panel {
-    left: 16px;
-    right: 16px;
-    bottom: 16px;
+    right: clamp(12px, 2vw, 16px);
     max-width: calc(100% - 32px);
-    padding: 16px;
+    padding: 16px 12px;
+  }
+
+  .timeline-section__panel-content {
+    gap: 12px;
   }
 
   .timeline-section__header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    margin-bottom: 16px;
+    /* flex-direction: column; */
+    /* align-items: center; */
+    gap: var(--space-xs);
   }
 
   .timeline-section__number {
-    font-size: var(--text-3xl);
+    width: 44px;
+    height: 44px;
+    font-size: var(--text-xl);
   }
 
   .timeline-section__meta {
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-
-  .timeline-section__meta-label {
-    font-size: var(--text-lg);
+    gap: var(--space-sm);
   }
 
   .timeline-section__gradient-overlay {
@@ -292,49 +322,36 @@
 
 @media (max-width: 600px) {
   .timeline-section__panel {
-    left: 12px;
     right: 12px;
-    bottom: 12px;
+    padding: 12px 8px;
     max-width: calc(100% - 24px);
-    padding: 12px;
+  }
+
+  .timeline-section__panel-content {
+    gap: var(--space-xs);
   }
 
   .timeline-section__header {
-    margin-bottom: 12px;
+    gap: var(--space-xs);
   }
 
   .timeline-section__number {
-    font-size: var(--text-2xl);
-  }
-
-  .timeline-section__date-start,
-  .timeline-section__date-end {
-    font-size: var(--text-base);
-  }
-
-  .timeline-section__date-separator {
+    width: 40px;
+    height: 40px;
     font-size: var(--text-base);
   }
 
   .timeline-section__meta {
-    gap: 10px;
-    margin-bottom: 12px;
-  }
-
-  .timeline-section__meta-label {
-    font-size: var(--text-base);
-  }
-
-  .timeline-section__meta-text {
-    font-size: var(--text-sm);
-  }
-
-  .timeline-section__summary-text {
-    font-size: var(--text-sm);
+    flex-direction: column;
+    gap: 12px;
   }
 
   .timeline-section__gradient-overlay {
     height: 60%;
+  }
+
+  .timeline-section__meta-item {
+    gap: var(--space-xs);
   }
 }
 
@@ -353,19 +370,13 @@
 
 /* ========================================
    ACCESSIBILITY
-   ======================================== */
-
-@media (prefers-reduced-motion: reduce) {
+   ======================================== */@media (prefers-reduced-motion: reduce) {
   .timeline-section {
     transition: none;
-  }
-
-  .timeline-section__panel {
+  }  .timeline-section__panel {
     transition: none;
   }
-}
-
-@media (prefers-contrast: high) {
+}@media (prefers-contrast: high) {
   .timeline-section__panel {
     background: rgba(0, 0, 0, 0.9);
     border: 2px solid white;

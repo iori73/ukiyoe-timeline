@@ -1,3 +1,4 @@
+import { duration } from '../../constants/motion'
 import { ProgressBar } from './ProgressTimeline'
 import LayeredImages from './LayeredImages'
 import './PeriodRow.css'
@@ -38,7 +39,7 @@ export default function PeriodRow({
       className={`period-row period-row--${period.id} ${shouldFadeIn && !isPast && !isActive && !isComplete ? 'period-row--hidden' : ''}`}
       style={shouldFadeIn && !isComplete ? { 
         opacity: contentOpacity,
-        transition: 'opacity 0.8s ease-out',
+        transition: `opacity ${duration.slower}s var(--ease-out)`,
       } : undefined}
     >
       <div className="period-row__container">

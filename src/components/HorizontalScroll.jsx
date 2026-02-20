@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState, useCallback } from 'react'
 import { useSpring } from 'framer-motion'
+import { spring } from '../constants/motion'
 
 /**
  * HorizontalScroll Component
@@ -16,10 +17,9 @@ export default function HorizontalScroll({ children, onSectionChange, totalSecti
   const scrollCooldownRef = useRef(null)
   const lastScrollTime = useRef(0)
   
-  // Smooth spring animation for scroll progress
+  // Smooth spring animation for scroll progress（デザインシステム spring.snappy）
   const scrollProgress = useSpring(0, {
-    stiffness: 100,
-    damping: 30,
+    ...spring.snappy,
     restDelta: 0.001
   })
 

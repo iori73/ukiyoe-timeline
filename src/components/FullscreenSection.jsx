@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { duration, easing } from '../constants/motion'
 import { useLanguage } from '../context/LanguageContext'
 import { getLocalizedField } from '../data/ukiyoe'
 import { memo, useMemo, useState } from 'react'
@@ -25,10 +26,10 @@ function FullscreenSection({ period, index, isActive }) {
       scale: 1,
       filter: 'blur(0px)',
       transition: {
-        duration: 1,
-        ease: [0.19, 1.0, 0.22, 1.0], // Smooth ease-out
+        duration: duration.slower,
+        ease: easing.ukiyoe,
         staggerChildren: 0.12,
-        delayChildren: 0.3
+        delayChildren: duration.normal
       }
     },
     exit: {
@@ -36,8 +37,8 @@ function FullscreenSection({ period, index, isActive }) {
       scale: 1.05,
       filter: 'blur(5px)',
       transition: {
-        duration: 0.5,
-        ease: [0.19, 1.0, 0.22, 1.0]
+        duration: duration.normal,
+        ease: easing.ukiyoe
       }
     }
   }
@@ -53,8 +54,8 @@ function FullscreenSection({ period, index, isActive }) {
       y: 0,
       filter: 'blur(0px)',
       transition: {
-        duration: 0.8,
-        ease: [0.19, 1.0, 0.22, 1.0]
+        duration: duration.slower,
+        ease: easing.ukiyoe
       }
     }
   }
@@ -71,8 +72,8 @@ function FullscreenSection({ period, index, isActive }) {
       x: 0,
       filter: 'blur(0px)',
       transition: {
-        duration: 1,
-        ease: [0.19, 1.0, 0.22, 1.0]
+        duration: duration.slower,
+        ease: easing.ukiyoe
       }
     }
   }
@@ -142,8 +143,8 @@ function FullscreenSection({ period, index, isActive }) {
           x: isActive ? 0 : -30
         }}
         transition={{ 
-          duration: 1, 
-          ease: [0.19, 1.0, 0.22, 1.0]
+          duration: duration.slower, 
+          ease: easing.ukiyoe
         }}
       >
         <div className="image-panel-inner">
@@ -159,7 +160,7 @@ function FullscreenSection({ period, index, isActive }) {
               animate={{ 
                 scale: isActive ? 1 : 1.1
               }}
-              transition={{ duration: 1.2, ease: [0.19, 1.0, 0.22, 1.0] }}
+              transition={{ duration: duration.slowest, ease: easing.ukiyoe }}
               onError={() => setImageError(true)}
             />
           ) : (

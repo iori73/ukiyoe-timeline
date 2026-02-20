@@ -1,5 +1,7 @@
 import { useState, useMemo, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { periodDecorKusa, periodDecorAkane } from '../../constants/colors'
+import { duration, easing } from '../../constants/motion'
 
 /**
  * Concept B: タイムライン融合型
@@ -28,7 +30,7 @@ export default function ConceptB() {
       yearStart: 1740,
       yearEnd: 1765,
       duration: 25,
-      color: '#95a078',
+      color: periodDecorKusa,
       image: '/benizuri-e.png',
       desc: '紅色と緑色の版木を追加。「見当」技術で重ね摺りが可能になった。'
     },
@@ -38,7 +40,7 @@ export default function ConceptB() {
       yearStart: 1765,
       yearEnd: 1800,
       duration: 35,
-      color: '#f8604f',
+      color: periodDecorAkane,
       image: '/nishiki-e.png',
       desc: '10枚以上の版木を精密に重ね、ぼかしや空摺りなどの高度な技法を導入。'
     }
@@ -115,7 +117,7 @@ export default function ConceptB() {
             initial={{ opacity: 0, scale: 1.02 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.98 }}
-            transition={{ duration: 0.5, ease: [0.19, 1.0, 0.22, 1.0] }}
+            transition={{ duration: duration.slow, ease: easing.ukiyoe }}
           />
         </AnimatePresence>
 
@@ -185,7 +187,7 @@ export default function ConceptB() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: duration.normal }}
         >
           <div className="info-header">
             <span 

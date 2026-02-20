@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useCallback, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import { duration, easing } from '../../constants/motion'
 import { useLanguage } from '../../context/LanguageContext'
 import './ArtworkDetailModal.css'
 
@@ -11,6 +12,7 @@ import './ArtworkDetailModal.css'
  * - 画像が中央にスムーズにズーム
  * - 作品情報（年代、タイトル、作者、概要）を横に表示
  * - 外側クリックで閉じる
+ * - アクセシビリティ: role="dialog", aria-modal, focus trap
  */
 export default function ArtworkDetailModal({
   artwork,
@@ -21,6 +23,38 @@ export default function ArtworkDetailModal({
   const { language } = useLanguage()
   const modalRef = useRef(null)
   const contentRef = useRef(null)
+  const previousFocusRef = useRef(null)
+  const titleId = 'artwork-modal-title'
+  const [imageError, setImageError] = useState(false)
+
+  // モーダルが開くたびに画像エラー状態をリセット
+  useEffect(() => {
+    if (isOpen) setImageError(false)
+  }, [isOpen, artwork])
+
+  // モーダル開閉時のフォーカス管理
+  useEffect(() => {
+    if (isOpen) {
+      previousFocusRef.current = document.activeElement
+      // モーダル内の最初のフォーカス可能な要素にフォーカス
+      requestAnimationFrame(() => {
+        const closeBtn = contentRef.current?.querySelector('.artwork-modal__close-btn')
+        closeBtn?.focus()
+      })
+      // body スクロールを無効化
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+      // 閉じた時にトリガー要素にフォーカスを戻す
+      if (previousFocusRef.current) {
+        previousFocusRef.current.focus()
+        previousFocusRef.current = null
+      }
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
 
   // ESCキーで閉じる
   useEffect(() => {
@@ -32,6 +66,31 @@ export default function ArtworkDetailModal({
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isOpen, onClose])
+
+  // フォーカストラップ: Tabキーがモーダル内に留まる
+  const handleKeyDown = useCallback((e) => {
+    if (e.key !== 'Tab') return
+    const modal = contentRef.current
+    if (!modal) return
+
+    const focusableElements = modal.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    )
+    const first = focusableElements[0]
+    const last = focusableElements[focusableElements.length - 1]
+
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault()
+        last?.focus()
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault()
+        first?.focus()
+      }
+    }
+  }, [])
 
   // 外側クリックで閉じる
   const handleBackdropClick = (e) => {
@@ -55,11 +114,15 @@ export default function ArtworkDetailModal({
         <motion.div
           ref={modalRef}
           className="artwork-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={titleId}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.4, ease: [0.19, 1.0, 0.22, 1.0] }}
+          transition={{ duration: duration.normal, ease: easing.ukiyoe }}
           onClick={handleBackdropClick}
+          onKeyDown={handleKeyDown}
         >
           {/* 背景オーバーレイ */}
           <motion.div
@@ -67,7 +130,7 @@ export default function ArtworkDetailModal({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: duration.slow }}
           />
 
           {/* コンテンツ - 画面中央 */}
@@ -87,17 +150,41 @@ export default function ArtworkDetailModal({
               scale: 0.95
             }}
             transition={{
-              duration: 0.4,
-              ease: [0.19, 1.0, 0.22, 1.0]
+              duration: duration.normal,
+              ease: easing.ukiyoe
             }}
           >
             {/* 画像 */}
             <div className="artwork-modal__image-container">
-              <img
-                src={artwork.url}
-                alt={title}
-                className="artwork-modal__image"
-              />
+              {!imageError ? (
+                <img
+                  src={artwork.url}
+                  alt={title}
+                  className="artwork-modal__image"
+                  onError={() => setImageError(true)}
+                />
+              ) : (
+                <div
+                  className="artwork-modal__image-placeholder"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '300px',
+                    height: '300px',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    color: 'rgba(245, 240, 230, 0.5)',
+                    fontFamily: 'var(--font-serif)',
+                    fontSize: 'var(--text-sm)',
+                    textAlign: 'center',
+                    padding: '24px',
+                  }}
+                >
+                  {language === 'ja'
+                    ? '画像を読み込めませんでした'
+                    : 'Image could not be loaded'}
+                </div>
+              )}
             </div>
 
             {/* 作品情報 */}
@@ -106,8 +193,8 @@ export default function ArtworkDetailModal({
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{
-                duration: 0.4,
-                ease: [0.19, 1.0, 0.22, 1.0],
+                duration: duration.normal,
+                ease: easing.ukiyoe,
                 delay: 0.15
               }}
             >
@@ -115,7 +202,7 @@ export default function ArtworkDetailModal({
                 {artwork.year}
               </div>
 
-              <h2 className="artwork-modal__title">
+              <h2 id={titleId} className="artwork-modal__title">
                 {title}
               </h2>
 

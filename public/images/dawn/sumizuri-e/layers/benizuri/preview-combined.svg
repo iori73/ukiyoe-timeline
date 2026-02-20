@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1676" height="2499" viewBox="0 0 1676 2499">
+  <title>紅摺絵 - Benizuri-e Combined Preview</title>
+  
+  <!-- 背景（和紙色） -->
+  <rect width="100%" height="100%" fill="#F5F0E6"/>
+  
+  <!-- Layer 3: 草（緑） -->
+  <g id="layer-kusa" opacity="0.9">
+    <!-- kusa layer content will be inserted here -->
+  </g>
+  
+  <!-- Layer 2: 紅（赤） -->
+  <g id="layer-beni" opacity="0.9">
+    <!-- beni layer content will be inserted here -->
+  </g>
+  
+  <!-- Layer 1: 墨（輪郭線） - 最上層 -->
+  <g id="layer-sumi">
+    <!-- sumi layer content will be inserted here -->
+  </g>
+</svg>

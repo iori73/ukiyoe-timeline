@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion'
+import { duration, easing } from '../constants/motion'
 import { useLanguage } from '../context/LanguageContext'
 import { memo } from 'react'
 
@@ -29,9 +30,9 @@ function ScrollIndicators({
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: 30, scale: 0.9 }}
             transition={{ 
-              duration: 1,
+              duration: duration.slower,
               delay: 2,
-              ease: [0.19, 1.0, 0.22, 1.0]
+              ease: easing.ukiyoe
             }}
           >
             <motion.div 
@@ -40,9 +41,9 @@ function ScrollIndicators({
                 x: [0, 12, 0],
               }}
               transition={{
-                duration: 2.5,
+                duration: duration.slowest,
                 repeat: Infinity,
-                ease: "easeInOut"
+                ease: easing.easeInOut
               }}
             >
               <motion.span 
@@ -51,9 +52,9 @@ function ScrollIndicators({
                   opacity: [0.8, 1, 0.8]
                 }}
                 transition={{
-                  duration: 2.5,
+                  duration: duration.slowest,
                   repeat: Infinity,
-                  ease: "easeInOut"
+                  ease: easing.easeInOut
                 }}
               >
                 scroll
@@ -79,10 +80,10 @@ function ScrollIndicators({
                     rotate: [90, 95, 90]
                   }}
                   transition={{
-                    duration: 2.5,
+                    duration: duration.slowest,
                     repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 0.3
+                    ease: easing.easeInOut,
+                    delay: duration.normal
                   }}
                 >
                   ↓
@@ -102,7 +103,7 @@ function ScrollIndicators({
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
+            transition={{ duration: duration.slower, delay: duration.slow }}
           >
             {Array.from({ length: totalSections - 1 }).map((_, index) => {
               const sectionIndex = index + 1 // Skip intro section
@@ -121,8 +122,8 @@ function ScrollIndicators({
                   }}
                   transition={{ 
                     delay: 0.7 + index * 0.08,
-                    duration: 0.5,
-                    ease: [0.19, 1.0, 0.22, 1.0]
+                    duration: duration.slow,
+                    ease: easing.ukiyoe
                   }}
                   aria-label={`Go to section ${index + 1}`}
                 >
@@ -132,15 +133,15 @@ function ScrollIndicators({
                       scale: sectionIndex === currentSection ? [1, 1.3, 1] : 1
                     }}
                     transition={{
-                      duration: 0.5,
-                      ease: "easeOut"
+                      duration: duration.slow,
+                      ease: easing.easeOut
                     }}
                   />
                   <motion.span 
                     className="dot-label"
                     initial={{ opacity: 0, x: -5 }}
                     whileHover={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.2 }}
+                    transition={{ duration: duration.fast }}
                   >
                     {index + 1}
                   </motion.span>
@@ -160,8 +161,8 @@ function ScrollIndicators({
             scaleX: (currentSection + 1) / totalSections 
           }}
           transition={{ 
-            duration: 0.8,
-            ease: [0.19, 1.0, 0.22, 1.0]
+            duration: duration.slower,
+            ease: easing.ukiyoe
           }}
         />
         <motion.div
@@ -180,9 +181,9 @@ function ScrollIndicators({
             opacity: [0.6, 1, 0.6]
           }}
           transition={{
-            duration: 2,
+            duration: duration.slowest,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: easing.easeInOut
           }}
         />
       </div>
@@ -197,9 +198,9 @@ function ScrollIndicators({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 30, scale: 0.9 }}
             transition={{ 
-              delay: 0.8,
-              duration: 0.6,
-              ease: [0.19, 1.0, 0.22, 1.0]
+              delay: duration.slower,
+              duration: duration.slow,
+              ease: easing.ukiyoe
             }}
           >
             <motion.span 
@@ -208,7 +209,7 @@ function ScrollIndicators({
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -20, opacity: 0 }}
-              transition={{ duration: 0.4, ease: [0.19, 1.0, 0.22, 1.0] }}
+              transition={{ duration: duration.normal, ease: easing.ukiyoe }}
             >
               {String(currentSection).padStart(2, '0')}
             </motion.span>

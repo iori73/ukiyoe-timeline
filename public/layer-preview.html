@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>浮世絵レイヤープレビュー | Ukiyo-e Layer Preview</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+      background: #2a2a2a;
+      color: #f5f0e6;
+      padding: 40px;
+    }
+    
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+    }
+    
+    h2 {
+      margin: 40px 0 20px;
+      font-weight: 400;
+      border-bottom: 1px solid #555;
+      padding-bottom: 10px;
+    }
+    
+    .section {
+      margin-bottom: 60px;
+    }
+    
+    .layer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .layer-card {
+      background: #f5f0e6;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    
+    .layer-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .layer-card__info {
+      padding: 12px 16px;
+      background: #3a3a3a;
+      color: #f5f0e6;
+    }
+    
+    .layer-card__name {
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .layer-card__color {
+      font-size: 12px;
+      opacity: 0.7;
+      margin-top: 4px;
+    }
+    
+    .color-swatch {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      vertical-align: middle;
+      margin-right: 8px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .combined-view {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto;
+      background: #f5f0e6;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    
+    .combined-view img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+    }
+    
+    .combined-view img:first-child {
+      position: relative;
+    }
+    
+    .palette {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    
+    .palette-item {
+      display: flex;
+      align-items: center;
+      background: #3a3a3a;
+      padding: 8px 16px;
+      border-radius: 20px;
+    }
+    
+    .controls {
+      margin: 20px 0;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    
+    .controls label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #3a3a3a;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .controls input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+    }
+    
+    .original-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .original-comparison img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+    
+    .caption {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 14px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <h1>浮世絵レイヤープレビュー</h1>
+  
+  <!-- 紅摺絵セクション -->
+  <section class="section">
+    <h2>紅摺絵 (Benizuri-e) - 3色版</h2>
+    
+    <div class="palette">
+      <div class="palette-item">
+        <span class="color-swatch" style="background: #1C1C1C;"></span>
+        墨 (Sumi) #1C1C1C
+      </div>
+      <div class="palette-item">
+        <span class="color-swatch" style="background: #B85B5B;"></span>
+        紅 (Beni) #B85B5B
+      </div>
+      <div class="palette-item">
+        <span class="color-swatch" style="background: #7A8B5A;"></span>
+        草 (Kusa) #7A8B5A
+      </div>
+    </div>
+    
+    <h3 style="margin: 20px 0 10px;">個別レイヤー</h3>
+    <div class="layer-grid">
+      <div class="layer-card">
+        <img src="images/dawn/sumizuri-e/layers/benizuri/layer-01-sumi.svg" alt="墨版">
+        <div class="layer-card__info">
+          <div class="layer-card__name">
+            <span class="color-swatch" style="background: #1C1C1C;"></span>
+            Layer 1: 墨版（輪郭線）
+          </div>
+          <div class="layer-card__color">#1C1C1C - 最上層</div>
+        </div>
+      </div>
+      <div class="layer-card">
+        <img src="images/dawn/sumizuri-e/layers/benizuri/layer-02-beni.svg" alt="紅版">
+        <div class="layer-card__info">
+          <div class="layer-card__name">
+            <span class="color-swatch" style="background: #B85B5B;"></span>
+            Layer 2: 紅版（桜の花）
+          </div>
+          <div class="layer-card__color">#B85B5B</div>
+        </div>
+      </div>
+      <div class="layer-card">
+        <img src="images/dawn/sumizuri-e/layers/benizuri/layer-03-kusa.svg" alt="草版">
+        <div class="layer-card__info">
+          <div class="layer-card__name">
+            <span class="color-swatch" style="background: #7A8B5A;"></span>
+            Layer 3: 草版（風景・葉）
+          </div>
+          <div class="layer-card__color">#7A8B5A</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 錦絵セクション -->
+  <section class="section">
+    <h2>錦絵 (Nishiki-e) - 7色版</h2>
+    
+    <div class="palette">
+      <div class="palette-item">
+        <span class="color-swatch" style="background: #1C1C1C;"></span>
+        墨 #1C1C1C
+      </div>
+      <div class="palette-item">
+        <span class="color-swatch" style="background: #3D5A73;"></span>
+        藍 #3D5A73
+      </div>
+      <div class="palette-item">
+        <span class="color-swatch" style="background: #B85B5B;"></span>
+        紅 #B85B5B
+      </div>
+      <div class="palette-item">
+        <span class="color-swatch" style="background: #7A8B5A;"></span>
+        草 #7A8B5A
+      </div>
+      <div class="palette-item">
+        <span class="color-swatch" style="background: #8B6B4A;"></span>
+        茶 #8B6B4A
+      </div>
+      <div class="palette-item">
+        <span class="color-swatch" style="background: #D4B87A;"></span>
+        黄 #D4B87A
+      </div>
+      <div class="palette-item">
+        <span class="color-swatch" style="background: #9A9A9A;"></span>
+        薄墨 #9A9A9A
+      </div>
+    </div>
+    
+    <h3 style="margin: 20px 0 10px;">個別レイヤー</h3>
+    <div class="layer-grid">
+      <div class="layer-card">
+        <img src="images/dawn/sumizuri-e/layers/nishiki/layer-01-sumi.svg" alt="墨版">
+        <div class="layer-card__info">
+          <div class="layer-card__name">
+            <span class="color-swatch" style="background: #1C1C1C;"></span>
+            Layer 1: 墨版
+          </div>
+        </div>
+      </div>
+      <div class="layer-card">
+        <img src="images/dawn/sumizuri-e/layers/nishiki/layer-02-ai.svg" alt="藍版">
+        <div class="layer-card__info">
+          <div class="layer-card__name">
+            <span class="color-swatch" style="background: #3D5A73;"></span>
+            Layer 2: 藍版（空・富士山）
+          </div>
+        </div>
+      </div>
+      <div class="layer-card">
+        <img src="images/dawn/sumizuri-e/layers/nishiki/layer-03-beni.svg" alt="紅版">
+        <div class="layer-card__info">
+          <div class="layer-card__name">
+            <span class="color-swatch" style="background: #B85B5B;"></span>
+            Layer 3: 紅版（桜の花）
+          </div>
+        </div>
+      </div>
+      <div class="layer-card">
+        <img src="images/dawn/sumizuri-e/layers/nishiki/layer-04-kusa.svg" alt="草版">
+        <div class="layer-card__info">
+          <div class="layer-card__name">
+            <span class="color-swatch" style="background: #7A8B5A;"></span>
+            Layer 4: 草版（風景）
+          </div>
+        </div>
+      </div>
+      <div class="layer-card">
+        <img src="images/dawn/sumizuri-e/layers/nishiki/layer-05-cha.svg" alt="茶版">
+        <div class="layer-card__info">
+          <div class="layer-card__name">
+            <span class="color-swatch" style="background: #8B6B4A;"></span>
+            Layer 5: 茶版（木の幹）
+          </div>
+        </div>
+      </div>
+      <div class="layer-card">
+        <img src="images/dawn/sumizuri-e/layers/nishiki/layer-06-ki.svg" alt="黄版">
+        <div class="layer-card__info">
+          <div class="layer-card__name">
+            <span class="color-swatch" style="background: #D4B87A;"></span>
+            Layer 6: 黄版（着物）
+          </div>
+        </div>
+      </div>
+      <div class="layer-card">
+        <img src="images/dawn/sumizuri-e/layers/nishiki/layer-07-usuzumi.svg" alt="薄墨版">
+        <div class="layer-card__info">
+          <div class="layer-card__name">
+            <span class="color-swatch" style="background: #9A9A9A;"></span>
+            Layer 7: 薄墨版（富士山・雲）
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 元画像との比較 -->
+  <section class="section">
+    <h2>元画像（墨摺絵）</h2>
+    <div style="max-width: 400px; margin: 0 auto;">
+      <div class="layer-card">
+        <img src="sumizuri-e.png" alt="元画像">
+        <div class="layer-card__info">
+          <div class="layer-card__name">sumizuri-e.png</div>
+          <div class="layer-card__color">オリジナルの墨摺絵</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <footer style="text-align: center; margin-top: 60px; opacity: 0.5; font-size: 14px;">
+    浮世絵プロジェクト - レイヤー生成プレビュー
+  </footer>
+</body>
+</html>

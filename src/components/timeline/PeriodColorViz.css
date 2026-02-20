@@ -1,0 +1,141 @@
+/* ========================================
+   PERIOD COLOR PROPORTION VISUALIZATION
+   時代別色彩使用割合（比例バー）
+   デザイン: 各時代で最も使われている色を横幅で表現
+   ======================================== */
+
+.period-color-viz {
+  background: var(--sumi-iro, #2d2d2d);
+  padding: clamp(48px, 8vh, 80px) clamp(24px, 4vw, 64px);
+}
+
+.period-color-viz__header {
+  max-width: 1200px;
+  margin: 0 auto clamp(32px, 5vh, 48px);
+  text-align: left;
+}
+
+.period-color-viz__title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.12em;
+  margin: 0 0 8px;
+}
+
+.period-color-viz__subtitle {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: clamp(0.8rem, 1vw, 0.9rem);
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.04em;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ========================================
+   PROPORTION BARS CONTAINER
+   ======================================== */
+
+.period-color-viz__bars {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 2vh, 20px);
+}
+
+/* ========================================
+   INDIVIDUAL PERIOD ROW
+   ======================================== */
+
+.period-color-viz__period-row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  align-items: center;
+  gap: clamp(16px, 3vw, 24px);
+}
+
+/* ========================================
+   PERIOD LABEL (Year)
+   ======================================== */
+
+.period-color-viz__period-label {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.period-color-viz__year {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
+  color: rgba(255, 255, 255, 0.75);
+  letter-spacing: 0.05em;
+}
+
+/* ========================================
+   PROPORTION BAR (Horizontal Segments)
+   ======================================== */
+
+.period-color-viz__proportion-bar {
+  display: flex;
+  width: 100%;
+  height: clamp(40px, 5vh, 60px);
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ========================================
+   COLOR SEGMENT (Individual Color Block)
+   ======================================== */
+
+.period-color-viz__color-segment {
+  height: 100%;
+  border-right: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.period-color-viz__color-segment:last-child {
+  border-right: none;
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+@media (max-width: 768px) {
+  .period-color-viz__period-row {
+    grid-template-columns: 60px 1fr;
+    gap: 12px;
+  }
+
+  .period-color-viz__year {
+    font-size: 0.85rem;
+  }
+
+  .period-color-viz__proportion-bar {
+    height: 36px;
+  }
+}
+
+@media (max-width: 600px) {
+  .period-color-viz__period-row {
+    grid-template-columns: 50px 1fr;
+    gap: 8px;
+  }
+
+  .period-color-viz__year {
+    font-size: 0.8rem;
+  }
+
+  .period-color-viz__proportion-bar {
+    height: 32px;
+  }
+
+  .period-color-viz__bars {
+    gap: 10px;
+  }
+}

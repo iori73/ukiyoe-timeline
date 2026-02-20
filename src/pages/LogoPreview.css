@@ -10,17 +10,17 @@
 .logo-preview-page {
   min-height: 100vh;
   font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  transition: background-color var(--duration-slow) var(--ease-ukiyoe), color var(--duration-slow) var(--ease-ukiyoe);
 }
 
 .logo-preview-page.light {
-  background: linear-gradient(180deg, #F5F1E6 0%, #EDE8D9 100%);
+  background: linear-gradient(180deg, var(--washi) 0%, #EDE8D9 100%);
   color: #1a1a1a;
 }
 
 .logo-preview-page.dark {
   background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
-  color: #F5F1E6;
+  color: var(--washi);
 }
 
 /* ===============================================
@@ -55,7 +55,7 @@
   color: inherit;
   font-size: var(--text-sm);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all var(--duration-normal) var(--ease-ukiyoe);
 }
 
 .mode-toggle:hover {
@@ -186,7 +186,7 @@
 
 .color-chip span {
   font-size: var(--text-xs);
-  color: #F5F1E6;
+  color: var(--washi);
   font-weight: 500;
   letter-spacing: 0.05em;
 }
@@ -283,7 +283,7 @@
   font-size: var(--text-sm);
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all var(--duration-normal) var(--ease-ukiyoe);
 }
 
 .era-button:hover {
@@ -292,7 +292,7 @@
 
 .era-button.active {
   background: var(--era-color);
-  color: #F5F1E6;
+  color: var(--washi);
 }
 
 /* ===============================================

@@ -183,7 +183,7 @@ export function ProgressBar({ period, isActive, progress, isPast }) {
         style={{ 
           backgroundColor: period.color,
           height: `${height}%`,
-          transition: isActive ? 'none' : 'height 0.3s ease-out',
+          transition: isActive ? 'none' : 'height var(--duration-normal) var(--ease-out)',
         }}
       />
     </div>

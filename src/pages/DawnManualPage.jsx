@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import { PERIOD_ORDER, PERIODS, useFirstVisit } from '../components/dawn/ProgressTimeline'
 import PeriodSlide from '../components/dawn/PeriodSlide'
 import GalleryIndicatorsManual from '../components/dawn/GalleryIndicatorsManual'
+import LayerStackAnimation from '../components/dawn/LayerStackAnimation'
 import LanguageToggle from '../components/LanguageToggle'
-import { LayeredLogo } from '../components/common/AnimatedLogo'
 import './DawnPage.css'
 
 /**
@@ -227,7 +227,7 @@ export default function DawnManualPage() {
       <header className="dawn-header">
         <div className="dawn-header__container">
           <Link to="/" className="dawn-header__logo">
-            <LayeredLogo size="small" animate={false} />
+            <img src="/images/logo-square.svg" alt="浮世絵" className="dawn-header__logo-img" />
           </Link>
           <LanguageToggle />
         </div>
@@ -281,7 +281,10 @@ export default function DawnManualPage() {
             </div>
           )
         })}
-        
+
+        {/* 印刷版アニメーション: スクロールで画面に入ったら色版が順に重なり一枚の絵に */}
+        <LayerStackAnimation />
+
         {/* End Section with Button */}
         <div ref={endRef} className="dawn-gallery__end">
           <section className="dawn-button-section">

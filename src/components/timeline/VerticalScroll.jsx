@@ -13,7 +13,7 @@ import './VerticalScroll.css'
 /**
  * スクロール速度の正規化
  * - trackpad/マウスホイールの違いを吸収
- * - 極端に大きい値を制限
+ * - 極端に大きい値のみ制限（従来のスクロールに近い進み量にするため緩めに）
  */
 const normalizeWheelDelta = (deltaY, deltaMode) => {
   // deltaMode: 0 = pixels, 1 = lines, 2 = pages
@@ -27,10 +27,13 @@ const normalizeWheelDelta = (deltaY, deltaMode) => {
     normalized = deltaY * window.innerHeight
   }
 
-  // 最大値を制限（1フレームで50px以上スクロールしない）
-  const maxDelta = 50
+  // 極端な値のみ制限（1フレームで120pxまで許可＝従来スクロールに近い体感に）
+  const maxDelta = 120
   return Math.max(-maxDelta, Math.min(maxDelta, normalized))
 }
+
+/** ホイールの進み量を増幅（従来のスクロールに近い体感にする） */
+const SCROLL_SPEED_MULTIPLIER = 1.8
 
 export default function VerticalScroll({
   children,
@@ -38,7 +41,10 @@ export default function VerticalScroll({
   totalSections,
   currentSection: externalCurrentSection,
   setCurrentSection: externalSetCurrentSection,
-  scrollToSectionRef
+  scrollToSectionRef,
+  onScrollPastEnd,
+  galleryMode = false,
+  onArtworkDetailOpenChange
 }) {
   const containerRef = useRef(null)
   const sectionRefs = useRef([])
@@ -100,6 +106,9 @@ export default function VerticalScroll({
 
   // ホイールイベントを処理
   const handleWheel = useCallback((e) => {
+    // ギャラリーモードでは wheel をキャプチャしない（通常のスクロールを許可）
+    if (galleryMode) return
+
     e.preventDefault()
 
     // 遷移中またはクールダウン中はスクロールを無視
@@ -112,8 +121,9 @@ export default function VerticalScroll({
     if (now - lastWheelTime.current < 16) return
     lastWheelTime.current = now
 
-    // deltaYを正規化（trackpad/マウスの違いを吸収、極端な値を制限）
-    const deltaY = normalizeWheelDelta(e.deltaY, e.deltaMode)
+    // deltaYを正規化し、進み量を増幅（従来スクロールに近い体感に）
+    const rawDelta = normalizeWheelDelta(e.deltaY, e.deltaMode)
+    const deltaY = rawDelta * SCROLL_SPEED_MULTIPLIER
 
     // アクティブなセクションにホイールイベントを渡す
     const activeRef = sectionRefs.current[currentSection]
@@ -121,18 +131,23 @@ export default function VerticalScroll({
       const result = activeRef.handleWheel(deltaY)
 
       if (!result.consumed) {
-        // 連続遷移試行をカウント（デバッグ用 & 安全弁）
-        consecutiveTransitionAttempts.current++
+        // 最後のセクションで下スクロール → 一覧（ギャラリー）へ遷移はブロックしない
+        // ここでブロックすると「何回もスクロールしないと一覧に行けない」原因になる
+        if (result.direction === 'next' && currentSection === totalSections - 1) {
+          consecutiveTransitionAttempts.current = 0
+          onScrollPastEnd?.()
+          return
+        }
 
-        // 異常な連続遷移を検出してブロック
+        // セクション間の連続遷移のみカウント（同一ジェスチャーでの飛び越し防止）
+        consecutiveTransitionAttempts.current++
         if (consecutiveTransitionAttempts.current > 3) {
-          console.warn('Blocked excessive transition attempts')
           transitionCooldown.current = now + 500
           consecutiveTransitionAttempts.current = 0
           return
         }
 
-        // セクションがスクロールを消費しなかった場合、次/前のセクションへ
+        // 次/前のセクションへ
         if (result.direction === 'next' && currentSection < totalSections - 1) {
           goToSection(currentSection + 1, 'next')
         } else if (result.direction === 'prev' && currentSection > 0) {
@@ -143,22 +158,27 @@ export default function VerticalScroll({
         consecutiveTransitionAttempts.current = 0
       }
     }
-  }, [currentSection, totalSections, goToSection])
+  }, [currentSection, totalSections, goToSection, galleryMode, onScrollPastEnd])
 
   // ホイールイベントリスナー
   useEffect(() => {
     const container = containerRef.current
     if (!container) return
 
+    // ギャラリーモードでは wheel イベントをキャプチャしない
+    if (galleryMode) return
+
     container.addEventListener('wheel', handleWheel, { passive: false })
 
     return () => {
       container.removeEventListener('wheel', handleWheel)
     }
-  }, [handleWheel])
+  }, [handleWheel, galleryMode])
 
   // キーボードナビゲーション
   useEffect(() => {
+    if (galleryMode) return
+
     const handleKeyDown = (e) => {
       if (isTransitioning.current) return
 
@@ -203,14 +223,15 @@ export default function VerticalScroll({
   const childrenWithRefs = Children.map(children, (child, index) => {
     return cloneElement(child, {
       ref: setSectionRef(index),
-      isActive: currentSection === index
+      isActive: currentSection === index,
+      ...(onArtworkDetailOpenChange != null && { onArtworkDetailOpenChange })
     })
   })
 
   return (
     <div
       ref={containerRef}
-      className="vertical-scroll-container"
+      className={`vertical-scroll-container${galleryMode ? ' vertical-scroll-container--gallery' : ''}`}
       data-current-section={currentSection}
     >
       <div className="vertical-sections-stack">

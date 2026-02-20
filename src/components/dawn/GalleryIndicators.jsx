@@ -44,12 +44,12 @@ export default function GalleryIndicators({
               cx="20" 
               cy="20" 
               r="19" 
-              stroke="#334E6C" 
+              stroke="var(--period-nishiki)" 
               strokeWidth="2" 
               fill="transparent"
             />
-            <rect x="14" y="12" width="4" height="16" rx="2" fill="#334E6C" />
-            <rect x="22" y="12" width="4" height="16" rx="2" fill="#334E6C" />
+            <rect x="14" y="12" width="4" height="16" rx="2" fill="var(--period-nishiki)" />
+            <rect x="22" y="12" width="4" height="16" rx="2" fill="var(--period-nishiki)" />
           </svg>
         ) : (
           // Play icon - triangle
@@ -64,13 +64,13 @@ export default function GalleryIndicators({
               cx="20" 
               cy="20" 
               r="19" 
-              stroke="#334E6C" 
+              stroke="var(--period-nishiki)" 
               strokeWidth="2" 
               fill="transparent"
             />
             <path 
               d="M16 12L28 20L16 28V12Z" 
-              fill="#334E6C"
+              fill="var(--period-nishiki)"
             />
           </svg>
         )}

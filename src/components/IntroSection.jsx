@@ -1,6 +1,8 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
+import { periodDecorKusa, periodDecorAkane } from '../constants/colors'
+import { duration, easing } from '../constants/motion'
 
 /**
  * IntroSection - トップページ導入セクション
@@ -44,7 +46,7 @@ export default function IntroSection({ isActive }) {
       yearStart: 1740,
       yearEnd: 1765,
       visualWidth: 28, // 視覚的な幅（%）
-      color: '#95a078',
+      color: periodDecorKusa,
       image: '/benizuri-e.png',
       desc: { 
         ja: '紅色と緑色の版木を追加し、「見当」という位置合わせ技術で重ね摺りしました版画です。手彩色より大量生産が可能になりました。2〜3色の限られた色彩ながら、華やかな印象を生み出しました。',
@@ -58,7 +60,7 @@ export default function IntroSection({ isActive }) {
       yearStart: 1765,
       yearEnd: 1800,
       visualWidth: 32, // 視覚的な幅（%）
-      color: '#f8604f',
+      color: periodDecorAkane,
       image: '/nishiki-e.png',
       desc: { 
         ja: '10枚以上の版木を精密に重ね、ぼかしや空摺りなどの高度な技法を導入しました。浮世絵の技術的頂点です。錦織のような豪華絢爛な色彩表現が可能になりました。',
@@ -271,14 +273,14 @@ export default function IntroSection({ isActive }) {
       className="fullscreen-section intro-section intro-section-ukiyoe first-section"
       initial={{ opacity: 0 }}
       animate={{ opacity: isActive ? 1 : 0 }}
-      transition={{ duration: 1, ease: [0.19, 1.0, 0.22, 1.0] }}
+      transition={{ duration: duration.slower, ease: easing.ukiyoe }}
     >
       {/* 2カラムレイアウト */}
       <motion.div 
         className="intro-content-wrapper"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
-        transition={{ duration: 0.8, delay: 0.3 }}
+        transition={{ duration: duration.slower, delay: duration.normal }}
       >
         {/* 左カラム: テキストとコントロール */}
         <div className="intro-left-column">
@@ -370,7 +372,7 @@ export default function IntroSection({ isActive }) {
             key={activeTechnique}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: duration.normal }}
           >
             <div className="current-technique-header">
               <span 
@@ -406,7 +408,7 @@ export default function IntroSection({ isActive }) {
                 animate={{
                   opacity: opacities[tech.id]
                 }}
-                transition={{ duration: isDragging ? 0.05 : 0.15, ease: 'easeOut' }}
+                transition={{ duration: isDragging ? 0.05 : duration.fast, ease: easing.easeOut }}
                 draggable={false}
               />
             ))}
