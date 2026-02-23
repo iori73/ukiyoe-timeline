@@ -21,7 +21,7 @@ export default function ConceptB() {
       yearEnd: 1740,
       duration: 80, // years
       color: '#1a1a1a',
-      image: '/sumizuri-e.png',
+      image: '/sumizuri-e.webp',
       desc: '墨一色のみで摺った木版画。菱川師宣により浮世絵が芸術形式として確立された。'
     },
     { 
@@ -31,7 +31,7 @@ export default function ConceptB() {
       yearEnd: 1765,
       duration: 25,
       color: periodDecorKusa,
-      image: '/benizuri-e.png',
+      image: '/benizuri-e.webp',
       desc: '紅色と緑色の版木を追加。「見当」技術で重ね摺りが可能になった。'
     },
     { 
@@ -41,7 +41,7 @@ export default function ConceptB() {
       yearEnd: 1800,
       duration: 35,
       color: periodDecorAkane,
-      image: '/nishiki-e.png',
+      image: '/nishiki-e.webp',
       desc: '10枚以上の版木を精密に重ね、ぼかしや空摺りなどの高度な技法を導入。'
     }
   ]

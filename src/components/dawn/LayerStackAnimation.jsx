@@ -6,10 +6,10 @@ import './LayerStackAnimation.css'
  * 初期オフセットは「浮いている」離れ具合（参考画像程度）
  */
 const BENIZURI_LAYERS = [
-  { src: '/images/dawn/benizuri-e/layers/layer-01.png', label: '黒', initialOffset: { x: 0, y: 0 } },
-  { src: '/images/dawn/benizuri-e/layers/layer-02.png', label: '緑', initialOffset: { x: 18, y: -22 } },
-  { src: '/images/dawn/benizuri-e/layers/layer-03.png', label: 'ピンク', initialOffset: { x: -12, y: 14 } },
-  { src: '/images/dawn/benizuri-e/layers/layer-04.png', label: '色', initialOffset: { x: 14, y: 10 } },
+  { src: '/images/dawn/benizuri-e/layers/layer-01.webp', label: '黒', initialOffset: { x: 0, y: 0 } },
+  { src: '/images/dawn/benizuri-e/layers/layer-02.webp', label: '緑', initialOffset: { x: 18, y: -22 } },
+  { src: '/images/dawn/benizuri-e/layers/layer-03.webp', label: 'ピンク', initialOffset: { x: -12, y: 14 } },
+  { src: '/images/dawn/benizuri-e/layers/layer-04.webp', label: '色', initialOffset: { x: 14, y: 10 } },
 ]
 
 const LAYER_DURATION_MS = 700
@@ -82,6 +82,7 @@ export default function LayerStackAnimation() {
                     src={layer.src}
                     alt=""
                     className="layer-stack__img"
+                    decoding="async"
                     draggable={false}
                   />
                 </div>

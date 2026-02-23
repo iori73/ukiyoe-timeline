@@ -157,6 +157,7 @@ PC 向けに最小16px を基準とした rem スケール。
 
 | 名前 | rem | 実効px | CSS変数 |
 |------|-----|--------|---------|
+| 2xs | 0.75rem | 12px | `--text-2xs` |
 | xs | 0.875rem | 14px | `--text-xs` |
 | sm | 1rem | 16px | `--text-sm` |
 | base | 1.125rem | 18px | `--text-base` |
@@ -188,6 +189,94 @@ PC 向けに最小16px を基準とした rem スケール。
 | wide | 0.05em | `--tracking-wide` |
 | wider | 0.1em | `--tracking-wider` |
 | widest | 0.2em | `--tracking-widest` |
+
+### セマンティックタイポグラフィースタイル
+
+プリミティブトークン（サイズ・行間・字間）を組み合わせた、用途別のタイポグラフィースタイル。
+ユーティリティクラスとして `src/styles/typography.css` で定義。
+
+#### カテゴリ概要
+
+| カテゴリ | フォント | 役割 | weight |
+|----------|----------|------|--------|
+| **display** | serif | Hero / ページレベル見出し | 400（em: 700） |
+| **headline** | serif | セクション見出し | 600 |
+| **title** | serif | カード / コンポーネント見出し | 700 |
+| **body** | sans | 本文 / 説明文 | 300（em: 600） |
+| **label** | sans | ラベル / メタデータ | 500 |
+
+headline と title は同じサイズステップを共有しつつ、weight と letter-spacing で役割を区別する。
+
+#### display（`--font-serif`）
+
+| スタイル | CSS クラス | サイズ | weight | line-height | letter-spacing |
+|----------|-----------|--------|--------|-------------|----------------|
+| display/large | `.typo-display-lg` | 7xl (92px) | 400 | 1.3 | 0.05em |
+| display/large-emphasized | `.typo-display-lg-em` | 7xl (92px) | 700 | 1.3 | 0.05em |
+| display/medium | `.typo-display-md` | 6xl (72px) | 400 | 1.2 | 0.04em |
+| display/medium-emphasized | `.typo-display-md-em` | 6xl (72px) | 700 | 1.2 | 0.04em |
+| display/small | `.typo-display-sm` | 5xl (55px) | 400 | 1.2 | 0.04em |
+| display/small-emphasized | `.typo-display-sm-em` | 5xl (55px) | 700 | 1.2 | 0.04em |
+
+#### headline（`--font-serif`）
+
+| スタイル | CSS クラス | サイズ | weight | line-height | letter-spacing |
+|----------|-----------|--------|--------|-------------|----------------|
+| headline/large | `.typo-headline-lg` | 4xl (46px) | 600 | 1.3 | 0.08em |
+| headline/medium | `.typo-headline-md` | 3xl (36px) | 600 | 1.3 | 0.05em |
+| headline/small | `.typo-headline-sm` | 2xl (28px) | 600 | 1.3 | 0.05em |
+
+#### title（`--font-serif`）
+
+| スタイル | CSS クラス | サイズ | weight | line-height | letter-spacing |
+|----------|-----------|--------|--------|-------------|----------------|
+| title/x-large | `.typo-title-xl` | 3xl (36px) | 700 | 1.3 | 0 |
+| title/large | `.typo-title-lg` | 2xl (28px) | 700 | 1.3 | 0 |
+| title/medium | `.typo-title-md` | xl (23px) | 700 | 1.4 | 0 |
+| title/small | `.typo-title-sm` | lg (20px) | 700 | 1.4 | 0 |
+
+#### body（`--font-sans`）
+
+| スタイル | CSS クラス | サイズ | weight | line-height | letter-spacing |
+|----------|-----------|--------|--------|-------------|----------------|
+| body/large | `.typo-body-lg` | lg (20px) | 300 | 1.6 | 0 |
+| body/large-emphasized | `.typo-body-lg-em` | lg (20px) | 600 | 1.6 | 0 |
+| body/medium | `.typo-body-md` | base (18px) | 300 | 1.6 | 0 |
+| body/medium-emphasized | `.typo-body-md-em` | base (18px) | 600 | 1.6 | 0 |
+| body/small | `.typo-body-sm` | sm (16px) | 300 | 1.6 | 0 |
+| body/small-emphasized | `.typo-body-sm-em` | sm (16px) | 600 | 1.6 | 0 |
+| body/x-small | `.typo-body-xs` | xs (14px) | 300 | 1.6 | 0 |
+| body/x-small-emphasized | `.typo-body-xs-em` | xs (14px) | 600 | 1.6 | 0 |
+
+#### label（`--font-sans`）
+
+| スタイル | CSS クラス | サイズ | weight | line-height | letter-spacing |
+|----------|-----------|--------|--------|-------------|----------------|
+| label/medium | `.typo-label-md` | sm (16px) | 500 | 1 | 0.05em |
+| label/small | `.typo-label-sm` | xs (14px) | 500 | 1 | 0.05em |
+| label/x-small | `.typo-label-xs` | 2xs (12px) | 500 | 1 | 0.05em |
+
+#### 使い方
+
+```html
+<!-- display: ページのヒーロータイトル -->
+<h1 class="typo-display-lg">浮世絵の世界</h1>
+
+<!-- headline: セクション見出し -->
+<h2 class="typo-headline-md">墨摺絵の技法</h2>
+
+<!-- title: カード見出し（headline より太く、字間が詰まる） -->
+<h3 class="typo-title-lg">見返り美人図</h3>
+
+<!-- body: 本文 -->
+<p class="typo-body-md">浮世絵は江戸時代に発展した...</p>
+
+<!-- body-emphasized: 強調本文 -->
+<p class="typo-body-md-em">重要な発見</p>
+
+<!-- label: メタデータ -->
+<span class="typo-label-sm">1765年頃</span>
+```
 
 ---
 

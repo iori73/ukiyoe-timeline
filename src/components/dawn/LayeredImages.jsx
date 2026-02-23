@@ -198,21 +198,19 @@ export default function LayeredImages({
   }, [periodId])
 
   // Generate image paths based on period
-  // Layer 1: root images (sumizuri-e.png, benizuri-e.png, nishiki-e.png)
-  // Layer 2+: /images/dawn/{periodId}/layers/{periodId}-e-{n}.png
+  // Layer 1: root images (sumizuri-e.webp, benizuri-e.webp, nishiki-e.webp)
+  // Layer 2+: /images/dawn/{periodId}/layers/{periodId}-e-{n}.webp
   const getImagePath = (periodId, layerIndex) => {
     if (layerIndex === 0) {
-      // Layer 1: Use root public images
-      return `/${periodId}-e.png`
+      return `/${periodId}-e.webp`
     }
-    // Layer 2+: Use layers folder images
-    return `/images/dawn/${periodId}-e/layers/${periodId}-e-${layerIndex + 1}.png`
+    return `/images/dawn/${periodId}-e/layers/${periodId}-e-${layerIndex + 1}.webp`
   }
 
   const images = Array.from({ length: imageCount }, (_, i) => ({
     index: i,
     path: isSingleImage 
-      ? `/${periodId}-e.png`  // sumizuri uses root image
+      ? `/${periodId}-e.webp`
       : getImagePath(periodId, i),
     // All images have same opacity - no progressive fade needed
     opacity: 1,
@@ -264,6 +262,7 @@ export default function LayeredImages({
               src={image.path}
               alt={`${periodId} layer ${image.index + 1}`}
               className="layered-images__img"
+              decoding="async"
               onError={(e) => {
                 // Hide image on error, show placeholder
                 e.target.style.display = 'none'

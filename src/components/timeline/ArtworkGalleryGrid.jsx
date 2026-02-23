@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo, useCallback, useEffect } from 'react'
+import { useState, useRef, useMemo, useCallback, useEffect, memo } from 'react'
 import { motion } from 'framer-motion'
 import { duration, stagger } from '../../constants/motion'
 import { useLanguage } from '../../context/LanguageContext'
@@ -34,16 +34,17 @@ function getAllArtworks() {
   return all
 }
 
-function ArtworkCard({ artwork, index, onCardClick, cardRefs }) {
+const ArtworkCard = memo(function ArtworkCard({ artwork, index, onCardClick, cardRefs }) {
   const { language } = useLanguage()
   const [imgError, setImgError] = useState(false)
+  const [imgLoaded, setImgLoaded] = useState(false)
   const title = language === 'ja' ? artwork.title_ja : artwork.title_en
   const artist = language === 'ja' ? artwork.artist_ja : artwork.artist_en
   const fp = artwork.focalPoint || { x: 0.5, y: 0.5 }
   const objectPosition = `${fp.x * 100}% ${fp.y * 100}%`
 
   return (
-    <motion.article
+    <motion.div
       className="artwork-gallery__card"
       ref={(el) => { cardRefs.current[artwork.id] = el }}
       initial={{ opacity: 0, y: 20 }}
@@ -51,15 +52,22 @@ function ArtworkCard({ artwork, index, onCardClick, cardRefs }) {
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: duration.slow, delay: (index % 8) * stagger.normal }}
       onClick={() => onCardClick(artwork, artwork.id)}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onCardClick(artwork, artwork.id) } }}
+      tabIndex={0}
+      role="button"
+      aria-label={title}
     >
       <div className="artwork-gallery__image-wrapper">
+        {!imgError && !imgLoaded && <div className="artwork-gallery__shimmer" />}
         {!imgError ? (
           <img
             src={artwork.url}
             alt={title}
-            className="artwork-gallery__image"
+            className={`artwork-gallery__image${imgLoaded ? ' artwork-gallery__image--loaded' : ''}`}
             style={{ objectPosition }}
             loading="lazy"
+            decoding="async"
+            onLoad={() => setImgLoaded(true)}
             onError={() => setImgError(true)}
           />
         ) : (
@@ -85,9 +93,9 @@ function ArtworkCard({ artwork, index, onCardClick, cardRefs }) {
           <span className="artwork-gallery__overlay-artist">{artist}</span>
         </div>
       </div>
-    </motion.article>
+    </motion.div>
   )
-}
+})
 
 export default function ArtworkGalleryGrid({ periods = [], onReturnToTimeline, onModalStateChange }) {
   const { language } = useLanguage()

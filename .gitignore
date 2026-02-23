@@ -12,6 +12,7 @@ node_modules
 
 # misc
 .DS_Store
+.env
 .env.local
 .env.development.local
 .env.test.local
@@ -37,3 +38,19 @@ yarn-error.log*
 # Conversation history
 /Users/iorikawano/Documents/Ukiyoe/docs/conversation-history
 
+# Playwright MCP logs/screenshots
+.playwright-mcp/
+
+# QA / debug screenshots (ルート直下の作業用画像)
+qa-*.png
+qa*.png
+mobile-*.png
+color-*.png
+freq-bar-*.png
+isometric-*.png
+timeline-section*.png
+og-image.png
+
+# テスト用スクリーンショット
+test-screenshots-mobile/
+screenshots/

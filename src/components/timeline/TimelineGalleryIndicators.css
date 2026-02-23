@@ -1,42 +1,72 @@
 /* ========================================
    TIMELINE GALLERY INDICATORS
    
-   Figmaデザインに準拠
-   - Active: 長い白い縦棒（100px）
-   - Past: 小さい灰色の丸（12px）、不透明度0.6
-   - Future: 小さい灰色の丸（12px）、不透明度0.3
+   Figmaデザイン準拠（1440w / 390w）
+   - Active: 白い縦棒（PC: 103px / SP: 72px）
+   - Inactive: 16px丸、距離に応じてopacity減衰
+   - セパレーター + ギャラリーアイコン付き
    ======================================== */
 
-/* コントロールラッパー（タイムライン・ギャラリー両方で常に表示・クリック可能） */
+/* コントロールラッパー */
 .timeline-gallery-controls {
   position: fixed;
-  left: clamp(16px, 2vw, 40px);
-  left: max(clamp(16px, 2vw, 40px), env(safe-area-inset-left));
-  top: 32%;
+  right: clamp(16px, 2vw, 40px);
+  right: max(clamp(16px, 2vw, 40px), env(safe-area-inset-right));
+  top: 50%;
   transform: translateY(-50%);
   z-index: var(--z-dropdown);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   pointer-events: auto;
 }
 
-/* インジケーターコンテナ */
+/* インジケーターコンテナ（indicators + separator + gallery を24pxギャップで配置） */
 .timeline-gallery-indicators {
   display: flex;
   flex-direction: column;
-  gap: clamp(6px, 1vh, 12px);
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+/* インジケーター群ラッパー（個別ドット間は8pxギャップ） */
+.timeline-gallery-controls__dots {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+/* 各インジケーター行（年号ラベル＋ドット） */
+.timeline-gallery-controls__item {
+  display: flex;
   align-items: center;
+  justify-content: flex-end;
+}
+
+/* 年号ラベル */
+.timeline-gallery-controls__year {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  color: var(--washi);
+  opacity: 0.4;
+  letter-spacing: 0.05em;
+  margin-right: 8px;
+  transition: opacity var(--duration-normal) var(--ease-ukiyoe);
+  white-space: nowrap;
+}
+
+.timeline-gallery-controls__item--active .timeline-gallery-controls__year {
+  opacity: 0.9;
 }
 
 /* 個別インジケーター */
 .timeline-gallery-indicator {
-  width: 12px;
+  width: 16px;
   border-radius: 100px;
   cursor: pointer;
   border: none;
   padding: 0;
-  /* 高さのモーフィングトランジション */
   transition: 
     height var(--duration-slow) var(--ease-in-out),
     opacity var(--duration-normal) var(--ease-ukiyoe),
@@ -48,74 +78,97 @@
   outline-offset: 2px;
 }
 
-/* アクティブ状態: 長い白い縦棒 */
+/* アクティブ状態 */
 .timeline-gallery-indicator--active {
-  height: clamp(50px, 10vh, 100px);
+  height: 103px;
   background-color: var(--washi);
   opacity: 1;
 }
 
-/* 非アクティブ状態: 小さい丸（不透明度はJSで動的に設定） */
+/* 非アクティブ状態（opacityはJSで動的設定） */
 .timeline-gallery-indicator--inactive {
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
   background-color: var(--washi);
 }
 
-/* ギャラリーモード時: すべてのインジケーターを小さい丸で表示 */
+/* ========================================
+   SEPARATOR + GALLERY ICON
+   ======================================== */
+
+.timeline-gallery-controls__separator {
+  width: 16px;
+  height: 1px;
+  background-color: var(--washi);
+  opacity: 0.3;
+}
+
+.timeline-gallery-controls__gallery-btn {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 1px;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity var(--duration-normal) var(--ease-ukiyoe);
+}
+
+.timeline-gallery-controls__gallery-btn:hover {
+  opacity: 0.8;
+}
+
+.timeline-gallery-controls__gallery-btn:focus {
+  /* outline: 2px solid var(--ai-iro);
+  outline-offset: 2px; */
+  scale: 1.2;
+}
+
+.timeline-gallery-controls__gallery-cell {
+  border: 2px solid var(--washi);
+}
+
+/* ========================================
+   GALLERY MODE
+   ======================================== */
+
 .timeline-gallery-controls--gallery-mode .timeline-gallery-indicator--active {
   height: 12px;
   opacity: 0.4;
+}
+
+.timeline-gallery-controls--gallery-mode .timeline-gallery-controls__gallery-btn {
+  opacity: 1;
 }
 
 /* ========================================
    RESPONSIVE
    ======================================== */
 
-@media (max-width: 900px) {
-  .timeline-gallery-indicator {
-    width: 10px;
-    border-radius: 5px;
-  }
-
-  .timeline-gallery-indicator--inactive {
-    width: 10px;
-    height: 10px;
-  }
-}
-
 @media (max-width: 600px) {
   .timeline-gallery-controls {
-    /* モバイルではインジケーター群を画面下部に横並びで配置 */
-    left: 50%;
-    top: auto;
-    bottom: 16px;
-    bottom: max(16px, env(safe-area-inset-bottom));
-    transform: translateX(-50%);
-    flex-direction: row;
+    right: 16px;
+    right: max(16px, env(safe-area-inset-right));
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                visibility 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .timeline-gallery-indicators {
-    flex-direction: row;
-    gap: 4px;
+  .timeline-gallery-controls--gallery-mode {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
   }
 
-  .timeline-gallery-indicator {
-    width: 8px;
-    border-radius: 4px;
-    /* タッチターゲット44px確保: paddingで透明な当たり判定を拡張 */
-    padding: 18px;
-    background-clip: content-box;
+  .timeline-gallery-controls__year {
+    display: none;
   }
 
   .timeline-gallery-indicator--active {
-    height: 8px;
-    width: clamp(32px, 6vw, 50px);
-  }
-
-  .timeline-gallery-indicator--inactive {
-    width: 8px;
-    height: 8px;
+    height: 72px;
   }
 }
 
@@ -123,14 +176,13 @@
    ACCESSIBILITY
    ======================================== */
 
-/* Reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
-  .timeline-gallery-indicator {
+  .timeline-gallery-indicator,
+  .timeline-gallery-controls__gallery-btn {
     transition: none;
   }
 }
 
-/* High contrast mode */
 @media (prefers-contrast: high) {
   .timeline-gallery-indicator {
     border: 2px solid currentColor;

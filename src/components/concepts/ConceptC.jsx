@@ -19,7 +19,7 @@ export default function ConceptC() {
       name: '墨摺絵', 
       year: '1660年頃',
       color: '#1a1a1a',
-      image: '/sumizuri-e.png',
+      image: '/sumizuri-e.webp',
       desc: '墨一色のみで摺った木版画。菱川師宣の流麗な線描により、浮世絵は独立した芸術形式として確立された。',
       zOffset: 0 // 最も奥
     },
@@ -28,7 +28,7 @@ export default function ConceptC() {
       name: '紅摺絵', 
       year: '1740年代',
       color: periodDecorKusa,
-      image: '/benizuri-e.png',
+      image: '/benizuri-e.webp',
       desc: '紅色と緑色の版木を追加し、「見当」という位置合わせ技術で重ね摺りした版画。',
       zOffset: 1 // 中間
     },
@@ -37,7 +37,7 @@ export default function ConceptC() {
       name: '錦絵', 
       year: '1765年以降',
       color: periodDecorAkane,
-      image: '/nishiki-e.png',
+      image: '/nishiki-e.webp',
       desc: '10枚以上の版木を精密に重ね、ぼかしや空摺りなどの高度な技法を導入。浮世絵の技術的頂点。',
       zOffset: 2 // 最も手前
     }

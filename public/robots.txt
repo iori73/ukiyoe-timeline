@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://ukiyoe-timeline.vercel.app/sitemap.xml

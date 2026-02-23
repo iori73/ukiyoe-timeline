@@ -32,7 +32,7 @@ export default function ConceptA() {
       yearStart: 1660,
       yearEnd: 1740,
       color: '#1a1a1a',
-      image: '/sumizuri-e.png',
+      image: '/sumizuri-e.webp',
       desc: '墨一色のみで摺りました木版画です。線の強弱や濃淡で立体感や質感を表現しました'
     },
     { 
@@ -44,7 +44,7 @@ export default function ConceptA() {
       yearStart: 1740,
       yearEnd: 1765,
       color: periodDecorKusa,
-      image: '/benizuri-e.png',
+      image: '/benizuri-e.webp',
       desc: '紅色と緑色を追加しました版画です。2〜3色程度の限られた色彩で華やかさを演出しました'
     },
     { 
@@ -56,7 +56,7 @@ export default function ConceptA() {
       yearStart: 1765,
       yearEnd: 1800,
       color: periodDecorAkane,
-      image: '/nishiki-e.png',
+      image: '/nishiki-e.webp',
       desc: '10色以上の多色摺り木版画です。錦織のような豪華絢爛な色彩表現を実現しました'
     }
   ]

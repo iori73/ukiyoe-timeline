@@ -5,6 +5,35 @@ import { duration, easing } from '../../constants/motion'
 import { useLanguage } from '../../context/LanguageContext'
 import './ArtworkDetailModal.css'
 
+function getSourceInfo(imageUrl) {
+  try {
+    const url = new URL(imageUrl)
+
+    if (url.hostname === 'upload.wikimedia.org') {
+      const filename = decodeURIComponent(url.pathname.split('/').pop())
+      return {
+        url: `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(filename)}`,
+        siteName: 'Wikimedia Commons'
+      }
+    }
+
+    if (url.hostname === 'data.ukiyo-e.org') {
+      const parts = url.pathname.split('/')
+      const source = parts[1]
+      const filenameWithExt = parts[parts.length - 1]
+      const id = filenameWithExt.replace(/\.[^.]+$/, '')
+      return {
+        url: `https://ukiyo-e.org/image/${source}/${id}`,
+        siteName: 'Ukiyo-e.org'
+      }
+    }
+
+    return { url: imageUrl, siteName: url.hostname }
+  } catch {
+    return null
+  }
+}
+
 /**
  * ArtworkDetailModal Component
  *
@@ -39,7 +68,10 @@ export default function ArtworkDetailModal({
       // モーダル内の最初のフォーカス可能な要素にフォーカス
       requestAnimationFrame(() => {
         const closeBtn = contentRef.current?.querySelector('.artwork-modal__close-btn')
-        closeBtn?.focus()
+        closeBtn?.focus({ preventScroll: true })
+        if (contentRef.current) {
+          contentRef.current.scrollTop = 0
+        }
       })
       // body スクロールを無効化
       document.body.style.overflow = 'hidden'
@@ -106,6 +138,7 @@ export default function ArtworkDetailModal({
   const description = language === 'ja'
     ? (artwork.description_ja || artwork.description || '')
     : (artwork.description_en || artwork.description || '')
+  const sourceInfo = getSourceInfo(artwork.url)
 
   // body直下にPortalでレンダリング（親のtransformの影響を受けない）
   return createPortal(
@@ -214,6 +247,20 @@ export default function ArtworkDetailModal({
                 <p className="artwork-modal__description">
                   {description}
                 </p>
+              )}
+
+              {sourceInfo && (
+                <a
+                  className="artwork-modal__source-link"
+                  href={sourceInfo.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span>{title} — {sourceInfo.siteName}</span>
+                  <svg className="artwork-modal__external-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M6 3H3.5A1.5 1.5 0 0 0 2 4.5v8A1.5 1.5 0 0 0 3.5 14h8a1.5 1.5 0 0 0 1.5-1.5V10m-4-8h5m0 0v5m0-5L7.5 8.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </a>
               )}
 
               <button

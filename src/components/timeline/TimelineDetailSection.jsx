@@ -1,4 +1,4 @@
-import { useRef, useMemo, useState, useEffect, useCallback, forwardRef, useImperativeHandle } from 'react'
+import { useRef, useMemo, useState, useEffect, useCallback, forwardRef, useImperativeHandle, memo } from 'react'
 import { motion, useSpring } from 'framer-motion'
 import { duration, easing, spring } from '../../constants/motion'
 import { useLanguage } from '../../context/LanguageContext'
@@ -16,7 +16,7 @@ import './TimelineDetailSection.css'
  * - ブラウザ幅が狭い場合やモバイルでも重なりが起きない
  * - progress=1 時に最後の作品（73% = 204.4vh）が画面内に収まる
  */
-const ARTWORK_LAYER_HEIGHT_VH = 280
+export const ARTWORK_LAYER_HEIGHT_VH = 280
 
 /** 作品レイヤーの最大スクロール量（vh単位） */
 const MAX_ARTWORK_SCROLL_VH = ARTWORK_LAYER_HEIGHT_VH - 100
@@ -69,12 +69,15 @@ function PeriodPanel({ period, index, language, isActive, isArtworkModalOpen }) 
         <div className="timeline-section__header">
           <div className="timeline-section__number">{sectionNumber}</div>
           <div className="timeline-section__date-range">
+            <div className="timeline-section__date-bar">
+              <div className="timeline-section__date-bar-line" />
+              <div className="timeline-section__date-bar-dot timeline-section__date-bar-dot--start" />
+              <div className="timeline-section__date-bar-dot timeline-section__date-bar-dot--end" />
+            </div>
             <div className="timeline-section__date-inner">
               <span className="timeline-section__date-start">{period.year_start}</span>
-              <span className="timeline-section__date-separator">—</span>
               <span className="timeline-section__date-end">{period.year_end}</span>
             </div>
-            <div className="timeline-section__date-divider" />
           </div>
         </div>
 
@@ -112,16 +115,15 @@ function PeriodPanel({ period, index, language, isActive, isArtworkModalOpen }) 
 // ========================================
 // メインコンポーネント
 // ========================================
-const TimelineDetailSection = forwardRef(function TimelineDetailSection({
+const TimelineDetailSection = memo(forwardRef(function TimelineDetailSection({
   period,
   index,
   isActive,
   totalPeriods,
-  // ネイティブスクロール用
-  scrollProgress = 0,
   useNativeScroll = false,
   onArtworkDetailOpenChange,
   // 旧VerticalScroll用（互換）
+  scrollProgress = 0,
   onScrollComplete,
   onScrollStart
 }, ref) {
@@ -141,9 +143,6 @@ const TimelineDetailSection = forwardRef(function TimelineDetailSection({
   // ネイティブスクロール（俵屋方式）
   // ============================
   if (useNativeScroll) {
-    // scrollProgress 0→1 に応じて作品レイヤーを translateY で動かす
-    const offsetVh = (ARTWORK_LAYER_HEIGHT_VH - 100) * scrollProgress
-
     // ref を section 要素に直接紐付ける（親が offsetTop/offsetHeight を読む）
     const setRef = (el) => {
       sectionRef.current = el
@@ -160,12 +159,10 @@ const TimelineDetailSection = forwardRef(function TimelineDetailSection({
       >
         {/* sticky viewport: スクロールしても画面に留まり、中の作品レイヤーだけが動く */}
         <div className="timeline-ns__viewport">
+          {/* transform は TimelinePage の scroll handler が直接 DOM 操作で設定 */}
           <div
             className="timeline-ns__artwork-layer"
-            style={{
-              height: `${ARTWORK_LAYER_HEIGHT_VH}vh`,
-              transform: `translateY(-${offsetVh}vh)`
-            }}
+            style={{ height: `${ARTWORK_LAYER_HEIGHT_VH}vh` }}
           >
             <ParallaxArtworks
               artworks={artworks}
@@ -267,6 +264,6 @@ const TimelineDetailSection = forwardRef(function TimelineDetailSection({
       </div>
     </section>
   )
-})
+}))
 
 export default TimelineDetailSection

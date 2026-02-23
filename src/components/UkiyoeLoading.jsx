@@ -186,11 +186,12 @@ export const UkiyoeLoadingContainer = ({ onComplete }) => {
   const loadingRef = useRef(null)
 
   useEffect(() => {
-    // Load SVG data from JSON
     const loadSvgData = async () => {
       try {
-        const data = await import('../data/ukiyoe-loading-layers.json')
-        setSvgData(data.default || data)
+        const res = await fetch('/data/ukiyoe-loading-layers.json')
+        if (!res.ok) throw new Error(`HTTP ${res.status}`)
+        const data = await res.json()
+        setSvgData(data)
       } catch (error) {
         console.error('Failed to load SVG data:', error)
       }

@@ -1,10 +1,25 @@
 import { Component } from 'react'
 
-/**
- * ErrorBoundary - トップレベルのエラーバウンダリ
- * React の componentDidCatch でランタイムエラーをキャッチし、
- * フォールバック UI を表示する
- */
+const MESSAGES = {
+  ja: {
+    title: 'エラーが発生しました',
+    description: '申し訳ございません。予期しないエラーが発生しました。',
+    action: 'ページをリロードしてお試しください。',
+    button: 'ページをリロード',
+  },
+  en: {
+    title: 'Something went wrong',
+    description: 'We apologize for the inconvenience. An unexpected error occurred.',
+    action: 'Please try reloading the page.',
+    button: 'Reload Page',
+  },
+}
+
+function detectLanguage() {
+  const lang = navigator.language || navigator.userLanguage || 'ja'
+  return lang.startsWith('ja') ? 'ja' : 'en'
+}
+
 export default class ErrorBoundary extends Component {
   constructor(props) {
     super(props)
@@ -25,6 +40,8 @@ export default class ErrorBoundary extends Component {
 
   render() {
     if (this.state.hasError) {
+      const msg = MESSAGES[detectLanguage()]
+
       return (
         <div style={{
           display: 'flex',
@@ -44,7 +61,7 @@ export default class ErrorBoundary extends Component {
             marginBottom: '16px',
             letterSpacing: '0.1em',
           }}>
-            エラーが発生しました
+            {msg.title}
           </h1>
           <p style={{
             fontSize: 'clamp(0.875rem, 2vw, 1rem)',
@@ -53,8 +70,8 @@ export default class ErrorBoundary extends Component {
             lineHeight: 1.6,
             maxWidth: '400px',
           }}>
-            申し訳ございません。予期しないエラーが発生しました。<br />
-            ページをリロードしてお試しください。
+            {msg.description}<br />
+            {msg.action}
           </p>
           <button
             onClick={this.handleReload}
@@ -72,7 +89,7 @@ export default class ErrorBoundary extends Component {
               minWidth: '44px',
             }}
           >
-            ページをリロード
+            {msg.button}
           </button>
         </div>
       )

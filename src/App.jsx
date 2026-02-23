@@ -18,6 +18,7 @@ const DawnManualPage = lazy(() => import('./pages/DawnManualPage'))
 const TimelinePage = lazy(() => import('./pages/TimelinePage'))
 const LogoPreview = lazy(() => import('./pages/LogoPreview'))
 const LayerAnimationPage = lazy(() => import('./pages/LayerAnimationPage'))
+const NotFound = lazy(() => import('./pages/NotFound'))
 
 function AppContent({ skipIntro = false }) {
   const [data, setData] = useState([])
@@ -305,15 +306,18 @@ export default function App() {
     <LanguageProvider>
       <ErrorBoundary>
         <Suspense fallback={<UkiyoeLoadingContainer />}>
-          <Routes>
-            <Route path="/" element={<LayerAnimationPage />} />
-            <Route path="/dawn" element={<DawnManualPage />} />
-            <Route path="/timeline" element={<TimelinePage />} />
-            <Route path="/logo-preview" element={<LogoPreview />} />
-            <Route path="/layer-animation" element={<LayerAnimationPage />} />
-            {/* 旧実装をアーカイブ: /timeline-old で水平スクロール版にアクセス可能 */}
-            <Route path="/timeline-old" element={<MainPageWithHashRouting skipIntro />} />
-          </Routes>
+          <main>
+            <Routes>
+              <Route path="/" element={<LayerAnimationPage />} />
+              <Route path="/dawn" element={<DawnManualPage />} />
+              <Route path="/timeline" element={<TimelinePage />} />
+              <Route path="/logo-preview" element={<LogoPreview />} />
+              <Route path="/layer-animation" element={<LayerAnimationPage />} />
+              {/* 旧実装をアーカイブ: /timeline-old で水平スクロール版にアクセス可能 */}
+              <Route path="/timeline-old" element={<MainPageWithHashRouting skipIntro />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </main>
         </Suspense>
       </ErrorBoundary>
     </LanguageProvider>

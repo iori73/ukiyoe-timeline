@@ -63,9 +63,9 @@
   max-height: 70vh;
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--space-xs);
   color: var(--washi-iro, #f5f0e6);
-  overflow: visible; /* 説明文のスクロールを許可 */
+  overflow: hidden;
 }
 
 .artwork-modal__year {
@@ -90,8 +90,8 @@
   font-size: var(--text-base);
   font-weight: 400;
   color: rgba(245, 240, 230, 0.8);
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgba(245, 240, 230, 0.15);
+  /* padding-bottom: 16px; */
+  /* border-bottom: 1px solid rgba(245, 240, 230, 0.15); */
 }
 
 .artwork-modal__description {
@@ -100,12 +100,49 @@
   font-weight: 300;
   line-height: 1.8;
   color: rgba(245, 240, 230, 0.85);
-  margin: 0;
+  margin: 0.5rem 0;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
 }
 
-/* 閉じるボタン - dawn-buttonスタイル準拠 */
+/* ソースリンク - 控えめなスタイル */
+.artwork-modal__source-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 300;
+  color: rgba(245, 240, 230, 0.45);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  transition: color var(--duration-fast) var(--ease-ukiyoe);
+  margin-top: var(--space-xs);
+}
+
+.artwork-modal__source-link:hover {
+  color: rgba(245, 240, 230, 0.8);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+.artwork-modal__external-icon {
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: opacity var(--duration-fast) var(--ease-ukiyoe);
+}
+
+.artwork-modal__source-link:hover .artwork-modal__external-icon {
+  opacity: 1;
+}
+
+/* 閉じるボタン - 右下配置（視線の終点に自然に配置） */
 .artwork-modal__close-btn {
   margin-top: auto;
+  align-self: flex-end;
   padding-top: 24px;
   display: flex;
   gap: 8px;
@@ -227,7 +264,7 @@
     max-width: none;
     max-height: none;
     gap: 12px;
-    padding: 24px 20px;
+    padding: 1rem 2rem 2rem;
     text-align: left;
     align-items: flex-start;
     overflow: visible;
@@ -241,7 +278,11 @@
     font-size: var(--text-sm);
     line-height: 1.7;
     overflow: visible;
-    max-height: none;
+    max-height: fit-content;
+  }
+
+  .artwork-modal__source-link {
+    font-size: var(--text-xs);
   }
 
   .artwork-modal__close-btn {

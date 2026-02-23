@@ -3,8 +3,8 @@
 # 機能完成後、セッション終了時に必ず更新してください。
 
 ## 現在のステータス
-- フェーズ: Phase 3 完了 → Phase 4 検討中
-- 最終更新: 2026-02-18
+- フェーズ: Phase 4 本番公開準備（実装完了、手動テスト待ち）
+- 最終更新: 2026-02-23
 
 ## 完了済み
 
@@ -58,8 +58,17 @@
 ## 進行中
 - Phase 4: 本番公開準備
 
+### UI/デザイン修正（2026-02-21 完了）
+- [x] タイムラインインジケーターを左側から右側へ移動
+- [x] インジケーターに年号ラベルを追加（periods.year_start を使用）
+- [x] パネル数字の外枠パディングを `4px` に設定（言語切り替えボタンと統一）
+- [x] ホームページフッターの「錦絵の黎明へ」リンクを削除
+- [x] 説明文のフォントサイズを `--text-xl`(23px) → `--text-base`(18px) に縮小
+- [x] アイソメトリックのスケールを拡大（desktop: 0.65→0.75）
+- [x] セクションタイトル「紅摺絵の印刷プロセス」→「紅摺絵」、「錦絵の印刷プロセス」→「錦絵」
+- [x] 「黒摺絵」→「墨摺絵」に統一（LayerAnimationPage.jsx・techniques.js のユーザー向けテキスト）
+
 ### 本番公開準備（2026-02-19 完了分）
-- [x] Figma MCPスクリプト（`capture.js`）を index.html から削除
 - [x] `vercel.json` 作成（SPA ルーティングフォールバック）
 - [x] `public/robots.txt` 作成
 - [x] `puppeteer` / `jsdom` を devDependencies へ移動（本番バンドル削減）
@@ -70,21 +79,60 @@
   - 480px 以下でタイムライン非表示（802px 固定幅のレイアウト破綻を防止）
   - シーンセクションに `overflow: hidden` 追加（アイソメのはみ出しをクリップ）
 
-## 次にやること
-- [ ] **デプロイ**: Vercel に push（vercel.json 設定済み）
-- [ ] **デプロイ後**: `index.html` の `og:url` と `og:image` を本番の絶対 URL に変更
-  - og:url → `https://your-domain.com`
-  - og:image → `https://your-domain.com/images/og-image.jpg`
-  - twitter:image → `https://your-domain.com/images/og-image.jpg`
-- [ ] iPhone 実機での最終確認（PRODUCTION_QA.md 参照）
-- [ ] パフォーマンス最適化（画像 WebP 変換、外部画像の自前ホスト化）
+### セマンティックタイポグラフィーシステム（2026-02-21 完了）
+- [x] `src/styles/typography.css` 新規作成: 28スタイルのユーティリティクラス
+  - display (6), headline (3), title (4), body (8), label (3)
+  - 命名規則: `.typo-{category}-{size}` / `.typo-{category}-{size}-em`
+- [x] `--text-2xs: 0.75rem` (12px) を `:root` に追加
+- [x] `main.jsx` で typography.css をインポート
+- [x] `docs/DESIGN_SYSTEM.md` にセマンティックスタイル一覧・使い方ガイドを追加
 
-### 完了済み（2026-02-19 追加）
+### 本番公開準備（2026-02-23 完了分）
+- [x] Figma MCP スクリプト（`capture.js`）を index.html から削除（02-19 で記録済みだったが実際には未削除だった）
+- [x] `ukiyoe-loading-layers.json` を JS バンドルから分離（1.77MB → 0）
+  - `src/data/` → `public/data/` に移動し `fetch()` で読み込む方式に変更
+  - Vite のチャンクサイズ警告が解消
+- [x] `public/sitemap.xml` 作成（3ページ: /, /dawn, /timeline）
+- [x] `robots.txt` に Sitemap 参照追加
+- [x] `<link rel="canonical">` を index.html に追加
+- [x] ErrorBoundary のバイリンガル対応（navigator.language で日英判定）
+- [x] CSP + セキュリティヘッダー追加（vercel.json）
+  - Content-Security-Policy, X-Content-Type-Options, X-Frame-Options, Referrer-Policy
+- [x] `/data/` 静的アセットの長期キャッシュ設定追加（vercel.json）
 - [x] OG 画像: `public/images/og-image.jpg` (1200×630px, 138KB) に変換・配置
 - [x] apple-touch-icon: `public/images/apple-touch-icon.png` (180×180px) を ImageMagick で生成
   → `index.html` の `<link rel="apple-touch-icon">` を PNG 参照に更新
 
+### パフォーマンス最適化 Round 1（2026-02-23 完了分）
+- [x] 画像リサイズ: dawn/ 全体 84MB → 19MB（77%削減）
+  - figma-layers: max 600px に縮小（2x Retina 対応）
+  - layers/: max 800px に縮小
+  - root hero images: max 600px に縮小
+  - ImageMagick `magick mogrify -resize -quality 82` で一括処理
+- [x] Google Fonts 非ブロッキング化: `media="print" onload` パターン + `display=optional`
+  - render-blocking CSS リクエスト解消 → FCP 3.7s → 1.6s（56%改善）
+- [x] LCP 画像: `fetchPriority="high"` を React img 要素に追加
+- [x] Accessibility: `<main>` landmark 追加（App.jsx の Routes を main で囲む）→ Accessibility 98 → 100
+
+### Lighthouse 再測定結果 → Round 2 最適化（2026-02-23）
+- 測定結果: Performance 75, Accessibility 100, Best Practices 74, SEO 100
+  - FCP: 1.6s（改善）、LCP: 5.7s（悪化）、CLS: 0、TBT: 190ms
+  - LCP 悪化の原因: hero 画像 preload が Slow 4G で JS バンドルと帯域を競合
+- [x] hero 画像 preload を index.html から削除（JS バンドルとの帯域競合を解消）
+  - preload は washi-texture.webp（31KB）のみ残す
+- [x] hero 画像を 1200×593 / quality 75 に圧縮（246KB → 98KB）
+- [x] figma-layers 追加圧縮 quality 65（微小改善: 1.4→1.3MB, 5.5→5.3MB）
+- [x] 非コンポジテッドアニメーション改善: `will-change: transform, opacity` を追加
+  - timeline-label, timeline-colors, tl-item, title-area の4クラスに適用
+
+## 次にやること
+- [ ] Lighthouse 再測定で Round 2 の効果確認
+- [ ] iPhone 実機での最終確認（PRODUCTION_QA.md 参照）
+- [ ] 主要ブラウザ（Chrome, Firefox, Safari macOS, Safari iOS, Edge）での通しテスト
+- [ ] git push → Vercel 自動デプロイ
+
 ## 既知の問題
-- 外部画像（Wikimedia Commons）への依存があり、可用性リスクあり
-- `ukiyoe-loading-layers` バンドルが約 1.7MB（gzip 658KB）— CDN キャッシュで軽減
+- 外部画像（Wikimedia Commons ~35件、ukiyo-e.org ~10件）への依存あり（全コンポーネントで onError フォールバック済み）
 - `LayerAnimationPage.css` の `.layer-anim__description::before` が Figma API URL を参照（本番で404になるが装飾のため実害なし）
+- `logo_v2.svg`（8.9MB）・`original-met.jpg`（2.1MB）はコード未参照の参照ファイル（本番バンドルに影響なし）
+- Lighthouse Performance 75 のボトルネックは JS 実行時間（1.5s）が主因。これは React + Framer Motion の構造的なもので、Slow 4G 環境で 90+ は困難（本番 HTTPS + CDN で改善見込み）

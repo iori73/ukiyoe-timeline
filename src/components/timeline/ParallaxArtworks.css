@@ -38,11 +38,19 @@
   position: absolute;
   cursor: pointer;
   transform-origin: center center;
-  will-change: transform, opacity;
   display: flex;
   flex-direction: column;
-  /* Figmaプロトタイプ準拠：より大きな作品表示 */
   max-width: 400px;
+  opacity: 0;
+  transition: opacity 1s var(--ease-ukiyoe), transform 1s var(--ease-ukiyoe);
+}
+
+.parallax-artwork--entered {
+  opacity: 0.4;
+}
+
+.parallax-artwork--entered.parallax-artwork--active {
+  opacity: 1;
 }
 
 /* ========================================
@@ -51,10 +59,10 @@
 
 .parallax-artwork__frame {
   position: relative;
-  box-shadow: 
+  /* box-shadow: 
     0 12px 40px rgba(0, 0, 0, 0.4),
     0 4px 12px rgba(0, 0, 0, 0.25);
-  border-radius: var(--radius-xs);
+  border-radius: var(--radius-xs); */
   overflow: hidden;
   transition: transform 2s var(--ease-ukiyoe);
 }
@@ -70,7 +78,7 @@
   inset: 0;
   pointer-events: none;
   border: 3px solid transparent;
-  border-image: url('/images/fude-border.svg') 10 stretch;
+  border-image: url('/fude-border.svg') 10 stretch;
   opacity: 0.6;
 }
 
@@ -174,7 +182,7 @@
   }
 
   .parallax-artwork__info {
-    margin-top: 6px;
+    margin-top: 1rem;
   }
 
   .parallax-artwork__year {
@@ -214,18 +222,18 @@
     max-height: clamp(180px, 35vh, 280px);
   }
 
-  .parallax-artwork__frame {
+  /* .parallax-artwork__frame {
     box-shadow: 
       0 8px 24px rgba(0, 0, 0, 0.35),
       0 2px 8px rgba(0, 0, 0, 0.2);
-  }
+  } */
 
   .parallax-artwork__info {
-    margin-top: 4px;
+    margin-top: .5rem;
   }
 
   .parallax-artwork__title {
-    font-size: var(--text-xs);
+    font-size: var(--text-sm);
   }
 
   .parallax-artwork__artist {
@@ -234,18 +242,52 @@
 }
 
 /* ========================================
-   PERFORMANCE OPTIMIZATIONS
+   SHIMMER PLACEHOLDER
+   画像読み込み中の和紙風シマーエフェクト
    ======================================== */
 
-.parallax-artworks__chirashi {
-  transform: translateZ(0);
+@keyframes shimmer-washi {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
-.parallax-artwork {
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+.parallax-artwork__shimmer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: rgba(45, 42, 38, 0.6);
+  border-radius: var(--radius-xs);
+  z-index: 1;
 }
+
+.parallax-artwork__shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(80, 75, 65, 0.4) 50%,
+    transparent 100%
+  );
+  animation: shimmer-washi 1.8s ease-in-out infinite;
+  will-change: transform;
+}
+
+.parallax-artwork__image {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.parallax-artwork__image--loaded {
+  opacity: 1;
+}
+
+/* ========================================
+   PERFORMANCE OPTIMIZATIONS
+   親レイヤー (.timeline-ns__artwork-layer) が will-change: transform を持つため
+   個別要素への GPU プロモーションは不要。レイヤー数を抑制して省メモリ化。
+   ======================================== */
 
 .parallax-artwork__frame {
   contain: layout paint;

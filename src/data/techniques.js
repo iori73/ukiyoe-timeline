@@ -1,25 +1,23 @@
 /**
  * 浮世絵の8つの技法データ
  * トップページのタイムライン表示用
- * 
- * Figmaデザイン準拠:
- * - タイムラインは左から右への時系列順
- * - 横線: top: 80px（タイムラインコンテナ225px内）
- * - マイルストーン（円）: 横線上（top: 72px）
- * - ラベル: 縦書き、横線の下に配置
- * - 色サンプル: 横線の上部（top: 0〜56px領域）
+ *
+ * milestoneLeft / labelLeft は全て中央基準（translateX(-50%) と併用）
+ * CSS側の色サンプル left 値も同じ中央座標を使う
  */
+
+const LABEL_TOP = 98
 
 export const TECHNIQUES = [
   {
     id: 'sumizuri',
-    name_ja: '黒摺絵',
+    name_ja: '墨摺絵',
     name_en: 'Sumizuri-e',
     major: true,
     colors: ['#2d2d2d'],
-    milestoneLeft: 6,
-    labelLeft: 15,
-    labelTop: 187     // 横線80px + 107px = 187px
+    milestoneLeft: 14,
+    labelLeft: 14,
+    labelTop: LABEL_TOP
   },
   {
     id: 'tan',
@@ -27,9 +25,9 @@ export const TECHNIQUES = [
     name_en: 'Tan-e',
     major: false,
     colors: [],
-    milestoneLeft: 108,
-    labelLeft: 116,
-    labelTop: 144     // 横線から約60px下（80 + 64 = 144）
+    milestoneLeft: 114,
+    labelLeft: 114,
+    labelTop: LABEL_TOP
   },
   {
     id: 'beni',
@@ -37,9 +35,9 @@ export const TECHNIQUES = [
     name_en: 'Beni-e',
     major: false,
     colors: [],
-    milestoneLeft: 216,
-    labelLeft: 224,
-    labelTop: 144
+    milestoneLeft: 222,
+    labelLeft: 222,
+    labelTop: LABEL_TOP
   },
   {
     id: 'urushi',
@@ -47,9 +45,9 @@ export const TECHNIQUES = [
     name_en: 'Urushi-e',
     major: false,
     colors: [],
-    milestoneLeft: 324,
-    labelLeft: 332,
-    labelTop: 144
+    milestoneLeft: 330,
+    labelLeft: 330,
+    labelTop: LABEL_TOP
   },
   {
     id: 'benizuri',
@@ -57,9 +55,9 @@ export const TECHNIQUES = [
     name_en: 'Benizuri-e',
     major: true,
     colors: ['#7A8B5A', '#B85B5B'],
-    milestoneLeft: 438,
-    labelLeft: 447,
-    labelTop: 187
+    milestoneLeft: 446,
+    labelLeft: 446,
+    labelTop: LABEL_TOP
   },
   {
     id: 'nishiki',
@@ -67,9 +65,9 @@ export const TECHNIQUES = [
     name_en: 'Nishiki-e',
     major: true,
     colors: ['#3D5A73', '#C9A84C', '#d64e4e', '#9fc09f'],
-    milestoneLeft: 546,
-    labelLeft: 555,
-    labelTop: 170     // 横線から90px下（80 + 90 = 170）
+    milestoneLeft: 554,
+    labelLeft: 554,
+    labelTop: LABEL_TOP
   },
   {
     id: 'kira',
@@ -77,9 +75,9 @@ export const TECHNIQUES = [
     name_en: 'Kira-zuri',
     major: false,
     colors: [],
-    milestoneLeft: 648,
-    labelLeft: 656,
-    labelTop: 158     // 横線から約80px下
+    milestoneLeft: 654,
+    labelLeft: 654,
+    labelTop: LABEL_TOP
   },
   {
     id: 'shomen',
@@ -87,8 +85,8 @@ export const TECHNIQUES = [
     name_en: 'Shōmen-zuri',
     major: false,
     colors: [],
-    milestoneLeft: 756,
-    labelLeft: 764,
-    labelTop: 158
+    milestoneLeft: 762,
+    labelLeft: 762,
+    labelTop: LABEL_TOP
   }
 ]

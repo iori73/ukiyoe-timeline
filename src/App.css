@@ -53,7 +53,7 @@
   --text-secondary: var(--ai-iro);
   --text-accent: var(--beni-iro);
   --text-highlight: var(--kin-iro);
-  --text-tertiary: #999999;        /* 補助テキスト（ミュート・ラベル等） */
+  --text-tertiary: #767676;        /* 補助テキスト（ミュート・ラベル等）WCAG AA 4.5:1 確保 */
   --bg-primary: var(--washi);
   --bg-secondary: var(--awayuki);
   
@@ -68,6 +68,7 @@
   /* --font-sans-old: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Noto Sans JP', system-ui, sans-serif; */
   
   /* フォントサイズ - Font Sizes (16px minimum for PC) */
+  --text-2xs: 0.75rem;     /* 12px - label/x-small 用 */
   --text-xs: 0.875rem;     /* 14px (was 12px) */
   --text-sm: 1rem;         /* 16px (was 14px) - minimum */
   --text-base: 1.125rem;   /* 18px (was 16px) */
@@ -3290,7 +3291,7 @@ body {
   /* 言語切り替えボタンをSPサイズで小さく */
   .language-toggle {
     gap: 8px;
-    padding: 8px;
+    padding: 0px;
   }
 
   .language-toggle .language-button {

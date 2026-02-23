@@ -5,7 +5,7 @@
 .dawn-page {
   min-height: 100vh;
   min-height: 100dvh;
-  background-image: url('/images/washi-bg.png');
+  background-image: url('/images/washi-bg.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -40,7 +40,9 @@
   right: 0;
   z-index: var(--z-dropdown);
   padding: var(--space-md) 40px;
-  /* 背景グラデーションを透明に変更（Figma準拠） */
+  padding-top: max(var(--space-md), env(safe-area-inset-top));
+  padding-left: max(40px, env(safe-area-inset-left));
+  padding-right: max(40px, env(safe-area-inset-right));
   background: transparent;
   pointer-events: none;
 }

@@ -17,6 +17,9 @@ export default function PeriodCard({ period, index, onClick }) {
     <motion.div 
       className="period-card"
       onClick={onClick}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick?.() } }}
+      tabIndex={0}
+      role="button"
       whileHover={{ 
         y: -8,
         boxShadow: '0 20px 40px rgba(0,0,0,0.2)'
