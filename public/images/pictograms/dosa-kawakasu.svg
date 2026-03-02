@@ -1,0 +1,18 @@
+<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Drying pole (竿) -->
+    <line x1="8" y1="14" x2="72" y2="14"/>
+    <!-- Pole supports -->
+    <line x1="8" y1="10" x2="8" y2="18"/>
+    <line x1="72" y1="10" x2="72" y2="18"/>
+    <!-- Paper sheet 1 (draped and hanging) -->
+    <path d="M16,14 L16,58 Q20,62 24,58 L24,14"/>
+    <!-- Paper sheet 2 -->
+    <path d="M36,14 L36,60 Q40,64 44,60 L44,14"/>
+    <!-- Paper sheet 3 -->
+    <path d="M56,14 L56,56 Q60,60 64,56 L64,14"/>
+    <!-- Water drips (どうさ液の滴り) -->
+    <line x1="20" y1="64" x2="20" y2="70"/>
+    <line x1="40" y1="66" x2="40" y2="72"/>
+  </g>
+</svg>

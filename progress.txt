@@ -3,8 +3,8 @@
 # 機能完成後、セッション終了時に必ず更新してください。
 
 ## 現在のステータス
-- フェーズ: Phase 4 本番公開準備（実装完了、手動テスト待ち）
-- 最終更新: 2026-02-23
+- フェーズ: Phase 4 本番公開準備（実装完了、手動テスト待ち）+ 記事公開済み
+- 最終更新: 2026-02-24
 
 ## 完了済み
 
@@ -125,11 +125,23 @@
 - [x] 非コンポジテッドアニメーション改善: `will-change: transform, opacity` を追加
   - timeline-label, timeline-colors, tl-item, title-area の4クラスに適用
 
+### 記事公開（2026-02-24 完了）
+- [x] note 記事公開: 「AIと浮世絵サイトを作ったら、自分で色を塗ることになった」
+  - URL: https://note.com/io_73/n/n95f374dea2ad
+  - ハッシュタグ: #デザインプロセス #AI活用 #浮世絵 #Webデザイン #個人開発
+- [x] Medium 記事公開: "I Built a Ukiyoe Website with AI, But Then Had to Color It Myself"
+  - URL: https://medium.com/@iori73/i-built-a-ukiyoe-website-with-ai-but-then-had-to-color-it-myself-56922756d938
+  - Tags: Design Process, Japanese Culture, AI, Web Development, Interaction Design
+- [x] note 執筆ガイドラインにタイトル期待値管理セクション追加
+- [x] Medium 執筆ガイドラインに「AIっぽい文体を避ける」セクション追加
+- [x] X 投稿文・LinkedIn 投稿文の作成
+
 ## 次にやること
 - [ ] Lighthouse 再測定で Round 2 の効果確認
 - [ ] iPhone 実機での最終確認（PRODUCTION_QA.md 参照）
 - [ ] 主要ブラウザ（Chrome, Firefox, Safari macOS, Safari iOS, Edge）での通しテスト
 - [ ] git push → Vercel 自動デプロイ
+- [ ] Medium 記事を UX Collective 等の Publication に投稿検討
 
 ## 既知の問題
 - 外部画像（Wikimedia Commons ~35件、ukiyo-e.org ~10件）への依存あり（全コンポーネントで onError フォールバック済み）

@@ -1,0 +1,15 @@
+<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Low printing platform (摺台: very flat, not a western table) -->
+    <rect x="8" y="50" width="64" height="8" rx="2"/>
+    <!-- Short legs (low to ground) -->
+    <line x1="16" y1="58" x2="16" y2="66"/>
+    <line x1="64" y1="58" x2="64" y2="66"/>
+    <!-- Woodblock on platform -->
+    <rect x="14" y="38" width="28" height="12" rx="2"/>
+    <!-- Baren (バレン: circular disc, most important printing tool) -->
+    <circle cx="58" cy="36" r="12"/>
+    <!-- Bamboo leaf twist at top (竹皮の結び目) -->
+    <path d="M54,26 Q58,18 62,26"/>
+  </g>
+</svg>

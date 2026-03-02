@@ -1,0 +1,14 @@
+<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Whetstone block (3/4 view: top face + front face) -->
+    <path d="M8,44 L54,44 L60,36 L14,36 Z"/>
+    <path d="M8,44 L8,58 L54,58 L54,44"/>
+    <!-- Kogatana handle (parallelogram at ~40 deg) -->
+    <path d="M56,10 L64,18 L46,36 L38,28 Z"/>
+    <!-- Blade on stone surface (with diagonal tip = 切出し刀) -->
+    <line x1="42" y1="32" x2="24" y2="36"/>
+    <line x1="24" y1="36" x2="20" y2="30"/>
+    <!-- Water on stone surface -->
+    <path d="M20,42 Q30,39 40,42" stroke-opacity="0.25"/>
+  </g>
+</svg>

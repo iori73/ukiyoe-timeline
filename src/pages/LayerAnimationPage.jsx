@@ -273,7 +273,6 @@ function TechniqueTimeline({ language }) {
 // ============================================================
 function SumizurieStatic() {
   const { language } = useLanguage()
-  const title = language === 'ja' ? '墨摺絵' : 'Sumizuri-e'
   const subtitle = language === 'ja' ? '墨一色で摺った版画' : 'Woodblock prints in monochrome ink'
   return (
     <section id="section-sumizuri" className="layer-anim__scene">
@@ -316,7 +315,7 @@ function SumizurieStatic() {
         </div>
 
         <div className="layer-anim__title-area">
-          <h2 className="layer-anim__title">{title}</h2>
+          <h2 className="layer-anim__title">{language === 'ja' ? <><span className="layer-anim__title-accent layer-anim__title-accent--sumi">墨</span>摺絵</> : <><span className="layer-anim__title-accent layer-anim__title-accent--sumi">Sumi</span>zuri-e</>}</h2>
           <p className="layer-anim__subtitle">{subtitle}</p>
           <p className="layer-anim__body">
             {language === 'ja'
@@ -407,7 +406,7 @@ function NishikieAnimation() {
           animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ delay: TEXT_DELAY_AFTER_START, duration: duration.slower, ease: easing.easeOut }}
         >
-          <h2 className="layer-anim__title">{language === 'ja' ? '紅摺絵' : 'Benizuri-e'}</h2>
+          <h2 className="layer-anim__title">{language === 'ja' ? <><span className="layer-anim__title-accent layer-anim__title-accent--beni">紅</span>摺絵</> : <><span className="layer-anim__title-accent layer-anim__title-accent--beni">Beni</span>zuri-e</>}</h2>
           <p className="layer-anim__subtitle">{language === 'ja' ? '色別の版木が順に重なり、一枚の絵になります' : 'Color blocks are printed in sequence to create a single image.'}</p>
           <p className="layer-anim__body">
             {language === 'ja'
@@ -669,7 +668,7 @@ function NishikieMultiLayerAnimation() {
           animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ delay: TEXT_DELAY_AFTER_START, duration: duration.slower, ease: easing.easeOut }}
         >
-          <h2 className="layer-anim__title">{language === 'ja' ? '錦絵' : 'Nishiki-e'}</h2>
+          <h2 className="layer-anim__title">{language === 'ja' ? <><span className="layer-anim__title-accent layer-anim__title-accent--nishiki">錦</span>絵</> : <><span className="layer-anim__title-accent layer-anim__title-accent--nishiki">Nishiki</span>-e</>}</h2>
           <p className="layer-anim__subtitle">{language === 'ja' ? <>多色の版木が順に重なり、<br className="sp-br" />豊かな色彩の一枚絵になります</> : 'Multiple color blocks are layered to create a richly colored print.'}</p>
           <p className="layer-anim__body">
             {language === 'ja'

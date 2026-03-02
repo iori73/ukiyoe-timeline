@@ -63,7 +63,7 @@
 
 .layer-stack__caption {
   font-family: var(--font-sans);
-  font-size: 0.875rem;
+  font-size: var(--text-xs);
   color: var(--sumi-iro, #2d2d2d);
   opacity: 0.85;
   margin: 0;

@@ -634,6 +634,35 @@ html[lang="en"] .layer-anim__timeline-label--minor {
   line-height: 1.3;
 }
 
+.layer-anim__title-accent {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4em;
+  height: 1.4em;
+  margin-right: 0.15em;
+  line-height: 1;
+  color: #fff;
+  font-weight: 400;
+  border: 2px solid;
+  vertical-align: baseline;
+}
+
+.layer-anim__title-accent--sumi {
+  background-color: var(--period-sumizuri, #1a1a1a);
+  border-color: var(--period-sumizuri, #1a1a1a);
+}
+
+.layer-anim__title-accent--beni {
+  background-color: var(--period-benizuri, #C33433);
+  border-color: var(--period-benizuri, #C33433);
+}
+
+.layer-anim__title-accent--nishiki {
+  background-color: var(--period-nishiki, #1B3E5B);
+  border-color: var(--period-nishiki, #1B3E5B);
+}
+
 .layer-anim__subtitle {
   font-family: var(--font-sans);
   font-size: var(--text-xs, 0.875rem);
@@ -887,7 +916,7 @@ html[lang="en"] .layer-anim__timeline-label--minor {
 
   .layer-anim__description-text,
   .layer-anim__description-summary {
-    font-size: 16px;
+    font-size: var(--text-sm);
   }
 
   .layer-anim__hero {

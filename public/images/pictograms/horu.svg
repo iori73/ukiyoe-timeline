@@ -1,0 +1,15 @@
+<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Woodblock (版木: mountain cherry, flat) -->
+    <rect x="8" y="44" width="52" height="24" rx="2"/>
+    <!-- Carved groove on block surface -->
+    <path d="M14,54 Q26,50 38,56"/>
+    <!-- Kogatana handle (parallelogram, steeper angle for carving) -->
+    <path d="M54,8 L62,14 L48,34 L40,28 Z"/>
+    <!-- Blade entering block (with diagonal tip) -->
+    <line x1="44" y1="31" x2="36" y2="44"/>
+    <line x1="36" y1="44" x2="30" y2="40"/>
+    <!-- V-notch (carved mark on block edge) -->
+    <path d="M28,44 L30,38 L32,44"/>
+  </g>
+</svg>

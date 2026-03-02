@@ -113,7 +113,7 @@
   }
 
   .period-color-viz__year {
-    font-size: 0.85rem;
+    font-size: var(--text-xs);
   }
 
   .period-color-viz__proportion-bar {
@@ -128,7 +128,7 @@
   }
 
   .period-color-viz__year {
-    font-size: 0.8rem;
+    font-size: var(--text-2xs);
   }
 
   .period-color-viz__proportion-bar {

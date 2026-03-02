@@ -195,6 +195,22 @@ PC 向けに最小16px を基準とした rem スケール。
 プリミティブトークン（サイズ・行間・字間）を組み合わせた、用途別のタイポグラフィースタイル。
 ユーティリティクラスとして `src/styles/typography.css` で定義。
 
+#### 運用方針
+
+このプロジェクトは**コンポーネント CSS アーキテクチャ**（各 `.jsx` に対応する `.css`）を採用している。
+`.typo-*` クラスは**リファレンス（参照用）**として維持するが、コンポーネント CSS でプリミティブトークン（`var(--text-*)` 等）を直接使用するのが正式な運用パターンである。
+
+| アプローチ | 使い方 | 推奨度 |
+|-----------|--------|--------|
+| コンポーネント CSS でプリミティブトークンを使用 | `font-size: var(--text-base);` | **推奨（標準）** |
+| `.typo-*` クラスを JSX の className に適用 | `<h2 className="typo-headline-md">` | オプション（新規コンポーネントで便利な場合） |
+| ハードコードの px / rem 値 | `font-size: 18px;` | **禁止** |
+
+理由:
+- スタイリングが JSX (className) と CSS に分散すると保守性が下がる
+- コンポーネント CSS 内の `font-size: var(--text-base)` はセレクタ名と合わせれば十分に意味的
+- 下記のカテゴリ表は、どのトークンをどの用途に使うかの**ガイドライン**として参照する
+
 #### カテゴリ概要
 
 | カテゴリ | フォント | 役割 | weight |
@@ -534,6 +550,10 @@ CSS変数はメディアクエリの値には使えないため、コメント�
 color: var(--ai-iro);
 background: var(--washi);
 
+/* フォントサイズはトークンを使う */
+font-size: var(--text-base);  /* 18px */
+font-size: var(--text-xs);    /* 14px */
+
 /* スペーシングはトークンを使う */
 padding: var(--space-md);
 gap: var(--space-sm);
@@ -552,6 +572,15 @@ z-index: var(--z-modal);
 color: #1e3a5f;
 background: #f5f0e6;
 
+/* ❌ ハードコードのフォントサイズ */
+font-size: 18px;      /* → var(--text-base) */
+font-size: 14px;      /* → var(--text-xs) */
+font-size: 0.875rem;  /* → var(--text-xs) */
+
+/* ❌ スケール外のフォントサイズ（トークンに存在しない値） */
+font-size: 13px;      /* → var(--text-2xs) (12px) か var(--text-xs) (14px) に丸める */
+font-size: 22px;      /* → var(--text-xl) (23px) に丸める */
+
 /* ❌ ハードコードのスペーシング（トークンにマッチする値の場合） */
 padding: 24px;  /* → var(--space-md) */
 gap: 16px;      /* → var(--space-sm) */
@@ -565,7 +594,7 @@ z-index: 1000;  /* → var(--z-modal) */
 
 ### 例外（トークン化しなくてよい）
 
-- `clamp()` 内のレスポンシブ値（柔軟性を優先）
+- `clamp()` 内のレスポンシブ値（柔軟性を優先。ただし min/max はトークン相当の rem 値を推奨）
 - ローカルな z-index（0, 1, 2 などの相対値）
 - コンポーネント固有の `rgba()` 値（グラデーション内など）
 - `prefers-contrast: high` 内のフォールバック値
