@@ -136,6 +136,11 @@
 - [x] Medium 執筆ガイドラインに「AIっぽい文体を避ける」セクション追加
 - [x] X 投稿文・LinkedIn 投稿文の作成
 
+### Vercel Analytics 導入（2026-03-03）
+- [x] `@vercel/analytics@1.6.1` を pnpm でインストール
+- [x] `src/main.jsx` に `<Analytics />` コンポーネント追加
+- [x] `docs/TECH_STACK.md` にアナリティクスセクション追加
+
 ## 次にやること
 - [ ] Lighthouse 再測定で Round 2 の効果確認
 - [ ] iPhone 実機での最終確認（PRODUCTION_QA.md 参照）

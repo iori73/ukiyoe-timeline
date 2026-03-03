@@ -16,6 +16,23 @@ const N = '/images/dawn/nishiki-e'
 const NF = '/images/dawn/nishiki-e/figma-layers'
 
 // ============================================================
+// Hero Annotations — 浮世絵制作工程（制作工程順）
+// Figma hero image container (1440×656) 内の座標を % に変換
+// ============================================================
+const HERO_ANNOTATIONS = [
+  { id: 'carve-block', label_ja: '主版を小刀で彫る', label_en: 'Carving the key block', icon: '/images/top/anno-carve.svg', left: 68.3, top: 41.9 },
+  { id: 'sharpen', label_ja: '① 小刀を砥ぐ', label_en: 'Sharpening the knife', icon: '/images/top/anno-sharpen.svg', left: 82.2, top: 82.0 },
+  { id: 'chisel', label_ja: '広い面積をのみを使ってさらう', label_en: 'Clearing large areas with a chisel', icon: '/images/top/anno-chisel.svg', left: 60.2, top: 21.0 },
+  { id: 'sizing', label_ja: 'にじみ止めのどうさを紙に引く', label_en: 'Applying sizing to prevent bleeding', icon: '/images/top/anno-sizing.svg', left: 31.0, top: 89.0 },
+  { id: 'drying', label_ja: 'どうさを引いた紙を乾かす', label_en: 'Drying the sized paper', icon: '/images/top/anno-drying.svg', left: 45.8, top: 5.5 },
+  { id: 'washi', label_ja: '和紙', label_en: 'Japanese paper', icon: '/images/top/anno-washi.svg', left: 65.6, top: 73.2 },
+  { id: 'pigment', label_ja: '絵具', label_en: 'Pigments', icon: '/images/top/anno-pigment.svg', left: 10.4, top: 25.9 },
+  { id: 'press', label_ja: '摺台', label_en: 'Printing stand', icon: '/images/top/anno-press.svg', left: 9.7, top: 72.1 },
+]
+
+const ANNOTATION_STAGGER = 0.2
+
+// ============================================================
 // Green Layer (gr) — 着物・帯・髪・山・草・木
 // Figma node 897:2181 のフラグメント構造をそのまま再現
 // ============================================================
@@ -686,6 +703,22 @@ function NishikieMultiLayerAnimation() {
 // ============================================================
 export default function LayerAnimationPage() {
   const { language } = useLanguage()
+  const heroVisualRef = useRef(null)
+  const [heroVisible, setHeroVisible] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !heroVisible) {
+          setHeroVisible(true)
+        }
+      },
+      { threshold: 0.3 },
+    )
+    if (heroVisualRef.current) observer.observe(heroVisualRef.current)
+    return () => observer.disconnect()
+  }, [heroVisible])
+
   return (
     <div className="layer-anim-page">
       <header className="layer-anim-page__header">
@@ -697,39 +730,100 @@ export default function LayerAnimationPage() {
         </div>
       </header>
 
-      {/* ヒーロー（2カラム：左＝タイトル＋サブ、右＝制作風景イラスト） */}
+      {/* ヒーロー（単カラム：タイトル → フル幅画像 + アノテーション → クレジット右寄せ） */}
       <section className="layer-anim__hero">
         <div className="layer-anim__hero-content">
-          <div className="layer-anim__hero-text">
+          <div className="layer-anim__hero-heading">
             <h1 className="layer-anim__hero-title">
-              {language === 'ja' ? <>浮世絵の<br />印刷技法</> : <>Ukiyo-e<br />Printing Techniques</>}
+              {language === 'ja' ? '浮世絵の印刷技法' : <>Ukiyo-e<br />Printing Techniques</>}
             </h1>
             <p className="layer-anim__hero-sub">
               {language === 'ja'
-                ? <>墨摺絵から錦絵へ —<br className="sp-br" />色が重なり、絵が生まれる</>
+                ? '墨摺絵から錦絵へ — 色が重なり、絵が生まれる'
                 : 'From Sumizuri-e to Nishiki-e: colors layer to create art'}
             </p>
           </div>
-          <div className="layer-anim__hero-visual-wrap">
-            <div className="layer-anim__hero-visual">
-              {/* 歌川国貞(初代)「今様見立士農工商 職人」江戸東京博物館蔵 — ToMuCo 利用規約に基づき出典表示 */}
-              <img
-                src="/images/top/hero-printing-scene.webp"
-                alt={language === 'ja' ? '木版画制作の様子（摺り・彫り・下絵など）' : 'Ukiyo-e workshop: printing, carving, and drawing'}
-                className="layer-anim__hero-image"
-                fetchPriority="high"
-                onError={(e) => {
-                  e.target.style.display = 'none'
-                  e.target.nextElementSibling?.classList.add('is-visible')
+
+          <div className="layer-anim__hero-visual" ref={heroVisualRef}>
+            {/* 歌川国貞(初代)「今様見立士農工商 職人」江戸東京博物館蔵 — ToMuCo 利用規約に基づき出典表示 */}
+            <img
+              src="/images/top/hero-printing-scene.webp"
+              alt={language === 'ja' ? '木版画制作の様子（摺り・彫り・下絵など）' : 'Ukiyo-e workshop: printing, carving, and drawing'}
+              className="layer-anim__hero-image"
+              fetchPriority="high"
+              onError={(e) => {
+                e.target.style.display = 'none'
+                e.target.nextElementSibling?.classList.add('is-visible')
+              }}
+            />
+            <div className="layer-anim__hero-placeholder" />
+
+            {/* Desktop: 画像上に absolute 配置のアノテーション */}
+            {HERO_ANNOTATIONS.map((anno, i) => (
+              <motion.div
+                key={anno.id}
+                className="layer-anim__hero-annotation"
+                style={{ left: `${anno.left}%`, top: `${anno.top}%` }}
+                initial={{ opacity: 0, y: 12 }}
+                animate={heroVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+                transition={{
+                  delay: i * ANNOTATION_STAGGER,
+                  duration: duration.slower,
+                  ease: easing.easeOut,
                 }}
-              />
-              <div className="layer-anim__hero-placeholder" />
-            </div>
+              >
+                <span className="layer-anim__hero-annotation-icon" aria-hidden="true">
+                  <img
+                    src={anno.icon}
+                    alt=""
+                    className="layer-anim__hero-annotation-icon-img"
+                    onError={(e) => { e.target.style.display = 'none' }}
+                  />
+                  <span className="layer-anim__hero-annotation-icon-fallback">{i + 1}</span>
+                </span>
+                <span className="layer-anim__hero-annotation-label">
+                  {language === 'ja' ? anno.label_ja : anno.label_en}
+                </span>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Mobile: 画像下のリスト表示 */}
+          <ul className="layer-anim__hero-annotations-list">
+            {HERO_ANNOTATIONS.map((anno, i) => (
+              <motion.li
+                key={anno.id}
+                className="layer-anim__hero-annotations-list-item"
+                initial={{ opacity: 0, y: 12 }}
+                animate={heroVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+                transition={{
+                  delay: i * ANNOTATION_STAGGER,
+                  duration: duration.slower,
+                  ease: easing.easeOut,
+                }}
+              >
+                <span className="layer-anim__hero-annotation-icon layer-anim__hero-annotation-icon--list" aria-hidden="true">
+                  <img
+                    src={anno.icon}
+                    alt=""
+                    className="layer-anim__hero-annotation-icon-img"
+                    onError={(e) => { e.target.style.display = 'none' }}
+                  />
+                  <span className="layer-anim__hero-annotation-icon-fallback">{i + 1}</span>
+                </span>
+                <span className="layer-anim__hero-annotations-list-label">
+                  {language === 'ja' ? anno.label_ja : anno.label_en}
+                </span>
+              </motion.li>
+            ))}
+          </ul>
+
+          <div className="layer-anim__hero-credit-wrap">
             <p className="layer-anim__hero-credit">
               <a href="https://museumcollection.tokyo/works/6256752/" target="_blank" rel="noopener noreferrer">
                 {language === 'ja' ? '歌川国貞(初代)「今様見立士農工商 職人」' : 'Utagawa Kunisada I, "A Modern Parody of the Hierarchy… : Craftsmen"'}
               </a>
-              {language === 'ja' ? <><br className="sp-br" />江戸東京博物館蔵</> : <><br />Edo-Tokyo Museum.</>}
+              {language === 'ja' ? '江戸東京博物館蔵' : <><br />Edo-Tokyo Museum.</>}
               <br />
               <span className="layer-anim__hero-credit-source">
                 {language === 'ja' ? '出典：' : 'Source: '}

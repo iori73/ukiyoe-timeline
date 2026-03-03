@@ -48,7 +48,8 @@
 }
 
 /* ========================================
-   HERO SECTION（2カラム: 左＝タイトル＋サブ、右＝制作風景）
+   HERO SECTION（単カラム: タイトル → フル幅画像 → クレジット右寄せ）
+   Figma node 1240:3094 準拠レイアウト
    ======================================== */
 
 .layer-anim__hero {
@@ -56,61 +57,50 @@
   min-height: 100dvh;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   background: var(--washi, #f5f0e6);
   background-image: url('/images/washi-texture.webp');
   background-repeat: repeat;
   background-blend-mode: multiply;
   background-size: auto;
   color: var(--sumi-iro, #2d2d2d);
-  padding: var(--space-3xl, 96px) 0 var(--space-3xl, 96px) var(--space-xl, 48px);
-  /* 上 96px、右 0、下 96px、左 48px — 画像を右端まで表示 */
+  padding: var(--space-3xl, 96px) 0 var(--space-xl, 48px);
+  overflow: clip;
 }
 
 .layer-anim__hero-content {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 80px;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm, 16px);
   width: 100%;
-  /* max-width を設けず、画像列が右端まで届くようにする */
 }
 
-.layer-anim__hero-text {
-  max-width: 480px;
-  min-width: 0;
+.layer-anim__hero-heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs, 8px);
+  padding: 0 var(--space-3xl, 96px);
 }
 
 .layer-anim__hero-title {
   font-family: var(--font-serif, 'Shippori Mincho', serif);
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
   font-weight: 400;
-  line-height: 1.3;
-  margin-bottom: var(--space-lg, 32px);
-  letter-spacing: 0.12em;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
 }
 
 .layer-anim__hero-sub {
   font-family: var(--font-sans);
-  font-size: var(--text-sm, 1rem);
-  color: rgba(45, 45, 45, 0.6);
-  letter-spacing: 0.06em;
-  line-height: 1.7;
+  font-size: var(--text-xl, 1.4375rem);
+  color: var(--sumi-iro, #2d2d2d);
+  line-height: 1.4;
 }
 
-.layer-anim__hero-visual-wrap {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-/* 画像は右端まで表示（グリッドの2列目が残り幅を占有） */
 .layer-anim__hero-visual {
   position: relative;
-  aspect-ratio: 4/3;
-  max-height: 70vh;
   width: 100%;
-  border-radius: 0px;
+  height: clamp(320px, 36vw, 500px);
   overflow: hidden;
 }
 
@@ -118,6 +108,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 30%;
   display: block;
 }
 
@@ -133,27 +124,101 @@
   display: block;
 }
 
-/* ヒーロー画像の出典（ToMuCo 利用規約に基づく表示） */
+.layer-anim__hero-credit-wrap {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 var(--space-3xl, 96px);
+}
+
 .layer-anim__hero-credit {
-  margin-top: var(--space-sm, 16px);
   font-family: var(--font-sans);
-  font-size: var(--text-xs, 0.875rem);
-  color: rgba(45, 45, 45, 0.5);
+  font-size: var(--text-sm, 1rem);
+  color: var(--sumi-iro, #2d2d2d);
   letter-spacing: 0.03em;
-  line-height: 1.5;
+  line-height: 1.4;
+  text-align: right;
 }
 
 .layer-anim__hero-credit a {
   color: var(--ai-iro, #1e3a5f);
-  text-decoration: none;
-}
-
-.layer-anim__hero-credit a:hover {
   text-decoration: underline;
 }
 
+.layer-anim__hero-credit a:hover {
+  text-decoration: none;
+}
+
 .layer-anim__hero-credit-source {
-  color: rgba(45, 45, 45, 0.4);
+  color: rgba(45, 45, 45, 0.5);
+}
+
+/* ========================================
+   HERO ANNOTATIONS（画像上の制作工程ラベル）
+   ======================================== */
+
+.layer-anim__hero-annotation {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs, 8px);
+  padding: var(--space-xs, 8px);
+  background:
+    linear-gradient(90deg, rgba(90, 78, 68, 0.4), rgba(90, 78, 68, 0.4)),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3));
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.layer-anim__hero-annotation-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 3px solid var(--color-white, #fff);
+  border-radius: var(--radius-full, 9999px);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.layer-anim__hero-annotation-icon-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.layer-anim__hero-annotation-icon-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm, 1rem);
+  font-weight: 600;
+  color: var(--color-white, #fff);
+}
+
+/* アイコン画像が表示できた場合はフォールバック番号を隠す */
+.layer-anim__hero-annotation-icon-img:not([style*="display: none"]) ~ .layer-anim__hero-annotation-icon-fallback {
+  display: none;
+}
+
+.layer-anim__hero-annotation-label {
+  font-family: var(--font-serif, 'Shippori Mincho', serif);
+  font-size: var(--text-lg, 1.25rem);
+  font-weight: 800;
+  color: var(--color-white, #fff);
+  line-height: 1.4;
+}
+
+/* ── Desktop: モバイルリストは非表示 ── */
+.layer-anim__hero-annotations-list {
+  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 /* ========================================
@@ -638,14 +703,16 @@ html[lang="en"] .layer-anim__timeline-label--minor {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.4em;
+  min-width: 1.4em;
   height: 1.4em;
+  padding: 0 0.2em;
   margin-right: 0.15em;
   line-height: 1;
   color: #fff;
   font-weight: 400;
   border: 2px solid;
   vertical-align: baseline;
+  box-sizing: border-box;
 }
 
 .layer-anim__title-accent--sumi {
@@ -833,10 +900,6 @@ html[lang="en"] .layer-anim__timeline-label--minor {
 
 /* ── Large Desktop / Figma 1440px 準拠 ── */
 @media (min-width: 1280px) {
-  .layer-anim__hero {
-    padding: 200px 80px;
-  }
-
   .layer-anim__description {
     background: rgba(255, 255, 255, 0.5);
     min-height: 759px;
@@ -920,18 +983,59 @@ html[lang="en"] .layer-anim__timeline-label--minor {
   }
 
   .layer-anim__hero {
-    padding: var(--space-3xl, 96px) var(--space-md, 24px) var(--space-3xl, 96px);
+    padding: var(--space-3xl, 96px) 0 var(--space-3xl, 96px);
     min-height: auto;
   }
 
-  .layer-anim__hero-content {
-    grid-template-columns: 1fr;
-    gap: var(--space-2xl);
-    text-align: center;
+  .layer-anim__hero-heading {
+    padding: 0 var(--space-md, 24px);
   }
 
-  .layer-anim__hero-text {
-    max-width: none;
+  .layer-anim__hero-credit-wrap {
+    padding: 0 var(--space-md, 24px);
+  }
+
+  .layer-anim__hero-annotation {
+    display: none;
+  }
+
+  .layer-anim__hero-annotations-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm, 16px);
+    padding: 0 var(--space-md, 24px);
+  }
+
+  .layer-anim__hero-annotations-list-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs, 8px);
+  }
+
+  .layer-anim__hero-annotation-icon--list {
+    width: 36px;
+    height: 36px;
+    border-width: 2px;
+    border-color: var(--sumi-iro, #2d2d2d);
+    background: rgba(45, 45, 45, 0.06);
+  }
+
+  .layer-anim__hero-annotation-icon--list .layer-anim__hero-annotation-icon-img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .layer-anim__hero-annotation-icon--list .layer-anim__hero-annotation-icon-fallback {
+    color: var(--sumi-iro, #2d2d2d);
+    font-size: var(--text-xs, 0.875rem);
+  }
+
+  .layer-anim__hero-annotations-list-label {
+    font-family: var(--font-serif, 'Shippori Mincho', serif);
+    font-size: var(--text-sm, 1rem);
+    font-weight: 600;
+    color: var(--sumi-iro, #2d2d2d);
+    line-height: 1.4;
   }
 
   .layer-anim__scene {
@@ -973,11 +1077,34 @@ html[lang="en"] .layer-anim__timeline-label--minor {
   }
 
   .layer-anim__hero {
-    padding: var(--space-2xl, 64px) var(--space-sm, 16px) var(--space-2xl, 64px);
+    padding: var(--space-2xl, 64px) 0 var(--space-2xl, 64px);
   }
 
-  .layer-anim__hero-title {
-    font-size: clamp(2rem, 8vw, 2.5rem);
+  .layer-anim__hero-heading {
+    padding: 0 var(--space-sm, 16px);
+  }
+
+  .layer-anim__hero-sub {
+    font-size: var(--text-base, 1.125rem);
+  }
+
+  .layer-anim__hero-credit-wrap {
+    padding: 0 var(--space-sm, 16px);
+  }
+
+  .layer-anim__hero-annotations-list {
+    padding: 0 var(--space-sm, 16px);
+    gap: 12px;
+  }
+
+  .layer-anim__hero-annotation-icon--list {
+    width: 32px;
+    height: 32px;
+  }
+
+  .layer-anim__hero-annotation-icon--list .layer-anim__hero-annotation-icon-img {
+    width: 20px;
+    height: 20px;
   }
 
   .layer-anim__scene {
