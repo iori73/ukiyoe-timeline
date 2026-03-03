@@ -21,7 +21,7 @@ const NF = '/images/dawn/nishiki-e/figma-layers'
 // ============================================================
 const HERO_ANNOTATIONS = [
   { id: 'carve-block', label_ja: '主版を小刀で彫る', label_en: 'Carving the key block', icon: '/images/top/anno-carve.svg', left: 68.3, top: 41.9 },
-  { id: 'sharpen', label_ja: '① 小刀を砥ぐ', label_en: 'Sharpening the knife', icon: '/images/top/anno-sharpen.svg', left: 82.2, top: 82.0 },
+  { id: 'sharpen', label_ja: '小刀を砥ぐ', label_en: 'Sharpening the knife', icon: '/images/top/anno-sharpen.svg', left: 82.2, top: 82.0 },
   { id: 'chisel', label_ja: '広い面積をのみを使ってさらう', label_en: 'Clearing large areas with a chisel', icon: '/images/top/anno-chisel.svg', left: 60.2, top: 21.0 },
   { id: 'sizing', label_ja: 'にじみ止めのどうさを紙に引く', label_en: 'Applying sizing to prevent bleeding', icon: '/images/top/anno-sizing.svg', left: 31.0, top: 89.0 },
   { id: 'drying', label_ja: 'どうさを引いた紙を乾かす', label_en: 'Drying the sized paper', icon: '/images/top/anno-drying.svg', left: 45.8, top: 5.5 },
