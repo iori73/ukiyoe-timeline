@@ -158,7 +158,7 @@
 
 .layer-anim__hero-annotation {
   position: absolute;
-  display: flex;
+  display: none;
   align-items: center;
   gap: var(--space-xs, 8px);
   padding: var(--space-xs, 8px);
@@ -1000,7 +1000,7 @@ html[lang="en"] .layer-anim__timeline-label--minor {
   }
 
   .layer-anim__hero-annotations-list {
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: var(--space-sm, 16px);
     padding: 0 var(--space-md, 24px);
