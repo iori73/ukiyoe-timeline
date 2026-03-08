@@ -192,9 +192,6 @@
   flex: 1;
   min-width: 0;
   margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   order: 2;
 }
 
@@ -314,9 +311,6 @@
 
   .timeline-fixed-panel .timeline-section__header-title {
     flex: unset;
-    white-space: normal;
-    overflow: visible;
-    text-overflow: unset;
   }
 
   .timeline-fixed-panel .timeline-section__date-badge {
