@@ -70,7 +70,7 @@
 
 .artwork-modal__year {
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
+  font-size: var(--type-label-sm);
   font-weight: 400;
   color: rgba(245, 240, 230, 0.6);
   letter-spacing: 0.05em;
@@ -78,7 +78,7 @@
 
 .artwork-modal__title {
   font-family: var(--font-serif);
-  font-size: var(--text-3xl);
+  font-size: var(--type-title-xl);
   font-weight: 600;
   line-height: 1.3;
   margin: 0;
@@ -87,16 +87,14 @@
 
 .artwork-modal__artist {
   font-family: var(--font-sans);
-  font-size: var(--text-base);
+  font-size: var(--type-body-md);
   font-weight: 400;
   color: rgba(245, 240, 230, 0.8);
-  /* padding-bottom: 16px; */
-  /* border-bottom: 1px solid rgba(245, 240, 230, 0.15); */
 }
 
 .artwork-modal__description {
   font-family: var(--font-sans);
-  font-size: var(--text-base);
+  font-size: var(--type-body-md);
   font-weight: 300;
   line-height: 1.8;
   color: rgba(245, 240, 230, 0.85);
@@ -112,7 +110,7 @@
   align-items: center;
   gap: 6px;
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
+  font-size: var(--type-label-sm);
   font-weight: 300;
   color: rgba(245, 240, 230, 0.45);
   text-decoration: none;
@@ -162,7 +160,7 @@
 
 .artwork-modal__close-text {
   font-family: var(--font-sans);
-  font-size: var(--text-base);
+  font-size: var(--type-body-sm);
   line-height: 1;
 }
 
@@ -209,12 +207,7 @@
     overflow: hidden;
   }
 
-  .artwork-modal__title {
-    font-size: var(--text-2xl);
-  }
-
   .artwork-modal__description {
-    /* スクロール可能にして全文表示 */
     overflow-y: auto;
     max-height: 180px;
   }
@@ -243,6 +236,7 @@
     flex-direction: column;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 76px);
   }
 
   .artwork-modal__image-container {
@@ -270,19 +264,10 @@
     overflow: visible;
   }
 
-  .artwork-modal__title {
-    font-size: var(--text-xl);
-  }
-
   .artwork-modal__description {
-    font-size: var(--text-sm);
     line-height: 1.7;
     overflow: visible;
     max-height: fit-content;
-  }
-
-  .artwork-modal__source-link {
-    font-size: var(--text-xs);
   }
 
   .artwork-modal__close-btn {

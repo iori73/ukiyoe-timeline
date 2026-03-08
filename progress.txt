@@ -141,6 +141,23 @@
 - [x] `src/main.jsx` に `<Analytics />` コンポーネント追加
 - [x] `docs/TECH_STACK.md` にアナリティクスセクション追加
 
+### レスポンシブタイポグラフィシステム（2026-03-08）
+- [x] HIG / MD3 / IBM Carbon を参照し、プロジェクト固有のレスポンシブタイポグラフィ設計を策定
+  - プリミティブトークン `--text-*`（固定 rem）とセマンティックトークン `--type-*`（clamp() fluid）の二層構造
+  - 階層比率契約（Hierarchy Ratio Contract）: title/body >= 1.4x, headline/body >= 1.5x 等
+  - 補間範囲: 375px (iPhone SE) → 1200px (デスクトップ)
+- [x] `App.css` に 15 のレスポンシブセマンティックトークンを追加（display/headline/title/body/label）
+- [x] `typography.css` の 28 ユーティリティクラスを `--type-*` に移行
+- [x] 全コンポーネント CSS を `--type-*` に移行、メディアクエリの font-size オーバーライドを削除:
+  - ParallaxArtworks, TimelineDetailSection, ArtworkDetailModal, ArtworkGalleryGrid
+  - DetailCards, PeriodSlide, PeriodRow, DawnPage, LayerAnimationPage, TimelinePage
+- [x] テキストグループのコントラスト比率を網羅的に監査・修正:
+  - ParallaxArtworks: title を `--type-title-xl`（22→36px）に拡大、desktop比率 2.0x → 2.57x
+  - DetailCards: title/content が mobile で 1.14x だった問題を `--type-*` 移行で解消
+  - ArtworkGalleryGrid: header/section/overlay の旧トークン・MQ を全面移行
+  - PeriodSlide/PeriodRow: title/description の MQ font-size オーバーライドをすべて削除
+- [x] `docs/DESIGN_SYSTEM.md` にセマンティックトークン一覧・階層比率契約・Do/Don't を追記
+
 ## 次にやること
 - [ ] Lighthouse 再測定で Round 2 の効果確認
 - [ ] iPhone 実機での最終確認（PRODUCTION_QA.md 参照）

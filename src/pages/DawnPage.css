@@ -5,11 +5,11 @@
 .dawn-page {
   min-height: 100vh;
   min-height: 100dvh;
-  background-image: url('/images/washi-bg.webp');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  /* background-image: url('/images/washi-bg.webp'); */
+  /* background-size: cover; */
+  /* background-position: center; */
+  /* background-repeat: no-repeat; */
+  /* background-attachment: fixed; */
   position: relative;
   overflow: hidden;
 }
@@ -95,7 +95,7 @@
 .dawn-heading__title {
   font-family: 'Shippori Mincho', serif;
   font-weight: 600;
-  font-size: var(--text-5xl);
+  font-size: var(--type-display-sm);
   color: var(--beni-iro, #d64e4e);
   letter-spacing: 0.04em;
   line-height: 1;
@@ -105,7 +105,7 @@
 .dawn-heading__subtitle {
   font-family: 'Shippori Mincho', serif;
   font-weight: 600;
-  font-size: var(--text-2xl);
+  font-size: var(--type-headline-sm);
   color: var(--ai-iro, #1e3a5f);
   letter-spacing: 0.05em;
   line-height: 1;
@@ -120,7 +120,7 @@
 
 .dawn-intro p {
   font-family: var(--font-sans);
-  font-size: var(--text-base);
+  font-size: var(--type-body-md);
   color: var(--sumi-iro);
   line-height: 1.6;
   margin: 0;
@@ -241,14 +241,6 @@
 }
 
 @media (max-width: 900px) {
-  .dawn-heading__title {
-    font-size: var(--text-4xl);
-  }
-  
-  .dawn-heading__subtitle {
-    font-size: var(--text-lg);
-  }
-  
   .dawn-heading {
     flex-direction: column;
     align-items: flex-start;
@@ -281,15 +273,4 @@
     max-width: calc(100% - var(--space-xl));
   }
   
-  .dawn-heading__title {
-    font-size: var(--text-2xl);
-  }
-  
-  .dawn-heading__subtitle {
-    font-size: var(--text-base);
-  }
-  
-  .dawn-intro p {
-    font-size: var(--text-sm);
-  }
 }

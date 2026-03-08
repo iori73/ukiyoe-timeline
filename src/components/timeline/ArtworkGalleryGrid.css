@@ -24,7 +24,7 @@
 .artwork-gallery__title {
   font-family: var(--font-serif);
   font-weight: 400;
-  font-size: var(--text-2xl);
+  font-size: var(--type-headline-sm);
   color: rgba(255, 255, 255, 0.85);
   letter-spacing: 0.15em;
   margin: 0 0 var(--space-xs);
@@ -33,7 +33,7 @@
 .artwork-gallery__count {
   font-family: var(--font-sans);
   font-weight: 300;
-  font-size: var(--text-2xs);
+  font-size: var(--type-label-sm);
   color: rgba(255, 255, 255, 0.5);
   letter-spacing: 0.08em;
   margin: 0;
@@ -70,26 +70,16 @@
 .artwork-gallery__section-number {
   font-family: var(--font-serif);
   font-weight: 400;
-  font-size: var(--text-xl);
+  font-size: var(--type-title-lg);
   color: rgba(255, 255, 255, 0.9);
   letter-spacing: var(--tracking-tight);
   line-height: 1;
 }
 
-@media (min-width: 901px) {
-  .artwork-gallery__title {
-    font-size: var(--text-3xl);
-  }
-
-  .artwork-gallery__section-number {
-    font-size: var(--text-2xl);
-  }
-}
-
 .artwork-gallery__section-date {
   font-family: var(--font-sans);
   font-weight: 400;
-  font-size: var(--text-xs);
+  font-size: var(--type-label-sm);
   color: rgba(255, 255, 255, 0.6);
   letter-spacing: 0.02em;
 }
@@ -97,7 +87,7 @@
 .artwork-gallery__section-title {
   font-family: var(--font-serif);
   font-weight: 400;
-  font-size: var(--text-sm);
+  font-size: var(--type-body-sm);
   color: rgba(255, 255, 255, 0.85);
   letter-spacing: 0.04em;
   line-height: var(--leading-tight);
@@ -267,7 +257,7 @@
 .artwork-gallery__overlay-title {
   font-family: var(--font-serif);
   font-weight: 400;
-  font-size: var(--text-lg);
+  font-size: var(--type-title-sm);
   color: rgba(255, 255, 255, 0.9);
   letter-spacing: var(--tracking-wide);
   line-height: 1.4;
@@ -276,7 +266,7 @@
 .artwork-gallery__overlay-artist {
   font-family: var(--font-sans);
   font-weight: 300;
-  font-size: var(--text-sm);
+  font-size: var(--type-label-sm);
   color: rgba(255, 255, 255, 0.55);
   letter-spacing: 0.04em;
   margin-top: 2px;

@@ -46,6 +46,11 @@
   justify-content: flex-end;
 }
 
+/* アクティブ時：年号をバー上部に配置（時代の始まりを示す） */
+.timeline-gallery-controls__item--active {
+  align-items: flex-start;
+}
+
 /* 年号ラベル */
 .timeline-gallery-controls__year {
   font-family: var(--font-serif);
@@ -161,8 +166,17 @@
     display: none;
   }
 
+  .timeline-gallery-indicator {
+    width: 14px;
+  }
+
   .timeline-gallery-indicator--active {
     height: 72px;
+  }
+
+  .timeline-gallery-indicator--inactive {
+    width: 14px;
+    height: 14px;
   }
 }
 

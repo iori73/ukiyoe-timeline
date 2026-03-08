@@ -90,7 +90,7 @@
 .period-slide__title {
   font-family: 'Shippori Mincho', serif;
   font-weight: 700;
-  font-size: var(--text-3xl);
+  font-size: var(--type-headline-md);
   line-height: 1;
   margin: 0;
 }
@@ -103,21 +103,21 @@
 
 .period-slide__years-main {
   font-family: var(--font-sans);
-  font-size: var(--text-lg);
+  font-size: var(--type-body-lg);
   color: var(--ai-iro, #1e3a5f);
   line-height: 1.6;
 }
 
 .period-slide__years-note {
   font-family: var(--font-sans);
-  font-size: var(--text-base);
+  font-size: var(--type-body-md);
   color: var(--text-tertiary);
   line-height: 1.6;
 }
 
 .period-slide__description {
   font-family: var(--font-sans);
-  font-size: var(--text-lg);
+  font-size: var(--type-body-lg);
   color: var(--ai-iro, #1e3a5f);
   line-height: 1.8;
   margin: 0;
@@ -231,14 +231,6 @@
     padding-bottom: var(--space-xl);
   }
   
-  .period-slide__title {
-    font-size: var(--text-3xl);
-  }
-  
-  .period-slide__description {
-    font-size: var(--text-base);
-  }
-  
   /* Allow horizontal overflow for LayeredImages scroll on mobile */
   .period-slide__container {
     overflow-x: visible;
@@ -271,22 +263,13 @@
     gap: var(--space-sm);
   }
   
-  .period-slide__title {
-    font-size: var(--text-2xl);
-  }
-  
   .period-slide__header {
     flex-direction: column;
     gap: var(--space-xs);
     align-items: flex-start;
   }
   
-  .period-slide__years-main {
-    font-size: var(--text-base);
-  }
-  
   .period-slide__description {
-    font-size: var(--text-base);
     line-height: 1.6;
   }
   

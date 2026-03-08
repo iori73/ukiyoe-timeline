@@ -68,32 +68,27 @@ function FixedPeriodPanel({ period, index, language, isArtworkDetailOpen, showGa
           transition={{ duration: duration.normal, ease: easing.ukiyoe }}
         >
           <div className="timeline-section__header">
-            <div className="timeline-section__number">{sectionNumber}</div>
-            <div className="timeline-section__header-right">
-              <div className="timeline-section__date-range">
-                <div className="timeline-section__date-inner">
-                  <span className="timeline-section__date-start">{period.year_start}</span>
-                  <span className="timeline-section__date-end">{period.year_end}</span>
-                </div>
-                <div className="timeline-section__date-bar">
-                  <div className="timeline-section__date-bar-line" />
-                  <div className="timeline-section__date-bar-dot timeline-section__date-bar-dot--end" />
-                </div>
+            <div className="timeline-section__heading">
+              <div className="timeline-section__number">{sectionNumber}</div>
+              <div className="timeline-section__date-badge">
+                <span className="timeline-section__date-start">{period.year_start}</span>
+                <span className="timeline-section__date-dash">—</span>
+                <span className="timeline-section__date-end">{period.year_end}</span>
               </div>
-              {keyEvent && (
-                <p className="timeline-section__header-title">{keyEvent.replace(/[（(][^）)]*[）)]/g, '').trim()}</p>
-              )}
+              <button
+                className="timeline-fixed-panel__toggle"
+                onClick={() => setIsExpanded(prev => !prev)}
+                aria-expanded={isExpanded}
+                aria-label={isExpanded ? 'Collapse details' : 'Expand details'}
+              >
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 8l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
             </div>
-            <button
-              className="timeline-fixed-panel__toggle"
-              onClick={() => setIsExpanded(prev => !prev)}
-              aria-expanded={isExpanded}
-              aria-label={isExpanded ? 'Collapse details' : 'Expand details'}
-            >
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5 8l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
+            {keyEvent && (
+              <p className="timeline-section__header-title">{keyEvent.replace(/[（(][^）)]*[）)]/g, '').trim()}</p>
+            )}
           </div>
 
           <div className={`timeline-fixed-panel__collapsible ${isExpanded ? 'timeline-fixed-panel__collapsible--expanded' : ''}`}>

@@ -8,10 +8,10 @@
   min-height: 100vh;
   min-height: 100dvh;
   background: var(--washi, #f5f0e6);
-  background-image: url('/images/washi-texture.webp');
-  background-repeat: repeat;
-  background-blend-mode: multiply;
-  background-size: auto;
+  /* background-image: url('/images/washi-texture.webp'); */
+  /* background-repeat: repeat; */
+  /* background-blend-mode: multiply; */
+  /* background-size: auto; */
   overflow-x: clip;
 }
 
@@ -59,10 +59,10 @@
   align-items: center;
   justify-content: center;
   background: var(--washi, #f5f0e6);
-  background-image: url('/images/washi-texture.webp');
-  background-repeat: repeat;
-  background-blend-mode: multiply;
-  background-size: auto;
+  /* background-image: url('/images/washi-texture.webp'); */
+  /* background-repeat: repeat; */
+  /* background-blend-mode: multiply; */
+  /* background-size: auto; */
   color: var(--sumi-iro, #2d2d2d);
   padding: var(--space-3xl, 96px) 0 var(--space-xl, 48px);
   overflow: clip;
@@ -84,7 +84,7 @@
 
 .layer-anim__hero-title {
   font-family: var(--font-serif, 'Shippori Mincho', serif);
-  font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+  font-size: var(--type-display-sm);
   font-weight: 400;
   line-height: 1.2;
   letter-spacing: 0.02em;
@@ -92,7 +92,7 @@
 
 .layer-anim__hero-sub {
   font-family: var(--font-sans);
-  font-size: var(--text-xl, 1.4375rem);
+  font-size: var(--type-title-md);
   color: var(--sumi-iro, #2d2d2d);
   line-height: 1.4;
 }
@@ -132,7 +132,7 @@
 
 .layer-anim__hero-credit {
   font-family: var(--font-sans);
-  font-size: var(--text-sm, 1rem);
+  font-size: var(--type-label-sm);
   color: var(--sumi-iro, #2d2d2d);
   letter-spacing: 0.03em;
   line-height: 1.4;
@@ -195,7 +195,7 @@
   align-items: center;
   justify-content: center;
   font-family: var(--font-sans);
-  font-size: var(--text-sm, 1rem);
+  font-size: var(--type-body-sm);
   font-weight: 600;
   color: var(--color-white, #fff);
 }
@@ -207,7 +207,7 @@
 
 .layer-anim__hero-annotation-label {
   font-family: var(--font-serif, 'Shippori Mincho', serif);
-  font-size: var(--text-lg, 1.25rem);
+  font-size: var(--type-body-lg);
   font-weight: 800;
   color: var(--color-white, #fff);
   line-height: 1.4;
@@ -236,9 +236,9 @@
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/images/washi-texture.webp');
-  background-size: cover;
-  background-position: center;
+  /* background-image: url('/images/washi-texture.webp'); */
+  /* background-size: cover; */
+  /* background-position: center; */
   mix-blend-mode: overlay;
   opacity: 0.2;
   pointer-events: none;
@@ -267,7 +267,7 @@
 
 .layer-anim__description-text {
   font-family: var(--font-serif, 'Shippori Mincho', serif);
-  font-size: var(--text-base);
+  font-size: var(--type-body-md);
   line-height: 1.7;
   color: var(--sumi-iro, #2d2d2d);
   text-align: center;
@@ -339,24 +339,24 @@
 }
 
 .layer-anim__timeline-label--major {
-  font-size: var(--text-2xl);
+  font-size: var(--type-headline-sm);
   font-weight: 600;
 }
 
 .layer-anim__timeline-label--major[lang="en"],
 html[lang="en"] .layer-anim__timeline-label--major {
-  font-size: var(--text-lg);
+  font-size: var(--type-title-sm);
   letter-spacing: 0.03em;
 }
 
 .layer-anim__timeline-label--minor {
-  font-size: var(--text-xl);
+  font-size: var(--type-title-md);
   font-weight: 400;
 }
 
 .layer-anim__timeline-label--minor[lang="en"],
 html[lang="en"] .layer-anim__timeline-label--minor {
-  font-size: var(--text-base);
+  font-size: var(--type-body-md);
   letter-spacing: 0.02em;
 }
 
@@ -456,12 +456,12 @@ html[lang="en"] .layer-anim__timeline-label--minor {
   font-family: var(--font-serif, 'Shippori Mincho', serif);
   color: var(--sumi-iro, #2d2d2d);
   letter-spacing: 0.06em;
-  font-size: var(--text-sm);
+  font-size: var(--type-body-sm);
   font-weight: 400;
 }
 
 .layer-anim__tl-item--major .layer-anim__tl-name {
-  font-size: var(--text-lg);
+  font-size: var(--type-body-lg);
   font-weight: 600;
 }
 
@@ -479,7 +479,7 @@ html[lang="en"] .layer-anim__timeline-label--minor {
 
 .layer-anim__description-summary {
   font-family: var(--font-serif, 'Shippori Mincho', serif);
-  font-size: var(--text-base);
+  font-size: var(--type-body-md);
   line-height: 1.7;
   color: var(--sumi-iro, #2d2d2d);
   text-align: center;
@@ -527,7 +527,7 @@ html[lang="en"] .layer-anim__timeline-label--minor {
 
 .layer-anim__overview-text {
   font-family: var(--font-sans);
-  font-size: var(--text-base, 1.125rem);
+  font-size: var(--type-body-md);
   color: var(--color-white);
   line-height: 1.8;
   letter-spacing: 0.04em;
@@ -544,7 +544,7 @@ html[lang="en"] .layer-anim__timeline-label--minor {
 
 .layer-anim__overview-dot {
   font-family: var(--font-serif);
-  font-size: var(--text-sm, 1rem);
+  font-size: var(--type-body-sm);
   color: rgba(255, 255, 255, 0.75);
   text-decoration: none;
   letter-spacing: 0.1em;
@@ -574,10 +574,10 @@ html[lang="en"] .layer-anim__timeline-label--minor {
   align-items: center;
   justify-content: center;
   background: var(--washi, #f5f0e6);
-  background-image: url('/images/washi-texture.webp');
-  background-repeat: repeat;
-  background-blend-mode: multiply;
-  background-size: auto;
+  /* background-image: url('/images/washi-texture.webp'); */
+  /* background-repeat: repeat; */
+  /* background-blend-mode: multiply; */
+  /* background-size: auto; */
   padding: var(--space-3xl, 96px) var(--space-xl, 48px);
   /* 左右に 48px の余白を確保してイラストが端に詰まらないようにする */
 }
@@ -586,7 +586,7 @@ html[lang="en"] .layer-anim__timeline-label--minor {
 .layer-anim__scene-inner {
   position: relative;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 5fr 7fr;
   gap: var(--space-3xl, 96px);
   align-items: center;
   max-width: 1100px;
@@ -689,9 +689,31 @@ html[lang="en"] .layer-anim__timeline-label--minor {
   will-change: transform, opacity;
 }
 
+.layer-anim__title-label {
+  display: block;
+  font-family: var(--font-serif, 'Shippori Mincho', serif);
+  font-size: var(--type-label-sm);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-xs, 8px);
+  line-height: 1;
+}
+
+.layer-anim__title-label--sumi {
+  color: var(--period-sumizuri, #1a1a1a);
+}
+
+.layer-anim__title-label--beni {
+  color: var(--period-benizuri, #C33433);
+}
+
+.layer-anim__title-label--nishiki {
+  color: var(--period-nishiki, #1B3E5B);
+}
+
 .layer-anim__title {
   font-family: var(--font-serif, 'Shippori Mincho', serif);
-  font-size: var(--text-3xl);
+  font-size: var(--type-headline-md);
   font-weight: 600;
   color: var(--sumi-iro, #2d2d2d);
   margin-bottom: var(--space-xs, 8px);
@@ -710,29 +732,26 @@ html[lang="en"] .layer-anim__timeline-label--minor {
   line-height: 1;
   color: #fff;
   font-weight: 400;
-  border: 2px solid;
+  border: none;
   vertical-align: baseline;
   box-sizing: border-box;
 }
 
 .layer-anim__title-accent--sumi {
-  background-color: var(--period-sumizuri, #1a1a1a);
-  border-color: var(--period-sumizuri, #1a1a1a);
+  background-color: color-mix(in srgb, var(--period-sumizuri, #1a1a1a) 70%, transparent);
 }
 
 .layer-anim__title-accent--beni {
-  background-color: var(--period-benizuri, #C33433);
-  border-color: var(--period-benizuri, #C33433);
+  background-color: color-mix(in srgb, var(--period-benizuri, #C33433) 70%, transparent);
 }
 
 .layer-anim__title-accent--nishiki {
-  background-color: var(--period-nishiki, #1B3E5B);
-  border-color: var(--period-nishiki, #1B3E5B);
+  background-color: color-mix(in srgb, var(--period-nishiki, #1B3E5B) 70%, transparent);
 }
 
 .layer-anim__subtitle {
   font-family: var(--font-sans);
-  font-size: var(--text-xs, 0.875rem);
+  font-size: var(--type-label-sm);
   color: rgba(45, 45, 45, 0.4);
   letter-spacing: 0.06em;
   margin-bottom: var(--space-md, 24px);
@@ -740,7 +759,7 @@ html[lang="en"] .layer-anim__timeline-label--minor {
 
 .layer-anim__body {
   font-family: var(--font-sans);
-  font-size: var(--text-sm, 1rem);
+  font-size: var(--type-body-sm);
   color: rgba(45, 45, 45, 0.75);
   line-height: 1.8;
   letter-spacing: 0.03em;
@@ -756,10 +775,10 @@ html[lang="en"] .layer-anim__timeline-label--minor {
   align-items: center;
   justify-content: center;
   background: var(--washi, #f5f0e6);
-  background-image: url('/images/washi-texture.webp');
-  background-repeat: repeat;
-  background-blend-mode: multiply;
-  background-size: auto;
+  /* background-image: url('/images/washi-texture.webp'); */
+  /* background-repeat: repeat; */
+  /* background-blend-mode: multiply; */
+  /* background-size: auto; */
   color: var(--sumi-iro, #2d2d2d);
   padding: var(--space-3xl, 96px) var(--space-xl, 48px);
 }
@@ -784,6 +803,7 @@ html[lang="en"] .layer-anim__timeline-label--minor {
   height: var(--space-md);
   border-radius: 0;
   flex-shrink: 0;
+  opacity: 0.7;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 
@@ -806,7 +826,7 @@ html[lang="en"] .layer-anim__timeline-label--minor {
 
 .layer-anim__nav-link-text {
   font-family: var(--font-serif, 'Shippori Mincho', serif);
-  font-size: var(--text-base);
+  font-size: var(--type-body-md);
 }
 
 .layer-anim__nav-link:hover {
@@ -837,12 +857,12 @@ html[lang="en"] .layer-anim__timeline-label--minor {
   height: 14px;
 }
 
-/* 外縁リング — 常時は薄い 1px ボーダー */
+/* 外縁リング — 常時は薄い 0.5px ボーダー */
 .layer-anim__nav-link-dot-border {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  border: 1px solid currentColor;
+  border: 0.5px solid currentColor;
   opacity: 0.15;
   transition: all 1.2s cubic-bezier(0.22, 0.87, 0.5, 1);
 }
@@ -918,7 +938,7 @@ html[lang="en"] .layer-anim__timeline-label--minor {
 
   .layer-anim__scene {
     min-height: 0;
-    padding: 40px 0;
+    padding: 80px 0;
   }
 
   #section-sumizuri {
@@ -926,7 +946,7 @@ html[lang="en"] .layer-anim__timeline-label--minor {
   }
 
   .layer-anim__scene-inner {
-    grid-template-columns: 576px 1fr;
+    grid-template-columns: 5fr 7fr;
     background: rgba(255, 255, 255, 0.5);
     padding: 80px 120px;
     max-width: none;
@@ -977,11 +997,6 @@ html[lang="en"] .layer-anim__timeline-label--minor {
     max-width: 100%;
   }
 
-  .layer-anim__description-text,
-  .layer-anim__description-summary {
-    font-size: var(--text-sm);
-  }
-
   .layer-anim__hero {
     padding: var(--space-3xl, 96px) 0 var(--space-3xl, 96px);
     min-height: auto;
@@ -1027,12 +1042,12 @@ html[lang="en"] .layer-anim__timeline-label--minor {
 
   .layer-anim__hero-annotation-icon--list .layer-anim__hero-annotation-icon-fallback {
     color: var(--sumi-iro, #2d2d2d);
-    font-size: var(--text-xs, 0.875rem);
+    font-size: var(--type-label-xs);
   }
 
   .layer-anim__hero-annotations-list-label {
     font-family: var(--font-serif, 'Shippori Mincho', serif);
-    font-size: var(--text-sm, 1rem);
+    font-size: var(--type-body-sm);
     font-weight: 600;
     color: var(--sumi-iro, #2d2d2d);
     line-height: 1.4;
@@ -1050,6 +1065,10 @@ html[lang="en"] .layer-anim__timeline-label--minor {
 
   .layer-anim__title-area {
     text-align: center;
+  }
+
+  .layer-anim__title-label {
+    font-size: var(--type-label-md);
   }
 
   .layer-anim-page__header {
@@ -1082,10 +1101,6 @@ html[lang="en"] .layer-anim__timeline-label--minor {
 
   .layer-anim__hero-heading {
     padding: 0 var(--space-sm, 16px);
-  }
-
-  .layer-anim__hero-sub {
-    font-size: var(--text-base, 1.125rem);
   }
 
   .layer-anim__hero-credit-wrap {

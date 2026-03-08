@@ -152,7 +152,7 @@
   bottom: max(clamp(16px, 3vw, 40px), env(safe-area-inset-bottom));
   width: 100%;
   max-width: min(560px, 50vw);
-  padding: 16px;
+  padding: 20px 24px;
   background: rgba(209, 209, 209, 0.1);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
@@ -166,8 +166,74 @@
 .timeline-fixed-panel__content {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 1rem;
   width: 100%;
+}
+
+/* ヘッダー行: 番号 + タイトル + 年代ボックスを1行に */
+.timeline-fixed-panel .timeline-section__header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: nowrap;
+}
+
+/* デスクトップ: heading ラッパーを透過して中身をフラットに並べる */
+.timeline-fixed-panel .timeline-section__heading {
+  display: contents;
+}
+
+/* 元の並び順を維持: 番号(1) → タイトル(2) → 年代(3) */
+.timeline-fixed-panel .timeline-section__number {
+  order: 1;
+}
+
+.timeline-fixed-panel .timeline-section__header-title {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  order: 2;
+}
+
+.timeline-fixed-panel .timeline-section__date-badge {
+  order: 3;
+}
+
+/* 年代バッジ: Figma準拠 白20%フィル */
+.timeline-fixed-panel .timeline-section__date-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px 12px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.timeline-fixed-panel .timeline-section__date-dash {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--type-body-sm);
+  color: white;
+  line-height: 1;
+}
+
+.timeline-fixed-panel .timeline-section__date-start,
+.timeline-fixed-panel .timeline-section__date-end {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--type-body-md);
+  color: white;
+  line-height: 1;
+}
+
+.timeline-fixed-panel__collapsible {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 /* SP 用トグルボタン（デスクトップでは非表示） */
@@ -196,6 +262,19 @@
   .timeline-fixed-panel__content {
     gap: 12px;
   }
+
+  .timeline-fixed-panel .timeline-section__header {
+    flex-wrap: wrap;
+  }
+
+  .timeline-fixed-panel .timeline-section__heading {
+    display: contents;
+  }
+
+  .timeline-fixed-panel .timeline-section__date-badge {
+    padding: 8px;
+    gap: 8px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -211,19 +290,50 @@
     gap: 0;
   }
 
-  /* ヘッダー行: 番号+年代+トグルを横並び */
+  /* Figma準拠: header を縦積み、heading 行 + タイトル下配置 */
   .timeline-fixed-panel .timeline-section__header {
-    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
   }
 
-  /* トグルボタン表示 */
+  .timeline-fixed-panel .timeline-section__heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+  }
+
+  /* デスクトップ用 order をリセット */
+  .timeline-fixed-panel .timeline-section__number,
+  .timeline-fixed-panel .timeline-section__date-badge,
+  .timeline-fixed-panel .timeline-section__header-title {
+    order: unset;
+  }
+
+  .timeline-fixed-panel .timeline-section__header-title {
+    flex: unset;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+  }
+
+  .timeline-fixed-panel .timeline-section__date-badge {
+    gap: 6px;
+  }
+
+  /* トグルボタン表示: heading 行の右端 */
   .timeline-fixed-panel__toggle {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 44px;
     height: 44px;
-    margin: -12px -8px -12px 0;
+    margin-left: auto;
+    margin-top: -8px;
+    margin-bottom: -8px;
+    margin-right: -8px;
     padding: 0;
     background: none;
     border: none;
@@ -253,7 +363,7 @@
     transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
     display: flex;
     flex-direction: column;
-    gap: .5rem;      
+    gap: 16px;
   }
 
   .timeline-fixed-panel__collapsible--expanded {

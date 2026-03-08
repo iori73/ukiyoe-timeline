@@ -305,7 +305,7 @@ export default function App() {
   return (
     <LanguageProvider>
       <ErrorBoundary>
-        <Suspense fallback={<UkiyoeLoadingContainer />}>
+        <Suspense fallback={<div className="loading"><div className="washi-bg" /></div>}>
           <main>
             <Routes>
               <Route path="/" element={<LayerAnimationPage />} />

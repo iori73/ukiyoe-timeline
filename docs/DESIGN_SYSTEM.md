@@ -151,9 +151,10 @@ JS で同じ値が必要な場合は `src/constants/colors.js` の `periodDecorK
 | **本文** | Hiragino Kaku Gothic ProN | `--font-sans` |
 | **ロゴ** | HOT-Tenshokk-M | カスタム (`@font-face`) |
 
-### フォントサイズスケール
+### フォントサイズスケール（プリミティブトークン）
 
-PC 向けに最小16px を基準とした rem スケール。
+固定値の rem スケール。コンポーネント固有の微調整やグローバルトークンの定義基盤として使用。
+**通常のコンポーネント開発では下記の「レスポンシブセマンティックトークン」を優先使用すること。**
 
 | 名前 | rem | 実効px | CSS変数 |
 |------|-----|--------|---------|
@@ -170,6 +171,86 @@ PC 向けに最小16px を基準とした rem スケール。
 | 6xl | 4.5rem | 72px | `--text-6xl` |
 | 7xl | 5.75rem | 92px | `--text-7xl` |
 | 8xl | 6.875rem | 110px | `--text-8xl` |
+
+### レスポンシブセマンティックトークン
+
+`clamp()` により 375px (iPhone SE) 〜 1200px (デスクトップ) で自動スケールするトークン。
+IBM Carbon の「見出しは fluid、本文は fixed」の思想に基づく。
+
+命名規則: `--type-{category}-{size}` （プリミティブの `--text-*` と区別）
+
+#### display — fluid: ページレベル見出し
+
+| CSS変数 | Compact (375px) | Expanded (1200px) | スケーリング |
+|---------|----------------|-------------------|------------|
+| `--type-display-lg` | 36px | 92px | fluid |
+| `--type-display-md` | 32px | 72px | fluid |
+| `--type-display-sm` | 28px | 55px | fluid |
+
+#### headline — fluid: セクション見出し
+
+| CSS変数 | Compact (375px) | Expanded (1200px) | スケーリング |
+|---------|----------------|-------------------|------------|
+| `--type-headline-lg` | 24px | 46px | fluid |
+| `--type-headline-md` | 22px | 36px | fluid |
+| `--type-headline-sm` | 20px | 28px | fluid |
+
+#### title — fluid: カード/コンポーネント見出し
+
+| CSS変数 | Compact (375px) | Expanded (1200px) | スケーリング |
+|---------|----------------|-------------------|------------|
+| `--type-title-xl` | 22px | 36px | fluid |
+| `--type-title-lg` | 20px | 28px | fluid |
+| `--type-title-md` | 18px | 23px | fluid |
+| `--type-title-sm` | 16px | 20px | fluid |
+
+#### body — modest fluid / fixed: 本文
+
+| CSS変数 | Compact (375px) | Expanded (1200px) | スケーリング |
+|---------|----------------|-------------------|------------|
+| `--type-body-lg` | 18px | 20px | modest fluid |
+| `--type-body-md` | 16px | 18px | modest fluid |
+| `--type-body-sm` | 16px | 16px | fixed |
+| `--type-body-xs` | 14px | 14px | fixed |
+
+#### label — fixed: ラベル/メタデータ
+
+| CSS変数 | サイズ | スケーリング |
+|---------|--------|------------|
+| `--type-label-md` | 16px | fixed |
+| `--type-label-sm` | 14px | fixed |
+| `--type-label-xs` | 12px | fixed |
+
+### 階層比率契約 (Hierarchy Ratio Contract)
+
+タイポグラフィの階層比率は、画面サイズが変わっても以下の最低値を維持する。
+新しいコンポーネントでフォントサイズを選択する際のガイドライン。
+
+| 関係 | Expanded (>=900px) | Compact (<600px) | 最低比率 |
+|------|-------------------|-------------------|---------|
+| title / body | 1.56x (28/18) | 1.43x (20/14) | >= 1.4x |
+| title / label | 2.0x (28/14) | 1.67x (20/12) | >= 1.5x |
+| headline / body | 2.0x (36/18) | 1.57x (22/14) | >= 1.5x |
+| display / headline | 1.53x (55/36) | 1.45x (32/22) | >= 1.4x |
+
+### `--text-*` と `--type-*` の使い分け
+
+| トークン | 用途 | レスポンシブ |
+|----------|------|------------|
+| `--text-*` (プリミティブ) | CSS変数定義の基盤、`clamp()` 内の min/max 値、特殊な固定サイズが必要な場合 | なし（固定） |
+| `--type-*` (セマンティック) | **コンポーネントの font-size 指定（標準）** | あり（clamp） |
+
+```css
+/* 推奨: レスポンシブセマンティックトークン */
+font-size: var(--type-title-lg);   /* 20px → 28px 自動スケール */
+font-size: var(--type-body-md);    /* 16px → 18px 微小スケール */
+
+/* 特殊用途のみ: プリミティブトークン */
+font-size: var(--text-2xl);        /* 28px 固定 */
+
+/* 禁止: ハードコード */
+font-size: 18px;                   /* NG */
+```
 
 ### 行間（Line Height）
 
@@ -192,23 +273,24 @@ PC 向けに最小16px を基準とした rem スケール。
 
 ### セマンティックタイポグラフィースタイル
 
-プリミティブトークン（サイズ・行間・字間）を組み合わせた、用途別のタイポグラフィースタイル。
+レスポンシブセマンティックトークン（`--type-*`）を組み合わせた、用途別のタイポグラフィースタイル。
 ユーティリティクラスとして `src/styles/typography.css` で定義。
 
 #### 運用方針
 
 このプロジェクトは**コンポーネント CSS アーキテクチャ**（各 `.jsx` に対応する `.css`）を採用している。
-`.typo-*` クラスは**リファレンス（参照用）**として維持するが、コンポーネント CSS でプリミティブトークン（`var(--text-*)` 等）を直接使用するのが正式な運用パターンである。
+`.typo-*` クラスは**リファレンス（参照用）**として維持するが、コンポーネント CSS でレスポンシブトークン（`var(--type-*)` ）を直接使用するのが正式な運用パターンである。
 
 | アプローチ | 使い方 | 推奨度 |
 |-----------|--------|--------|
-| コンポーネント CSS でプリミティブトークンを使用 | `font-size: var(--text-base);` | **推奨（標準）** |
+| コンポーネント CSS でレスポンシブトークンを使用 | `font-size: var(--type-title-lg);` | **推奨（標準）** |
 | `.typo-*` クラスを JSX の className に適用 | `<h2 className="typo-headline-md">` | オプション（新規コンポーネントで便利な場合） |
+| コンポーネント CSS でプリミティブトークンを使用 | `font-size: var(--text-base);` | 特殊用途のみ（固定サイズが必要な場合） |
 | ハードコードの px / rem 値 | `font-size: 18px;` | **禁止** |
 
-理由:
-- スタイリングが JSX (className) と CSS に分散すると保守性が下がる
-- コンポーネント CSS 内の `font-size: var(--text-base)` はセレクタ名と合わせれば十分に意味的
+利点:
+- `clamp()` がトークン側で処理するため、コンポーネントの `@media` による font-size オーバーライドが不要
+- 階層比率契約により、画面サイズが変わってもテキスト間のコントラストが維持される
 - 下記のカテゴリ表は、どのトークンをどの用途に使うかの**ガイドライン**として参照する
 
 #### カテゴリ概要
@@ -223,54 +305,54 @@ PC 向けに最小16px を基準とした rem スケール。
 
 headline と title は同じサイズステップを共有しつつ、weight と letter-spacing で役割を区別する。
 
-#### display（`--font-serif`）
+#### display（`--font-serif`）— fluid
+
+| スタイル | CSS クラス | サイズ (375px → 1200px) | weight | line-height | letter-spacing |
+|----------|-----------|------------------------|--------|-------------|----------------|
+| display/large | `.typo-display-lg` | 36px → 92px | 400 | 1.3 | 0.05em |
+| display/large-emphasized | `.typo-display-lg-em` | 36px → 92px | 700 | 1.3 | 0.05em |
+| display/medium | `.typo-display-md` | 32px → 72px | 400 | 1.2 | 0.04em |
+| display/medium-emphasized | `.typo-display-md-em` | 32px → 72px | 700 | 1.2 | 0.04em |
+| display/small | `.typo-display-sm` | 28px → 55px | 400 | 1.2 | 0.04em |
+| display/small-emphasized | `.typo-display-sm-em` | 28px → 55px | 700 | 1.2 | 0.04em |
+
+#### headline（`--font-serif`）— fluid
+
+| スタイル | CSS クラス | サイズ (375px → 1200px) | weight | line-height | letter-spacing |
+|----------|-----------|------------------------|--------|-------------|----------------|
+| headline/large | `.typo-headline-lg` | 24px → 46px | 600 | 1.3 | 0.08em |
+| headline/medium | `.typo-headline-md` | 22px → 36px | 600 | 1.3 | 0.05em |
+| headline/small | `.typo-headline-sm` | 20px → 28px | 600 | 1.3 | 0.05em |
+
+#### title（`--font-serif`）— fluid
+
+| スタイル | CSS クラス | サイズ (375px → 1200px) | weight | line-height | letter-spacing |
+|----------|-----------|------------------------|--------|-------------|----------------|
+| title/x-large | `.typo-title-xl` | 22px → 36px | 700 | 1.3 | 0 |
+| title/large | `.typo-title-lg` | 20px → 28px | 700 | 1.3 | 0 |
+| title/medium | `.typo-title-md` | 18px → 23px | 700 | 1.4 | 0 |
+| title/small | `.typo-title-sm` | 16px → 20px | 700 | 1.4 | 0 |
+
+#### body（`--font-sans`）— modest fluid / fixed
+
+| スタイル | CSS クラス | サイズ (375px → 1200px) | weight | line-height | letter-spacing |
+|----------|-----------|------------------------|--------|-------------|----------------|
+| body/large | `.typo-body-lg` | 18px → 20px | 300 | 1.6 | 0 |
+| body/large-emphasized | `.typo-body-lg-em` | 18px → 20px | 600 | 1.6 | 0 |
+| body/medium | `.typo-body-md` | 16px → 18px | 300 | 1.6 | 0 |
+| body/medium-emphasized | `.typo-body-md-em` | 16px → 18px | 600 | 1.6 | 0 |
+| body/small | `.typo-body-sm` | 16px (fixed) | 300 | 1.6 | 0 |
+| body/small-emphasized | `.typo-body-sm-em` | 16px (fixed) | 600 | 1.6 | 0 |
+| body/x-small | `.typo-body-xs` | 14px (fixed) | 300 | 1.6 | 0 |
+| body/x-small-emphasized | `.typo-body-xs-em` | 14px (fixed) | 600 | 1.6 | 0 |
+
+#### label（`--font-sans`）— fixed
 
 | スタイル | CSS クラス | サイズ | weight | line-height | letter-spacing |
 |----------|-----------|--------|--------|-------------|----------------|
-| display/large | `.typo-display-lg` | 7xl (92px) | 400 | 1.3 | 0.05em |
-| display/large-emphasized | `.typo-display-lg-em` | 7xl (92px) | 700 | 1.3 | 0.05em |
-| display/medium | `.typo-display-md` | 6xl (72px) | 400 | 1.2 | 0.04em |
-| display/medium-emphasized | `.typo-display-md-em` | 6xl (72px) | 700 | 1.2 | 0.04em |
-| display/small | `.typo-display-sm` | 5xl (55px) | 400 | 1.2 | 0.04em |
-| display/small-emphasized | `.typo-display-sm-em` | 5xl (55px) | 700 | 1.2 | 0.04em |
-
-#### headline（`--font-serif`）
-
-| スタイル | CSS クラス | サイズ | weight | line-height | letter-spacing |
-|----------|-----------|--------|--------|-------------|----------------|
-| headline/large | `.typo-headline-lg` | 4xl (46px) | 600 | 1.3 | 0.08em |
-| headline/medium | `.typo-headline-md` | 3xl (36px) | 600 | 1.3 | 0.05em |
-| headline/small | `.typo-headline-sm` | 2xl (28px) | 600 | 1.3 | 0.05em |
-
-#### title（`--font-serif`）
-
-| スタイル | CSS クラス | サイズ | weight | line-height | letter-spacing |
-|----------|-----------|--------|--------|-------------|----------------|
-| title/x-large | `.typo-title-xl` | 3xl (36px) | 700 | 1.3 | 0 |
-| title/large | `.typo-title-lg` | 2xl (28px) | 700 | 1.3 | 0 |
-| title/medium | `.typo-title-md` | xl (23px) | 700 | 1.4 | 0 |
-| title/small | `.typo-title-sm` | lg (20px) | 700 | 1.4 | 0 |
-
-#### body（`--font-sans`）
-
-| スタイル | CSS クラス | サイズ | weight | line-height | letter-spacing |
-|----------|-----------|--------|--------|-------------|----------------|
-| body/large | `.typo-body-lg` | lg (20px) | 300 | 1.6 | 0 |
-| body/large-emphasized | `.typo-body-lg-em` | lg (20px) | 600 | 1.6 | 0 |
-| body/medium | `.typo-body-md` | base (18px) | 300 | 1.6 | 0 |
-| body/medium-emphasized | `.typo-body-md-em` | base (18px) | 600 | 1.6 | 0 |
-| body/small | `.typo-body-sm` | sm (16px) | 300 | 1.6 | 0 |
-| body/small-emphasized | `.typo-body-sm-em` | sm (16px) | 600 | 1.6 | 0 |
-| body/x-small | `.typo-body-xs` | xs (14px) | 300 | 1.6 | 0 |
-| body/x-small-emphasized | `.typo-body-xs-em` | xs (14px) | 600 | 1.6 | 0 |
-
-#### label（`--font-sans`）
-
-| スタイル | CSS クラス | サイズ | weight | line-height | letter-spacing |
-|----------|-----------|--------|--------|-------------|----------------|
-| label/medium | `.typo-label-md` | sm (16px) | 500 | 1 | 0.05em |
-| label/small | `.typo-label-sm` | xs (14px) | 500 | 1 | 0.05em |
-| label/x-small | `.typo-label-xs` | 2xs (12px) | 500 | 1 | 0.05em |
+| label/medium | `.typo-label-md` | 16px | 500 | 1 | 0.05em |
+| label/small | `.typo-label-sm` | 14px | 500 | 1 | 0.05em |
+| label/x-small | `.typo-label-xs` | 12px | 500 | 1 | 0.05em |
 
 #### 使い方
 
@@ -546,13 +628,14 @@ CSS変数はメディアクエリの値には使えないため、コメント�
 ### Do
 
 ```css
+/* フォントサイズはレスポンシブトークンを使う */
+font-size: var(--type-title-lg);   /* 20px → 28px 自動スケール */
+font-size: var(--type-body-md);    /* 16px → 18px */
+font-size: var(--type-label-sm);   /* 14px 固定 */
+
 /* 色はトークンを使う */
 color: var(--ai-iro);
 background: var(--washi);
-
-/* フォントサイズはトークンを使う */
-font-size: var(--text-base);  /* 18px */
-font-size: var(--text-xs);    /* 14px */
 
 /* スペーシングはトークンを使う */
 padding: var(--space-md);
@@ -568,18 +651,19 @@ z-index: var(--z-modal);
 ### Don't
 
 ```css
+/* ❌ ハードコードのフォントサイズ */
+font-size: 18px;      /* → var(--type-body-md) */
+font-size: 14px;      /* → var(--type-body-xs) */
+font-size: 0.875rem;  /* → var(--type-body-xs) */
+
+/* ❌ メディアクエリでの font-size オーバーライド（--type-* の clamp が処理する） */
+@media (max-width: 600px) {
+  .title { font-size: var(--text-sm); }  /* → 不要。var(--type-title-lg) が自動スケール */
+}
+
 /* ❌ ハードコードの色 */
 color: #1e3a5f;
 background: #f5f0e6;
-
-/* ❌ ハードコードのフォントサイズ */
-font-size: 18px;      /* → var(--text-base) */
-font-size: 14px;      /* → var(--text-xs) */
-font-size: 0.875rem;  /* → var(--text-xs) */
-
-/* ❌ スケール外のフォントサイズ（トークンに存在しない値） */
-font-size: 13px;      /* → var(--text-2xs) (12px) か var(--text-xs) (14px) に丸める */
-font-size: 22px;      /* → var(--text-xl) (23px) に丸める */
 
 /* ❌ ハードコードのスペーシング（トークンにマッチする値の場合） */
 padding: 24px;  /* → var(--space-md) */
@@ -618,4 +702,4 @@ z-index: 1000;  /* → var(--z-modal) */
 
 ---
 
-*最終更新: 2026-02-15*
+*最終更新: 2026-03-08*
