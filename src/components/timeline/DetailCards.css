@@ -55,10 +55,10 @@
 
 .detail-card__title {
   font-family: var(--font-serif);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--type-title-sm);
   color: var(--ai-iro);
-  line-height: 1.2;
+  line-height: 1.4;
   margin: 0;
 }
 

@@ -83,7 +83,7 @@
 }
 
 .layer-anim__hero-title {
-  font-family: var(--font-serif, 'Shippori Mincho', serif);
+  font-family: var(--font-serif);
   font-size: var(--type-display-sm);
   font-weight: 400;
   line-height: 1.2;
@@ -196,7 +196,7 @@
   justify-content: center;
   font-family: var(--font-sans);
   font-size: var(--type-body-sm);
-  font-weight: 600;
+  font-weight: 500;
   color: var(--color-white, #fff);
 }
 
@@ -206,9 +206,9 @@
 }
 
 .layer-anim__hero-annotation-label {
-  font-family: var(--font-serif, 'Shippori Mincho', serif);
+  font-family: var(--font-serif);
   font-size: var(--type-body-lg);
-  font-weight: 800;
+  font-weight: 600;
   color: var(--color-white, #fff);
   line-height: 1.4;
 }
@@ -266,7 +266,7 @@
 }
 
 .layer-anim__description-text {
-  font-family: var(--font-serif, 'Shippori Mincho', serif);
+  font-family: var(--font-serif);
   font-size: var(--type-body-md);
   line-height: 1.7;
   color: var(--sumi-iro, #2d2d2d);
@@ -327,7 +327,7 @@
 
 .layer-anim__timeline-label {
   position: absolute;
-  font-family: var(--font-serif, 'Shippori Mincho', serif);
+  font-family: var(--font-serif);
   color: var(--sumi-iro, #2d2d2d);
   text-align: center;
   transform: translateX(-50%);
@@ -340,7 +340,7 @@
 
 .layer-anim__timeline-label--major {
   font-size: var(--type-headline-sm);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .layer-anim__timeline-label--major[lang="en"],
@@ -453,7 +453,7 @@ html[lang="en"] .layer-anim__timeline-label--minor {
 }
 
 .layer-anim__tl-name {
-  font-family: var(--font-serif, 'Shippori Mincho', serif);
+  font-family: var(--font-serif);
   color: var(--sumi-iro, #2d2d2d);
   letter-spacing: 0.06em;
   font-size: var(--type-body-sm);
@@ -462,7 +462,7 @@ html[lang="en"] .layer-anim__timeline-label--minor {
 
 .layer-anim__tl-item--major .layer-anim__tl-name {
   font-size: var(--type-body-lg);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .layer-anim__tl-colors {
@@ -478,7 +478,7 @@ html[lang="en"] .layer-anim__timeline-label--minor {
 }
 
 .layer-anim__description-summary {
-  font-family: var(--font-serif, 'Shippori Mincho', serif);
+  font-family: var(--font-serif);
   font-size: var(--type-body-md);
   line-height: 1.7;
   color: var(--sumi-iro, #2d2d2d);
@@ -691,7 +691,7 @@ html[lang="en"] .layer-anim__timeline-label--minor {
 
 .layer-anim__title-label {
   display: block;
-  font-family: var(--font-serif, 'Shippori Mincho', serif);
+  font-family: var(--font-serif);
   font-size: var(--type-label-sm);
   font-weight: 400;
   letter-spacing: 0.08em;
@@ -712,9 +712,9 @@ html[lang="en"] .layer-anim__timeline-label--minor {
 }
 
 .layer-anim__title {
-  font-family: var(--font-serif, 'Shippori Mincho', serif);
+  font-family: var(--font-serif);
   font-size: var(--type-headline-md);
-  font-weight: 600;
+  font-weight: 500;
   color: var(--sumi-iro, #2d2d2d);
   margin-bottom: var(--space-xs, 8px);
   letter-spacing: 0.05em;
@@ -825,7 +825,7 @@ html[lang="en"] .layer-anim__timeline-label--minor {
 }
 
 .layer-anim__nav-link-text {
-  font-family: var(--font-serif, 'Shippori Mincho', serif);
+  font-family: var(--font-serif);
   font-size: var(--type-body-md);
 }
 
@@ -1046,9 +1046,9 @@ html[lang="en"] .layer-anim__timeline-label--minor {
   }
 
   .layer-anim__hero-annotations-list-label {
-    font-family: var(--font-serif, 'Shippori Mincho', serif);
+    font-family: var(--font-serif);
     font-size: var(--type-body-sm);
-    font-weight: 600;
+    font-weight: 500;
     color: var(--sumi-iro, #2d2d2d);
     line-height: 1.4;
   }

@@ -93,22 +93,22 @@
 }
 
 .dawn-heading__title {
-  font-family: 'Shippori Mincho', serif;
-  font-weight: 600;
+  font-family: var(--font-serif);
+  font-weight: 500;
   font-size: var(--type-display-sm);
   color: var(--beni-iro, #d64e4e);
   letter-spacing: 0.04em;
-  line-height: 1;
+  line-height: 1.2;
   margin: 0;
 }
 
 .dawn-heading__subtitle {
-  font-family: 'Shippori Mincho', serif;
-  font-weight: 600;
+  font-family: var(--font-serif);
+  font-weight: 500;
   font-size: var(--type-headline-sm);
   color: var(--ai-iro, #1e3a5f);
   letter-spacing: 0.05em;
-  line-height: 1;
+  line-height: 1.3;
 }
 
 .dawn-intro {

@@ -20,7 +20,7 @@
   font-weight: 400;
   font-size: clamp(1.35rem, 2.5vw, 1.75rem);
   color: rgba(255, 255, 255, 0.9);
-  letter-spacing: 0.12em;
+  letter-spacing: var(--tracking-wider);
   margin: 0 0 8px;
 }
 

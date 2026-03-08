@@ -9,7 +9,7 @@
 
 .logo-preview-page {
   min-height: 100vh;
-  font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+  font-family: var(--font-sans);
   transition: background-color var(--duration-slow) var(--ease-ukiyoe), color var(--duration-slow) var(--ease-ukiyoe);
 }
 

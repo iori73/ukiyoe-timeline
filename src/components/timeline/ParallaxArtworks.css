@@ -121,13 +121,13 @@
   font-size: var(--type-label-sm);
   font-weight: 400;
   color: rgba(245, 240, 230, 0.7);
-  line-height: 1.2;
+  line-height: 1;
 }
 
 .parallax-artwork__title {
   font-family: var(--font-serif);
   font-size: var(--type-title-xl);
-  font-weight: 600;
+  font-weight: 500;
   color: rgba(245, 240, 230, 1);
   line-height: 1.3;
 }

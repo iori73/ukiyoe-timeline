@@ -37,7 +37,7 @@
 .typo-display-lg-em {
   font-family: var(--font-serif);
   font-size: var(--type-display-lg);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.3;
   letter-spacing: 0.05em;
 }
@@ -53,7 +53,7 @@
 .typo-display-md-em {
   font-family: var(--font-serif);
   font-size: var(--type-display-md);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.2;
   letter-spacing: 0.04em;
 }
@@ -69,7 +69,7 @@
 .typo-display-sm-em {
   font-family: var(--font-serif);
   font-size: var(--type-display-sm);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.2;
   letter-spacing: 0.04em;
 }
@@ -83,7 +83,7 @@
 .typo-headline-lg {
   font-family: var(--font-serif);
   font-size: var(--type-headline-lg);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.3;
   letter-spacing: 0.08em;
 }
@@ -91,7 +91,7 @@
 .typo-headline-md {
   font-family: var(--font-serif);
   font-size: var(--type-headline-md);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.3;
   letter-spacing: 0.05em;
 }
@@ -99,7 +99,7 @@
 .typo-headline-sm {
   font-family: var(--font-serif);
   font-size: var(--type-headline-sm);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.3;
   letter-spacing: 0.05em;
 }
@@ -114,7 +114,7 @@
 .typo-title-xl {
   font-family: var(--font-serif);
   font-size: var(--type-title-xl);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.3;
   letter-spacing: 0;
 }
@@ -122,7 +122,7 @@
 .typo-title-lg {
   font-family: var(--font-serif);
   font-size: var(--type-title-lg);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.3;
   letter-spacing: 0;
 }
@@ -130,7 +130,7 @@
 .typo-title-md {
   font-family: var(--font-serif);
   font-size: var(--type-title-md);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.4;
   letter-spacing: 0;
 }
@@ -138,7 +138,7 @@
 .typo-title-sm {
   font-family: var(--font-serif);
   font-size: var(--type-title-sm);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.4;
   letter-spacing: 0;
 }
@@ -160,7 +160,7 @@
 .typo-body-lg-em {
   font-family: var(--font-sans);
   font-size: var(--type-body-lg);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.6;
   letter-spacing: 0;
 }
@@ -176,7 +176,7 @@
 .typo-body-md-em {
   font-family: var(--font-sans);
   font-size: var(--type-body-md);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.6;
   letter-spacing: 0;
 }
@@ -192,7 +192,7 @@
 .typo-body-sm-em {
   font-family: var(--font-sans);
   font-size: var(--type-body-sm);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.6;
   letter-spacing: 0;
 }
@@ -208,7 +208,7 @@
 .typo-body-xs-em {
   font-family: var(--font-sans);
   font-size: var(--type-body-xs);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.6;
   letter-spacing: 0;
 }

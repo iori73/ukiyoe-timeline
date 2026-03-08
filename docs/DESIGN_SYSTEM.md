@@ -297,54 +297,56 @@ font-size: 18px;                   /* NG */
 
 | カテゴリ | フォント | 役割 | weight |
 |----------|----------|------|--------|
-| **display** | serif | Hero / ページレベル見出し | 400（em: 700） |
-| **headline** | serif | セクション見出し | 600 |
-| **title** | serif | カード / コンポーネント見出し | 700 |
-| **body** | sans | 本文 / 説明文 | 300（em: 600） |
+| **display** | serif | Hero / ページレベル見出し | 400（em: 600） |
+| **headline** | serif | セクション見出し | 500 |
+| **title** | serif | カード / コンポーネント見出し | 600 |
+| **body** | sans | 本文 / 説明文 | 300（em: 500） |
 | **label** | sans | ラベル / メタデータ | 500 |
 
+**font-weight スケール（最大 600）**: 300（light）→ 400（regular）→ 500（medium）→ 600（semibold, max）。
 headline と title は同じサイズステップを共有しつつ、weight と letter-spacing で役割を区別する。
+headline（500）と label（500）は同じ weight だが、font-family（serif vs sans）とサイズで区別する。
 
 #### display（`--font-serif`）— fluid
 
 | スタイル | CSS クラス | サイズ (375px → 1200px) | weight | line-height | letter-spacing |
 |----------|-----------|------------------------|--------|-------------|----------------|
 | display/large | `.typo-display-lg` | 36px → 92px | 400 | 1.3 | 0.05em |
-| display/large-emphasized | `.typo-display-lg-em` | 36px → 92px | 700 | 1.3 | 0.05em |
+| display/large-emphasized | `.typo-display-lg-em` | 36px → 92px | 600 | 1.3 | 0.05em |
 | display/medium | `.typo-display-md` | 32px → 72px | 400 | 1.2 | 0.04em |
-| display/medium-emphasized | `.typo-display-md-em` | 32px → 72px | 700 | 1.2 | 0.04em |
+| display/medium-emphasized | `.typo-display-md-em` | 32px → 72px | 600 | 1.2 | 0.04em |
 | display/small | `.typo-display-sm` | 28px → 55px | 400 | 1.2 | 0.04em |
-| display/small-emphasized | `.typo-display-sm-em` | 28px → 55px | 700 | 1.2 | 0.04em |
+| display/small-emphasized | `.typo-display-sm-em` | 28px → 55px | 600 | 1.2 | 0.04em |
 
 #### headline（`--font-serif`）— fluid
 
 | スタイル | CSS クラス | サイズ (375px → 1200px) | weight | line-height | letter-spacing |
 |----------|-----------|------------------------|--------|-------------|----------------|
-| headline/large | `.typo-headline-lg` | 24px → 46px | 600 | 1.3 | 0.08em |
-| headline/medium | `.typo-headline-md` | 22px → 36px | 600 | 1.3 | 0.05em |
-| headline/small | `.typo-headline-sm` | 20px → 28px | 600 | 1.3 | 0.05em |
+| headline/large | `.typo-headline-lg` | 24px → 46px | 500 | 1.3 | 0.08em |
+| headline/medium | `.typo-headline-md` | 22px → 36px | 500 | 1.3 | 0.05em |
+| headline/small | `.typo-headline-sm` | 20px → 28px | 500 | 1.3 | 0.05em |
 
 #### title（`--font-serif`）— fluid
 
 | スタイル | CSS クラス | サイズ (375px → 1200px) | weight | line-height | letter-spacing |
 |----------|-----------|------------------------|--------|-------------|----------------|
-| title/x-large | `.typo-title-xl` | 22px → 36px | 700 | 1.3 | 0 |
-| title/large | `.typo-title-lg` | 20px → 28px | 700 | 1.3 | 0 |
-| title/medium | `.typo-title-md` | 18px → 23px | 700 | 1.4 | 0 |
-| title/small | `.typo-title-sm` | 16px → 20px | 700 | 1.4 | 0 |
+| title/x-large | `.typo-title-xl` | 22px → 36px | 600 | 1.3 | 0 |
+| title/large | `.typo-title-lg` | 20px → 28px | 600 | 1.3 | 0 |
+| title/medium | `.typo-title-md` | 18px → 23px | 600 | 1.4 | 0 |
+| title/small | `.typo-title-sm` | 16px → 20px | 600 | 1.4 | 0 |
 
 #### body（`--font-sans`）— modest fluid / fixed
 
 | スタイル | CSS クラス | サイズ (375px → 1200px) | weight | line-height | letter-spacing |
 |----------|-----------|------------------------|--------|-------------|----------------|
 | body/large | `.typo-body-lg` | 18px → 20px | 300 | 1.6 | 0 |
-| body/large-emphasized | `.typo-body-lg-em` | 18px → 20px | 600 | 1.6 | 0 |
+| body/large-emphasized | `.typo-body-lg-em` | 18px → 20px | 500 | 1.6 | 0 |
 | body/medium | `.typo-body-md` | 16px → 18px | 300 | 1.6 | 0 |
-| body/medium-emphasized | `.typo-body-md-em` | 16px → 18px | 600 | 1.6 | 0 |
+| body/medium-emphasized | `.typo-body-md-em` | 16px → 18px | 500 | 1.6 | 0 |
 | body/small | `.typo-body-sm` | 16px (fixed) | 300 | 1.6 | 0 |
-| body/small-emphasized | `.typo-body-sm-em` | 16px (fixed) | 600 | 1.6 | 0 |
+| body/small-emphasized | `.typo-body-sm-em` | 16px (fixed) | 500 | 1.6 | 0 |
 | body/x-small | `.typo-body-xs` | 14px (fixed) | 300 | 1.6 | 0 |
-| body/x-small-emphasized | `.typo-body-xs-em` | 14px (fixed) | 600 | 1.6 | 0 |
+| body/x-small-emphasized | `.typo-body-xs-em` | 14px (fixed) | 500 | 1.6 | 0 |
 
 #### label（`--font-sans`）— fixed
 

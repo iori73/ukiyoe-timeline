@@ -26,7 +26,7 @@
   font-weight: 400;
   font-size: var(--type-headline-sm);
   color: rgba(255, 255, 255, 0.85);
-  letter-spacing: 0.15em;
+  letter-spacing: var(--tracking-wider);
   margin: 0 0 var(--space-xs);
 }
 

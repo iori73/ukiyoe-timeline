@@ -80,7 +80,7 @@
 }
 
 .timeline-error p:first-child {
-  font-weight: 600;
+  font-weight: 500;
   color: var(--beni-iro);
 }
 
@@ -212,7 +212,7 @@
 
 .timeline-fixed-panel .timeline-section__date-dash {
   font-family: var(--font-serif);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--type-body-sm);
   color: white;
   line-height: 1;
@@ -221,7 +221,7 @@
 .timeline-fixed-panel .timeline-section__date-start,
 .timeline-fixed-panel .timeline-section__date-end {
   font-family: var(--font-serif);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--type-body-md);
   color: white;
   line-height: 1;
