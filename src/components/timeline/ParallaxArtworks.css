@@ -126,7 +126,7 @@
 
 .parallax-artwork__title {
   font-family: var(--font-serif);
-  font-size: var(--type-title-xl);
+  font-size: var(--type-title-lg);
   font-weight: 500;
   color: rgba(245, 240, 230, 1);
   line-height: 1.3;
