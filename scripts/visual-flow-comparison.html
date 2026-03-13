@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visual Flow Comparison: Layer Animation Graphic</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Helvetica Neue',Helvetica,sans-serif;
+    background:#f8f8f8;color:#1a1a1a;
+    padding:40px 24px;
+    line-height:1.5;
+  }
+  h1{font-size:28px;font-weight:500;margin-bottom:8px}
+  .subtitle{font-size:16px;color:#71717a;margin-bottom:48px}
+  h2{font-size:22px;font-weight:500;margin-bottom:16px}
+  .section{margin-bottom:64px}
+
+  .comparison{
+    display:grid;grid-template-columns:1fr 1fr;gap:48px;
+    max-width:1400px;margin:0 auto;
+  }
+  .panel{
+    background:#fff;border-radius:12px;padding:32px;
+    border:1px solid #e4e4e7;
+  }
+  .panel.problem{border-color:#fca5a5}
+  .panel.solution{border-color:#86efac}
+  .panel-badge{
+    display:inline-block;font-size:11px;font-weight:600;
+    padding:3px 10px;border-radius:999px;margin-bottom:16px;
+    text-transform:uppercase;letter-spacing:.5px;
+  }
+  .panel.problem .panel-badge{background:#fef2f2;color:#dc2626}
+  .panel.solution .panel-badge{background:#f0fdf4;color:#16a34a}
+  .panel h3{font-size:18px;font-weight:500;margin-bottom:20px}
+
+  /* Card grid */
+  .card-grid{position:relative}
+  .card-row{
+    display:flex;gap:12px;margin-bottom:12px;
+  }
+  .card-row.centered{justify-content:center}
+  .card-row.left-aligned{justify-content:flex-start}
+
+  .card{
+    width:120px;height:160px;
+    border:2px solid rgba(0,0,0,.15);
+    border-radius:4px;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    font-size:11px;color:#52525b;
+    text-align:center;padding:8px;
+    position:relative;
+    background:#fff;
+  }
+  .card.ink{background:#f9f9f9;border-color:rgba(0,0,0,.4)}
+  .card.green{background:#f0f5eb}
+  .card.red{background:#faf0f0}
+  .card.paper{background:#f5f0e0}
+  .card.composite{background:#fff;border-color:rgba(0,0,0,.3)}
+  .card.final{background:#f5f0e0;border-color:rgba(0,0,0,.5);border-width:3px}
+
+  .card-icon{font-size:28px;margin-bottom:6px;opacity:.7}
+  .card-label{font-size:10px;font-weight:500;line-height:1.3}
+
+  /* Step number */
+  .step-num{
+    position:absolute;top:-10px;left:-10px;
+    width:22px;height:22px;
+    background:#0a0a0a;color:#fff;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:600;
+  }
+  .step-num.highlight{background:#16a34a}
+
+  /* Arrows */
+  .arrow-container{
+    display:flex;align-items:center;justify-content:center;
+    width:28px;
+    color:#a1a1aa;font-size:18px;
+  }
+  .arrow-down{
+    display:flex;align-items:center;justify-content:flex-start;
+    height:24px;padding-left:52px;
+    color:#a1a1aa;font-size:16px;
+  }
+
+  /* Serpentine arrows for current layout */
+  .serp-arrow{
+    position:absolute;
+    color:rgba(220,38,38,.4);font-size:32px;
+    font-weight:300;
+  }
+
+  /* Issue callouts */
+  .issue{
+    display:flex;align-items:flex-start;gap:8px;
+    margin-top:16px;padding:12px;
+    background:#fef2f2;border-radius:8px;
+    font-size:13px;line-height:1.5;
+  }
+  .issue-icon{color:#dc2626;font-size:16px;flex-shrink:0;margin-top:1px}
+  .benefit{
+    display:flex;align-items:flex-start;gap:8px;
+    margin-top:16px;padding:12px;
+    background:#f0fdf4;border-radius:8px;
+    font-size:13px;line-height:1.5;
+  }
+  .benefit-icon{color:#16a34a;font-size:16px;flex-shrink:0;margin-top:1px}
+
+  /* Plus sign between layers */
+  .plus{
+    display:flex;align-items:center;justify-content:center;
+    width:20px;color:#a1a1aa;font-size:16px;font-weight:300;
+  }
+
+  /* Color label */
+  .color-label{
+    display:inline-flex;align-items:center;gap:4px;
+    font-size:10px;font-weight:500;
+    margin-top:4px;
+  }
+  .color-dot{width:8px;height:8px;border-radius:2px}
+  .color-dot.g{background:#7a8b5a}
+  .color-dot.r{background:#b85b5b}
+  .color-dot.p{background:#d4c9a8}
+
+  /* Full-width option panels */
+  .options{
+    display:grid;grid-template-columns:1fr 1fr;gap:32px;
+    max-width:1400px;margin:0 auto;
+  }
+  .option-panel{
+    background:#fff;border-radius:12px;padding:32px;
+    border:2px solid #e4e4e7;
+  }
+  .option-panel.recommended{border-color:#3b82f6}
+  .option-panel h3{font-size:16px;font-weight:500;margin-bottom:16px}
+  .option-badge{
+    display:inline-block;font-size:10px;font-weight:600;
+    padding:2px 8px;border-radius:999px;margin-left:8px;
+    background:#dbeafe;color:#2563eb;
+  }
+
+  .note{
+    font-size:13px;color:#71717a;line-height:1.6;
+    margin-top:24px;padding:16px;
+    background:#fafafa;border-radius:8px;
+    border:1px solid #e4e4e7;
+  }
+  .note strong{color:#0a0a0a}
+
+  .ref{
+    font-size:12px;color:#a1a1aa;margin-top:32px;
+    padding-top:16px;border-top:1px solid #e4e4e7;
+  }
+  .ref a{color:#71717a}
+</style>
+</head>
+<body>
+
+<h1>Benizuri-e Layer Graphic: Visual Flow Comparison</h1>
+<p class="subtitle">NN/g アイトラッキング研究に基づくレイアウト改善案</p>
+
+<!-- ===== SIDE-BY-SIDE COMPARISON ===== -->
+<div class="section">
+  <h2>Current vs. Recommended</h2>
+  <div class="comparison">
+
+    <!-- CURRENT LAYOUT -->
+    <div class="panel problem">
+      <div class="panel-badge">Current: Serpentine</div>
+      <h3>現在のレイアウト（蛇行パターン）</h3>
+
+      <div class="card-grid">
+        <!-- Row 1: left-aligned, 3 items -->
+        <div class="card-row left-aligned">
+          <div class="card ink">
+            <div class="card-icon">墨</div>
+            <div class="card-label">Ink drawing</div>
+          </div>
+          <div class="arrow-container">→</div>
+          <div class="card green">
+            <div class="card-icon">緑</div>
+            <div class="card-label">Green layer</div>
+          </div>
+          <div class="card composite">
+            <div class="card-icon">墨+緑</div>
+            <div class="card-label">Ink + Green</div>
+          </div>
+        </div>
+
+        <!-- Serpentine arrow: right → center (BAD) -->
+        <div style="display:flex;justify-content:center;height:20px;align-items:center">
+          <span style="color:rgba(220,38,38,.35);font-size:14px">↙ 蛇行（視線が逆行）</span>
+        </div>
+
+        <!-- Row 2: CENTERED, 2 items -->
+        <div class="card-row centered">
+          <div class="card red">
+            <div class="card-icon">紅</div>
+            <div class="card-label">Red layer</div>
+          </div>
+          <div class="card composite">
+            <div class="card-icon">墨+緑+紅</div>
+            <div class="card-label">All colors</div>
+          </div>
+        </div>
+
+        <!-- Serpentine arrow: center → center (BAD) -->
+        <div style="display:flex;justify-content:center;height:20px;align-items:center">
+          <span style="color:rgba(220,38,38,.35);font-size:14px">↙ 蛇行（視線が逆行）</span>
+        </div>
+
+        <!-- Row 3: CENTERED, 2 items -->
+        <div class="card-row centered">
+          <div class="card paper">
+            <div class="card-icon">紙</div>
+            <div class="card-label">Paper/BG</div>
+          </div>
+          <div class="card final">
+            <div class="card-icon">完成</div>
+            <div class="card-label">Final print</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="issue">
+        <span class="issue-icon">!</span>
+        <div>
+          <strong>蛇行パターン:</strong> 行間の接続が右→左に逆行し、自然な読み方向（L→R）に反する。NN/g 研究によりスキャン効率が低下。
+        </div>
+      </div>
+      <div class="issue">
+        <span class="issue-icon">!</span>
+        <div>
+          <strong>中央揃え:</strong> Row 2-3 が中央に寄っているため、左端の揃いが崩れ、視線の着地点がバラバラ。
+        </div>
+      </div>
+      <div class="issue">
+        <span class="issue-icon">!</span>
+        <div>
+          <strong>矢印依存:</strong> 半透明の矢印がないと順序がわからない = レイアウト自体が順序を語っていない。
+        </div>
+      </div>
+    </div>
+
+    <!-- RECOMMENDED LAYOUT -->
+    <div class="panel solution">
+      <div class="panel-badge">Recommended: Z-pattern</div>
+      <h3>改善案 C: Z-pattern 左揃えグリッド</h3>
+
+      <div class="card-grid">
+        <!-- Row 1: left-aligned, 3 items with step numbers -->
+        <div class="card-row left-aligned">
+          <div class="card ink">
+            <div class="step-num highlight">1</div>
+            <div class="card-icon">墨</div>
+            <div class="card-label">Ink drawing</div>
+          </div>
+          <div class="plus">+</div>
+          <div class="card green">
+            <div class="step-num highlight">2</div>
+            <div class="card-icon">緑</div>
+            <div class="card-label">Green layer</div>
+            <div class="color-label"><span class="color-dot g"></span>+ green</div>
+          </div>
+          <div class="plus">=</div>
+          <div class="card composite">
+            <div class="step-num highlight">3</div>
+            <div class="card-icon">墨+緑</div>
+            <div class="card-label">Ink + Green</div>
+          </div>
+        </div>
+
+        <!-- Clean down-arrow (left-aligned) -->
+        <div class="arrow-down">↓</div>
+
+        <!-- Row 2: LEFT-ALIGNED, same structure -->
+        <div class="card-row left-aligned">
+          <div class="card red">
+            <div class="step-num highlight">4</div>
+            <div class="card-icon">紅</div>
+            <div class="card-label">Red layer</div>
+            <div class="color-label"><span class="color-dot r"></span>+ red</div>
+          </div>
+          <div class="plus">=</div>
+          <div class="card composite">
+            <div class="step-num highlight">5</div>
+            <div class="card-icon">全色</div>
+            <div class="card-label">All colors</div>
+          </div>
+          <div class="plus">+</div>
+          <div class="card paper">
+            <div class="step-num highlight">6</div>
+            <div class="card-icon">紙</div>
+            <div class="card-label">Paper/BG</div>
+            <div class="color-label"><span class="color-dot p"></span>+ paper</div>
+          </div>
+          <div class="plus">=</div>
+          <div class="card final">
+            <div class="step-num highlight">7</div>
+            <div class="card-icon">完成</div>
+            <div class="card-label">Final print</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="benefit">
+        <span class="benefit-icon">&#10003;</span>
+        <div>
+          <strong>統一された読み方向:</strong> 両行とも L→R。行間は左端に戻るだけ（テキストを読むのと同じ）。
+        </div>
+      </div>
+      <div class="benefit">
+        <span class="benefit-icon">&#10003;</span>
+        <div>
+          <strong>番号で順序が自明:</strong> 矢印なしでも 1→2→3→...→7 が伝わる。
+        </div>
+      </div>
+      <div class="benefit">
+        <span class="benefit-icon">&#10003;</span>
+        <div>
+          <strong>差分ラベル:</strong> 各ステップで「+ green」「+ red」「+ paper」が何が追加されたかを即座に伝える。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ALTERNATIVE OPTIONS ===== -->
+<div class="section">
+  <h2>Alternative Options</h2>
+  <div class="options">
+
+    <!-- Option A: Single row -->
+    <div class="option-panel">
+      <h3>案 A: 横一列ストリップ</h3>
+      <div class="card-grid">
+        <div class="card-row left-aligned" style="flex-wrap:nowrap">
+          <div class="card ink" style="width:80px;height:108px;font-size:9px">
+            <div class="step-num" style="width:16px;height:16px;font-size:9px;top:-6px;left:-6px">1</div>
+            <div style="font-size:18px;opacity:.7">墨</div>
+            <div class="card-label">Ink</div>
+          </div>
+          <div class="plus" style="width:14px;font-size:12px">→</div>
+          <div class="card composite" style="width:80px;height:108px;font-size:9px">
+            <div class="step-num" style="width:16px;height:16px;font-size:9px;top:-6px;left:-6px">2</div>
+            <div style="font-size:18px;opacity:.7">墨+緑</div>
+            <div class="card-label">+Green</div>
+          </div>
+          <div class="plus" style="width:14px;font-size:12px">→</div>
+          <div class="card composite" style="width:80px;height:108px;font-size:9px">
+            <div class="step-num" style="width:16px;height:16px;font-size:9px;top:-6px;left:-6px">3</div>
+            <div style="font-size:18px;opacity:.7">全色</div>
+            <div class="card-label">+Red</div>
+          </div>
+          <div class="plus" style="width:14px;font-size:12px">→</div>
+          <div class="card final" style="width:80px;height:108px;font-size:9px">
+            <div class="step-num" style="width:16px;height:16px;font-size:9px;top:-6px;left:-6px">4</div>
+            <div style="font-size:18px;opacity:.7">完成</div>
+            <div class="card-label">Final</div>
+          </div>
+        </div>
+      </div>
+      <div class="note">
+        <strong>Pros:</strong> 読み方向が1つだけ。最もシンプル。<br>
+        <strong>Cons:</strong> 画像が小さくなり詳細が見えにくい。個別レイヤーを省略する必要あり。
+      </div>
+    </div>
+
+    <!-- Option D: Progressive composite only -->
+    <div class="option-panel recommended">
+      <h3>案 A': 累積合成のみ（4枚）<span class="option-badge">Simple &amp; Clean</span></h3>
+      <div class="card-grid">
+        <div class="card-row left-aligned" style="flex-wrap:nowrap">
+          <div class="card ink" style="width:100px;height:134px">
+            <div class="step-num highlight" style="width:18px;height:18px;font-size:10px;top:-8px;left:-8px">1</div>
+            <div style="font-size:22px;opacity:.7">墨</div>
+            <div class="card-label">Ink only</div>
+          </div>
+          <div class="plus">→</div>
+          <div class="card composite" style="width:100px;height:134px">
+            <div class="step-num highlight" style="width:18px;height:18px;font-size:10px;top:-8px;left:-8px">2</div>
+            <div style="font-size:22px;opacity:.7">墨+緑</div>
+            <div class="card-label">+ Green</div>
+            <div class="color-label"><span class="color-dot g"></span></div>
+          </div>
+          <div class="plus">→</div>
+          <div class="card composite" style="width:100px;height:134px">
+            <div class="step-num highlight" style="width:18px;height:18px;font-size:10px;top:-8px;left:-8px">3</div>
+            <div style="font-size:22px;opacity:.7">全色</div>
+            <div class="card-label">+ Red</div>
+            <div class="color-label"><span class="color-dot r"></span></div>
+          </div>
+          <div class="plus">→</div>
+          <div class="card final" style="width:100px;height:134px">
+            <div class="step-num highlight" style="width:18px;height:18px;font-size:10px;top:-8px;left:-8px">4</div>
+            <div style="font-size:22px;opacity:.7">完成</div>
+            <div class="card-label">On paper</div>
+            <div class="color-label"><span class="color-dot p"></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="note">
+        <strong>Pros:</strong> 最もクリア。色が「増えていく」プロセスが一目瞭然。画像サイズも十分。<br>
+        <strong>Cons:</strong> 個別レイヤー（緑だけ、紅だけ）を見せられない。<br>
+        <strong>Recommendation:</strong> ポートフォリオの読者にとって重要なのは「色が重なっていくプロセス」であり、個別レイヤーの詳細ではない。4枚の累積合成で十分に伝わる。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DESIGN TIPS ===== -->
+<div class="section">
+  <h2>Figma での実装ガイド</h2>
+  <div style="max-width:700px">
+    <div class="note" style="margin-top:0">
+      <p><strong>1. 左揃えに統一:</strong> 全ての行を左端から開始する。中央揃えを避ける。</p>
+      <p style="margin-top:8px"><strong>2. ステップ番号を追加:</strong> 各画像の左上に小さな丸ナンバー（20x20px, 背景 #0a0a0a, 白文字）を配置。</p>
+      <p style="margin-top:8px"><strong>3. 差分ラベル:</strong> 新しく追加された色を示す小さなラベル（「+ green」「+ red」）を画像下に配置。色スウォッチ付き。</p>
+      <p style="margin-top:8px"><strong>4. 矢印の扱い:</strong> 行内は番号で順序が伝わるので矢印不要。行間に1本だけ「↓」を左端に置くのはOK。蛇行矢印は削除。</p>
+      <p style="margin-top:8px"><strong>5. 最初と最後を強調:</strong> 最初の画像に薄いボーダー、最後の画像に太いボーダーまたは「Final」ラベルを付けて、始点と終点を視覚的に区別する。</p>
+    </div>
+  </div>
+</div>
+
+<div class="ref">
+  Reference: <a href="https://www.nngroup.com/articles/zigzag-page-layout/" target="_blank">NN/g: Zigzag Image-Text Layouts Make Scanning Less Efficient</a>
+</div>
+
+</body>
+</html>

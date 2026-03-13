@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+<title>Ukiyoe: Interactive Cultural Exhibition - Portfolio</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+    color:#0a0a0a;
+    background:#fff;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* Header */
+  .header{
+    position:sticky;top:0;z-index:100;
+    background:#fff;
+    border-bottom:1px solid #e4e4e7;
+    height:72px;display:flex;align-items:center;
+    padding:0 24px;
+  }
+  .header-logo{
+    width:48px;height:48px;
+    background:#0a0a0a;border-radius:4px;
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;font-weight:600;font-size:14px;
+  }
+  .header-nav{
+    margin-left:auto;display:flex;gap:48px;align-items:center;
+  }
+  .header-nav a{
+    font-size:18px;line-height:30px;color:#0a0a0a;text-decoration:none;
+  }
+  .header-nav a:hover{opacity:.6}
+  .lang-switch{display:flex;gap:8px;align-items:center;color:#a1a1aa;font-size:18px}
+  .lang-switch .active{color:#0a0a0a;font-weight:500}
+
+  /* Hero */
+  .hero{
+    width:100%;max-width:1104px;margin:0 auto;
+    aspect-ratio:1104/621;
+    background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);
+    border-radius:8px;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;font-size:14px;opacity:.85;
+  }
+  .hero-placeholder{text-align:center;opacity:.5}
+
+  /* Project Info */
+  .project-info{
+    max-width:1028px;margin:48px auto 0;
+    padding:0 38px;
+  }
+  .project-title-row{
+    display:flex;justify-content:space-between;align-items:flex-start;
+  }
+  .project-title{
+    font-size:40px;font-weight:500;line-height:48px;letter-spacing:-0.5px;
+  }
+  .project-subtitle{
+    font-size:18px;line-height:30px;color:#52525b;margin-top:8px;
+  }
+  .go-to-site{
+    display:inline-flex;align-items:center;justify-content:center;
+    border:1px solid #d4d4d8;border-radius:999px;
+    padding:12px 24px;font-size:18px;color:#0a0a0a;text-decoration:none;
+    white-space:nowrap;
+  }
+  .go-to-site:hover{background:#f4f4f5}
+  .meta-row{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
+    margin-top:32px;
+  }
+  .meta-label{font-size:14px;line-height:21px;color:#71717a;font-weight:500;text-transform:uppercase;letter-spacing:.5px}
+  .meta-value{font-size:18px;line-height:29px;color:#0a0a0a;margin-top:8px}
+
+  /* Main Layout */
+  .main-layout{
+    max-width:1046px;margin:48px auto 0;
+    padding:0 0 0 0;
+    display:grid;
+    grid-template-columns:883px 1fr;
+    gap:0;
+  }
+
+  /* Sidebar */
+  .sidebar{
+    position:sticky;top:88px;
+    align-self:start;
+    padding:8px 8px 8px 0;
+  }
+  .sidebar a{
+    display:block;
+    font-size:16px;line-height:26px;
+    color:#a1a1aa;text-decoration:none;
+    padding:6px 0;
+    transition:color .15s;
+  }
+  .sidebar a:hover,.sidebar a.active{color:#0a0a0a}
+  .sidebar a.active{font-weight:500}
+  .sidebar .new-badge{
+    display:inline-block;
+    background:#ef4444;color:#fff;
+    font-size:10px;font-weight:600;
+    padding:1px 5px;border-radius:3px;
+    margin-left:6px;vertical-align:middle;
+    text-transform:uppercase;letter-spacing:.5px;
+  }
+  .sidebar .updated-badge{
+    display:inline-block;
+    background:#3b82f6;color:#fff;
+    font-size:10px;font-weight:600;
+    padding:1px 5px;border-radius:3px;
+    margin-left:6px;vertical-align:middle;
+    text-transform:uppercase;letter-spacing:.5px;
+  }
+
+  /* Content Sections */
+  .content-area{min-width:0}
+
+  section{
+    border-top:1px solid #d4d4d8;
+    padding:33px 0 40px;
+  }
+  section:first-child{border-top:none}
+
+  h2{
+    font-size:40px;font-weight:500;line-height:48px;
+    margin-bottom:27px;letter-spacing:-0.3px;
+  }
+  h3{
+    font-size:32px;font-weight:500;line-height:38.4px;
+    margin-bottom:16px;letter-spacing:-0.2px;
+  }
+  .section-intro{
+    font-size:18px;line-height:28.8px;letter-spacing:.2px;
+    color:#0a0a0a;margin-bottom:24px;
+  }
+  .subsection{margin-top:40px}
+  .subsection p{
+    font-size:18px;line-height:28.8px;letter-spacing:.2px;
+    margin-bottom:16px;
+  }
+  .subsection p:last-child{margin-bottom:0}
+
+  .bold-label{font-weight:500}
+
+  /* Image placeholders */
+  .img-placeholder{
+    width:100%;
+    background:#f4f4f5;
+    border-radius:4px;
+    display:flex;align-items:center;justify-content:center;
+    color:#a1a1aa;font-size:13px;
+    margin:24px 0;
+    min-height:200px;
+  }
+  .img-placeholder.tall{min-height:500px}
+  .img-placeholder.medium{min-height:350px}
+
+  /* Video placeholder */
+  .video-placeholder{
+    width:100%;
+    aspect-ratio:16/9;
+    background:#18181b;
+    border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    color:#71717a;font-size:14px;
+    margin:24px 0;
+    position:relative;
+  }
+  .video-placeholder .play-btn{
+    width:64px;height:64px;
+    background:rgba(255,255,255,.15);
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    position:absolute;
+  }
+  .video-placeholder .play-btn::after{
+    content:'';
+    display:block;
+    width:0;height:0;
+    border-style:solid;
+    border-width:12px 0 12px 20px;
+    border-color:transparent transparent transparent rgba(255,255,255,.7);
+    margin-left:4px;
+  }
+  .video-placeholder span{
+    position:absolute;bottom:16px;
+    font-size:12px;color:#52525b;
+  }
+
+  /* GitHub link */
+  .github-link{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:18px;line-height:29px;color:#0a0a0a;
+    text-decoration:none;margin-top:24px;
+  }
+  .github-link:hover{text-decoration:underline}
+  .github-icon{
+    width:32px;height:32px;background:#0a0a0a;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .github-icon svg{width:18px;height:18px;fill:#fff}
+
+  /* Tech list */
+  .tech-item{margin-bottom:24px}
+  .tech-item .bold-label{
+    font-size:18px;line-height:28.8px;font-weight:500;
+    margin-bottom:8px;
+  }
+  .tech-item p{
+    font-size:18px;line-height:28.8px;letter-spacing:.2px;
+  }
+
+  /* Footer */
+  footer{
+    margin-top:64px;
+    border-top:1px solid #e4e4e7;
+    padding:32px 24px;
+  }
+  .footer-icons{
+    display:flex;gap:0;
+  }
+  .footer-icon{
+    width:40px;height:40px;
+    background:#e4e4e7;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    margin-right:24px;
+  }
+
+  /* Highlight changes */
+  .changed{
+    border-left:3px solid #3b82f6;
+    padding-left:16px;
+    margin-left:-19px;
+  }
+  .new-section{
+    border-left:3px solid #ef4444;
+    padding-left:16px;
+    margin-left:-19px;
+  }
+
+  /* Legend */
+  .legend{
+    position:fixed;bottom:24px;right:24px;
+    background:#fff;border:1px solid #d4d4d8;
+    border-radius:8px;padding:16px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+    font-size:13px;line-height:20px;
+    z-index:200;
+  }
+  .legend-item{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+  .legend-item:last-child{margin-bottom:0}
+  .legend-dot{width:12px;height:3px;border-radius:1px}
+  .legend-dot.blue{background:#3b82f6}
+  .legend-dot.red{background:#ef4444}
+  .legend-dot.gray{background:#d4d4d8}
+</style>
+</head>
+<body>
+
+<!-- Legend -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot blue"></div> Updated text</div>
+  <div class="legend-item"><div class="legend-dot red"></div> New section</div>
+  <div class="legend-item"><div class="legend-dot gray"></div> Unchanged</div>
+</div>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-logo">IK</div>
+  <nav class="header-nav">
+    <a href="#">Experiment</a>
+    <a href="#">About</a>
+    <a href="#">Blog</a>
+    <div class="lang-switch">
+      <span class="active">EN</span>
+      <span>|</span>
+      <span>JP</span>
+    </div>
+  </nav>
+</header>
+
+<!-- Hero -->
+<div style="padding:0 57.5px">
+  <div class="hero">
+    <div class="hero-placeholder">
+      [Hero Image: Ukiyoe Interactive Cultural Exhibition]<br>
+      1104 x 621
+    </div>
+  </div>
+</div>
+
+<!-- Project Info -->
+<div class="project-info">
+  <div class="project-title-row">
+    <div>
+      <h1 class="project-title">Ukiyoe: Interactive Cultural Exhibition</h1>
+      <p class="project-subtitle">Experiencing the evolution of woodblock printing techniques through interactive animation</p>
+    </div>
+    <a href="https://ukiyoe-timeline.vercel.app" class="go-to-site" target="_blank">Go to site</a>
+  </div>
+  <div class="meta-row">
+    <div>
+      <div class="meta-label">Timeline</div>
+      <div class="meta-value">Dec 2025 - Feb 2026</div>
+    </div>
+    <div>
+      <div class="meta-label">My Skills</div>
+      <div class="meta-value">UI, Interaction Design, Cultural Research</div>
+    </div>
+    <div>
+      <div class="meta-label">Type</div>
+      <div class="meta-value">Personal Project</div>
+    </div>
+    <div>
+      <div class="meta-label">Deliverables</div>
+      <div class="meta-value">Interactive Website</div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-layout" style="padding:0 0 0 57.5px">
+  <div class="content-area">
+
+    <!-- ==================== OVERVIEW (UPDATED) ==================== -->
+    <section id="overview">
+      <h2>Overview</h2>
+      <div class="changed">
+        <div class="subsection">
+          <p>A couple of years ago, I visited the ukiyoe gallery at the Tokyo National Museum. I had seen woodblock prints before in textbooks and online, but standing in front of the real thing was different. The paper had texture. The pigments had depth. I was looking at prints of Tokyo landscapes: snow falling on Shinagawa, Mount Fuji visible over low rooftops, rivers that no longer look the way they do today. The same city, seen through the eyes and craft of people who lived here centuries ago. That stuck with me. When AI tools matured enough to support complex front-end work, I saw an opportunity: the layered printing process that makes ukiyoe unique could be recreated as an interactive web experience.</p>
+          <p>The site visualizes how these printing techniques evolved, from monochrome sumizuri-e to two-color benizuri-e to full-color nishiki-e, using scroll-driven animations that stack color layers one by one, just as a printer would have done by hand.</p>
+        </div>
+      </div>
+      <a href="https://github.com/iori73/ukiyoe" class="github-link" target="_blank">
+        <div class="github-icon"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></div>
+        <span>iori73 / ukiyoe</span>
+      </a>
+    </section>
+
+    <!-- ==================== RESEARCH & DISCOVERY (UNCHANGED) ==================== -->
+    <section id="research">
+      <h2>Research &amp; Discovery</h2>
+      <p class="section-intro">Before writing a single line of code, I spent significant time understanding the history and mechanics of ukiyoe printing. This research phase fundamentally shaped every design decision that followed.</p>
+
+      <div class="subsection">
+        <h3>Cultural Immersion</h3>
+        <p>I studied over 25 reference sites including museum digital archives, printmaking workshop documentation, academic resources, and traditional craft educational content. This immersion helped me understand not just the visual characteristics of ukiyoe, but the cultural context in which these prints were created and consumed.</p>
+        <div class="img-placeholder medium">[25+ reference sites grid]</div>
+      </div>
+
+      <div class="subsection">
+        <h3>Color Extraction &amp; Analysis</h3>
+        <div class="changed">
+          <p>Using Python scripts with PIL image quantization, I extracted dominant colors from representative ukiyoe prints across 9 historical periods, sourced from the MET Open Access collection and Wikimedia Commons.</p>
+          <p>The raw hex values alone were not meaningful for comparison. Each era used different pigments, but comparing unstructured color lists across time periods was visually noisy. So I designed a normalization structure: 9 canonical color slots (ink black, crimson, gold, green, blue-gray, indigo, Prussian blue, mica gray, warm paper) arranged in fixed positions across all periods. Each era declares which slots are "active." Unused slots appear as ghosts, preserving their position.</p>
+          <p>The result: reading left to right, you can see how the available palette expanded from a single ink tone in 1670 to the full Prussian blue revolution of the 1800s. This structure powers the color proportion bars in the timeline gallery.</p>
+        </div>
+        <div class="img-placeholder">[Color extraction visuals + Proportion Bars]</div>
+      </div>
+
+      <div class="subsection">
+        <h3>Printing Process Study</h3>
+        <p>I studied the precise order in which colors were applied during the printing process. In nishiki-e, for example, a single print could require 10 or more separate woodblocks, each carrying a different color. Understanding this sequence was crucial for designing the layer-stacking animations on the top page, where each color layer appears in historically accurate order.</p>
+        <div class="img-placeholder">[Color layer separation images - moved from Color Extraction]</div>
+      </div>
+    </section>
+
+    <!-- ==================== DESIGN PROCESS (UNCHANGED) ==================== -->
+    <section id="design">
+      <h2>Design Process</h2>
+      <p class="section-intro">The design evolved through multiple iterations, not as a linear process but as a series of explorations, dead ends, and breakthroughs that were often sparked by research insights rather than design trends.</p>
+
+      <div class="subsection">
+        <h3>Top Page: Layer Animation</h3>
+        <p>The core concept was to let visitors experience how ukiyoe prints are made by watching color layers stack one by one. Finding the right visual format for this took several iterations.</p>
+        <div class="img-placeholder tall">[Top page design iterations]</div>
+        <p>I then converted these layers into SVG format and implemented scroll-driven animations using Framer Motion, where each layer's opacity and position responds to scroll progress.</p>
+        <p>A key design challenge was storytelling. Raw layer animations without context confuse first-time visitors. I added explanatory text sections between each technique era, using horizontal scroll to manage the vertical length of the page.</p>
+      </div>
+
+      <div class="subsection">
+        <h3>Timeline: Artwork Gallery</h3>
+        <p>The timeline page went through a fundamental architectural change. The initial design captured wheel events and converted vertical scrolling into horizontal movement. After two failed patches, I rebuilt the entire page using native vertical scroll with parallax effects.</p>
+        <div class="img-placeholder tall">[Timeline page design iterations]</div>
+        <p>A pivotal design insight came from considering how ukiyoe was consumed in its era: these were mass-produced prints bought casually by ordinary people, not museum pieces. This led to a more organic, browsable gallery layout rather than a formal exhibition-style grid.</p>
+      </div>
+
+      <div class="subsection">
+        <h3>Design Motifs: Kushi-Dango</h3>
+        <p>One recurring visual element across the site is a three-circle motif inspired by kushi-dango, a traditional Japanese sweet. The three circles represent the three major printing techniques, vertically stacked like the evolution from monochrome to full-color.</p>
+        <p>The motif first took shape during the top page design process, where I needed a compact visual symbol for navigation between technique eras.</p>
+        <div class="img-placeholder">[Kushi-dango motif design in Figma]</div>
+        <p>The kushi-dango pattern appears in four distinct forms across the site: as a navigation indicator on the top page, as section markers in the timeline, as decorative elements in transitions, and as the favicon. Each instance maintains the same three-circle structure while adapting to its specific context.</p>
+        <div class="img-placeholder">[Kushi-dango motif spread across site]</div>
+      </div>
+
+      <div class="subsection">
+        <h3>Color System &amp; Period Ratios</h3>
+        <p>The timeline gallery features a color proportion bar at the top of each period section, showing the estimated distribution of pigments used in that era.</p>
+        <p>Rather than pixel-level analysis of artworks, the color system uses 9 canonical slots that represent the major pigment categories available to Edo-period printers. Each period declares which slots are active, and unused slots appear as ghost segments. This structure makes the gradual expansion of available colors visually legible across the timeline.</p>
+        <div class="img-placeholder">[Color system proportion bars]</div>
+        <p>In the timeline gallery, each era displays a horizontal color bar where segment widths reflect estimated pigment ratios. Active colors appear at full opacity while unused slots remain as faint indicators, showing which pigments had not yet entered the printer's palette.</p>
+      </div>
+
+      <div class="subsection">
+        <h3>Logo Design</h3>
+        <p>The logo design explored the intersection of traditional Japanese visual motifs and modern brand identity. Starting from hanko (seal stamp) aesthetics, the design evolved through research into hanmoto (Edo-period publisher) marks, which were essentially the earliest form of Japanese brand logos, combining geometric simplicity with cultural meaning.</p>
+        <div class="img-placeholder medium">[Logo design process]</div>
+      </div>
+    </section>
+
+    <!-- ==================== HAND-COLORING (NEW SECTION) ==================== -->
+    <section id="hand-coloring">
+      <h2>Hand-Coloring the Layers</h2>
+      <div class="new-section">
+        <div class="subsection">
+          <p>The core animation on this site shows color layers stacking to form a complete print, just as a real Edo-period printer would have pressed each woodblock in sequence. To build this, I needed images of each individual color layer: the red pigment areas on one layer, green foliage on another, gold accents on a third.</p>
+          <p>These assets do not exist in any dataset. I tried AI image generation, but it could not produce layers with the color accuracy and edge precision required to align and stack convincingly. So I did what a printer would have done: I separated the colors by hand.</p>
+          <p>Using Adobe Fresco, I painted each layer individually, referencing the original prints to match pigment areas. This was the most time-consuming part of the entire project, and the part AI could not shortcut. The timelapse below shows the process.</p>
+        </div>
+        <div class="video-placeholder">
+          <div class="play-btn"></div>
+          <span>Adobe Fresco timelapse: hand-coloring process</span>
+        </div>
+        <div class="img-placeholder">[Completed layers: ink &rarr; crimson &rarr; green &rarr; indigo &rarr; final]</div>
+      </div>
+    </section>
+
+    <!-- ==================== AI COLLABORATION (UPDATED) ==================== -->
+    <section id="ai">
+      <h2>AI Can Create, But It Can't Craft</h2>
+      <div class="changed">
+        <div class="subsection">
+          <p>I estimated this project would take 2 to 3 weeks with AI handling the implementation. It took three months. Not because AI failed, but because the work that mattered most turned out to be the work AI could not do: hand-coloring layer assets, making cultural design judgments, and finding unexpected connections between historical research and interaction design.</p>
+          <p>AI was still central to execution. I used Claude and Cursor to prototype components, iterate on responsive layouts, and implement scroll-driven animations that would have taken much longer to build alone. But my process goes beyond prompting. I bring cultural context, historical references, and design intent into every interaction. When building the timeline's color system, I did not ask AI to "pick nice colors." I researched pigment histories, wrote Python scripts to extract colors from museum archives, then designed a canonical slot structure that makes 130 years of palette evolution legible at a glance. AI implemented each step faster. The story, the structure, and the judgment were mine.</p>
+          <p>AI can create, but it can't craft. Craft is the narrative behind a design choice, the sensitivity to a cultural context, the attention to a detail that nobody requested but that makes the whole thing feel intentional. The isometric layer animations, the kushi-dango navigation motif, the canonical color slots: each reflects a specific design decision rooted in genuine research, not generic output. What AI gave me was speed. What I brought was direction, a cultural story, and the conviction that the details matter.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TECHNICAL HIGHLIGHTS (UNCHANGED, AI REMOVED) ==================== -->
+    <section id="technical">
+      <h2>Technical Highlights</h2>
+      <p class="section-intro">The site is built with React 18 and Vite 6, using Framer Motion for scroll-driven animations and a custom CSS variable-based design system with historically-derived color tokens.</p>
+
+      <div class="subsection">
+        <div class="tech-item">
+          <div class="bold-label">Scroll-Driven Layer Animation</div>
+          <p>The top page uses Framer Motion's useScroll and useTransform hooks to orchestrate layer-stacking animations synchronized to scroll position. Each technique era (sumizuri-e, benizuri-e, nishiki-e) has its own set of hand-painted layers that stack progressively.</p>
+        </div>
+        <div class="tech-item">
+          <div class="bold-label">Parallax Artwork Gallery</div>
+          <p>The timeline page implements a native scroll-based parallax system where artwork images move at different speeds based on depth, creating visual depth. A fixed period panel and progress indicators help users understand their position across five historical eras.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== REFLECTION (UPDATED) ==================== -->
+    <section id="reflection">
+      <h2>Reflection</h2>
+
+      <div class="subsection">
+        <h3>What I Learned</h3>
+        <div class="changed">
+          <p>Standing in front of those prints at the Tokyo National Museum, I was moved by a simple fact: the same streets I walk today once looked entirely different, and someone centuries ago cared enough to carve that vision into wood, ink it, and press it onto paper, one color at a time. This project let me follow that same impulse through a different medium.</p>
+          <p>What I learned is that genuine curiosity about a subject is not separate from the design process. It is the design process. Understanding that nishiki-e required 10+ woodblocks shaped the animation sequence. Knowing that ukiyoe was mass-produced popular art, not gallery pieces, shaped the timeline's casual layout. Researching Edo-period publisher marks shaped the logo. Every design decision traced back to something I learned because I wanted to, not because a brief required it.</p>
+          <p>Cultural context is not decoration. It is the design foundation. And in an era where AI can generate layouts, write code, and produce visual assets at speed, what sets work apart is craft: the cultural story behind each decision, the hand-painted layers that no algorithm could shortcut, and the conviction that these details are what make a project feel genuinely made, not just generated.</p>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3>Future Directions</h3>
+        <p>The site is currently deployed on Vercel with ongoing optimization for mobile performance and image loading. Future enhancements may include additional artwork data, audio narration for accessibility, and deeper exploration of individual printing techniques through interactive demonstrations.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Sidebar Navigation -->
+  <div class="sidebar">
+    <a href="#overview" class="active">Overview <span class="updated-badge">Updated</span></a>
+    <a href="#research">Research</a>
+    <a href="#design">Design Process</a>
+    <a href="#hand-coloring">Hand-Coloring <span class="new-badge">New</span></a>
+    <a href="#ai">AI &amp; Craft <span class="updated-badge">Updated</span></a>
+    <a href="#technical">Technical</a>
+    <a href="#reflection">Reflection <span class="updated-badge">Updated</span></a>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div style="max-width:1219px;margin:0 auto">
+    <div class="footer-icons">
+      <div class="footer-icon" title="X / Twitter">X</div>
+      <div class="footer-icon" title="GitHub">GH</div>
+      <div class="footer-icon" title="note">N</div>
+      <div class="footer-icon" title="Medium">M</div>
+      <div class="footer-icon" title="LinkedIn">in</div>
+      <div class="footer-icon" title="Behance">Be</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const links = document.querySelectorAll('.sidebar a');
+  const sections = document.querySelectorAll('section[id]');
+  function onScroll() {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    links.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>
+</body>
+</html>

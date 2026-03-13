@@ -3,8 +3,8 @@
 # 機能完成後、セッション終了時に必ず更新してください。
 
 ## 現在のステータス
-- フェーズ: Phase 4 本番公開準備（実装完了、手動テスト待ち）+ 記事公開済み
-- 最終更新: 2026-02-24
+- フェーズ: Phase 4 本番公開準備（実装完了、手動テスト待ち）+ 記事公開済み + ポートフォリオ画像更新
+- 最終更新: 2026-03-13
 
 ## 完了済み
 
@@ -158,7 +158,35 @@
   - PeriodSlide/PeriodRow: title/description の MQ font-size オーバーライドをすべて削除
 - [x] `docs/DESIGN_SYSTEM.md` にセマンティックトークン一覧・階層比率契約・Do/Don't を追記
 
+### ポートフォリオ詳細ページ テキスト改訂（2026-03-10）
+- [x] 色抽出セクションのレビュー・仕様書作成（docs/specs/portfolio-color-section-revision.md）
+- [x] Proportion Bars ビジュアルの HTML 生成（scripts/portfolio-color-viz.html）
+- [x] ページ全体のナラティブ改訂仕様書作成（docs/specs/portfolio-narrative-revision.md）
+  - Overview: 東京国立博物館での体験 + AI進化がトリガーの2段階動機
+  - Color Extraction: 3段階パイプライン（Raw → Curated → Structured）
+  - Hand-Coloring the Layers: 新設セクション（Fresco timelapse 動画配置）
+  - AI Collaboration: "AI can create, but it can't craft" テーゼを独立セクション化
+  - Reflection: 博物館体験の回収 + craft テーゼの回収（円環構造）
+- [x] HTML プロトタイプ作成（scripts/portfolio-prototype.html）
+  - Figma レイアウト（Helvetica Neue, サイドバーナビ）を再現
+  - 改訂テキストを反映、変更箇所を青線/赤線でインジケート
+  - http://localhost:8787/portfolio-prototype.html で確認可能
+
+### ポートフォリオ画像更新（2026-03-13）
+- [x] Figma REST API エクスポートスクリプト作成（scripts/figma-export-images.mjs）
+- [x] figure 画像 5点を Figma 最新デザインでエクスポート・差し替え
+  - research-sites.png (1885KB, 1782×1272) — 25+ サイト 3D グリッド
+  - color-analysis.png (640KB, 1766×1125) — 浮世絵作品 + カラーバーチャート
+  - process-toppage.png (2492KB, 1766×3208) — Benizuri-e / Nishiki-e レイアウト
+  - process-timeline.png (2190KB, 1766×2388) — 3D アイソメトリック + ギャラリービュー
+  - process-logo.png (11KB, 1766×700) — ※Figma 側がまだプレースホルダー
+- [x] 団子画像を新しいリアルな 3 色団子に差し替え（dango-photo.png, 1024×1536）
+- [x] TimelineShowcase コンポーネントの Controls 位置を right: 32% に調整（PC幅 1280px 向け）
+- [x] IntersectionObserver の threshold を 0.65 + 1.2s の認知ディレイ追加（静止画先行表示）
+
 ## 次にやること
+- [ ] ポートフォリオ: process-logo.png を Figma でデザイン後に再エクスポート
+- [ ] ポートフォリオ: Fresco timelapse 動画を Figma/プロトタイプに埋め込み
 - [ ] Lighthouse 再測定で Round 2 の効果確認
 - [ ] iPhone 実機での最終確認（PRODUCTION_QA.md 参照）
 - [ ] 主要ブラウザ（Chrome, Firefox, Safari macOS, Safari iOS, Edge）での通しテスト

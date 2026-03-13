@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Color Proportion by Period — Portfolio Visual</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #fafafa;
+    color: #1a1a1a;
+    padding: 48px 40px;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+
+  .section { margin-bottom: 48px; }
+
+  /* ============================================================
+     Proportion Stacked Bars
+     Matches artwork-gallery__section-colors / __color-segment
+     ============================================================ */
+  .bars { display: flex; flex-direction: column; gap: 8px; }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .bar-year {
+    width: 48px;
+    font-size: 13px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: #555;
+    text-align: right;
+    padding-right: 14px;
+    flex-shrink: 0;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 24px;
+    display: flex;
+    border-radius: 0;
+    overflow: hidden;
+  }
+
+  .bar-segment {
+    height: 100%;
+    position: relative;
+    min-width: 2px;
+    border-right: 1px solid rgba(0, 0, 0, 0.15);
+  }
+
+  .bar-segment:last-child {
+    border-right: none;
+  }
+
+  .bar-label-area {
+    padding-left: 14px;
+    flex-shrink: 0;
+    width: 150px;
+  }
+
+  .bar-label-text {
+    font-size: 11px;
+    color: #999;
+    line-height: 1.3;
+  }
+
+  .bar-label-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #fff;
+    background: #c04545;
+    padding: 1px 5px;
+    border-radius: 2px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+
+  .bar-divider {
+    height: 1px;
+    background: #e8e8e8;
+    margin: 4px 0 4px 62px;
+  }
+
+  /* ============================================================
+     Color Legend
+     ============================================================ */
+  .color-legend {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e8e8e8;
+  }
+
+  .color-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    color: #888;
+  }
+
+  .color-legend-swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="section">
+  <div class="bars" id="barsBody"></div>
+  <div class="color-legend" id="colorLegend"></div>
+</div>
+
+<script>
+const CANONICAL_SLOTS = [
+  { id: 'sumi',   label_ja: '墨',     label_en: 'Ink Black',     hex: '#1a1a1a' },
+  { id: 'beni',   label_ja: '紅',     label_en: 'Crimson',       hex: '#c04545' },
+  { id: 'kin',    label_ja: '金/茶',  label_en: 'Gold',          hex: '#c9a050' },
+  { id: 'midori', label_ja: '緑',     label_en: 'Green',         hex: '#7a9060' },
+  { id: 'ao',     label_ja: '青灰',   label_en: 'Blue-gray',     hex: '#607888' },
+  { id: 'ai',     label_ja: '藍',     label_en: 'Indigo',        hex: '#2a3848' },
+  { id: 'bero',   label_ja: 'ベロ藍', label_en: 'Prussian Blue', hex: '#2d4f6e' },
+  { id: 'gin',    label_ja: '銀灰',   label_en: 'Mica Gray',     hex: '#b8b0a4' },
+  { id: 'hada',   label_ja: '肌/紙',  label_en: 'Paper',         hex: '#d9c5b8' },
+];
+
+const PERIOD_COLORS = [
+  { year_start: 1670, label_en: 'Sumizuri-e',    activeSlots: ['sumi','beni','kin','hada'] },
+  { year_start: 1700, label_en: 'Actor prints',   activeSlots: ['sumi','kin','hada'] },
+  { year_start: 1720, label_en: 'Urushi-e',       activeSlots: ['sumi','beni','kin','hada'] },
+  { year_start: 1740, label_en: 'Benizuri-e',     activeSlots: ['sumi','beni','midori','hada'], newSlots: ['midori'] },
+  { year_start: 1750, label_en: 'Refinement',     activeSlots: ['sumi','beni','kin','midori','ao','hada'], newSlots: ['ao'] },
+  { year_start: 1765, label_en: 'Nishiki-e',      activeSlots: ['sumi','beni','kin','midori','ao','hada'] },
+  { year_start: 1770, label_en: 'Large-format',   activeSlots: ['sumi','beni','kin','midori','ao','ai','hada'], newSlots: ['ai'] },
+  { year_start: 1790, label_en: 'Utamaro/Sharaku',activeSlots: ['sumi','beni','ao','ai','gin','hada'], newSlots: ['gin'] },
+  { year_start: 1800, label_en: 'Hokusai/Hiroshige',activeSlots: ['sumi','beni','midori','ai','bero','hada'], newSlots: ['bero'] },
+];
+
+const PROPORTIONS = [
+  { year_start: 1670, p: { sumi:0.50, beni:0.15, kin:0.10, hada:0.25 } },
+  { year_start: 1700, p: { sumi:0.60, kin:0.15, hada:0.25 } },
+  { year_start: 1720, p: { sumi:0.35, beni:0.25, kin:0.15, hada:0.25 } },
+  { year_start: 1740, p: { sumi:0.30, beni:0.30, midori:0.20, hada:0.20 } },
+  { year_start: 1750, p: { sumi:0.22, beni:0.20, kin:0.12, midori:0.15, ao:0.10, hada:0.21 } },
+  { year_start: 1765, p: { sumi:0.15, beni:0.18, kin:0.15, midori:0.13, ao:0.14, hada:0.25 } },
+  { year_start: 1770, p: { sumi:0.14, beni:0.17, kin:0.13, midori:0.12, ao:0.12, ai:0.12, hada:0.20 } },
+  { year_start: 1790, p: { sumi:0.16, beni:0.20, ao:0.13, ai:0.12, gin:0.08, hada:0.31 } },
+  { year_start: 1800, p: { sumi:0.15, beni:0.15, midori:0.14, ai:0.12, bero:0.29, hada:0.15 } },
+];
+
+const slotMap = {};
+CANONICAL_SLOTS.forEach(s => { slotMap[s.id] = s; });
+
+const ERA_GROUPS = [
+  { end: 1720 },
+  { end: 1750 },
+  { end: 1800 },
+];
+
+const barsEl = document.getElementById('barsBody');
+let groupIdx = 0;
+PROPORTIONS.forEach(period => {
+  const row = document.createElement('div');
+  row.className = 'bar-row';
+
+  const yearDiv = document.createElement('div');
+  yearDiv.className = 'bar-year';
+  yearDiv.textContent = period.year_start;
+  row.appendChild(yearDiv);
+
+  const track = document.createElement('div');
+  track.className = 'bar-track';
+
+  CANONICAL_SLOTS.forEach(slot => {
+    const val = period.p[slot.id];
+    if (!val) return;
+    const seg = document.createElement('div');
+    seg.className = 'bar-segment';
+    seg.style.width = (val * 100) + '%';
+    seg.style.backgroundColor = slot.hex;
+    seg.title = `${slot.label_en}: ${Math.round(val * 100)}%`;
+    track.appendChild(seg);
+  });
+
+  row.appendChild(track);
+
+  const labelArea = document.createElement('div');
+  labelArea.className = 'bar-label-area';
+  const pc = PERIOD_COLORS.find(p => p.year_start === period.year_start);
+  if (pc) {
+    let html = `<span class="bar-label-text">${pc.label_en}`;
+    if (pc.newSlots && pc.newSlots.length > 0) {
+      pc.newSlots.forEach(id => {
+        const s = slotMap[id];
+        html += ` <span class="bar-label-badge" style="background:${s.hex}">+ ${s.label_en}</span>`;
+      });
+    }
+    html += '</span>';
+    labelArea.innerHTML = html;
+  }
+  row.appendChild(labelArea);
+
+  barsEl.appendChild(row);
+
+  if (groupIdx < ERA_GROUPS.length && period.year_start >= ERA_GROUPS[groupIdx].end) {
+    const divider = document.createElement('div');
+    divider.className = 'bar-divider';
+    barsEl.appendChild(divider);
+    groupIdx++;
+  }
+});
+
+/* --- Color Legend --- */
+const legendEl = document.getElementById('colorLegend');
+CANONICAL_SLOTS.forEach(slot => {
+  const item = document.createElement('div');
+  item.className = 'color-legend-item';
+  item.innerHTML = `<div class="color-legend-swatch" style="background:${slot.hex}"></div>${slot.label_ja} ${slot.label_en}`;
+  legendEl.appendChild(item);
+});
+</script>
+
+</body>
+</html>
