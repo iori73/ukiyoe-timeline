@@ -205,7 +205,7 @@
 .layer-anim__hero-annotation-label {
   font-family: var(--font-serif);
   font-size: var(--type-body-lg);
-  font-weight: 600;
+  font-weight: 500;
   color: var(--color-white, #fff);
   line-height: 1.4;
 }
@@ -252,9 +252,9 @@
   align-items: center;
 }
 
-/* 説明文の行の長さを読みやすい幅に制限（日本語で約28〜32文字/行） */
+/* 説明文の幅: 明示的な<br>で改行制御しつつ、最長行(39文字≈40em)が折り返さない幅 */
 .layer-anim__description-prose {
-  max-width: 32em;
+  max-width: 42em;
   margin: 0 auto;
   width: 100%;
   display: flex;
@@ -481,7 +481,7 @@ html[lang="en"] .layer-anim__timeline-label--minor {
   color: var(--sumi-iro, #2d2d2d);
   text-align: center;
   letter-spacing: 0.03em;
-  max-width: 36em;
+  max-width: 42em;
   margin-left: auto;
   margin-right: auto;
   width: 100%;
