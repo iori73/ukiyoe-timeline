@@ -3,8 +3,8 @@
 # 機能完成後、セッション終了時に必ず更新してください。
 
 ## 現在のステータス
-- フェーズ: Phase 4 本番公開準備（実装完了、手動テスト待ち）+ 記事公開済み + ポートフォリオ画像更新
-- 最終更新: 2026-03-13
+- フェーズ: Phase 4 本番公開準備（実装完了、手動テスト待ち）+ 記事公開済み + ポートフォリオ詳細ページ改訂中
+- 最終更新: 2026-03-15
 
 ## 完了済み
 
@@ -184,9 +184,97 @@
 - [x] TimelineShowcase コンポーネントの Controls 位置を right: 32% に調整（PC幅 1280px 向け）
 - [x] IntersectionObserver の threshold を 0.65 + 1.2s の認知ディレイ追加（静止画先行表示）
 
+### Design Motifs セクション: 3カラム団子ショーケース（2026-03-15）
+- [x] アニメーション版 TimelineShowcase を廃止し、静止画に切り替え
+- [x] Figma から 3 カラム版ビジュアル（timeline-dango-showcase.png, 1766×1104）をエクスポート
+  - 左: タイムライン UI（団子モチーフのインジケーター）
+  - 中央: AI 生成の写実的な串団子
+  - 右: 浮世絵に描かれた団子 3 点（歌川国芳・鈴木春信・香蝶楼国貞）
+- [x] motifsIntro テキスト改訂（en.json / jp.json）
+  - 外国人向けの団子解説（三色餅の概要）
+  - 月+団子のダブルメタファー（インジケーター = 団子 & 月）
+  - 浮世絵に描かれた団子への言及
+- [x] captionMotifs テキスト改訂 — 3 カラムの説明 + 作品クレジット
+- [x] page.tsx: motifsIntro を複数段落に分割表示（\n 区切り → 個別 <p> タグ）
+
+### Color System インタラクティブ可視化（2026-03-15）
+- [x] ColorSystemViz React コンポーネント新規作成（components/work/ukiyoe/ColorSystemViz.tsx）
+  - 9 時代 × 9 色スロットの比例バーをインタラクティブに表示
+  - IntersectionObserver によるスクロールトリガーアニメーション（バーが左→右に伸びる）
+  - ホバーツールチップで色名 + パーセンテージ表示
+  - i18n 対応（locale prop で日英切替）
+  - border-radius 0 — 木版画の直線的な美学に合致
+- [x] page.tsx: color-system-bar.png プレースホルダーを ColorSystemViz コンポーネントに差替
+- [x] Research セクションの color-analysis.png を再エクスポート（作品グリッド + 抽出パレットのみ、比例バー除去）
+  - 重複解消: Research = 生の抽出データ（静止画）、Design Process = 設計された可視化（動的コンポーネント）
+  - 旧: 1766×1125 → 新: 1764×424
+
+### ポートフォリオ ukiyoe 詳細ページ: セクション構成の最適化（2026-03-15）
+- [x] 3ソース比較分析（Figma / localhost / 改訂仕様書）→ 7セクション構成を策定
+- [x] en.json 更新:
+  - Overview: 博物館ナラティブ（短縮編集版）に書き換え
+  - Hand-Coloring: 5キー新設（title + text1-3 + caption）
+  - AI Craft: 4キー新設（title + text1-3）
+  - Reflection: learningsText1-2 を円環構造テキストに改訂、learningsText3 新設
+- [x] jp.json 更新: 同上の日本語版
+- [x] page.tsx: 5セクション → 7セクション構造に変更
+  - Research: H3 3本追加（Cultural Immersion / Color Extraction / Printing Process）
+  - Design Process: H3 5本化（Top Page 3段落 / Timeline 2段落 / Motifs / Color System 3段落 / Logo テキスト追加）
+  - Hand-Coloring: 新設 H2 + 3段落 + タイムラプス動画（sumizuri-timelapse.mp4）
+  - AI Can Create, But It Can't Craft: Technical から分離し独立 H2 に（3段落）
+  - Technical: AI H3 除去、4 feature cards 維持
+  - Reflection: H3 2本（What I Learned 3段落 / Future Directions）
+  - サイドバー: 5 → 7項目
+- [x] Fresco timelapse 動画を public/work/ukiyoe/ に配置（15MB）
+- [x] ブラウザ確認: EN/JP 両言語で全7セクション + サイドバー正常表示
+
+### ポートフォリオ ColorAnalysisGrid 動的コンポーネント化（2026-03-15）
+- [x] ColorAnalysisGrid.tsx 新規作成（portfolio/components/work/ukiyoe/）
+  - 9時代 × 2作品 = 18点のアートワークサムネイルをグリッド表示
+  - 各時代の「シグネチャーカラー」を手動キュレーション（色彩進化の物語を視覚化）
+    sumi → kin → beni → midori → ao → beni → ai → gin → bero
+  - IntersectionObserver による順次フェードインアニメーション（60ms/column）
+  - サムネイルホバーで作品名 + 作者名オーバーレイ
+  - loading="lazy" + スケルトンプレースホルダー
+  - モバイル: 横スクロール + snap、デスクトップ: 9カラムグリッド
+- [x] page.tsx: 静的 color-analysis.png を ColorAnalysisGrid コンポーネントに差替
+  - データは PERIOD_ARTWORKS (ukiyoe.js) と PERIOD_COLOR_PROPORTIONS (periodColors.js) から導出
+  - ポートフォリオ側にインライン定義（Ukiyoe プロジェクトへの依存なし）
+
+### 色統一 & コード品質改善（2026-03-15）
+- [x] periodColors.js の CANONICAL_SLOTS を Single Source of Truth に指定
+  - techniques.js: sumizuri/benizuri/nishiki の colors 配列を正規 hex に統一
+  - LayerAnimationPage.jsx: タイムライン色スウォッチとフッタースウォッチを techniques.js からの動的生成に変更
+  - レイヤー関数コメント内の旧 hex も更新
+- [x] Figma 用カラー変数 JSON 作成（figma-pigment-styles.json）
+  - DTCG (Design Tokens Format Module) 形式で 9 色を 5 技法グループに分類
+  - Design Tokens Manager プラグインでインポート可能
+- [x] コードベース品質監査 & 修正（6件）
+  - CardPlayground.css: 未定義変数 --color-washi → --echizen に修正
+  - ArtworkDetailModal.css: 未定義変数 --washi-iro → --washi に修正
+  - LogoPreview.css: 無効な gap: -4px → 0 に修正
+  - App.jsx: 未使用 import (motionTransition) を削除
+  - truncateToSentences を src/utils/text.js に抽出（TimelineDetailSection.jsx / TimelinePage.jsx の重複解消）
+  - LayeredImages.jsx: calculateScrollProgress をコンポーネント外の純粋関数に移動（useEffect 依存配列の不要再実行を解消）
+  - PeriodColorViz.jsx: console.warn を import.meta.env.DEV でガード（本番ビルドで除去）
+
+### ポートフォリオ詳細ページ更新（2026-03-15）
+- [x] ColorSystemViz: カラーバーに白い枠線追加（border: 1px solid rgba(255,255,255,0.15)）
+- [x] Hand-Coloring セクション: PC表示で動画を width: 40% + 中央寄せに変更
+- [x] Technical Highlights: 4枚のカードタイトルを <p> → <h4> に変更、デザインシステムの heading トークン使用（text-heading-sm md:text-heading-base）
+- [x] Printing Process Study: テキストのみだったセクションに <figure> + printing-process-study.png を追加
+- [x] KushiDangoShowcase.tsx 新規作成（ハイブリッドコンポーネント）
+  - 上部: timeline-showcase-bg.png + dango-photo.png を並べ、TimelineIndicators を CSS オーバーレイ
+  - 下部: 3点の浮世絵作品カード（歌川国芳・鈴木春信・香蝶楼国貞）をコードで実装
+  - IntersectionObserver fade-in アニメーション
+  - page.tsx の静的 timeline-dango-showcase.png を KushiDangoShowcase コンポーネントに差替
+- [x] Figma 手動エクスポート完了（8点）:
+  - printing-process-study.png (385K), process-toppage.png (1.9M), process-timeline.png (2.3M), process-logo.png (175K)
+  - research-sites.png (1.8M) ← 再エクスポート
+  - dango-artwork-kuniyoshi.png (857K), dango-artwork-harunobu.png (943K), dango-artwork-kunisada.png (498K)
+- [x] ヒーロー画像を言語別に分割: hero-jp.png / hero-en.png（language === 'jp' で条件分岐）
+
 ## 次にやること
-- [ ] ポートフォリオ: process-logo.png を Figma でデザイン後に再エクスポート
-- [ ] ポートフォリオ: Fresco timelapse 動画を Figma/プロトタイプに埋め込み
 - [ ] Lighthouse 再測定で Round 2 の効果確認
 - [ ] iPhone 実機での最終確認（PRODUCTION_QA.md 参照）
 - [ ] 主要ブラウザ（Chrome, Firefox, Safari macOS, Safari iOS, Edge）での通しテスト

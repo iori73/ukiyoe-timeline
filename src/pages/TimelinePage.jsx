@@ -3,24 +3,13 @@ import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { duration, easing } from '../constants/motion'
 import { loadUkiyoeData, getLocalizedField, getArtworksForPeriod } from '../data/ukiyoe'
+import { truncateToSentences } from '../utils/text'
 import TimelineDetailSection, { ARTWORK_LAYER_HEIGHT_VH } from '../components/timeline/TimelineDetailSection'
 import TimelineGalleryIndicators from '../components/timeline/TimelineGalleryIndicators'
 import ArtworkGalleryGrid from '../components/timeline/ArtworkGalleryGrid'
 import LanguageToggle from '../components/LanguageToggle'
 import { useLanguage } from '../context/LanguageContext'
 import './TimelinePage.css'
-
-/**
- * 文章を指定した文数に短縮する
- */
-const truncateToSentences = (text, maxSentences = 2, lang = 'ja') => {
-  if (!text) return ''
-  const pattern = lang === 'ja'
-    ? /[^。！？]+[。！？]/g
-    : /[^.!?]+[.!?]+/g
-  const sentences = text.match(pattern) || [text]
-  return sentences.slice(0, maxSentences).join('')
-}
 
 /**
  * テキストコンテンツのアニメーション variants
@@ -290,7 +279,7 @@ export default function TimelinePage() {
         >
           <Link to="/" className="logo" style={{ cursor: 'pointer', textDecoration: 'none' }} aria-hidden={isArtworkDetailOpen}>
             <span className="logo-kanji">
-              <img src="/images/logo-square.svg" alt="浮世絵" className="logo-kanji-image" width="48" height="48" />
+              <img src="/images/logo-square-white.svg" alt="浮世絵" className="logo-kanji-image" width="48" height="48" />
             </span>
           </Link>
           <LanguageToggle />

@@ -270,7 +270,7 @@
   bottom: 0;
   width: 3px;
   /* background:var(--bg-primary); */
-  background: var(--color-washi, #ebdcbd);
+  background: var(--echizen);
 }
 
 .slider-segment:last-child::after {

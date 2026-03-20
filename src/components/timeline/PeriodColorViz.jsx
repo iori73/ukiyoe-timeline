@@ -22,10 +22,11 @@ function PeriodProportionBar({ periodData, language }) {
   // 使用されている色のみフィルタリング（proportion > 0）
   const usedColors = CANONICAL_SLOTS.filter((slot) => proportions[slot.id] > 0)
 
-  // 合計が1.0になっているか確認（デバッグ用）
-  const total = Object.values(proportions).reduce((sum, val) => sum + val, 0)
-  if (Math.abs(total - 1.0) > 0.01) {
-    console.warn(`Period ${year_start}: proportions sum to ${total.toFixed(2)}, expected 1.0`)
+  if (import.meta.env.DEV) {
+    const total = Object.values(proportions).reduce((sum, val) => sum + val, 0)
+    if (Math.abs(total - 1.0) > 0.01) {
+      console.warn(`Period ${year_start}: proportions sum to ${total.toFixed(2)}, expected 1.0`)
+    }
   }
 
   return (

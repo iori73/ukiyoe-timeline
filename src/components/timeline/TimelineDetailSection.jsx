@@ -3,6 +3,7 @@ import { motion, useSpring } from 'framer-motion'
 import { duration, easing, spring } from '../../constants/motion'
 import { useLanguage } from '../../context/LanguageContext'
 import { getLocalizedField, getArtworksForPeriod } from '../../data/ukiyoe'
+import { truncateToSentences } from '../../utils/text'
 import ParallaxArtworks from './ParallaxArtworks'
 import './TimelineDetailSection.css'
 
@@ -20,18 +21,6 @@ export const ARTWORK_LAYER_HEIGHT_VH = 280
 
 /** 作品レイヤーの最大スクロール量（vh単位） */
 const MAX_ARTWORK_SCROLL_VH = ARTWORK_LAYER_HEIGHT_VH - 100
-
-/**
- * 文章を指定した文数に短縮する
- */
-const truncateToSentences = (text, maxSentences = 2, lang = 'ja') => {
-  if (!text) return ''
-  const pattern = lang === 'ja'
-    ? /[^。！？]+[。！？]/g
-    : /[^.!?]+[.!?]+/g
-  const sentences = text.match(pattern) || [text]
-  return sentences.slice(0, maxSentences).join('')
-}
 
 // ========================================
 // パネル（時代情報） - 共通サブコンポーネント

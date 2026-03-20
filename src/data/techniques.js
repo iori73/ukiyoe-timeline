@@ -14,7 +14,7 @@ export const TECHNIQUES = [
     name_ja: '墨摺絵',
     name_en: 'Sumizuri-e',
     major: true,
-    colors: ['#2d2d2d'],
+    colors: ['#1a1a1a'],
     milestoneLeft: 14,
     labelLeft: 14,
     labelTop: LABEL_TOP
@@ -54,7 +54,7 @@ export const TECHNIQUES = [
     name_ja: '紅摺絵',
     name_en: 'Benizuri-e',
     major: true,
-    colors: ['#7A8B5A', '#B85B5B'],
+    colors: ['#c04545', '#7a9060'],
     milestoneLeft: 446,
     labelLeft: 446,
     labelTop: LABEL_TOP
@@ -64,7 +64,7 @@ export const TECHNIQUES = [
     name_ja: '錦絵',
     name_en: 'Nishiki-e',
     major: true,
-    colors: ['#3D5A73', '#C9A84C', '#d64e4e', '#9fc09f'],
+    colors: ['#c9a050', '#607888', '#2a3848', '#2d4f6e', '#b8b0a4', '#d9c5b8'],
     milestoneLeft: 554,
     labelLeft: 554,
     labelTop: LABEL_TOP

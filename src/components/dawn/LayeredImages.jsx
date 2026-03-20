@@ -2,6 +2,21 @@ import { useState, useEffect, useRef } from 'react'
 import { duration, stagger, easingCss } from '../../constants/motion'
 import './LayeredImages.css'
 
+const VIEW_TIME = 800 // Fixed viewing time at start/end (ms)
+
+/**
+ * Calculate scroll progress (0-1) from elapsed time
+ * Timeline: 800ms waiting → scroll → 800ms waiting
+ */
+function calculateScrollProgress(elapsed, dur) {
+  if (dur <= 0) return 0
+  if (elapsed <= VIEW_TIME) return 0
+  if (elapsed >= dur - VIEW_TIME) return 1
+  const scrollTime = dur - (VIEW_TIME * 2)
+  const scrollElapsed = elapsed - VIEW_TIME
+  return Math.min(scrollElapsed / scrollTime, 1)
+}
+
 /**
  * LayeredImages - Displays woodblock printing layer sequence
  * Shows the progression of color layers in ukiyo-e printing process
@@ -46,23 +61,6 @@ export default function LayeredImages({
   useEffect(() => {
     isAutoAnimatingRef.current = isAutoAnimating
   }, [isAutoAnimating])
-  
-  /**
-   * Calculate scroll progress (0-1) from elapsed time
-   * Timeline: 800ms waiting → scroll → 800ms waiting
-   * Uses absolute time (800ms) instead of percentage to match DawnPage's periodDuration calculation
-   */
-  const VIEW_TIME = 800 // Fixed viewing time at start/end (ms)
-  
-  const calculateScrollProgress = (elapsed, duration) => {
-    if (duration <= 0) return 0
-    if (elapsed <= VIEW_TIME) return 0                    // Start waiting phase (800ms)
-    if (elapsed >= duration - VIEW_TIME) return 1         // End waiting phase (last 800ms)
-    
-    const scrollTime = duration - (VIEW_TIME * 2)         // Actual scroll time
-    const scrollElapsed = elapsed - VIEW_TIME
-    return Math.min(scrollElapsed / scrollTime, 1)        // Linear scroll
-  }
   
   // Trigger animation when period becomes active (only on first visit)
   useEffect(() => {
@@ -182,7 +180,7 @@ export default function LayeredImages({
     return () => {
       clearTimeout(animationTimeout)
     }
-  }, [isActive, isAutoAnimating, isSingleImage, periodDuration, syncElapsedTime, calculateScrollProgress])
+  }, [isActive, isAutoAnimating, isSingleImage, periodDuration, syncElapsedTime])
   
   // Reset when period changes
   useEffect(() => {

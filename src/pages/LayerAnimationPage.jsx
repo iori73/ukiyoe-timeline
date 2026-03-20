@@ -213,34 +213,26 @@ function TechniqueTimeline({ language }) {
             )
           })}
 
-          <motion.div
-            className="layer-anim__timeline-colors layer-anim__timeline-colors--sumizuri"
-            initial={{ opacity: 0, scale: 0.6, x: '-50%' }}
-            animate={isVisible ? { opacity: 1, scale: 1, x: '-50%' } : { opacity: 0, scale: 0.6, x: '-50%' }}
-            transition={{ delay: colorGroupDelay(0), duration: duration.slower, ease: easing.ukiyoe }}
-          >
-            <div className="layer-anim__timeline-color" style={{ background: '#2d2d2d' }} />
-          </motion.div>
-          <motion.div
-            className="layer-anim__timeline-colors layer-anim__timeline-colors--benizuri"
-            initial={{ opacity: 0, scale: 0.6, x: '-50%' }}
-            animate={isVisible ? { opacity: 1, scale: 1, x: '-50%' } : { opacity: 0, scale: 0.6, x: '-50%' }}
-            transition={{ delay: colorGroupDelay(4), duration: duration.slower, ease: easing.ukiyoe }}
-          >
-            <div className="layer-anim__timeline-color" style={{ background: '#7A8B5A' }} />
-            <div className="layer-anim__timeline-color" style={{ background: '#B85B5B' }} />
-          </motion.div>
-          <motion.div
-            className="layer-anim__timeline-colors layer-anim__timeline-colors--nishiki"
-            initial={{ opacity: 0, scale: 0.6, x: '-50%' }}
-            animate={isVisible ? { opacity: 1, scale: 1, x: '-50%' } : { opacity: 0, scale: 0.6, x: '-50%' }}
-            transition={{ delay: colorGroupDelay(5), duration: duration.slower, ease: easing.ukiyoe }}
-          >
-            <div className="layer-anim__timeline-color" style={{ background: '#3D5A73' }} />
-            <div className="layer-anim__timeline-color" style={{ background: '#C9A84C' }} />
-            <div className="layer-anim__timeline-color" style={{ background: '#d64e4e' }} />
-            <div className="layer-anim__timeline-color" style={{ background: '#9fc09f' }} />
-          </motion.div>
+          {[
+            { id: 'sumizuri', delayIdx: 0 },
+            { id: 'benizuri', delayIdx: 4 },
+            { id: 'nishiki',  delayIdx: 5 },
+          ].map(({ id, delayIdx }) => {
+            const tech = TECHNIQUES.find(t => t.id === id)
+            return (
+              <motion.div
+                key={id}
+                className={`layer-anim__timeline-colors layer-anim__timeline-colors--${id}`}
+                initial={{ opacity: 0, scale: 0.6, x: '-50%' }}
+                animate={isVisible ? { opacity: 1, scale: 1, x: '-50%' } : { opacity: 0, scale: 0.6, x: '-50%' }}
+                transition={{ delay: colorGroupDelay(delayIdx), duration: duration.slower, ease: easing.ukiyoe }}
+              >
+                {tech.colors.map((hex, i) => (
+                  <div key={i} className="layer-anim__timeline-color" style={{ background: hex }} />
+                ))}
+              </motion.div>
+            )
+          })}
         </div>
       </div>
 
@@ -478,7 +470,7 @@ function NkBgLayer() {
   )
 }
 
-// Green (#7A8B5A) — 26 color + 6 pixel fragments
+// Green / midori (#7a9060, canonical) — 26 color + 6 pixel fragments
 function NkGreenLayer() {
   const frags = [
     { src: 'nk-gr-00.webp', l: 2456, t: 5116, w: 2200, h: 460 },
@@ -522,7 +514,7 @@ function NkGreenLayer() {
   )
 }
 
-// Pink (#B85B5B) — 14 color + 7 pixel fragments
+// Pink / beni (#c04545, canonical) — 14 color + 7 pixel fragments
 function NkPinkLayer() {
   const frags = [
     { src: 'nk-pk-00.webp', l: 877, t: 3808, w: 531, h: 502 },
@@ -555,7 +547,7 @@ function NkPinkLayer() {
   )
 }
 
-// Gray-blue (#3D5A73 + #9A9A9A + #1C1C1C) — 4 color + 2 pixel fragments
+// Gray-blue / ao (#607888, canonical) + #9A9A9A + #1C1C1C — 4 color + 2 pixel fragments
 function NkGrayBlueLayer() {
   const frags = [
     { src: 'nk-gb-00.webp', l: 2932, t: 5444, w: 1554, h: 404 },
@@ -738,7 +730,7 @@ export default function LayerAnimationPage() {
         <div className="layer-anim__hero-content">
           <div className="layer-anim__hero-heading">
             <h1 className="layer-anim__hero-title">
-              {language === 'ja' ? '浮世絵の印刷技法' : <>Ukiyo-e<br />Printing Techniques</>}
+              {language === 'ja' ? '浮世絵の印刷技法' : 'Ukiyo-e Printing Techniques'}
             </h1>
             <p className="layer-anim__hero-sub">
               {language === 'ja'
@@ -822,19 +814,19 @@ export default function LayerAnimationPage() {
           </ul>
 
           <div className="layer-anim__hero-credit-wrap">
-            <p className="layer-anim__hero-credit">
-              <a href="https://museumcollection.tokyo/works/6256752/" target="_blank" rel="noopener noreferrer">
-                {language === 'ja' ? '歌川国貞(初代)「今様見立士農工商 職人」' : 'Utagawa Kunisada I, "A Modern Parody of the Hierarchy… : Craftsmen"'}
-              </a>
-              {language === 'ja' ? '江戸東京博物館蔵' : <><br />Edo-Tokyo Museum.</>}
-              <br />
+            <a
+              className="layer-anim__hero-credit"
+              href="https://museumcollection.tokyo/works/6256752/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {language === 'ja'
+                ? '歌川国貞(初代)「今様見立士農工商 職人」江戸東京博物館蔵'
+                : 'Utagawa Kunisada I, "A Modern Parody of the Hierarchy… : Craftsmen." Edo-Tokyo Museum.'}
               <span className="layer-anim__hero-credit-source">
-                {language === 'ja' ? '出典：' : 'Source: '}
-                <a href="https://museumcollection.tokyo/works/6256752/" target="_blank" rel="noopener noreferrer">
-                  Tokyo Museum Collection
-                </a>
+                {' '}{language === 'ja' ? '出典：' : ''}Tokyo Museum Collection
               </span>
-            </p>
+            </a>
           </div>
         </div>
       </section>
@@ -885,7 +877,7 @@ export default function LayerAnimationPage() {
       <section className="layer-anim__footer">
         <div className="layer-anim__footer-inner">
           <div className="layer-anim__footer-swatches" aria-hidden="true">
-            {['#2d2d2d', '#7A8B5A', '#B85B5B', '#3D5A73', '#C9A84C', '#d64e4e', '#9fc09f', '#8BADC4'].map((hex, i) => (
+            {TECHNIQUES.flatMap(t => t.colors).map((hex, i) => (
               <div key={i} className="layer-anim__footer-swatch" style={{ background: hex }} />
             ))}
           </div>

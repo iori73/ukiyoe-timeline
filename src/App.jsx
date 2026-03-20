@@ -1,7 +1,7 @@
 import { useState, useEffect, lazy, Suspense } from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { duration, easing, transition as motionTransition } from './constants/motion'
+import { duration, easing } from './constants/motion'
 import { LanguageProvider } from './context/LanguageContext'
 import { loadUkiyoeData } from './data/ukiyoe'
 import ErrorBoundary from './components/common/ErrorBoundary'
