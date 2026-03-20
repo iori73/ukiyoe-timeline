@@ -1,0 +1,55 @@
+{
+  "Pigment": {
+    "Sumizuri": {
+      "Sumi": {
+        "$type": "color",
+        "$value": "#1a1a1a",
+        "$description": "墨 — Ink Black. Foundation of all ukiyoe. Used since 1670."
+      }
+    },
+    "Benizuri": {
+      "Beni": {
+        "$type": "color",
+        "$value": "#c04545",
+        "$description": "紅 — Crimson. Safflower pigment, defining color of benizuri-e (1740–)."
+      },
+      "Midori": {
+        "$type": "color",
+        "$value": "#7a9060",
+        "$description": "緑 — Green. First appeared in benizuri-e as complementary to beni."
+      }
+    },
+    "Nishiki": {
+      "Kin": {
+        "$type": "color",
+        "$value": "#c9a050",
+        "$description": "金/茶 — Gold / Ochre. Metallic pigment prominent in nishiki-e polychrome prints."
+      },
+      "Ao": {
+        "$type": "color",
+        "$value": "#607888",
+        "$description": "青灰 — Blue-gray. First appeared in refined benizuri-e, expanded in nishiki-e."
+      },
+      "Ai": {
+        "$type": "color",
+        "$value": "#2a3848",
+        "$description": "藍 — Indigo. Deep plant-based blue, introduced in large-format nishiki-e (1770–)."
+      },
+      "Bero": {
+        "$type": "color",
+        "$value": "#2d4f6e",
+        "$description": "ベロ藍 — Prussian Blue. Imported synthetic pigment, iconic in Hokusai & Hiroshige landscapes (1800–)."
+      },
+      "Gin": {
+        "$type": "color",
+        "$value": "#b8b0a4",
+        "$description": "銀灰 — Mica Gray. Crushed mica (kirazuri) used by Utamaro and Sharaku (1790–)."
+      },
+      "Hada": {
+        "$type": "color",
+        "$value": "#d9c5b8",
+        "$description": "肌/紙 — Warm Paper. The washi substrate visible as background and skin tone."
+      }
+    }
+  }
+}
