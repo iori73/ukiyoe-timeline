@@ -730,7 +730,7 @@ export default function LayerAnimationPage() {
         <div className="layer-anim__hero-content">
           <div className="layer-anim__hero-heading">
             <h1 className="layer-anim__hero-title">
-              {language === 'ja' ? '浮世絵の印刷技法' : 'Ukiyo-e Printing Techniques'}
+              {language === 'ja' ? '浮世絵の技法変遷' : 'Evolution of Ukiyo-e Techniques'}
             </h1>
             <p className="layer-anim__hero-sub">
               {language === 'ja'
@@ -837,28 +837,27 @@ export default function LayerAnimationPage() {
           <div className="layer-anim__description-prose">
             <p className="layer-anim__description-text">
               {language === 'ja' ? (
-                <>浮世絵は、江戸時代に花開いた木版画の芸術です。<br className="layer-anim__br-pc" />美人画や役者絵、風景画など、庶民の暮らしや夢を描き、今も世界中で愛されています。</>
+                <>浮世絵の木版画は、墨一色の摺りから始まり、<br className="layer-anim__br-pc" />やがて多くの版木を重ねて鮮やかな色彩を実現するまでに進化しました。<br className="layer-anim__br-pc" />版木ごとに色を摺り重ねていく工程そのものが、浮世絵ならではの美しさを生み出しています。</>
               ) : (
-                <>Ukiyo-e is the art of woodblock printing that flourished in the Edo period.{' '}<br className="layer-anim__br-pc" />From beauties and actors to sweeping landscapes, it captured the lives and dreams of ordinary people, and is still loved around the world.</>
+                <>Ukiyo-e woodblock printing began with a single ink impression{' '}<br className="layer-anim__br-pc" />and evolved into vibrant polychrome works made by layering multiple carved blocks.{' '}<br className="layer-anim__br-pc" />This process of printing one color at a time is what gives ukiyo-e its distinctive beauty.</>
               )}
             </p>
             <p className="layer-anim__description-text">
               {language === 'ja' ? (
-                <>このサイトでは、浮世絵が「墨一色」から「多色摺り」へと進化していった過程に焦点を当てています。<br className="layer-anim__br-pc" />とくに墨摺絵・紅摺絵・錦絵の三つの技法をとりあげ、それぞれの特徴と歴史を、作品とあわせて紹介します。</>
+                <>このサイトでは、その変遷を版木の重なりのアニメーションで体験できます。<br className="layer-anim__br-pc" />一枚の絵が完成するまでの工程を、画面上で追いかけてみてください。</>
               ) : (
-                <>This site focuses on how ukiyo-e evolved from single-color ink prints to full polychrome.{' '}<br className="layer-anim__br-pc" />We highlight three key techniques: sumizuri-e, benizuri-e, and nishiki-e, introducing their characteristics and history alongside representative works.</>
+                <>On this site, you can experience that evolution through animated layer-by-layer printing.{' '}<br className="layer-anim__br-pc" />Watch each color block come together to form a finished print.</>
               )}
             </p>
           </div>
 
           <TechniqueTimeline language={language} />
 
-                {/* プロジェクト概要文（文の区切りで改行し、切りの悪い改行を避ける） */}
                 <p className="layer-anim__description-summary">
                   {language === 'ja' ? (
-                    <>このプロジェクトでは、色彩の進化における3つの主要なマイルストーン—墨摺絵、紅摺絵、そして錦絵—を深く掘り下げ、<br className="layer-anim__br-pc" />それぞれの技法と代表作品を紹介します。</>
+                    <>このうち墨摺絵・紅摺絵・錦絵の三技法を、版木の重なりとともに詳しく紹介します。</>
                   ) : (
-                    <>This project explores three major milestones in the evolution of color: sumizuri-e, benizuri-e, and nishiki-e.{' '}<br className="layer-anim__br-pc" />Each technique and its representative works are introduced in depth.</>
+                    <>Of these, we explore sumizuri-e, benizuri-e, and nishiki-e in detail, showing how their color layers build up.</>
                   )}
                 </p>
         </div>
@@ -884,7 +883,7 @@ export default function LayerAnimationPage() {
           <nav className="layer-anim__footer-nav">
             <Link to="/timeline" className="layer-anim__nav-link">
               <span className="layer-anim__nav-link-text">
-                {language === 'ja' ? '浮世絵の歴史をたどる' : 'Explore the history of ukiyo-e'}
+                {language === 'ja' ? '時代ごとの作品を見る' : 'Browse works by era'}
               </span>
               <span className="layer-anim__nav-link-visual" aria-hidden="true">
                 <span className="layer-anim__nav-link-line" />

@@ -4,7 +4,7 @@
 
 ## 現在のステータス
 - フェーズ: Phase 4 本番公開準備（実装完了、手動テスト待ち）+ 記事公開済み + ポートフォリオ詳細ページ改訂中
-- 最終更新: 2026-03-15
+- 最終更新: 2026-03-20
 
 ## 完了済み
 
@@ -273,6 +273,17 @@
   - research-sites.png (1.8M) ← 再エクスポート
   - dango-artwork-kuniyoshi.png (857K), dango-artwork-harunobu.png (943K), dango-artwork-kunisada.png (498K)
 - [x] ヒーロー画像を言語別に分割: hero-jp.png / hero-en.png（language === 'jp' で条件分岐）
+
+### サイトアイデンティティ統一 — 「技法の変遷」軸（2026-03-20）
+- [x] `<title>` / `og:title` / `twitter:title` を「浮世絵の技法変遷 | Evolution of Ukiyo-e Techniques」に統一
+- [x] `<meta name="description">` / `og:description` / `twitter:description` を技法変遷の軸に合わせて微調整
+- [x] h1 を「浮世絵の技法変遷 / Evolution of Ukiyo-e Techniques」に更新（旧: 浮世絵の印刷技法）
+- [x] `layer-anim__description` の3段落を改善:
+  - 段落1: 一般的な「浮世絵とは」→ 版木の重なりの進化という核心に絞った導入
+  - 段落2: 「サイトの焦点」の説明 → 体験への具体的な誘導
+  - サマリー: 段落2の繰り返し → TechniqueTimeline から3技法への橋渡し
+- [x] フッターCTA を「時代ごとの作品を見る / Browse works by era」に変更（旧: 浮世絵の歴史をたどる）
+- [x] SCOPE.md の概要文を更新
 
 ## 次にやること
 - [ ] Lighthouse 再測定で Round 2 の効果確認
