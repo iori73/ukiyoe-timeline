@@ -1,0 +1,14 @@
+{
+  "name": "linkedin-curator",
+  "version": "1.0.0",
+  "description": "Daily LinkedIn post curator using Claude AI",
+  "type": "module",
+  "main": "index.mjs",
+  "scripts": {
+    "start": "node index.mjs",
+    "test": "node index.mjs --dry-run"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.0"
+  }
+}
