@@ -227,7 +227,7 @@ function AppContent({ skipIntro = false }) {
                 >
                   <span className="logo-kanji">
                     <img 
-                      src="/images/logo-square.svg" 
+                      src="/images/logo-square.svg?v=20260706"
                       alt="浮世絵" 
                       className="logo-kanji-image"
                     />
