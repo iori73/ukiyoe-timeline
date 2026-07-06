@@ -88,5 +88,19 @@
 1. **state/props に依存しない関数はコンポーネント外に置く** — モジュールスコープで定義すれば参照は不変。
 2. **useEffect の依存配列に関数がある場合、その関数の安定性を確認する** — `useCallback` でラップするか、コンポーネント外に移動する。
 
+### 2026-07-06: SVGロゴをPNGアイコン化する際、qlmanageが余白付きでラスタライズする
+
+**症状**: `qlmanage -t -s 180` で `square-layers.svg`（100×100 viewBox、strokeWidth=4の線画）を180×180 PNGに変換すると、図案が左上に小さく縮んで残り大半が余白になった。`-s` を512に上げても比率が変わらず、意図した「エッジまで塗りが埋まったアイコン」にならなかった。
+
+**根本原因**: qlmanageのQuick Look thumbnailは指定した `-s` を最終キャンバスサイズとして使う一方、SVGの内容自体を一定の基準サイズでレンダリングしてから配置するため、`-s` を変えても中身のスケールが連動しない（ImageMagickの「strokeが単色化する」問題とは別種の不具合）。
+
+**正しい対処**: playwright（chrome-devtools-mcpでも同様）の `browser_evaluate` で `document.body.innerHTML` に対象のSVG文字列を直接注入し、`browser_resize` で目的の解像度（180×180等）にビューポートを合わせてから `browser_take_screenshot` する。この方式ならビューポート＝キャンバスなので余白が入らず、strokeも正しく描画される。
+
+**もう一つの制約**: playwright/chrome-devtools MCPは `file://` プロトコルへの `navigate` をセキュリティ上ブロックする。ローカルSVG/HTMLファイルを検証したい場合、ファイルパスへ直接navigateせず、`about:blank` を開いてから `document.body.innerHTML` にファイル内容（Readで読んだ文字列）を注入する。
+
+**教訓**:
+1. **SVG→PNGアイコンのラスタライズはqlmanageではなくplaywright/chrome-devtoolsのスクリーンショットを使う** — `-s` パラメータの余白挙動を都度確認する手間を避けられる。
+2. **ローカルファイルをブラウザMCPで検証する時は `file://` navigateを試さず、最初から `innerHTML` 注入方式を使う** — ブロックされてからやり直すより速い。
+
 ### 2026-01-05
 - （初期作成）

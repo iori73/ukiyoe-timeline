@@ -285,6 +285,42 @@
 - [x] フッターCTA を「時代ごとの作品を見る / Browse works by era」に変更（旧: 浮世絵の歴史をたどる）
 - [x] SCOPE.md の概要文を更新
 
+### ロゴ・favicon 刷新（2026-07-04）
+- [x] 新ロゴ `logo0703.svg`（濃色地 #141F21 ＋ 白の二重矩形枠・円・筆致モチーフの印章型）を全ロゴ資産に反映
+- [x] 明地ヘッダー用 `public/images/logo-square.svg` を濃色印章版に差し替え（背景 rect 保持）
+- [x] 暗地ヘッダー用 `public/images/logo-square-white.svg` を透過白絵柄版に差し替え（背景 rect 除去）
+- [x] favicon `public/images/square-layers.svg`（index.html 参照）を濃色印章版に差し替え
+- [x] `public/images/apple-touch-icon.png`（180×180）を再生成
+  - ImageMagick 内蔵SVGレンダラは stroke 非対応で単色化 → qlmanage(WebKit) + playwright(headless) で正しくラスタライズ
+- [x] `/dawn`（DawnManualPage）は明るいベージュ地なのに白絵柄版を使用しロゴがほぼ不可視だった問題を発見
+  - DawnManualPage.jsx:230 のロゴ参照を `logo-square-white.svg` → `logo-square.svg`（濃色印章）に変更しホームと統一
+- [x] ブラウザ検証（playwright）: ホーム/Dawn（明地=濃色印章）・Timeline（暗地=白絵柄版）すべてコントラスト良好
+- 備考: リポジトリ直下に一時スクショが残存（apple-touch-icon-render.png / *-header.png / logo0703.svg）。削除は規約上ユーザー手動対応。
+
+### ロゴ再考 — 摺りの構造3案（2026-07-06）
+- ユーザー自己診断: 現行ロゴ（万華鏡リピート）は『日本の装飾と模様』の小紋=染めの言語に寄り、
+  「①一色ずつ摺り重ねる ②色面は交わらない ③色数は時代とともに増えた」の3原則が形に無い
+- 容れ物（濃地=版木・二重四角=版元印・白丸=馬連）は維持で合意
+- [x] 3方向スケッチのartifactボード作成（案A見当ずれの三枚/案B九つの色枡/案C主版から錦絵へ）
+- [x] Figma の Section（1422:4480→「ロゴ再考 — 摺りの構造 3案」）に5タイル設置
+  - 案A: 和紙円に墨→紅→ベロ藍の三度摺り＋かぎ見当・引付見当
+  - 案B: 正規9スロット(periodColors.js CANONICAL_SLOTS)をそのまま紋に
+  - 案C: 主版(白線)共通の3状態=墨摺絵/紅摺絵/錦絵(藍髪+金簪+紅緑襟)。ロゴ自体が摺り上がるシステム
+- [ ] 方向確定待ち → 確定後に本SVG化・サイト反映・ポートフォリオLogo Designコピー再改稿
+- ⚠️ ポートフォリオに反映済みの新コピー(2026-07-04)は現行ロゴ前提。方向確定までコミット保留
+- [x] ユーザーレビュー: 案A「見当ずれの三枚」は3枚が丸ごと重なって見え、実際の摺り（色面が重ならず縁で組む）と矛盾すると指摘 → 却下ではなく作り直しを選択
+  - 案A-v2: 円を3分割する渦状ペタル（境界を同一カーブの回転コピーにして隙間・重なりなくタイル化、三つ巴に近い構成）に再設計。かぎ見当・引付見当マークは維持
+  - Figmaに新規フレーム設置（node `1429:2830`、ラベル `1429:2840`）、既存5タイルの直下（section外・abs y=3320）に配置。元の案Aタイルは比較用に保持
+- ユーザーから cosmos.so/iori73/japanese-aesthetics のムードボードを共有され「0から creative に考えて」と依頼
+  - ボード17点を分析: 金継ぎ×2（漆黒の器に金の亀裂）、ICHIJIKU/無花果ロゴボード（単色手彫り線画・丸い印・生成り地）、ヴィンテージ商標集（回転対称ピンウィール多数）、水紋チャート、幾何形状シート×2、エレメント系線アイコン
+  - 単色×和紙地のハンコ系4案をFigmaに追加試作: 案D馬連の渦(`1432:2830`)/案E見当のピンウィール(`1432:2835`)/案F金継ぎの継ぎ目(`1434:2830`)/案H年輪と色の切れ目(`1434:2843`)。案G暖簾判(`1434:2836`)は概念的に弱いと判断
+- [x] ユーザー最終決定（2026-07-06）: A-v2/B/C/D/E/F/G/Hのどれでもなく、ユーザー自身が別途作成した `logo0706.svg`（濃色地#141F21・白線・二重矩形枠・円・対角線・円窓・回転矩形、strokeWidth=4）を採用
+  - `public/images/logo-square.svg` / `logo-square-white.svg`（bg rect除去・透過版、小円窓はfill="none"に変更） / `square-layers.svg`（favicon）を新デザインに差し替え
+  - `apple-touch-icon.png`（180×180）再生成: qlmanage は SVG を余白付きでレンダリングし使えなかった（新知見・下記lessons行き）→ playwright headless で `document.body.innerHTML` に直接SVGを注入し180×180ビューポートでスクリーンショットする方式に変更、成功
+  - playwright(chrome-devtools-mcpも同様)で `file://` プロトコルはセキュリティブロックされ使用不可。ローカルSVGを検証する場合は `document.body.innerHTML` 注入 + スクリーンショットが確実
+  - ブラウザ検証(playwright): ホーム(明地)・Dawn(明地)・Timeline(暗地)の3ページで新ロゴのコントラスト良好を確認
+  - 過去の3案(A-v2/B/C)・追加4+1案(D/E/F/G/H)はFigma上に比較用として残存（削除せず）
+
 ## 次にやること
 - [ ] Lighthouse 再測定で Round 2 の効果確認
 - [ ] iPhone 実機での最終確認（PRODUCTION_QA.md 参照）
