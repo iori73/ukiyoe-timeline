@@ -320,6 +320,10 @@
   - playwright(chrome-devtools-mcpも同様)で `file://` プロトコルはセキュリティブロックされ使用不可。ローカルSVGを検証する場合は `document.body.innerHTML` 注入 + スクリーンショットが確実
   - ブラウザ検証(playwright): ホーム(明地)・Dawn(明地)・Timeline(暗地)の3ページで新ロゴのコントラスト良好を確認
   - 過去の3案(A-v2/B/C)・追加4+1案(D/E/F/G/H)はFigma上に比較用として残存（削除せず）
+- [x] コミット・push（`587fcf5`）後、本番(ukiyoe-timeline.vercel.app)・`/timeline`にロゴが反映されないとユーザーから報告
+  - 原因: `vercel.json` が `/images/(.*)` に `max-age=31536000, immutable`（ハッシュ付きビルド資産向けの設定）を適用していたため、ファイル名が固定の logo-square.svg 等を更新してもブラウザ/CDNキャッシュが古いバイトを返し続けていた
+  - 対処（`904c6b5`）: 全ロゴ・favicon参照（App.jsx/DawnPage.jsx/DawnManualPage.jsx/TimelinePage.jsx/LayerAnimationPage.jsx/index.html）に `?v=20260706` を付与してキャッシュを強制バスト。`vercel.json` の `/images/` を `max-age=3600, must-revalidate` に緩和し再発防止
+  - 本番で再検証(playwright): ホーム・`/timeline`ともに新ロゴが正しく表示されることを確認
 
 ## 次にやること
 - [ ] Lighthouse 再測定で Round 2 の効果確認
