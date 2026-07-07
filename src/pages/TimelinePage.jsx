@@ -279,7 +279,7 @@ export default function TimelinePage() {
         >
           <Link to="/" className="logo" style={{ cursor: 'pointer', textDecoration: 'none' }} aria-hidden={isArtworkDetailOpen}>
             <span className="logo-kanji">
-              <img src="/images/logo-square-white.svg?v=20260706" alt="浮世絵" className="logo-kanji-image" width="48" height="48" />
+              <img src="/images/logo-square-white.svg?v=20260707" alt="浮世絵" className="logo-kanji-image" width="48" height="48" />
             </span>
           </Link>
           <LanguageToggle />

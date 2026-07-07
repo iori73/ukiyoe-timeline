@@ -719,7 +719,7 @@ export default function LayerAnimationPage() {
       <header className="layer-anim-page__header">
         <div className="layer-anim-page__header-inner">
           <Link to="/" className="layer-anim-page__logo">
-            <img src="/images/logo-square.svg?v=20260706" alt="浮世絵" className="logo-kanji-image" />
+            <img src="/images/logo-square.svg?v=20260707" alt="浮世絵" className="logo-kanji-image" />
           </Link>
           <LanguageToggle />
         </div>

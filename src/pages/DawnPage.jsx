@@ -338,7 +338,7 @@ export default function DawnPage() {
         <div className="dawn-header__container">
           <Link to="/" className="dawn-header__logo">
             <img 
-              src="/images/logo-square-white.svg?v=20260706"
+              src="/images/logo-square-white.svg?v=20260707"
               alt="浮世絵" 
               className="dawn-header__logo-img"
             />

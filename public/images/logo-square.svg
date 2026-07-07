@@ -2,6 +2,7 @@
 <!--
   浮世絵技法変遷 ─ 版元印ロゴ（明地ヘッダー / favicon 用・濃色印章版）2026-07-06
   logo0706.svg 版。濃色地 #141F21 に白の二重矩形枠・円・対角線・円窓・回転矩形。
+  2026-07-07: 円窓の中心を対角線上の最近点に補正（39,66→37.08,64.06）。
 -->
 <rect width="100" height="100" fill="#141F21"/>
 <rect x="7" y="7" width="86" height="86" stroke="white" stroke-width="4"/>
@@ -9,7 +10,7 @@
 <g clip-path="url(#clip0_1447_2833)">
 <circle cx="19" cy="82" r="61" stroke="white" stroke-width="4"/>
 <path d="M81.5 20L19.5 81.5" stroke="white" stroke-width="4"/>
-<circle cx="39" cy="66" r="18" fill="#141F21" stroke="white" stroke-width="4"/>
+<circle cx="37.08" cy="64.06" r="18" fill="#141F21" stroke="white" stroke-width="4"/>
 <rect x="21.0477" y="21.0476" width="59" height="59" stroke="white" stroke-width="4"/>
 </g>
 <defs>
