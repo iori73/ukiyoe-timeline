@@ -21,14 +21,13 @@
     <meta name="twitter:title" content="浮世絵の技法変遷 | Evolution of Ukiyo-e Techniques" />
     <meta name="twitter:description" content="墨摺絵から錦絵へ — 版木の重なりで体験する浮世絵の技法変遷" />
     <meta name="twitter:image" content="https://ukiyoe-timeline.vercel.app/images/og-image.jpg" />
-    <!-- Critical resource preloads (keep minimal to avoid competing with JS bundle on slow networks) -->
-    <link rel="preload" as="image" type="image/webp" href="/images/washi-texture.webp" />
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Shippori Mincho: non-blocking load via media="print" trick -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700&display=optional" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700&display=optional"></noscript>
+    <!-- Shippori Mincho (--font-serif). A plain stylesheet link: the old media="print"
+         + onload="this.media='all'" trick is an inline handler, which the CSP
+         (script-src 'self') blocks — so the font never applied in production.
+         The CSS file is ~1KB; display=swap shows the fallback until the font arrives. -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700&display=swap">
   </head>
   <body>
     <div id="root"></div>
