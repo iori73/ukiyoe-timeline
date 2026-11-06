@@ -1,0 +1,46 @@
+/* Review-only UI. Neutral styling so it does not read as part of any variant. */
+.variant-switcher {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: var(--z-tooltip, 1300);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  max-width: calc(100vw - 32px);
+  background: #ffffff;
+  color: #1a1a1a;
+  border: 1px solid #1a1a1a;
+  font-family: system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+}
+
+.variant-switcher__buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.variant-switcher__btn {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid #1a1a1a;
+  background: #ffffff;
+  color: #1a1a1a;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.variant-switcher__btn[aria-pressed='true'] {
+  background: #1a1a1a;
+  color: #ffffff;
+}
+
+.variant-switcher__btn:focus-visible {
+  outline: 2px solid #1e3a5f;
+  outline-offset: 2px;
+}
