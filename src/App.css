@@ -479,8 +479,11 @@ body {
   --lang-red: var(--period-benizuri);   /* #C33433, the logo's 紅 */
   --lang-blue: var(--period-nishiki);   /* #1B3E5B, the logo's 藍 */
   --lang-ground: var(--washi);
-  /* On washi pages the tile is washi too (1:1), so it needs an edge:
-     sumi at 55% = 3.25:1 against washi (WCAG 1.4.11 asks for 3:1). */
+  /* OFF = outline square (2026-11-07 revision). The line takes the ink of the
+     ground it sits on: sumi on washi pages, washi on the dark timeline (≈12:1 either way). */
+  --lang-line: var(--sumi-iro);
+  /* ON on washi pages: the washi disc needs an edge to exist at all (1:1 otherwise);
+     sumi at 55% = 3.25:1 (WCAG 1.4.11 asks for 3:1). */
   --lang-edge: rgba(45, 45, 45, 0.55);
   --lang-morph: 420ms;
 }
@@ -505,17 +508,24 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: var(--lang-ground);
-  box-shadow: inset 0 0 0 1px var(--lang-edge);
+  /* OFF: an empty square drawn as a 2px line. */
+  background-color: transparent;
+  box-shadow: inset 0 0 0 2px var(--lang-line);
   border-radius: 0;
-  /* Switching OFF: wait for the colour to leave, then go back to a square. */
-  transition: border-radius var(--lang-morph) var(--ease-ukiyoe) 140ms;
+  /* Switching OFF: the fill and mark leave first (160ms), then the disc returns to a square line. */
+  transition: border-radius var(--lang-morph) var(--ease-ukiyoe) 140ms,
+              background-color 160ms ease-out,
+              box-shadow 160ms ease-out;
 }
 
 .language-button.active .lang-tile {
   border-radius: 50%;
-  /* Switching ON: the shape changes first, right away. */
-  transition: border-radius var(--lang-morph) var(--ease-ukiyoe) 0ms;
+  background-color: var(--lang-ground);
+  box-shadow: inset 0 0 0 1px var(--lang-edge);
+  /* Switching ON: the line becomes a circle first; then the disc fills in with the mark. */
+  transition: border-radius var(--lang-morph) var(--ease-ukiyoe) 0ms,
+              background-color 360ms ease-out var(--lang-morph),
+              box-shadow 360ms ease-out var(--lang-morph);
 }
 
 .lang-mark {
@@ -537,8 +547,9 @@ body {
               transform 520ms var(--ease-ukiyoe) var(--lang-morph);
 }
 
-/* On the dark timeline the washi tile already stands out (12:1); no edge needed. */
+/* On the dark timeline: washi line for OFF; the washi disc already stands out (12:1). */
 .timeline-page .language-toggle {
+  --lang-line: var(--washi);
   --lang-edge: transparent;
 }
 

@@ -3,7 +3,8 @@ import { useLanguage } from '../context/LanguageContext'
 /**
  * Language toggle (redesigned 2026-11-07, Figma portfolio_v6 node 104:4168).
  *
- * ON  = circle, coloured mark.   OFF = square, plain washi tile.
+ * ON  = filled washi circle with the coloured mark.   OFF = empty square, 2px line
+ * (sumi on washi pages, washi on the dark timeline). Revised 2026-11-07.
  * The state is carried by SHAPE as well as colour (WCAG 1.4.1), so it reads
  * without colour vision.
  *
