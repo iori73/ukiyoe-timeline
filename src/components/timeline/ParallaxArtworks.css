@@ -291,3 +291,21 @@
     opacity: 1;
   }
 }
+
+/* ========================================
+   DIRECTION A (2026-11-07): reserve the panel's column
+   The fixed panel sits bottom-left (max 560px wide). Artworks scroll vertically,
+   so only a horizontal separation stops them passing underneath it:
+   overlap in 6 of 8 sampled scroll positions → 0 of 8.
+   140px on the right keeps clear of the year navigation.
+   ======================================== */
+@media (min-width: 1024px) {
+  .parallax-artworks__chirashi {
+    margin-left: 620px;
+    width: calc(100% - 620px - 140px);
+  }
+
+  .parallax-artwork__image {
+    max-width: clamp(220px, 18vw, 300px);
+  }
+}

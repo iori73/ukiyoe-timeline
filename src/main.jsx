@@ -5,14 +5,11 @@ import { Analytics } from '@vercel/analytics/react'
 import App from './App.jsx'
 import './App.css'
 import './styles/typography.css'
-import './styles/variants.css'
-import VariantSwitcher from './components/common/VariantSwitcher.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <App />
-      <VariantSwitcher />
     </BrowserRouter>
     <Analytics />
   </StrictMode>,

@@ -469,6 +469,88 @@ body {
   opacity: 0.7;
 }
 
+/* ----------------------------------------
+   Language mark toggle (2026-11-07)
+   ON = circle + colour, OFF = square + plain washi. See LanguageToggle.jsx.
+   Colours: logo 藍/紅 + washi (contrast on washi: 紅 4.79:1, 藍 9.80:1;
+   tile on the dark timeline 12.13:1).
+   ---------------------------------------- */
+.language-toggle {
+  --lang-red: var(--period-benizuri);   /* #C33433, the logo's 紅 */
+  --lang-blue: var(--period-nishiki);   /* #1B3E5B, the logo's 藍 */
+  --lang-ground: var(--washi);
+  /* On washi pages the tile is washi too (1:1), so it needs an edge:
+     sumi at 55% = 3.25:1 against washi (WCAG 1.4.11 asks for 3:1). */
+  --lang-edge: rgba(45, 45, 45, 0.55);
+  --lang-morph: 420ms;
+}
+
+.language-toggle .language-button.language-button--mark {
+  border-width: 0;
+  padding: 4px;
+  line-height: 1;
+  /* The old text button was a clipped circle; that would cut the OFF square's corners. */
+  border-radius: 0;
+  overflow: visible;
+}
+
+.language-toggle .language-button.language-button--mark:focus-visible {
+  outline: 2px solid var(--ai-iro);
+  outline-offset: 2px;
+}
+
+.lang-tile {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--lang-ground);
+  box-shadow: inset 0 0 0 1px var(--lang-edge);
+  border-radius: 0;
+  /* Switching OFF: wait for the colour to leave, then go back to a square. */
+  transition: border-radius var(--lang-morph) var(--ease-ukiyoe) 140ms;
+}
+
+.language-button.active .lang-tile {
+  border-radius: 50%;
+  /* Switching ON: the shape changes first, right away. */
+  transition: border-radius var(--lang-morph) var(--ease-ukiyoe) 0ms;
+}
+
+.lang-mark {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: scale(0.88);
+  /* OFF: the colour leaves first, quickly. */
+  transition: opacity 160ms ease-out, transform 160ms ease-out;
+}
+
+.language-button.active .lang-mark {
+  opacity: 1;
+  transform: scale(1);
+  /* ON: the colour arrives only after the circle has formed, softly. */
+  transition: opacity 360ms ease-out var(--lang-morph),
+              transform 520ms var(--ease-ukiyoe) var(--lang-morph);
+}
+
+/* On the dark timeline the washi tile already stands out (12:1); no edge needed. */
+.timeline-page .language-toggle {
+  --lang-edge: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lang-tile,
+  .language-button.active .lang-tile,
+  .lang-mark,
+  .language-button.active .lang-mark {
+    transition: none;
+  }
+}
+
 /* ========================================
    MAIN / TIMELINE
    ======================================== */
