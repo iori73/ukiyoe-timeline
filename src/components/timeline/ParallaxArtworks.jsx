@@ -321,7 +321,7 @@ const ParallaxImage = memo(function ParallaxImage({
           className={`parallax-artwork__image${isLandscape ? ' parallax-artwork__image--landscape' : ''}${isLoaded ? ' parallax-artwork__image--loaded' : ''}`}
           loading={isFirstVisible ? 'eager' : 'lazy'}
           decoding="async"
-          {...(isFirstVisible && { fetchPriority: 'high' })}
+          {...(isFirstVisible && { fetchpriority: 'high' })}
           onLoad={handleImageLoad}
           onError={onError}
         />

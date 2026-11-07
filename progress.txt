@@ -337,3 +337,26 @@
 - `LayerAnimationPage.css` の `.layer-anim__description::before` が Figma API URL を参照（本番で404になるが装飾のため実害なし）
 - `logo_v2.svg`（8.9MB）・`original-met.jpg`（2.1MB）はコード未参照の参照ファイル（本番バンドルに影響なし）
 - Lighthouse Performance 75 のボトルネックは JS 実行時間（1.5s）が主因。これは React + Framer Motion の構造的なもので、Slow 4G 環境で 90+ は困難（本番 HTTPS + CDN で改善見込み）
+
+## 2026-11-06: リポジトリ復旧・コンソールのエラー解消・デザイン案 A/B/C
+
+- ~/dev/Ukiyoe の .git が壊れていた（HEAD と refs が消失、objects は残存）。GitHub から取り直した .git に入れ替え、
+  壊れた方は ~/dev/Ukiyoe/.git.broken-20261106 に退避（.git/info/exclude 済み）。main = origin/main (c908da9)。
+  .gitignore は GitHub 側（会話履歴・エディタデータを除外する版）に戻した。docs/DESIGN_SYSTEM.md のロゴ章は未コミットで残置。
+- コンソール: Shippori Mincho の onload インラインハンドラが CSP で止められ、書体が本番で一度も効いていなかった → 通常の link に。
+  未使用の washi-texture の preload を削除。fetchPriority → fetchpriority（React 18 の警告）。
+- デザイン案（?v=a|b|c、VariantSwitcher + src/styles/variants.css。?v なしは本番と同じ）:
+  A 間を詰める（CTA 区間を墨にして橋渡し）/ B 和紙で通す / C 墨で通す（版画の区間だけ和紙のケース）。
+  計測（1440px）: トップ 4212→3547px、技法の区間 674〜754→482〜578px、パネルと作品の重なり 6/8→0/8。
+  Figma portfolio_v6「Site — JP」のセクション「ukiyoe-timeline — デザイン案 A / B / C」に6画面（編集可能レイヤー）。
+- 次: 河野さんが案を選ぶ → 選んだ案を本実装（variants.css の該当ルールを各 CSS に移す）→ VariantSwitcher と variants.css を削除。
+
+## 2026-11-07: A を確定・言語切り替えを作り直し・依存パッケージ
+
+- A を本採用（LayerAnimationPage.css / ParallaxArtworks.css の末尾）。比較用の ?v と VariantSwitcher は削除。
+- 言語切り替え: ON＝和紙の丸＋印、OFF＝線だけの四角（明るい地は墨の線、暗い地は和紙の線、2px）。
+  日＝日の丸、EN＝英米の旗の共通部分（左上の藍、斜めの白、横の紅、紅と藍の間に白い隙間）。
+  色はロゴの紅 #C33433 / 藍 #1B3E5B と和紙。動きは「形が先、塗りと印が後」、外すときは逆順。
+- 依存パッケージ（PR #3）: Dependabot 67件中65件を解消。extract-zip の2件（修正版なし、puppeteer の開発専用）は
+  GitHub 上で tolerable_risk として理由つきで閉じた（#42, #48）。puppeteer は Chrome 148 を前提に変わった。
+- Figma: portfolio_v6 に「ukiyoe-timeline」ページ（114:4559）。作品サイト関連を複製、A 確定版を階層つきで取り込み。

@@ -745,7 +745,7 @@ export default function LayerAnimationPage() {
               src="/images/top/hero-printing-scene.webp"
               alt={language === 'ja' ? '木版画制作の様子（摺り・彫り・下絵など）' : 'Ukiyo-e workshop: printing, carving, and drawing'}
               className="layer-anim__hero-image"
-              fetchPriority="high"
+              fetchpriority="high"
               onError={(e) => {
                 e.target.style.display = 'none'
                 e.target.nextElementSibling?.classList.add('is-visible')
