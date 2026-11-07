@@ -3,8 +3,8 @@
 # 機能完成後、セッション終了時に必ず更新してください。
 
 ## 現在のステータス
-- フェーズ: Phase 4 本番公開準備（実装完了、手動テスト待ち）+ 記事公開済み + ポートフォリオ詳細ページ改訂中
-- 最終更新: 2026-03-20
+- フェーズ: 本番公開済み（方向 A）。リデザイン案 v2 をプロトタイプ中（/v2・/v2/timeline、PR #5 draft）→ 河野さんが Figma「iori wip」で検討し、その指示でサイトを直す段階
+- 最終更新: 2026-11-07（最新の状況は末尾の「2026-11-07 夜」節）
 
 ## 完了済み
 
@@ -360,3 +360,21 @@
 - 依存パッケージ（PR #3）: Dependabot 67件中65件を解消。extract-zip の2件（修正版なし、puppeteer の開発専用）は
   GitHub 上で tolerable_risk として理由つきで閉じた（#42, #48）。puppeteer は Chrome 148 を前提に変わった。
 - Figma: portfolio_v6 に「ukiyoe-timeline」ページ（114:4559）。作品サイト関連を複製、A 確定版を階層つきで取り込み。
+
+## 2026-11-07 夜: リデザイン案 v2（トップ ／ 時代ごとの作品）
+
+- 依頼: 美術館のコレクションサイト調査をもとに、トップと /timeline の改善版を PC・SP で、Figma とプロトタイプの両方に。
+  パターンの寄せ集めではなく、プロジェクトの目的（東博で見た実物 → 技法の変遷 → 庶民の刷り物 → 色が増える流れ）から設計。
+- プロトタイプ: ブランチ worktree-redesign-v2（~/dev/Ukiyoe/.claude/worktrees/redesign-v2）、draft PR #5。
+  ルート /v2（LayerAnimationPage variant="v2"）と /v2/timeline（src/pages/v2/TimelineV2.jsx）。本番の / と /timeline は無変更。
+  新規: src/pages/v2/{v2Data.js, SlotStrip.jsx, TopAdditions.jsx, TimelineV2.jsx, v2.css}。根拠と未決事項: docs/specs/redesign-v2.md。
+- トップ: 入口2つ／技法の横に固定した9色の枠（墨摺1→紅摺3→錦絵9、techniques.js から計算、新色に◆、SP は下の帯）／時代から探す（9時代）。
+- /v2/timeline: 導入＋凡例／固定の「時代のものさし」（串団子、近い年は段違い）／時代ごとの区切り（色の枠・初登場の色・背景は開いたときだけ）
+  ／元の比率で少しずらした作品の並び／詳細シート（PC 横・SP 下、出典リンク、←→・Esc）／最後に「色が増えていく」。高さ 約25,000→13,560px。
+- 画像: Wikimedia を縮小版（/thumb/…/500px-…、詳細は1280px）に。45/45 読み込み。本番にも転用できる。
+- Figma: portfolio_v6「ukiyoe-timeline」ページ（114:4559）、河野さんの「iori wip」(137:1168) の右にセクション
+  「リデザイン案 v2（Claude・2026-11-07）」(145:27)。左に説明パネル、右に /v2 PC・SP、/v2/timeline PC・SP（編集可能レイヤー、書体は Noto Sans JP に置換）。
+- 河野さんに聞くこと: 1670年代の肉筆画の扱い／作品の制作年を足すか／作品のずらしの量。
+- 次: 河野さんが Figma「iori wip」で直す → 注釈を読んでサイト（v2）→ Figma の順に反映 → 決まったら /v2 を本番の / と /timeline に置き換える。
+- 開発サーバー: v2 は `pnpm dev --port 5182`（worktree）、本番相当は 5181（~/dev/Ukiyoe main）。
+

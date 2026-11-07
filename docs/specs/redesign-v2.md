@@ -1,7 +1,8 @@
 # リデザイン案 v2（トップ ／ 時代ごとの作品）— 2026-11-07
 
 プロトタイプ: `/v2`（トップ）と `/v2/timeline`。本番の `/` と `/timeline` は変えていない。
-Figma: portfolio_v6 の「ukiyoe-timeline」ページ、河野さんの「iori wip」の右に PC / SP を並べた。
+Figma: portfolio_v6（r9AUm9XA7iTNGCdpVAQW7U）の「ukiyoe-timeline」ページ（114:4559）。河野さんの「iori wip」（137:1168）の右の Section「リデザイン案 v2」（145:27）に、説明パネル（145:28）と /v2 PC（141:27）・SP（142:27）、/v2/timeline PC（150:27）・SP（151:27）。編集可能レイヤー、書体は Noto Sans JP に置換。
+取り込みの注意: CSS の段組みと data.ukiyo-e.org の画像（CORS なし）は取り込みで崩れるので、直前に位置の固定と data URL 化をしてから取り込んだ（lessons.md 2026-11-07）。
 
 ## 何のためのサイトか（ここから外れない）
 
