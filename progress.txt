@@ -350,3 +350,13 @@
   計測（1440px）: トップ 4212→3547px、技法の区間 674〜754→482〜578px、パネルと作品の重なり 6/8→0/8。
   Figma portfolio_v6「Site — JP」のセクション「ukiyoe-timeline — デザイン案 A / B / C」に6画面（編集可能レイヤー）。
 - 次: 河野さんが案を選ぶ → 選んだ案を本実装（variants.css の該当ルールを各 CSS に移す）→ VariantSwitcher と variants.css を削除。
+
+## 2026-11-07: A を確定・言語切り替えを作り直し・依存パッケージ
+
+- A を本採用（LayerAnimationPage.css / ParallaxArtworks.css の末尾）。比較用の ?v と VariantSwitcher は削除。
+- 言語切り替え: ON＝和紙の丸＋印、OFF＝線だけの四角（明るい地は墨の線、暗い地は和紙の線、2px）。
+  日＝日の丸、EN＝英米の旗の共通部分（左上の藍、斜めの白、横の紅、紅と藍の間に白い隙間）。
+  色はロゴの紅 #C33433 / 藍 #1B3E5B と和紙。動きは「形が先、塗りと印が後」、外すときは逆順。
+- 依存パッケージ（PR #3）: Dependabot 67件中65件を解消。extract-zip の2件（修正版なし、puppeteer の開発専用）は
+  GitHub 上で tolerable_risk として理由つきで閉じた（#42, #48）。puppeteer は Chrome 148 を前提に変わった。
+- Figma: portfolio_v6 に「ukiyoe-timeline」ページ（114:4559）。作品サイト関連を複製、A 確定版を階層つきで取り込み。
