@@ -19,6 +19,8 @@ const TimelinePage = lazy(() => import('./pages/TimelinePage'))
 const LogoPreview = lazy(() => import('./pages/LogoPreview'))
 const LayerAnimationPage = lazy(() => import('./pages/LayerAnimationPage'))
 const NotFound = lazy(() => import('./pages/NotFound'))
+// Redesign prototype (2026-11-07): /v2 and /v2/timeline. The live routes are unchanged.
+const TimelineV2 = lazy(() => import('./pages/v2/TimelineV2'))
 
 function AppContent({ skipIntro = false }) {
   const [data, setData] = useState([])
@@ -313,6 +315,8 @@ export default function App() {
               <Route path="/timeline" element={<TimelinePage />} />
               <Route path="/logo-preview" element={<LogoPreview />} />
               <Route path="/layer-animation" element={<LayerAnimationPage />} />
+              <Route path="/v2" element={<LayerAnimationPage variant="v2" />} />
+              <Route path="/v2/timeline" element={<TimelineV2 />} />
               {/* 旧実装をアーカイブ: /timeline-old で水平スクロール版にアクセス可能 */}
               <Route path="/timeline-old" element={<MainPageWithHashRouting skipIntro />} />
               <Route path="*" element={<NotFound />} />

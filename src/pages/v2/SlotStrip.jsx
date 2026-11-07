@@ -1,0 +1,23 @@
+import { CANONICAL_SLOTS, t } from './v2Data'
+
+/**
+ * The 9-slot palette as a strip: used slots are filled, unused ones stay as a
+ * hairline ghost. Same order everywhere (墨 → 肌/紙), so "colours being added
+ * over time" reads left-to-right on both pages.
+ */
+export default function SlotStrip({ active = [], fresh = [], lang, size = 'md', showLabels = false, label }) {
+  return (
+    <div className={`v2-slots v2-slots--${size}`} role="img" aria-label={label ?? t(lang, `使われた色: ${active.length} / 9`, `Colours in use: ${active.length} of 9`)}>
+      {CANONICAL_SLOTS.map((s) => {
+        const on = active.includes(s.id)
+        const isNew = fresh.includes(s.id)
+        return (
+          <span key={s.id} className={`v2-slot${on ? ' is-on' : ''}${isNew ? ' is-new' : ''}`}>
+            <span className="v2-slot__chip" style={on ? { background: s.hex } : undefined} />
+            {showLabels && <span className="v2-slot__label">{t(lang, s.label_ja, s.label_en)}</span>}
+          </span>
+        )
+      })}
+    </div>
+  )
+}

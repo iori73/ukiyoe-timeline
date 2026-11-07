@@ -6,6 +6,7 @@ import LanguageToggle from '../components/LanguageToggle'
 import { useLanguage } from '../context/LanguageContext'
 import { TECHNIQUES } from '../data/techniques'
 import './LayerAnimationPage.css'
+import { EntryPoints, TechniqueStage, EraIndex } from './v2/TopAdditions'
 
 // ============================================================
 // Asset paths
@@ -696,8 +697,13 @@ function NishikieMultiLayerAnimation() {
 // ============================================================
 // Page
 // ============================================================
-export default function LayerAnimationPage() {
+/**
+ * variant="v2" (route /v2) adds the redesign prototype's sections
+ * (entry points, palette rail, era index). Without it the page is unchanged.
+ */
+export default function LayerAnimationPage({ variant } = {}) {
   const { language } = useLanguage()
+  const isV2 = variant === 'v2'
   const heroVisualRef = useRef(null)
   const [heroVisible, setHeroVisible] = useState(false)
 
@@ -863,14 +869,28 @@ export default function LayerAnimationPage() {
         </div>
       </section>
 
-      {/* 黒摺絵（静止） */}
-      <SumizurieStatic />
+      {isV2 && <EntryPoints lang={language} />}
 
-      {/* 紅摺絵アニメーション */}
-      <NishikieAnimation />
+      {isV2 ? (
+        <TechniqueStage lang={language}>
+          <SumizurieStatic />
+          <NishikieAnimation />
+          <NishikieMultiLayerAnimation />
+        </TechniqueStage>
+      ) : (
+        <>
+          {/* 黒摺絵（静止） */}
+          <SumizurieStatic />
 
-      {/* 錦絵アニメーション */}
-      <NishikieMultiLayerAnimation />
+          {/* 紅摺絵アニメーション */}
+          <NishikieAnimation />
+
+          {/* 錦絵アニメーション */}
+          <NishikieMultiLayerAnimation />
+        </>
+      )}
+
+      {isV2 && <EraIndex lang={language} />}
 
       {/* フッター */}
       <section className="layer-anim__footer">
@@ -881,7 +901,7 @@ export default function LayerAnimationPage() {
             ))}
           </div>
           <nav className="layer-anim__footer-nav">
-            <Link to="/timeline" className="layer-anim__nav-link">
+            <Link to={isV2 ? '/v2/timeline' : '/timeline'} className="layer-anim__nav-link">
               <span className="layer-anim__nav-link-text">
                 {language === 'ja' ? '時代ごとの作品を見る' : 'Browse works by era'}
               </span>
