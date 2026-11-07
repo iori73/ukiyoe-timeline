@@ -66,3 +66,6 @@ docs/conversation-history/
 # ブラウザで保存したWebページ（AIとの会話ページを含む）
 *_files/
 
+
+# Claude Code worktrees (local working copies)
+.claude/worktrees/
