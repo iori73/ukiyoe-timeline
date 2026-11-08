@@ -77,3 +77,18 @@ export function sourceOf(imageUrl) {
     return null
   }
 }
+
+/**
+ * Prototype routes (/v2, /v2/timeline) are public but must not compete with the live pages in
+ * search results: add <meta name="robots" content="noindex"> while mounted.
+ */
+export function useNoindex(active = true) {
+  useEffect(() => {
+    if (!active) return undefined
+    const m = document.createElement('meta')
+    m.name = 'robots'; m.content = 'noindex'
+    document.head.appendChild(m)
+    return () => m.remove()
+  }, [active])
+}
+

@@ -7,6 +7,7 @@ import { useLanguage } from '../context/LanguageContext'
 import { TECHNIQUES } from '../data/techniques'
 import './LayerAnimationPage.css'
 import { EraIndex } from './v2/TopAdditions'
+import { useNoindex } from './v2/v2Data'
 
 // ============================================================
 // Asset paths
@@ -704,6 +705,7 @@ function NishikieMultiLayerAnimation() {
 export default function LayerAnimationPage({ variant } = {}) {
   const { language } = useLanguage()
   const isV2 = variant === 'v2'
+  useNoindex(isV2)
   const heroVisualRef = useRef(null)
   const [heroVisible, setHeroVisible] = useState(false)
 

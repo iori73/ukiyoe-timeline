@@ -132,26 +132,20 @@
 .v2-era-sec__fresh { font-size: 13px; color: rgba(245, 240, 230, 0.85); }
 .v2-era-sec__more { grid-column: 1 / -1; margin-top: var(--space-sm); }
 .v2-era-sec__more summary {
-  display: inline-flex; align-items: center; gap: var(--space-xs);
-  min-height: 44px; padding: 0 var(--space-md); cursor: pointer; list-style: none;
+  display: inline-flex; align-items: center; gap: 10px;
+  /* side padding 16px (owner: 24px was too wide) */
+  min-height: 44px; padding: 0 var(--space-sm); cursor: pointer; list-style: none;
   border: 1px solid rgba(245, 240, 230, 0.6); font-size: 14px;
 }
 .v2-era-sec__more summary::-webkit-details-marker { display: none; }
-/* open/close mark: a folding fan (owner's drawing, Figma 168:65). Closed = ribs gathered into a
-   narrow fan; open = spread to 120°, slowly and one rib after another (owner: "ゆったり"). */
-.v2-fanmark { width: 40px; height: 23px; flex: none; color: currentColor; overflow: visible; }
-.v2-fan__rib path { fill: currentColor; stroke: var(--sumi-iro); stroke-width: 0.7; }
-.v2-fan__rib {
-  transform-box: view-box; transform-origin: 20px 21px;
-  transform: rotate(var(--closed));
-  /* closing: outer ribs first, gently */
-  transition: transform 900ms var(--ease-ukiyoe) calc((5 - var(--i)) * 60ms);
-}
-.v2-era-sec__more[open] .v2-fan__rib {
-  transform: rotate(var(--open));
-  /* opening: 1.1s, each rib 90ms after the previous */
-  transition: transform 1100ms var(--ease-ukiyoe) calc(var(--i) * 90ms);
-}
+/* open/close mark: a folding fan drawn and animated in Marks.jsx (Fan). Pleats alternate
+   mountain/valley tones; guard sticks and the rivet sit on top. */
+.v2-fanmark { width: 40px; height: 23px; flex: none; overflow: visible; }
+.v2-fan__pleat.is-mountain { fill: var(--washi); }
+.v2-fan__pleat.is-valley { fill: rgba(245, 240, 230, 0.8); }
+.v2-fan__ribs { fill: none; stroke: rgba(245, 240, 230, 0.75); stroke-width: 0.5; }
+.v2-fan__guards { fill: none; stroke: var(--washi); stroke-width: 1.3; stroke-linecap: round; }
+.v2-fan__rivet { fill: var(--sumi-iro); stroke: var(--washi); stroke-width: 0.9; }
 .v2-era-sec__more summary:focus-visible { outline: 2px solid var(--washi); outline-offset: 2px; }
 .v2-era-sec__more dl { display: grid; grid-template-columns: 8em 1fr; gap: var(--space-sm) var(--space-md); max-width: 52em; margin: var(--space-md) 0 0; line-height: 1.9; }
 .v2-era-sec__more dt { color: rgba(245, 240, 230, 0.65); font-size: 13px; padding-top: 3px; }
@@ -242,7 +236,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .v2-sheet__panel { animation: none; }
-  .v2-era__thumb img, .v2-work__img img, .v2-ruler__dango, .v2-fan__rib { transition: none !important; }
+  .v2-era__thumb img, .v2-work__img img, .v2-ruler__dango { transition: none !important; }
 }
 
 /* Header on the dark v2 timeline (the logo file is the dark one on this route) */

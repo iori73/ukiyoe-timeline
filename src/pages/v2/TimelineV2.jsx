@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useLanguage } from '../../context/LanguageContext'
-import { usePeriods, slotsForPeriod, newSlotsForPeriod, getArtworksForPeriod, field, t, sourceOf, sized, CANONICAL_SLOTS } from './v2Data'
+import { useNoindex, usePeriods, slotsForPeriod, newSlotsForPeriod, getArtworksForPeriod, field, t, sourceOf, sized, CANONICAL_SLOTS } from './v2Data'
 import SlotStrip from './SlotStrip'
 import LanguageToggle from '../../components/LanguageToggle'
 import { Hishi, Fan, EraNumber } from './Marks'
@@ -192,6 +192,7 @@ export default function TimelineV2() {
   const [active, setActive] = useState(null)
   const [open, setOpen] = useState(null) // { era, index }
 
+  useNoindex()
   useEffect(() => {
     document.body.classList.add('v2-dark')
     return () => document.body.classList.remove('v2-dark')
@@ -265,9 +266,9 @@ export default function TimelineV2() {
               </div>
               <details className="v2-era-sec__more">
                 <summary>
-                  {t(lang, 'この時代の背景を読む', 'Read the background')}
-                  {/* folded fan while shut, spread fan while open (the owner's drawing, Figma 168:65) */}
+                  {/* folded fan while shut, spread fan while open (owner: icon on the left of the text) */}
                   <Fan className="v2-fanmark" />
+                  {t(lang, 'この時代の背景を読む', 'Read the background')}
                 </summary>
                 <dl>
                   <dt>{t(lang, '背景', 'Background')}</dt><dd>{field(p, 'background', lang)}</dd>
