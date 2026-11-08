@@ -1,7 +1,7 @@
 /**
  * Small marks drawn by the owner in Figma (portfolio_v6, ukiyoe-timeline page):
  * - Hishi: the flat lozenge for "colour appearing for the first time" (168:56 / 168:376)
- * - FanClosed / FanOpened: the open/close mark for the era background (168:65)
+ * - Fan: the open/close mark for the era background (168:65)
  * - eraNumber: era numbers as kanji numerals in Japanese (169:395), 01 in English
  */
 
@@ -13,18 +13,23 @@ export function Hishi({ className = '' }) {
   )
 }
 
-export function FanClosed({ className = '' }) {
+/**
+ * Folding fan for the open/close control (owner's drawing, Figma 168:65: a 120° fan with the
+ * paper starting away from the pivot). Six ribs; closed = gathered into a narrow ~50° fan so it
+ * still reads as a fan (the 5px sliver of the first version did not), open = spread to 120°.
+ * The spread is CSS (v2.css .v2-fan__rib), slow and one rib after another.
+ */
+const RIBS = [-50, -30, -10, 10, 30, 50]
+export function Fan({ className = '' }) {
   return (
-    <svg className={`v2-fan v2-fan--closed ${className}`} viewBox="100 9 22 92" width="6" height="24" aria-hidden="true" focusable="false">
-      <path fill="currentColor" d="M120.358 10.4528C114.104 9.79557 107.803 9.72958 101.537 10.2557L109.068 99.9401C109.695 99.8875 110.325 99.8941 110.95 99.9598L120.358 10.4528Z" />
-    </svg>
-  )
-}
-
-export function FanOpened({ className = '' }) {
-  return (
-    <svg className={`v2-fan v2-fan--opened ${className}`} viewBox="13 0 177 87" width="40" height="20" aria-hidden="true" focusable="false">
-      <path fill="currentColor" d="M189.1 54.601C180.97 38.6441 168.703 25.1633 153.582 15.5673C138.461 5.97121 121.041 0.611946 103.141 0.0494148C85.2407 -0.513117 67.518 3.74172 51.8243 12.3694C36.1306 20.9971 23.0419 33.681 13.9255 49.0959L74.1774 84.7288C76.9123 80.1043 80.839 76.2992 85.5471 73.7109C90.2552 71.1226 95.572 69.8461 100.942 70.0149C106.312 70.1836 111.538 71.7914 116.075 74.6702C120.611 77.549 124.291 81.5933 126.73 86.3803L189.1 54.601Z" />
+    <svg className={`v2-fan ${className}`} viewBox="0 0 40 23" width="40" height="23" aria-hidden="true" focusable="false">
+      {RIBS.map((deg, i) => (
+        <g key={deg} className="v2-fan__rib" style={{ '--i': i, '--open': `${deg}deg`, '--closed': `${deg * 0.3}deg` }}>
+          <line x1="20" y1="21" x2="19.4" y2="15.2" stroke="currentColor" strokeWidth="0.8" />
+          <path d="M16.527 1.304 A20 20 0 0 1 23.473 1.304 L21.042 15.091 A6 6 0 0 0 18.958 15.091 Z" />
+        </g>
+      ))}
+      <circle cx="20" cy="21" r="1.6" fill="currentColor" />
     </svg>
   )
 }

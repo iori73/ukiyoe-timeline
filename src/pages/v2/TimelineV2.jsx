@@ -4,7 +4,7 @@ import { useLanguage } from '../../context/LanguageContext'
 import { usePeriods, slotsForPeriod, newSlotsForPeriod, getArtworksForPeriod, field, t, sourceOf, sized, CANONICAL_SLOTS } from './v2Data'
 import SlotStrip from './SlotStrip'
 import LanguageToggle from '../../components/LanguageToggle'
-import { Hishi, FanClosed, FanOpened, EraNumber } from './Marks'
+import { Hishi, Fan, EraNumber } from './Marks'
 import './v2.css'
 
 /**
@@ -47,9 +47,18 @@ function EraRuler({ periods, active, lang, onJump }) {
     const btn = nav.querySelector('.v2-ruler__stop.is-active')
     if (!btn) return
     const track = btn.offsetParent
-    const left = (track?.offsetLeft ?? 0) + btn.offsetLeft + btn.offsetWidth / 2 - nav.clientWidth / 2
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    nav.scrollTo({ left: Math.max(0, left), behavior: reduce ? 'auto' : 'smooth' })
+    const target = Math.max(0, Math.min(nav.scrollWidth - nav.clientWidth,
+      (track?.offsetLeft ?? 0) + btn.offsetLeft + btn.offsetWidth / 2 - nav.clientWidth / 2))
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { nav.scrollLeft = target; return undefined }
+    // An unhurried glide (owner: the browser's smooth scroll felt abrupt): 900ms, ease-in-out.
+    const from = nav.scrollLeft, dist = target - from, dur = 900, t0 = performance.now()
+    const ease = (x) => (x < 0.5 ? 4 * x * x * x : 1 - (-2 * x + 2) ** 3 / 2)
+    let raf = requestAnimationFrame(function stepFrame(now) {
+      const p = Math.min(1, (now - t0) / dur)
+      nav.scrollLeft = from + dist * ease(p)
+      if (p < 1) raf = requestAnimationFrame(stepFrame)
+    })
+    return () => cancelAnimationFrame(raf)
   }, [active])
 
   return (
@@ -257,8 +266,8 @@ export default function TimelineV2() {
               <details className="v2-era-sec__more">
                 <summary>
                   {t(lang, 'この時代の背景を読む', 'Read the background')}
-                  {/* closed fan while shut, opened fan while open (the owner's drawing, Figma 168:65) */}
-                  <span className="v2-fanmark" aria-hidden="true"><FanClosed /><FanOpened /></span>
+                  {/* folded fan while shut, spread fan while open (the owner's drawing, Figma 168:65) */}
+                  <Fan className="v2-fanmark" />
                 </summary>
                 <dl>
                   <dt>{t(lang, '背景', 'Background')}</dt><dd>{field(p, 'background', lang)}</dd>
