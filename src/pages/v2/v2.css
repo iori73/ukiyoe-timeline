@@ -1,0 +1,244 @@
+/* ==========================================================================
+   Redesign v2 prototype (2026-11-07). Routes: /v2, /v2/timeline.
+   Tokens only (App.css): --washi, --sumi-iro, --period-*, --space-*, --type-*,
+   --font-serif / --font-sans, --ease-ukiyoe, --duration-*.
+   ========================================================================== */
+
+/* ---------- Shared: 9-slot strip ---------- */
+/* Sizes raised 2026-11-08 (owner: "too small to read"): chip 24px (sm 16px), labels 13px. */
+.v2-slots { display: flex; gap: 6px; align-items: flex-end; padding-top: 12px; }
+.v2-slot { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.v2-slot__chip {
+  display: block;
+  width: 24px; height: 24px;
+  box-shadow: inset 0 0 0 1px currentColor;
+  opacity: 0.32; /* unused slot = ghost */
+}
+.v2-slots--sm .v2-slot__chip { width: 16px; height: 16px; }
+.v2-slot.is-on .v2-slot__chip { opacity: 1; box-shadow: none; }
+/* first appearance: the owner's flat lozenge above the chip */
+.v2-slot__new { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); width: 12px; height: 7px; color: currentColor; }
+.v2-hishi { display: inline-block; fill: currentColor; }
+.v2-hishi--inline { width: 14px; height: 8px; vertical-align: middle; }
+.v2-slot__label { font-size: 13px; letter-spacing: 0.02em; opacity: 0.9; white-space: nowrap; }
+
+/* Era number in a hairline square: kanji in Japanese, two digits in English (both boxed) */
+.v2-num {
+  display: inline-grid; place-items: center;
+  min-width: 1.9em; height: 1.9em; padding: 0 0.25em;
+  border: 1px solid currentColor; line-height: 1;
+  font-family: var(--font-serif); font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   TOP (/v2)
+   ========================================================================== */
+
+/* Era index */
+.v2-eras { background: var(--washi); padding: var(--space-3xl) var(--space-xl); color: var(--sumi-iro); }
+.v2-eras__head { max-width: 1100px; margin: 0 auto var(--space-xl); }
+.v2-eras__title { font-family: var(--font-serif); font-size: var(--type-title-xl); font-weight: 500; margin: 0 0 var(--space-xs); }
+.v2-eras__lead { font-size: var(--type-body-md); line-height: 1.8; color: rgba(45, 45, 45, 0.8); margin: 0; }
+.v2-eras__grid {
+  list-style: none; margin: 0 auto; padding: 0; max-width: 1100px;
+  /* columns follow the number of eras and the screen width (7 eras → 4 + 3 on desktop) */
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--space-md);
+}
+.v2-era {
+  display: grid; gap: var(--space-xs); padding-bottom: var(--space-sm);
+  color: inherit; text-decoration: none; border-bottom: 1px solid rgba(45, 45, 45, 0.25);
+}
+.v2-era:focus-visible { outline: 2px solid var(--ai-iro); outline-offset: 4px; }
+.v2-era__thumb { display: block; aspect-ratio: 4 / 3; overflow: hidden; background: #e6dfd2; }
+.v2-era__thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--duration-slow) var(--ease-ukiyoe); }
+.v2-era:hover .v2-era__thumb img { transform: scale(1.03); }
+.v2-era__meta { display: flex; gap: var(--space-sm); font-size: 13px; color: rgba(45, 45, 45, 0.7); }
+.v2-era__num { font-family: var(--font-serif); }
+.v2-era__name { font-family: var(--font-serif); font-size: var(--type-title-sm); line-height: 1.5; }
+/* inside an era tile the strip fits the tile width (9 equal columns, chips up to 16px) */
+.v2-era .v2-slots { display: grid; grid-template-columns: repeat(9, minmax(0, 16px)); gap: 4px; }
+.v2-era .v2-slot__chip { width: 100%; height: auto; aspect-ratio: 1; }
+
+@media (max-width: 900px) {
+  .v2-eras { padding: var(--space-2xl) var(--space-md); }
+  .v2-eras__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-sm); }
+}
+
+/* ==========================================================================
+   TIMELINE (/v2/timeline)
+   ========================================================================== */
+.v2-tl {
+  /* guard: content wider than the screen must not widen the page — that stretched the fixed
+     header and pushed the language toggle off screen in English (2026-11-08) */
+  overflow-x: clip;
+  min-height: 100vh; background: var(--sumi-iro); color: var(--washi);
+  padding-bottom: var(--space-4xl);
+}
+.v2-tl a { color: inherit; }
+.v2-tl__intro { max-width: 1100px; margin: 0 auto; padding: 160px var(--space-xl) var(--space-xl); }
+.v2-tl__kicker { font-family: var(--font-serif); letter-spacing: 0.12em; opacity: 0.7; margin: 0 0 var(--space-xs); }
+.v2-tl__title { font-family: var(--font-serif); font-size: var(--type-title-xl); font-weight: 500; margin: 0 0 var(--space-sm); }
+.v2-tl__lead { font-size: var(--type-body-md); line-height: 1.9; max-width: 44em; margin: 0 0 var(--space-lg); color: rgba(245, 240, 230, 0.86); }
+.v2-tl__legend { display: flex; flex-wrap: wrap; gap: var(--space-md); align-items: flex-end; font-size: 13px; color: rgba(245, 240, 230, 0.75); }
+.v2-tl .v2-slot { color: var(--washi); }
+/* the 9-label legend wraps: English names (Gold / Ochre, Prussian Blue…) are too wide for a phone */
+.v2-tl__legend .v2-slots { flex-wrap: wrap; row-gap: var(--space-sm); }
+
+/* Header: same as the live /timeline, but on a solid ground so nothing shows between it and the ruler */
+.v2-tl__header { background: var(--sumi-iro); }
+
+/* Body: PC = ruler column on the left + eras; phone = ruler strip on top (see media query) */
+.v2-tl__body { display: grid; grid-template-columns: 152px minmax(0, 1fr); align-items: start; }
+.v2-tl__eras { min-width: 0; }
+
+/* Time ruler — PC: vertical. Time runs down, the same way the page scrolls (2026-11-08, owner's note). */
+.v2-ruler {
+  position: sticky; top: var(--v2-header-h, 96px); z-index: 900; align-self: start;
+  height: calc(100vh - var(--v2-header-h, 96px)); padding: var(--space-lg) 0;
+  box-sizing: border-box;
+}
+.v2-ruler__track { position: relative; height: 100%; }
+/* the line runs through the centre of the dots (x = 42px) */
+.v2-ruler__line { position: absolute; top: 0; bottom: 0; left: 42px; width: 1px; background: rgba(245, 240, 230, 0.4); }
+.v2-ruler__stop {
+  position: absolute; top: var(--pos); left: 36px; transform: translateY(-50%);
+  display: flex; align-items: center; gap: 10px;
+  min-height: 44px; padding: 0; min-width: 44px;
+  background: none; border: 0; color: rgba(245, 240, 230, 0.75); cursor: pointer;
+  font-family: var(--font-serif); font-size: 14px;
+}
+.v2-ruler__stop.is-alt .v2-ruler__year { margin-left: 40px; }
+.v2-ruler__dango {
+  flex: none; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--sumi-iro); box-shadow: inset 0 0 0 1.5px var(--washi);
+  /* slower change of the current era (owner: too abrupt) */
+  transition: transform 600ms var(--ease-ukiyoe), background-color 600ms var(--ease-ukiyoe);
+}
+.v2-ruler__stop:hover .v2-ruler__dango { transform: scale(1.25); }
+.v2-ruler__stop { transition: color 600ms var(--ease-ukiyoe); }
+.v2-ruler__stop.is-active { color: var(--washi); }
+.v2-ruler__stop.is-active .v2-ruler__dango { background: var(--washi); transform: scale(1.5); }
+.v2-ruler__stop:focus-visible { outline: 2px solid var(--washi); outline-offset: 2px; }
+.v2-ruler__sr { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+
+/* Era sections */
+.v2-era-sec { max-width: 1100px; margin: 0 auto; padding: var(--space-3xl) var(--space-xl) 0; scroll-margin-top: calc(var(--v2-header-h, 96px) + 16px); }
+.v2-era-sec__head { display: grid; grid-template-columns: auto auto 1fr; gap: var(--space-xs) var(--space-md); align-items: baseline; margin-bottom: var(--space-xl); }
+.v2-era-sec__num { font-family: var(--font-serif); font-size: var(--type-title-md); opacity: 0.85; }
+.v2-era-sec__years { font-family: var(--font-serif); font-size: var(--type-title-sm); letter-spacing: 0.06em; }
+.v2-era-sec__title { grid-column: 1 / -1; font-family: var(--font-serif); font-size: var(--type-title-xl); font-weight: 500; margin: var(--space-xs) 0 0; line-height: 1.4; }
+.v2-era-sec__artists { grid-column: 1 / -1; margin: 0; color: rgba(245, 240, 230, 0.75); font-size: var(--type-body-md); }
+.v2-era-sec__palette { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--space-md); align-items: center; margin-top: var(--space-sm); }
+.v2-era-sec__fresh { font-size: 13px; color: rgba(245, 240, 230, 0.85); }
+.v2-era-sec__more { grid-column: 1 / -1; margin-top: var(--space-sm); }
+.v2-era-sec__more summary {
+  display: inline-flex; align-items: center; gap: 10px;
+  /* side padding 16px (owner: 24px was too wide) */
+  min-height: 44px; padding: 0 var(--space-sm); cursor: pointer; list-style: none;
+  border: 1px solid rgba(245, 240, 230, 0.6); font-size: 14px;
+}
+.v2-era-sec__more summary::-webkit-details-marker { display: none; }
+/* open/close mark: a folding fan drawn and animated in Marks.jsx (Fan). Pleats alternate
+   mountain/valley tones; guard sticks and the rivet sit on top. */
+.v2-fanmark { width: 40px; height: 23px; flex: none; overflow: visible; }
+.v2-fan__pleat.is-mountain { fill: var(--washi); }
+.v2-fan__pleat.is-valley { fill: rgba(245, 240, 230, 0.8); }
+.v2-fan__ribs { fill: none; stroke: rgba(245, 240, 230, 0.75); stroke-width: 0.5; }
+.v2-fan__guards { fill: none; stroke: var(--washi); stroke-width: 1.3; stroke-linecap: round; }
+.v2-fan__rivet { fill: var(--sumi-iro); stroke: var(--washi); stroke-width: 0.9; }
+.v2-era-sec__more summary:focus-visible { outline: 2px solid var(--washi); outline-offset: 2px; }
+.v2-era-sec__more dl { display: grid; grid-template-columns: 8em 1fr; gap: var(--space-sm) var(--space-md); max-width: 52em; margin: var(--space-md) 0 0; line-height: 1.9; }
+.v2-era-sec__more dt { color: rgba(245, 240, 230, 0.65); font-size: 13px; padding-top: 3px; }
+.v2-era-sec__more dd { margin: 0; color: rgba(245, 240, 230, 0.9); }
+
+/* Works: natural proportions, a loose staggered run (a print seller's front, not a grid) */
+.v2-works { list-style: none; margin: 0; padding: 0; columns: 3; column-gap: var(--space-xl); }
+.v2-work { break-inside: avoid; margin: 0 0 var(--space-xl); padding-top: var(--stagger, 0); }
+.v2-work__btn { display: grid; gap: 6px; width: 100%; padding: 0; background: none; border: 0; color: inherit; text-align: left; cursor: zoom-in; font: inherit; }
+.v2-work__img { display: block; background: rgba(245, 240, 230, 0.06); }
+.v2-work__img img { display: block; width: 100%; height: auto; transition: transform var(--duration-slow) var(--ease-ukiyoe); }
+.v2-work__btn:hover .v2-work__img img { transform: translateY(-4px); }
+.v2-work__btn:focus-visible { outline: 2px solid var(--washi); outline-offset: 4px; }
+.v2-work__title { font-family: var(--font-serif); font-size: var(--type-title-sm); line-height: 1.5; }
+.v2-work__artist { font-size: 13px; color: rgba(245, 240, 230, 0.7); }
+.v2-work__year { font-size: 12px; color: rgba(245, 240, 230, 0.55); font-variant-numeric: tabular-nums; }
+
+/* Palette summary */
+.v2-summary { max-width: 1100px; margin: var(--space-4xl) auto 0; padding: 0 var(--space-xl); }
+.v2-summary__title { font-family: var(--font-serif); font-size: var(--type-title-xl); font-weight: 500; margin: 0 0 var(--space-lg); }
+.v2-summary__rows { list-style: none; margin: 0 0 var(--space-2xl); padding: 0; display: grid; gap: 14px; }
+.v2-summary__rows a { display: grid; grid-template-columns: 9em 1fr; align-items: center; text-decoration: none; min-height: 44px; }
+.v2-summary__years { font-family: var(--font-serif); }
+.v2-summary__back {
+  display: inline-flex; align-items: center; min-height: 56px; padding: 0 var(--space-lg);
+  background: var(--washi); color: var(--sumi-iro) !important; text-decoration: none; font-family: var(--font-serif);
+}
+
+/* Detail sheet: side sheet on PC, bottom sheet on SP */
+.v2-sheet { position: fixed; inset: 0; z-index: 1200; }
+.v2-sheet__scrim { position: absolute; inset: 0; border: 0; background: rgba(20, 20, 20, 0.5); cursor: pointer; }
+.v2-sheet__panel {
+  position: absolute; top: 0; right: 0; bottom: 0; width: min(520px, 100%);
+  overflow-y: auto; padding: var(--space-lg);
+  /* dark like the page, one step lighter so it reads as a layer (owner: the washi sheet was a jolt) */
+  background: #3a3734; color: var(--washi);
+  box-shadow: -12px 0 32px rgba(0, 0, 0, 0.35);
+  animation: v2-sheet-in var(--duration-slow) var(--ease-ukiyoe);
+}
+@keyframes v2-sheet-in { from { transform: translateX(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+.v2-sheet__bar { display: flex; justify-content: space-between; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-md); }
+.v2-sheet__era { font-size: 13px; color: rgba(245, 240, 230, 0.75); }
+.v2-sheet__close { min-width: 44px; min-height: 44px; border: 1px solid rgba(245, 240, 230, 0.7); background: none; font-size: 22px; cursor: pointer; color: var(--washi); }
+.v2-sheet__close:focus-visible, .v2-sheet__nav button:focus-visible, .v2-sheet__credit a:focus-visible { outline: 2px solid var(--washi); outline-offset: 2px; }
+.v2-sheet__img { background: rgba(245, 240, 230, 0.05); display: flex; justify-content: center; }
+.v2-sheet__img img { max-width: 100%; max-height: 60vh; object-fit: contain; }
+.v2-sheet__title { font-family: var(--font-serif); font-size: var(--type-title-lg); font-weight: 500; margin: var(--space-md) 0 4px; }
+.v2-sheet__artist { margin: 0 0 var(--space-md); color: rgba(245, 240, 230, 0.75); }
+.v2-sheet__year { margin-left: 0.75em; font-variant-numeric: tabular-nums; }
+.v2-sheet__desc { line-height: 1.9; margin: 0 0 var(--space-md); color: rgba(245, 240, 230, 0.9); }
+.v2-sheet__credit { font-size: 13px; color: rgba(245, 240, 230, 0.75); margin: 0 0 var(--space-lg); }
+.v2-sheet__credit a { color: var(--washi); }
+.v2-sheet__nav { display: flex; justify-content: space-between; align-items: center; gap: var(--space-sm); font-size: 13px; }
+.v2-sheet__nav button { min-height: 44px; padding: 0 var(--space-md); border: 1px solid rgba(245, 240, 230, 0.7); background: none; cursor: pointer; color: var(--washi); font: inherit; }
+
+@media (max-width: 900px) {
+  .v2-tl__intro { padding: 128px var(--space-md) var(--space-lg); }
+  /* Phone: the ruler is a horizontal strip stuck flush under the header (height measured in JS),
+     scrolling itself so the current era stays in the middle (TimelineV2 EraRuler). */
+  .v2-tl__body { display: block; }
+  .v2-ruler {
+    top: var(--v2-header-h, 80px); height: auto; padding: var(--space-xs) 0;
+    overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
+    background: var(--sumi-iro); border-bottom: 1px solid rgba(245, 240, 230, 0.15);
+  }
+  .v2-ruler::-webkit-scrollbar { display: none; }
+  .v2-ruler__track { min-width: 680px; height: 56px; margin: 0 var(--space-lg); }
+  /* line through the dot centres: padding 4px + dot 12px / 2 = 10px */
+  .v2-ruler__line { top: 10px; bottom: auto; left: 0; right: 0; width: auto; height: 1px; }
+  .v2-ruler__stop {
+    top: 0; left: var(--pos); transform: translateX(-50%);
+    flex-direction: column; gap: 6px; padding: 4px 0 0; font-size: 13px;
+  }
+  .v2-ruler__stop.is-alt .v2-ruler__year { margin-left: 0; transform: translateY(16px); }
+  .v2-era-sec { padding: var(--space-2xl) var(--space-md) 0; scroll-margin-top: calc(var(--v2-header-h, 80px) + 76px); }
+  .v2-era-sec__more dl { grid-template-columns: 1fr; gap: 4px; }
+  .v2-era-sec__more dd { margin-bottom: var(--space-sm); }
+  .v2-works { columns: 2; column-gap: var(--space-md); }
+  .v2-work { margin-bottom: var(--space-lg); padding-top: calc(var(--stagger, 0px) / 2); }
+  .v2-summary { padding: 0 var(--space-md); }
+  .v2-summary__rows a { grid-template-columns: 1fr; gap: 6px; }
+  .v2-sheet__panel {
+    top: auto; left: 0; right: 0; width: 100%; max-height: 88vh;
+    border-radius: 12px 12px 0 0; animation-name: v2-sheet-up;
+  }
+  @keyframes v2-sheet-up { from { transform: translateY(32px); opacity: 0; } to { transform: none; opacity: 1; } }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-sheet__panel { animation: none; }
+  .v2-era__thumb img, .v2-work__img img, .v2-ruler__dango { transition: none !important; }
+}
+
+/* Header on the dark v2 timeline (the logo file is the dark one on this route) */
+body.v2-dark .header .logo-kanji-image { filter: brightness(0) invert(1); }
+body.v2-dark .language-toggle { --lang-line: var(--washi); --lang-edge: transparent; }

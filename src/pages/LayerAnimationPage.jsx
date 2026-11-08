@@ -6,6 +6,8 @@ import LanguageToggle from '../components/LanguageToggle'
 import { useLanguage } from '../context/LanguageContext'
 import { TECHNIQUES } from '../data/techniques'
 import './LayerAnimationPage.css'
+import { EraIndex } from './v2/TopAdditions'
+import { useNoindex } from './v2/v2Data'
 
 // ============================================================
 // Asset paths
@@ -696,8 +698,14 @@ function NishikieMultiLayerAnimation() {
 // ============================================================
 // Page
 // ============================================================
-export default function LayerAnimationPage() {
+/**
+ * variant="v2" (route /v2) adds the redesign prototype's sections
+ * (entry points, palette rail, era index). Without it the page is unchanged.
+ */
+export default function LayerAnimationPage({ variant } = {}) {
   const { language } = useLanguage()
+  const isV2 = variant === 'v2'
+  useNoindex(isV2)
   const heroVisualRef = useRef(null)
   const [heroVisible, setHeroVisible] = useState(false)
 
@@ -863,6 +871,8 @@ export default function LayerAnimationPage() {
         </div>
       </section>
 
+      {/* v2 (2026-11-08, owner): the two entry cards and the sticky palette rail were removed —
+          the technique scenes run as before on both / and /v2. */}
       {/* 黒摺絵（静止） */}
       <SumizurieStatic />
 
@@ -871,6 +881,8 @@ export default function LayerAnimationPage() {
 
       {/* 錦絵アニメーション */}
       <NishikieMultiLayerAnimation />
+
+      {isV2 && <EraIndex lang={language} />}
 
       {/* フッター */}
       <section className="layer-anim__footer">
@@ -881,7 +893,7 @@ export default function LayerAnimationPage() {
             ))}
           </div>
           <nav className="layer-anim__footer-nav">
-            <Link to="/timeline" className="layer-anim__nav-link">
+            <Link to={isV2 ? '/v2/timeline' : '/timeline'} className="layer-anim__nav-link">
               <span className="layer-anim__nav-link-text">
                 {language === 'ja' ? '時代ごとの作品を見る' : 'Browse works by era'}
               </span>
