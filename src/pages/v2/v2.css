@@ -69,7 +69,8 @@
 .v2-eras__lead { font-size: var(--type-body-md); line-height: 1.8; color: rgba(45, 45, 45, 0.8); margin: 0; }
 .v2-eras__grid {
   list-style: none; margin: 0 auto; padding: 0; max-width: 1100px;
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md);
+  /* columns follow the number of eras and the screen width (7 eras → 4 + 3 on desktop) */
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--space-md);
 }
 .v2-era {
   display: grid; gap: var(--space-xs); padding-bottom: var(--space-sm);
@@ -174,6 +175,7 @@
 .v2-work__btn:focus-visible { outline: 2px solid var(--washi); outline-offset: 4px; }
 .v2-work__title { font-family: var(--font-serif); font-size: var(--type-title-sm); line-height: 1.5; }
 .v2-work__artist { font-size: 13px; color: rgba(245, 240, 230, 0.7); }
+.v2-work__year { font-size: 12px; color: rgba(245, 240, 230, 0.55); font-variant-numeric: tabular-nums; }
 
 /* Palette summary */
 .v2-summary { max-width: 1100px; margin: var(--space-4xl) auto 0; padding: 0 var(--space-xl); }
@@ -204,6 +206,7 @@
 .v2-sheet__img img { max-width: 100%; max-height: 60vh; object-fit: contain; }
 .v2-sheet__title { font-family: var(--font-serif); font-size: var(--type-title-lg); font-weight: 500; margin: var(--space-md) 0 4px; }
 .v2-sheet__artist { margin: 0 0 var(--space-md); color: rgba(45, 45, 45, 0.75); }
+.v2-sheet__year { margin-left: 0.75em; font-variant-numeric: tabular-nums; }
 .v2-sheet__desc { line-height: 1.9; margin: 0 0 var(--space-md); }
 .v2-sheet__credit { font-size: 13px; color: rgba(45, 45, 45, 0.75); margin: 0 0 var(--space-lg); }
 .v2-sheet__nav { display: flex; justify-content: space-between; align-items: center; gap: var(--space-sm); font-size: 13px; }

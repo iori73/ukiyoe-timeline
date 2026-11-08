@@ -20,7 +20,9 @@ import './v2.css'
  */
 
 function EraRuler({ periods, active, lang, onJump }) {
-  const first = 1670, last = 1850
+  // The ruler spans the data (first era start → last era end), so any set of eras fits.
+  const first = Math.min(...periods.map((p) => +p.year_start))
+  const last = Math.max(...periods.map((p) => +(p.year_end || p.year_start)))
   // Eras only a few years apart (1750 / 1765 / 1770) would print their years on top of each
   // other; drop every other one in a close run onto a second line.
   const lows = periods.reduce((acc, p) => {
@@ -65,6 +67,7 @@ function ArtworkCard({ art, lang, onOpen, index }) {
         </span>
         <span className="v2-work__title">{t(lang, art.title_ja, art.title_en)}</span>
         <span className="v2-work__artist">{t(lang, art.artist_ja, art.artist_en)}</span>
+        {art.year && <span className="v2-work__year">{art.year}</span>}
       </button>
     </li>
   )
@@ -97,9 +100,21 @@ function ArtworkSheet({ item, lang, onClose, onStep, eraLabel }) {
         </div>
         <div className="v2-sheet__img"><img src={sized(art.url, 1280)} alt={t(lang, art.title_ja, art.title_en)} onError={(e) => { if (e.currentTarget.src !== art.url) e.currentTarget.src = art.url }} /></div>
         <h3 className="v2-sheet__title">{t(lang, art.title_ja, art.title_en)}</h3>
-        <p className="v2-sheet__artist">{t(lang, art.artist_ja, art.artist_en)}</p>
+        <p className="v2-sheet__artist">
+          {t(lang, art.artist_ja, art.artist_en)}
+          {art.year && <span className="v2-sheet__year">{art.year}</span>}
+        </p>
         <p className="v2-sheet__desc">{t(lang, art.description_ja, art.description_en)}</p>
-        {src && (
+        {art.collection ? (
+          // New-format records carry the holding museum, accession number and licence.
+          <p className="v2-sheet__credit">
+            {art.source_url
+              ? <a href={art.source_url} target="_blank" rel="noopener noreferrer">{art.collection}</a>
+              : art.collection}
+            {art.accession && ` ${art.accession}`}
+            {art.license && ` · ${art.license}`}
+          </p>
+        ) : src && (
           <p className="v2-sheet__credit">
             {t(lang, '画像: ', 'Image: ')}
             <a href={src.url} target="_blank" rel="noopener noreferrer">{src.name}</a>
@@ -160,8 +175,8 @@ export default function TimelineV2() {
         <p className="v2-tl__kicker">{t(lang, '1670 — 1850', '1670 — 1850')}</p>
         <h1 className="v2-tl__title">{t(lang, '時代ごとの作品', 'Prints by era')}</h1>
         <p className="v2-tl__lead">
-          {t(lang, '浮世絵の多くは、町の人が気軽に買った刷り物でした。9つの時代の45点を、色が一つずつ増えていく順に並べています。',
-            'Most ukiyo-e were prints that townspeople bought casually. Here are 45 works across nine eras, in the order the palette grew.')}
+          {t(lang, `浮世絵の多くは、町の人が気軽に買った刷り物でした。${periods.length}つの時代の${flat.length}点を、色が一つずつ増えていく順に並べています。`,
+            `Most ukiyo-e were prints that townspeople bought casually. Here are ${flat.length} works across ${periods.length} eras, in the order the palette grew.`)}
         </p>
         <div className="v2-tl__legend">
           <SlotStrip active={CANONICAL_SLOTS.map((s) => s.id)} lang={lang} size="sm" showLabels label={t(lang, '9色の枠', 'The nine colour slots')} />

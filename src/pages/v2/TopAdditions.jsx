@@ -12,6 +12,10 @@ import './v2.css'
 
 /** Two ways in, said up front (the case study notes first-time visitors were lost without context). */
 export function EntryPoints({ lang }) {
+  // Counts come from the data so the copy stays true when eras or works change.
+  const periods = usePeriods()
+  const works = periods.reduce((n, p) => n + getArtworksForPeriod(p.year_start).length, 0)
+  const span = periods.length ? `${periods[0].year_start}–${periods[periods.length - 1].year_end || periods[periods.length - 1].year_start}` : ''
   return (
     <section className="v2-entry" aria-label={t(lang, 'このサイトの見方', 'How to use this site')}>
       <a className="v2-entry__card" href="#v2-techniques">
@@ -27,8 +31,8 @@ export function EntryPoints({ lang }) {
         <span className="v2-entry__num">02</span>
         <span className="v2-entry__title">{t(lang, '時代ごとに作品を見る', 'Browse prints by era')}</span>
         <span className="v2-entry__text">
-          {t(lang, '1670年から1850年までの9つの時代、45点。色が一つずつ増えていく流れを追えます。',
-            'Nine eras from 1670 to 1850, 45 prints. Follow how the palette grows, one colour at a time.')}
+          {t(lang, `${span}年の${periods.length}つの時代、${works}点。色が一つずつ増えていく流れを追えます。`,
+            `${periods.length} eras, ${span}, ${works} prints. Follow how the palette grows, one colour at a time.`)}
         </span>
         <span className="v2-entry__go" aria-hidden="true">→</span>
       </Link>
