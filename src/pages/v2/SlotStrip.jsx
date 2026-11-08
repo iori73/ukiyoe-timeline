@@ -1,9 +1,11 @@
 import { CANONICAL_SLOTS, t } from './v2Data'
+import { Hishi } from './Marks'
 
 /**
  * The 9-slot palette as a strip: used slots are filled, unused ones stay as a
  * hairline ghost. Same order everywhere (墨 → 肌/紙), so "colours being added
- * over time" reads left-to-right on both pages.
+ * over time" reads left-to-right on both pages. A colour that appears for the
+ * first time carries the owner's flat lozenge (Hishi) above it.
  */
 export default function SlotStrip({ active = [], fresh = [], lang, size = 'md', showLabels = false, label }) {
   return (
@@ -13,6 +15,7 @@ export default function SlotStrip({ active = [], fresh = [], lang, size = 'md', 
         const isNew = fresh.includes(s.id)
         return (
           <span key={s.id} className={`v2-slot${on ? ' is-on' : ''}${isNew ? ' is-new' : ''}`}>
+            {isNew && <Hishi className="v2-slot__new" />}
             <span className="v2-slot__chip" style={on ? { background: s.hex } : undefined} />
             {showLabels && <span className="v2-slot__label">{t(lang, s.label_ja, s.label_en)}</span>}
           </span>

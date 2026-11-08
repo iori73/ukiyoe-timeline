@@ -6,7 +6,7 @@ import LanguageToggle from '../components/LanguageToggle'
 import { useLanguage } from '../context/LanguageContext'
 import { TECHNIQUES } from '../data/techniques'
 import './LayerAnimationPage.css'
-import { EntryPoints, TechniqueStage, EraIndex } from './v2/TopAdditions'
+import { EraIndex } from './v2/TopAdditions'
 
 // ============================================================
 // Asset paths
@@ -869,26 +869,16 @@ export default function LayerAnimationPage({ variant } = {}) {
         </div>
       </section>
 
-      {isV2 && <EntryPoints lang={language} />}
+      {/* v2 (2026-11-08, owner): the two entry cards and the sticky palette rail were removed —
+          the technique scenes run as before on both / and /v2. */}
+      {/* 黒摺絵（静止） */}
+      <SumizurieStatic />
 
-      {isV2 ? (
-        <TechniqueStage lang={language}>
-          <SumizurieStatic />
-          <NishikieAnimation />
-          <NishikieMultiLayerAnimation />
-        </TechniqueStage>
-      ) : (
-        <>
-          {/* 黒摺絵（静止） */}
-          <SumizurieStatic />
+      {/* 紅摺絵アニメーション */}
+      <NishikieAnimation />
 
-          {/* 紅摺絵アニメーション */}
-          <NishikieAnimation />
-
-          {/* 錦絵アニメーション */}
-          <NishikieMultiLayerAnimation />
-        </>
-      )}
+      {/* 錦絵アニメーション */}
+      <NishikieMultiLayerAnimation />
 
       {isV2 && <EraIndex lang={language} />}
 

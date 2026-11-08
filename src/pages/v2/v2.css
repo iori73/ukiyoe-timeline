@@ -5,62 +5,34 @@
    ========================================================================== */
 
 /* ---------- Shared: 9-slot strip ---------- */
-.v2-slots { display: flex; gap: 4px; align-items: flex-end; }
-.v2-slot { position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+/* Sizes raised 2026-11-08 (owner: "too small to read"): chip 24px (sm 16px), labels 13px. */
+.v2-slots { display: flex; gap: 6px; align-items: flex-end; padding-top: 12px; }
+.v2-slot { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; }
 .v2-slot__chip {
   display: block;
-  width: 18px; height: 18px;
+  width: 24px; height: 24px;
   box-shadow: inset 0 0 0 1px currentColor;
-  opacity: 0.28; /* unused slot = ghost */
+  opacity: 0.32; /* unused slot = ghost */
 }
-.v2-slots--sm .v2-slot__chip { width: 12px; height: 12px; }
+.v2-slots--sm .v2-slot__chip { width: 16px; height: 16px; }
 .v2-slot.is-on .v2-slot__chip { opacity: 1; box-shadow: none; }
-.v2-slot.is-new::after {
-  content: '◆';
-  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
-  font-size: 8px; line-height: 1; color: currentColor;
+/* first appearance: the owner's flat lozenge above the chip */
+.v2-slot__new { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); width: 12px; height: 7px; color: currentColor; }
+.v2-hishi { display: inline-block; fill: currentColor; }
+.v2-hishi--inline { width: 14px; height: 8px; vertical-align: middle; }
+.v2-slot__label { font-size: 13px; letter-spacing: 0.02em; opacity: 0.9; white-space: nowrap; }
+
+/* Era number: kanji in a hairline square (JP), two digits (EN) */
+.v2-num { font-family: var(--font-serif); }
+.v2-num--kanji {
+  display: inline-grid; place-items: center;
+  min-width: 1.9em; height: 1.9em; padding: 0 0.2em;
+  border: 1px solid currentColor; line-height: 1;
 }
-.v2-slot__label { font-size: 10px; letter-spacing: 0.02em; opacity: 0.8; white-space: nowrap; }
 
 /* ==========================================================================
    TOP (/v2)
    ========================================================================== */
-
-/* Two ways in */
-.v2-entry {
-  display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md);
-  max-width: none; margin: 0; padding: 0 max(var(--space-xl), calc((100% - 1100px) / 2)) var(--space-3xl);
-  /* same ground as the description block above, so the two read as one band */
-  background: inherit;
-}
-.v2-entry__card {
-  position: relative; display: grid; gap: var(--space-xs);
-  padding: var(--space-lg); min-height: 180px;
-  color: var(--sumi-iro); text-decoration: none;
-  border: 1px solid rgba(45, 45, 45, 0.55);
-  transition: background-color var(--duration-normal) var(--ease-ukiyoe);
-}
-.v2-entry__card:hover { background: rgba(45, 45, 45, 0.05); }
-.v2-entry__card:focus-visible { outline: 2px solid var(--ai-iro); outline-offset: 3px; }
-.v2-entry__num { font-family: var(--font-serif); font-size: var(--type-title-sm); opacity: 0.6; }
-.v2-entry__title { font-family: var(--font-serif); font-size: var(--type-title-lg); }
-.v2-entry__text { font-size: var(--type-body-md); line-height: 1.8; color: rgba(45, 45, 45, 0.82); }
-.v2-entry__go { position: absolute; right: var(--space-lg); bottom: var(--space-lg); font-size: 24px; }
-
-/* Technique stage with sticky palette rail */
-.v2-stage { position: relative; display: grid; grid-template-columns: 1fr 220px; background: var(--washi); }
-.v2-stage__scenes { min-width: 0; }
-.v2-rail {
-  position: sticky; top: 140px; align-self: start;
-  display: grid; gap: var(--space-xs); justify-items: start;
-  margin: var(--space-2xl) var(--space-lg) var(--space-2xl) 0;
-  padding: var(--space-md);
-  color: var(--sumi-iro);
-  border-left: 2px solid var(--sumi-iro);
-}
-.v2-rail__label { font-size: 12px; letter-spacing: 0.08em; color: rgba(45, 45, 45, 0.7); }
-.v2-rail__tech { font-family: var(--font-serif); font-size: var(--type-title-md); }
-.v2-rail__count { font-size: 13px; color: rgba(45, 45, 45, 0.75); }
 
 /* Era index */
 .v2-eras { background: var(--washi); padding: var(--space-3xl) var(--space-xl); color: var(--sumi-iro); }
@@ -85,16 +57,6 @@
 .v2-era__name { font-family: var(--font-serif); font-size: var(--type-title-sm); line-height: 1.5; }
 
 @media (max-width: 900px) {
-  .v2-entry { grid-template-columns: 1fr; padding: 0 var(--space-md) var(--space-2xl); }
-  .v2-stage { grid-template-columns: 1fr; }
-  .v2-rail {
-    position: sticky; top: auto; bottom: 0; z-index: 5;
-    margin: 0; border-left: 0; border-top: 2px solid var(--sumi-iro);
-    grid-template-columns: auto 1fr; align-items: center; justify-items: start;
-    background: var(--washi-translucent);
-    grid-row: 2;
-  }
-  .v2-rail__label, .v2-rail__count { grid-column: 1 / -1; }
   .v2-eras { padding: var(--space-2xl) var(--space-md); }
   .v2-eras__grid { grid-template-columns: 1fr 1fr; gap: var(--space-sm); }
 }
@@ -114,28 +76,35 @@
 .v2-tl__legend { display: flex; flex-wrap: wrap; gap: var(--space-md); align-items: flex-end; font-size: 13px; color: rgba(245, 240, 230, 0.75); }
 .v2-tl .v2-slot { color: var(--washi); }
 
-/* Time ruler (sticky; kushi-dango stops on a line) */
+/* Header: same as the live /timeline, but on a solid ground so nothing shows between it and the ruler */
+.v2-tl__header { background: var(--sumi-iro); }
+
+/* Body: PC = ruler column on the left + eras; phone = ruler strip on top (see media query) */
+.v2-tl__body { display: grid; grid-template-columns: 152px minmax(0, 1fr); align-items: start; }
+.v2-tl__eras { min-width: 0; }
+
+/* Time ruler — PC: vertical. Time runs down, the same way the page scrolls (2026-11-08, owner's note). */
 .v2-ruler {
-  position: sticky; top: 0; z-index: 900;
-  height: 112px; display: flex; align-items: center;
-  padding: 0 136px; /* clear the fixed logo (left) and language toggle (right) */
-  background: linear-gradient(var(--sumi-iro) 70%, rgba(45, 45, 45, 0));
+  position: sticky; top: var(--v2-header-h, 96px); z-index: 900; align-self: start;
+  height: calc(100vh - var(--v2-header-h, 96px)); padding: var(--space-lg) 0;
+  box-sizing: border-box;
 }
-.v2-ruler__track { position: relative; width: 100%; height: 48px; }
-.v2-ruler__line { position: absolute; left: 0; right: 0; top: 14px; height: 1px; background: rgba(245, 240, 230, 0.4); }
+.v2-ruler__track { position: relative; height: 100%; }
+/* the line runs through the centre of the dots (x = 42px) */
+.v2-ruler__line { position: absolute; top: 0; bottom: 0; left: 42px; width: 1px; background: rgba(245, 240, 230, 0.4); }
 .v2-ruler__stop {
-  position: absolute; left: var(--x); top: 0; transform: translateX(-50%);
-  display: grid; justify-items: center; gap: 6px;
-  min-width: 44px; min-height: 44px; padding: 4px;
-  background: none; border: 0; color: rgba(245, 240, 230, 0.7); cursor: pointer;
-  font-family: var(--font-serif); font-size: 12px;
+  position: absolute; top: var(--pos); left: 36px; transform: translateY(-50%);
+  display: flex; align-items: center; gap: 10px;
+  min-height: 44px; padding: 0; min-width: 44px;
+  background: none; border: 0; color: rgba(245, 240, 230, 0.75); cursor: pointer;
+  font-family: var(--font-serif); font-size: 14px;
 }
+.v2-ruler__stop.is-alt .v2-ruler__year { margin-left: 40px; }
 .v2-ruler__dango {
-  width: 12px; height: 12px; border-radius: 50%;
+  flex: none; width: 12px; height: 12px; border-radius: 50%;
   background: var(--sumi-iro); box-shadow: inset 0 0 0 1.5px var(--washi);
   transition: transform var(--duration-normal) var(--ease-ukiyoe), background-color var(--duration-normal) var(--ease-ukiyoe);
 }
-.v2-ruler__stop.is-low .v2-ruler__year { transform: translateY(14px); }
 .v2-ruler__stop:hover .v2-ruler__dango { transform: scale(1.25); }
 .v2-ruler__stop.is-active { color: var(--washi); }
 .v2-ruler__stop.is-active .v2-ruler__dango { background: var(--washi); transform: scale(1.5); }
@@ -143,9 +112,9 @@
 .v2-ruler__sr { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 
 /* Era sections */
-.v2-era-sec { max-width: 1100px; margin: 0 auto; padding: var(--space-3xl) var(--space-xl) 0; scroll-margin-top: 112px; }
+.v2-era-sec { max-width: 1100px; margin: 0 auto; padding: var(--space-3xl) var(--space-xl) 0; scroll-margin-top: calc(var(--v2-header-h, 96px) + 16px); }
 .v2-era-sec__head { display: grid; grid-template-columns: auto auto 1fr; gap: var(--space-xs) var(--space-md); align-items: baseline; margin-bottom: var(--space-xl); }
-.v2-era-sec__num { font-family: var(--font-serif); font-size: var(--type-title-md); opacity: 0.6; }
+.v2-era-sec__num { font-family: var(--font-serif); font-size: var(--type-title-md); opacity: 0.85; }
 .v2-era-sec__years { font-family: var(--font-serif); font-size: var(--type-title-sm); letter-spacing: 0.06em; }
 .v2-era-sec__title { grid-column: 1 / -1; font-family: var(--font-serif); font-size: var(--type-title-xl); font-weight: 500; margin: var(--space-xs) 0 0; line-height: 1.4; }
 .v2-era-sec__artists { grid-column: 1 / -1; margin: 0; color: rgba(245, 240, 230, 0.75); font-size: var(--type-body-md); }
@@ -158,8 +127,13 @@
   border: 1px solid rgba(245, 240, 230, 0.6); font-size: 14px;
 }
 .v2-era-sec__more summary::-webkit-details-marker { display: none; }
-.v2-era-sec__more summary::after { content: '+'; font-size: 16px; }
-.v2-era-sec__more[open] summary::after { content: '−'; }
+/* open/close mark: a closed fan while shut, an opened fan while open (owner's drawing, Figma 168:65) */
+.v2-fanmark { display: inline-grid; place-items: end center; width: 40px; height: 20px; color: currentColor; }
+.v2-fanmark .v2-fan { grid-area: 1 / 1; transition: opacity var(--duration-normal) var(--ease-ukiyoe), transform var(--duration-normal) var(--ease-ukiyoe); transform-origin: 50% 100%; }
+.v2-fanmark .v2-fan--closed { width: 5px; height: 20px; }
+.v2-fanmark .v2-fan--opened { width: 40px; height: 20px; opacity: 0; transform: scaleX(0.15); }
+.v2-era-sec__more[open] .v2-fan--closed { opacity: 0; }
+.v2-era-sec__more[open] .v2-fan--opened { opacity: 1; transform: none; }
 .v2-era-sec__more summary:focus-visible { outline: 2px solid var(--washi); outline-offset: 2px; }
 .v2-era-sec__more dl { display: grid; grid-template-columns: 8em 1fr; gap: var(--space-sm) var(--space-md); max-width: 52em; margin: var(--space-md) 0 0; line-height: 1.9; }
 .v2-era-sec__more dt { color: rgba(245, 240, 230, 0.65); font-size: 13px; padding-top: 3px; }
@@ -214,12 +188,24 @@
 
 @media (max-width: 900px) {
   .v2-tl__intro { padding: 128px var(--space-md) var(--space-lg); }
+  /* Phone: the ruler is a horizontal strip stuck flush under the header (height measured in JS),
+     scrolling itself so the current era stays in the middle (TimelineV2 EraRuler). */
+  .v2-tl__body { display: block; }
   .v2-ruler {
-    top: 88px; height: auto; padding: var(--space-xs) var(--space-md);
-    overflow-x: auto; background: var(--sumi-iro);
+    top: var(--v2-header-h, 80px); height: auto; padding: var(--space-xs) 0;
+    overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
+    background: var(--sumi-iro); border-bottom: 1px solid rgba(245, 240, 230, 0.15);
   }
-  .v2-ruler__track { min-width: 640px; }
-  .v2-era-sec { padding: var(--space-2xl) var(--space-md) 0; scroll-margin-top: 160px; }
+  .v2-ruler::-webkit-scrollbar { display: none; }
+  .v2-ruler__track { min-width: 680px; height: 56px; margin: 0 var(--space-lg); }
+  /* line through the dot centres: padding 4px + dot 12px / 2 = 10px */
+  .v2-ruler__line { top: 10px; bottom: auto; left: 0; right: 0; width: auto; height: 1px; }
+  .v2-ruler__stop {
+    top: 0; left: var(--pos); transform: translateX(-50%);
+    flex-direction: column; gap: 6px; padding: 4px 0 0; font-size: 13px;
+  }
+  .v2-ruler__stop.is-alt .v2-ruler__year { margin-left: 0; transform: translateY(16px); }
+  .v2-era-sec { padding: var(--space-2xl) var(--space-md) 0; scroll-margin-top: calc(var(--v2-header-h, 80px) + 76px); }
   .v2-era-sec__more dl { grid-template-columns: 1fr; gap: 4px; }
   .v2-era-sec__more dd { margin-bottom: var(--space-sm); }
   .v2-works { columns: 2; column-gap: var(--space-md); }

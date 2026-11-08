@@ -508,24 +508,24 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  /* OFF: an empty square drawn as a 2px line. */
+  /* OFF: an empty square with a 2px line. A real border (not an inset shadow, 2026-11-08):
+     the same 2px in both states, and it comes into Figma as a stroke. */
+  box-sizing: border-box;
   background-color: transparent;
-  box-shadow: inset 0 0 0 2px var(--lang-line);
+  border: 2px solid var(--lang-line);
   border-radius: 0;
   /* Switching OFF: the fill and mark leave first (160ms), then the disc returns to a square line. */
   transition: border-radius var(--lang-morph) var(--ease-ukiyoe) 140ms,
-              background-color 160ms ease-out,
-              box-shadow 160ms ease-out;
+              background-color 160ms ease-out;
 }
 
 .language-button.active .lang-tile {
   border-radius: 50%;
   background-color: var(--lang-ground);
-  box-shadow: inset 0 0 0 1px var(--lang-edge);
+  /* ON keeps the same 2px line, so the outline thickness never changes */
   /* Switching ON: the line becomes a circle first; then the disc fills in with the mark. */
   transition: border-radius var(--lang-morph) var(--ease-ukiyoe) 0ms,
-              background-color 360ms ease-out var(--lang-morph),
-              box-shadow 360ms ease-out var(--lang-morph);
+              background-color 360ms ease-out var(--lang-morph);
 }
 
 .lang-mark {

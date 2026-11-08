@@ -3,6 +3,8 @@ import { Link, useLocation } from 'react-router-dom'
 import { useLanguage } from '../../context/LanguageContext'
 import { usePeriods, slotsForPeriod, newSlotsForPeriod, getArtworksForPeriod, field, t, sourceOf, sized, CANONICAL_SLOTS } from './v2Data'
 import SlotStrip from './SlotStrip'
+import LanguageToggle from '../../components/LanguageToggle'
+import { Hishi, FanClosed, FanOpened, EraNumber } from './Marks'
 import './v2.css'
 
 /**
@@ -19,42 +21,86 @@ import './v2.css'
  *   sits above each run, and the long background text only opens on request.
  */
 
+/**
+ * Time ruler. PC: a vertical column on the left (time runs down, the same way the page scrolls).
+ * Phone: a horizontal strip stuck right under the header that scrolls itself so the current era
+ * sits in the middle. Positions come from the data (first era start → last era end).
+ */
 function EraRuler({ periods, active, lang, onJump }) {
-  // The ruler spans the data (first era start → last era end), so any set of eras fits.
+  const navRef = useRef(null)
   const first = Math.min(...periods.map((p) => +p.year_start))
   const last = Math.max(...periods.map((p) => +(p.year_end || p.year_start)))
   // Eras only a few years apart (1750 / 1765 / 1770) would print their years on top of each
-  // other; drop every other one in a close run onto a second line.
-  const lows = periods.reduce((acc, p) => {
-    const left = ((+p.year_start - first) / (last - first)) * 100
+  // other; every other one in a close run moves its label to the other side of the line.
+  const stops = periods.reduce((acc, p) => {
+    const pos = ((+p.year_start - first) / (last - first)) * 100
     const prev = acc[acc.length - 1]
-    const close = prev && left - prev.left < 8
-    acc.push({ p, left, low: Boolean(close && !prev.low) })
+    const close = prev && pos - prev.pos < 8
+    acc.push({ p, pos, alt: Boolean(close && !prev.alt) })
     return acc
   }, [])
+
+  // Phone (horizontal, scrollable): keep the current era centred in the strip.
+  useEffect(() => {
+    const nav = navRef.current
+    if (!nav || nav.scrollWidth <= nav.clientWidth) return
+    const btn = nav.querySelector('.v2-ruler__stop.is-active')
+    if (!btn) return
+    const track = btn.offsetParent
+    const left = (track?.offsetLeft ?? 0) + btn.offsetLeft + btn.offsetWidth / 2 - nav.clientWidth / 2
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    nav.scrollTo({ left: Math.max(0, left), behavior: reduce ? 'auto' : 'smooth' })
+  }, [active])
+
   return (
-    <nav className="v2-ruler" aria-label={t(lang, '時代へ移動', 'Jump to an era')}>
+    <nav className="v2-ruler" ref={navRef} aria-label={t(lang, '時代へ移動', 'Jump to an era')}>
       <div className="v2-ruler__track">
         <span className="v2-ruler__line" aria-hidden="true" />
-        {lows.map(({ p, left, low }, i) => {
+        {stops.map(({ p, pos, alt }, i) => {
           const on = active === p.year_start
           return (
             <button
               key={p.year_start}
               type="button"
-              className={`v2-ruler__stop${on ? ' is-active' : ''}${low ? ' is-low' : ''}`}
-              style={{ '--x': `${left}%` }}
+              className={`v2-ruler__stop${on ? ' is-active' : ''}${alt ? ' is-alt' : ''}`}
+              style={{ '--pos': `${pos}%` }}
               aria-current={on ? 'true' : undefined}
               onClick={() => onJump(p.year_start)}
             >
               <span className="v2-ruler__dango" aria-hidden="true" />
               <span className="v2-ruler__year">{p.year_start}</span>
-              <span className="v2-ruler__sr">{String(i + 1).padStart(2, '0')} {field(p, 'key_event', lang)}</span>
+              <span className="v2-ruler__sr">{i + 1} {field(p, 'key_event', lang)}</span>
             </button>
           )
         })}
       </div>
     </nav>
+  )
+}
+
+/** Same header as the live /timeline (logo → top, language toggle); its height feeds the sticky offsets. */
+function TimelineHeader() {
+  const ref = useRef(null)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return undefined
+    const set = () => document.documentElement.style.setProperty('--v2-header-h', `${el.offsetHeight}px`)
+    set()
+    const ro = new ResizeObserver(set)
+    ro.observe(el)
+    return () => { ro.disconnect(); document.documentElement.style.removeProperty('--v2-header-h') }
+  }, [])
+  return (
+    <header className="header v2-tl__header" ref={ref}>
+      <div className="header-content">
+        <Link to="/v2" className="logo" style={{ textDecoration: 'none' }}>
+          <span className="logo-kanji">
+            <img src="/images/logo-square-white.svg?v=20260707" alt="浮世絵" className="logo-kanji-image" width="48" height="48" />
+          </span>
+        </Link>
+        <LanguageToggle />
+      </div>
+    </header>
   )
 }
 
@@ -171,8 +217,9 @@ export default function TimelineV2() {
   let counter = 0
   return (
     <div className="v2-tl">
+      <TimelineHeader />
       <header className="v2-tl__intro">
-        <p className="v2-tl__kicker">{t(lang, '1670 — 1850', '1670 — 1850')}</p>
+        <p className="v2-tl__kicker">{periods.length ? `${periods[0].year_start} — ${periods[periods.length - 1].year_end || periods[periods.length - 1].year_start}` : ''}</p>
         <h1 className="v2-tl__title">{t(lang, '時代ごとの作品', 'Prints by era')}</h1>
         <p className="v2-tl__lead">
           {t(lang, `浮世絵の多くは、町の人が気軽に買った刷り物でした。${periods.length}つの時代の${flat.length}点を、色が一つずつ増えていく順に並べています。`,
@@ -180,12 +227,18 @@ export default function TimelineV2() {
         </p>
         <div className="v2-tl__legend">
           <SlotStrip active={CANONICAL_SLOTS.map((s) => s.id)} lang={lang} size="sm" showLabels label={t(lang, '9色の枠', 'The nine colour slots')} />
-          <span>{t(lang, '色の枠は、その時代の作品に使われた色。◆ は初めて登場した色です。', 'Each strip shows the colours used in that era. ◆ marks a colour appearing for the first time.')}</span>
+          <span>
+            {t(lang, '色の枠は、その時代の作品に使われた色。', 'Each strip shows the colours used in that era. ')}
+            <Hishi className="v2-hishi--inline" />
+            {t(lang, ' は初めて登場した色です。', ' marks a colour appearing for the first time.')}
+          </span>
         </div>
       </header>
 
+      <div className="v2-tl__body">
       {periods.length > 0 && <EraRuler periods={periods} active={active} lang={lang} onJump={jump} />}
 
+      <div className="v2-tl__eras">
       {periods.map((p, i) => {
         const arts = getArtworksForPeriod(p.year_start)
         const fresh = newSlotsForPeriod(p.year_start)
@@ -193,16 +246,20 @@ export default function TimelineV2() {
         return (
           <section key={p.year_start} id={`era-${p.year_start}`} data-year={p.year_start} className="v2-era-sec" aria-labelledby={`era-title-${p.year_start}`}>
             <div className="v2-era-sec__head">
-              <span className="v2-era-sec__num">{String(i + 1).padStart(2, '0')}</span>
+              <EraNumber n={i + 1} lang={lang} className="v2-era-sec__num" />
               <span className="v2-era-sec__years">{p.year_start} — {p.year_end}</span>
               <h2 id={`era-title-${p.year_start}`} className="v2-era-sec__title">{field(p, 'key_event', lang)}</h2>
               <p className="v2-era-sec__artists">{field(p, 'artists', lang)}</p>
               <div className="v2-era-sec__palette">
                 <SlotStrip active={slotsForPeriod(p.year_start)} fresh={fresh} lang={lang} />
-                {fresh.length > 0 && <span className="v2-era-sec__fresh">◆ {t(lang, `初登場: ${freshNames}`, `New: ${freshNames}`)}</span>}
+                {fresh.length > 0 && <span className="v2-era-sec__fresh"><Hishi className="v2-hishi--inline" /> {t(lang, `初登場: ${freshNames}`, `New: ${freshNames}`)}</span>}
               </div>
               <details className="v2-era-sec__more">
-                <summary>{t(lang, 'この時代の背景を読む', 'Read the background')}</summary>
+                <summary>
+                  {t(lang, 'この時代の背景を読む', 'Read the background')}
+                  {/* closed fan while shut, opened fan while open (the owner's drawing, Figma 168:65) */}
+                  <span className="v2-fanmark" aria-hidden="true"><FanClosed /><FanOpened /></span>
+                </summary>
                 <dl>
                   <dt>{t(lang, '背景', 'Background')}</dt><dd>{field(p, 'background', lang)}</dd>
                   <dt>{t(lang, '技法', 'Technique')}</dt><dd>{field(p, 'technique', lang)}</dd>
@@ -219,6 +276,8 @@ export default function TimelineV2() {
           </section>
         )
       })}
+      </div>
+      </div>
 
       {periods.length > 0 && (
         <section className="v2-summary" aria-labelledby="v2-summary-title">
