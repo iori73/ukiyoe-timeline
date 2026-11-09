@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useLanguage } from '../../context/LanguageContext'
-import { useNoindex, usePeriods, slotsForPeriod, newSlotsForPeriod, getArtworksForPeriod, getMoreArtworksForPeriod, field, t, sourceOf, sized, CANONICAL_SLOTS } from './v2Data'
+import { usePeriods, slotsForPeriod, newSlotsForPeriod, getArtworksForPeriod, getMoreArtworksForPeriod, field, t, sourceOf, sized, CANONICAL_SLOTS } from './v2Data'
 import SlotStrip from './SlotStrip'
 import LanguageToggle from '../../components/LanguageToggle'
 import { Hishi, Fan, PrintStack, EraNumber } from './Marks'
@@ -102,7 +102,7 @@ function TimelineHeader() {
   return (
     <header className="header v2-tl__header" ref={ref}>
       <div className="header-content">
-        <Link to="/v2" className="logo" style={{ textDecoration: 'none' }}>
+        <Link to="/" className="logo" style={{ textDecoration: 'none' }}>
           <span className="logo-kanji">
             <img src="/images/logo-square-white.svg?v=20260707" alt="浮世絵" className="logo-kanji-image" width="48" height="48" />
           </span>
@@ -195,7 +195,6 @@ export default function TimelineV2() {
   const [active, setActive] = useState(null)
   const [open, setOpen] = useState(null) // { era, index }
 
-  useNoindex()
   useEffect(() => {
     document.body.classList.add('v2-dark')
     return () => document.body.classList.remove('v2-dark')
@@ -344,7 +343,7 @@ export default function TimelineV2() {
               </li>
             ))}
           </ol>
-          <Link to="/v2" className="v2-summary__back">{t(lang, '← 版木の重なりに戻る', '← Back to the layered blocks')}</Link>
+          <Link to="/" className="v2-summary__back">{t(lang, '← 版木の重なりに戻る', '← Back to the layered blocks')}</Link>
         </section>
       )}
 

@@ -7,7 +7,7 @@ import { useLanguage } from '../context/LanguageContext'
 import { TECHNIQUES } from '../data/techniques'
 import './LayerAnimationPage.css'
 import { EraIndex } from './v2/TopAdditions'
-import { useNoindex, CANONICAL_SLOTS } from './v2/v2Data'
+import { CANONICAL_SLOTS } from './v2/v2Data'
 import SlotStrip from './v2/SlotStrip'
 
 // ============================================================
@@ -706,7 +706,6 @@ function NishikieMultiLayerAnimation() {
 export default function LayerAnimationPage({ variant } = {}) {
   const { language } = useLanguage()
   const isV2 = variant === 'v2'
-  useNoindex(isV2)
   const heroVisualRef = useRef(null)
   const [heroVisible, setHeroVisible] = useState(false)
 
@@ -727,7 +726,7 @@ export default function LayerAnimationPage({ variant } = {}) {
     <div className="layer-anim-page">
       <header className="layer-anim-page__header">
         <div className="layer-anim-page__header-inner">
-          <Link to="/" className="layer-anim-page__logo">
+          <Link to={isV2 ? '/' : '/a'} className="layer-anim-page__logo">
             <img src="/images/logo-square.svg?v=20260707" alt="浮世絵" className="logo-kanji-image" />
           </Link>
           <LanguageToggle variant={isV2 ? 'rain' : 'mark'} />
@@ -903,7 +902,7 @@ export default function LayerAnimationPage({ variant } = {}) {
             </div>
           )}
           <nav className="layer-anim__footer-nav">
-            <Link to={isV2 ? '/v2/timeline' : '/timeline'} className="layer-anim__nav-link">
+            <Link to={isV2 ? '/timeline' : '/a/timeline'} className="layer-anim__nav-link">
               <span className="layer-anim__nav-link-text">
                 {language === 'ja' ? '時代ごとの作品を見る' : 'Browse works by era'}
               </span>

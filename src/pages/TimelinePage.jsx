@@ -277,7 +277,7 @@ export default function TimelinePage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: duration.slow }}
         >
-          <Link to="/" className="logo" style={{ cursor: 'pointer', textDecoration: 'none' }} aria-hidden={isArtworkDetailOpen}>
+          <Link to="/a" className="logo" style={{ cursor: 'pointer', textDecoration: 'none' }} aria-hidden={isArtworkDetailOpen}>
             <span className="logo-kanji">
               <img src="/images/logo-square-white.svg?v=20260707" alt="浮世絵" className="logo-kanji-image" width="48" height="48" />
             </span>

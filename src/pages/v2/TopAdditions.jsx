@@ -26,7 +26,7 @@ export function EraIndex({ lang }) {
           const art = getArtworksForPeriod(p.year_start)[0]
           return (
             <li key={p.year_start}>
-              <Link className="v2-era" to={`/v2/timeline#era-${p.year_start}`}>
+              <Link className="v2-era" to={`/timeline#era-${p.year_start}`}>
                 <span className="v2-era__thumb">
                   {art && (
                     <img
