@@ -596,17 +596,17 @@ body.v2-dark .language-toggle--rain { --lang-page: var(--sumi-iro); }
 }
 /* switching OFF: the letters change as quickly as the fill leaves */
 .language-toggle--rain .language-button:not(.active) .lang-rain__label { transition: fill 160ms ease-out, stroke 160ms ease-out; }
-/* Switching: the rain fades in softly, falls two pattern periods, and eases to a stop as the pattern. */
-.language-button.is-raining .lang-rain__col {
-  animation: lang-rain-fall 1150ms cubic-bezier(0.12, 0.55, 0.22, 1) 240ms both;
+/* Backing: the toggle floats over page content on /v2 (transparent header) — a translucent ground +
+   blur keeps it readable over text and images (owner, 2026-11-09). */
+.language-toggle--rain {
+  background: color-mix(in srgb, var(--lang-page) 82%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
-.language-button.is-raining .lang-rain__cross { animation: lang-rain-settle 420ms ease-out 1050ms both; }
-@keyframes lang-rain-fall {
-  from { stroke-dashoffset: calc(var(--o) + var(--run)); opacity: 0; }
-  30%  { opacity: 1; }
-  to   { stroke-dashoffset: var(--o); opacity: 1; }
-}
-@keyframes lang-rain-settle { from { opacity: 0; } to { opacity: 1; } }
+/* The chosen tile must not look dimmer than the other: no hover fade on it, and no focus ring after a
+   mouse click (keyboard focus still shows via :focus-visible). Owner, 2026-11-09. */
+.language-toggle--rain .language-button.active:hover { opacity: 1; }
+.language-toggle--rain .language-button:focus:not(:focus-visible) { outline: none; }
 
 /* On the dark timeline: washi line for OFF; the washi disc already stands out (12:1). */
 .timeline-page .language-toggle {
@@ -621,8 +621,6 @@ body.v2-dark .language-toggle--rain { --lang-page: var(--sumi-iro); }
   .language-button.active .lang-mark {
     transition: none;
   }
-  .language-button.is-raining .lang-rain__col,
-  .language-button.is-raining .lang-rain__cross { animation: none; }
 }
 
 /* ========================================
