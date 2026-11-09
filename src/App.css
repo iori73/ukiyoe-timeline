@@ -25,6 +25,28 @@
 
   /* 地色（紙の色） - Paper Colors */
   --washi: #f5f0e6;           /* 和紙 - Washi paper */
+
+  /* ---- Lines & outlines (DS, 2026-11-09; see docs/DESIGN_SYSTEM.md「線と枠」) ----
+     One outline weight for everything drawn: the logo's stroke (4 on a 100 grid at 48px ≈ 2px).
+     Hairlines only for quiet separators. */
+  --stroke-outline: var(--border-normal);   /* 2px — outlines of controls, chips, number boxes, ruler, icons, language mark */
+  --stroke-hair: var(--border-thin);        /* 1px — separators only (rules under strips, tile bottoms) */
+  --stroke-focus: 2px;     /* keyboard focus ring (with 2px offset) */
+
+  /* ---- Ink on the dark (sumi) ground: 4 text levels + lines ---- */
+  --on-dark: #f5f0e6;                        /* headings, active */
+  --on-dark-body: rgba(245, 240, 230, 0.9);  /* body text */
+  --on-dark-sub: rgba(245, 240, 230, 0.75);  /* secondary: artists, labels, credits (≈ 8:1) */
+  --on-dark-meta: rgba(245, 240, 230, 0.6);  /* years, small meta (≈ 5.6:1) */
+  --outline-on-dark: rgba(245, 240, 230, 0.75); /* outlines of controls on dark */
+  --line-on-dark: rgba(245, 240, 230, 0.4);  /* ruler line */
+  --hair-on-dark: rgba(245, 240, 230, 0.15); /* separators */
+  --surface-on-dark: rgba(245, 240, 230, 0.05); /* image wells */
+
+  /* ---- Sizes ---- */
+  --icon-size: 24px;
+  --control-height: 44px;   /* minimum touch target */
+  --text-min: 14px;         /* smallest text on the site (labels, years, credits) */
   --awayuki: #fefefe;         /* 淡雪 - Light snow */
   --echizen: #ebdcbd;         /* 越前 - Dawn page background */
   --washi-translucent: rgba(245, 240, 230, 0.95); /* 和紙（半透明） */
@@ -96,6 +118,7 @@
   --tracking-widest: 0.2em;
   
   /* スペーシング - Spacing (8の倍数) */
+  --space-2xs: 4px;        /* Half step (DS 2026-11-09): mark ↔ chip (icon ↔ label is --space-xs since 11-09) */
   --space-xs: 8px;         /* Internal spacing within small components (padding in boxes) */
   --space-sm: 16px;        /* Tight groupings - related elements like card text, form fields */
   --space-md: 24px;        /* Moderate gaps between sub-sections */
@@ -498,7 +521,7 @@ body {
 }
 
 .language-toggle .language-button.language-button--mark:focus-visible {
-  outline: 2px solid var(--ai-iro);
+  outline: var(--stroke-focus) solid var(--ai-iro);
   outline-offset: 2px;
 }
 
@@ -512,7 +535,7 @@ body {
      the same 2px in both states, and it comes into Figma as a stroke. */
   box-sizing: border-box;
   background-color: transparent;
-  border: 2px solid var(--lang-line);
+  border: var(--stroke-outline) solid var(--lang-line);
   border-radius: 0;
   /* Switching OFF: the fill and mark leave first (160ms), then the disc returns to a square line. */
   transition: border-radius var(--lang-morph) var(--ease-ukiyoe) 140ms,
@@ -546,6 +569,44 @@ body {
   transition: opacity 360ms ease-out var(--lang-morph),
               transform 520ms var(--ease-ukiyoe) var(--lang-morph);
 }
+
+/* variant="rain" (v2, 2026-11-09): あ / EN with Hiroshige's rain stripe and Van Gogh's crossing.
+   The letters carry the meaning, so the mark stays visible when OFF (in the line colour). */
+.language-toggle--rain { --lang-page: var(--washi); }
+body.v2-dark .language-toggle--rain { --lang-page: var(--sumi-iro); }
+.language-toggle--rain .lang-mark { opacity: 1; transform: none; transition: none; }
+.lang-mark--rain line, .lang-mark--rain path {
+  fill: none; stroke: var(--lang-line); stroke-opacity: 0.5; stroke-width: 1.2;
+  transition: stroke 360ms ease-out, stroke-opacity 360ms ease-out;
+}
+.language-button.active .lang-mark--rain line,
+.language-button.active .lang-mark--rain path { stroke: var(--lang-blue); stroke-opacity: 0.6; }
+.lang-rain__label {
+  text-anchor: middle; dominant-baseline: central; font-weight: 700;
+  fill: var(--lang-line); stroke: var(--lang-page); stroke-width: 3; stroke-linejoin: round; paint-order: stroke;
+  transition: fill 360ms ease-out, stroke 360ms ease-out;
+}
+.lang-rain__label--ja { font-family: var(--font-serif); font-size: 19px; }
+.lang-rain__label--en { font-family: var(--font-sans); font-size: 15.5px; letter-spacing: 0.02em; }
+.language-button.active .lang-rain__label {
+  fill: var(--sumi-iro); stroke: var(--lang-ground);
+  /* switching ON: the letters change with the disc fill, after the shape has become a circle —
+     otherwise the washi halo shows on the dark ground for a moment */
+  transition: fill 360ms ease-out var(--lang-morph), stroke 360ms ease-out var(--lang-morph);
+}
+/* switching OFF: the letters change as quickly as the fill leaves */
+.language-toggle--rain .language-button:not(.active) .lang-rain__label { transition: fill 160ms ease-out, stroke 160ms ease-out; }
+/* Backing: the toggle floats over page content on /v2 (transparent header) — a translucent ground +
+   blur keeps it readable over text and images (owner, 2026-11-09). */
+.language-toggle--rain {
+  background: color-mix(in srgb, var(--lang-page) 82%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+/* The chosen tile must not look dimmer than the other: no hover fade on it, and no focus ring after a
+   mouse click (keyboard focus still shows via :focus-visible). Owner, 2026-11-09. */
+.language-toggle--rain .language-button.active:hover { opacity: 1; }
+.language-toggle--rain .language-button:focus:not(:focus-visible) { outline: none; }
 
 /* On the dark timeline: washi line for OFF; the washi disc already stands out (12:1). */
 .timeline-page .language-toggle {
@@ -3429,6 +3490,11 @@ body {
   .language-toggle {
     gap: 8px;
     padding: 0px;
+  }
+  /* v2 (rain): the backing needs a little room around the tiles; 4px gap and padding (owner, 2026-11-09) */
+  .language-toggle.language-toggle--rain {
+    gap: var(--space-2xs);
+    padding: var(--space-2xs);
   }
 
   .language-toggle .language-button {

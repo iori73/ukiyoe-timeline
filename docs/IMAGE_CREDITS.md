@@ -60,3 +60,12 @@ ToMuCo（[Tokyo Museum Collection](https://museumcollection.tokyo/)）の[利用
 
 - [Tokyo Museum Collection (ToMuCo) - 本作品](https://museumcollection.tokyo/works/6256752/)
 - [ToMuCo 利用条件](https://museumcollection.tokyo/terms/)
+
+---
+
+## v2 の作品画像（/v2・/v2/timeline、2026-11-09〜）
+
+- 出典はすべて所蔵館の公開データ（CC0／パブリックドメイン）: The Metropolitan Museum of Art、Art Institute of Chicago、Cleveland Museum of Art。作品ごとの所蔵館・所蔵番号・作品ページの URL は `src/data/v2/artworks.json`（詳細シートにも表示）。
+- The Met とクリーブランド美術館は、所蔵館の画像 URL をそのまま使う。
+- シカゴ美術館は、所蔵館の画像サーバーが他サイトへの埋め込みを受け付けないため、河野が所蔵館のページから保存した CC0 の画像を 1200px に縮小して `public/images/artworks/aic/<所蔵番号>.jpg` に置いている（`scripts/build_artworks_v2.py`）。
+- 日本語の題の多くは所蔵館に日本語の題がなく、読み下したもの（`title_ja_source: "inferred"`）。本番に出す前に確かめる。

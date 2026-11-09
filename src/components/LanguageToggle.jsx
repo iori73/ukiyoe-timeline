@@ -33,8 +33,64 @@ function EnglishMark() {
   return (
     <svg className="lang-mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
       <rect x="0" y="0" width="20" height="20" fill="var(--lang-blue)" />
-      <path d="M0 0L20 20" stroke="var(--lang-ground)" strokeWidth="2.5" />
+      <path d="M0 0L20 20" stroke="var(--lang-ground)" strokeWidth="2" />
       <rect x="0" y="22" width="40" height="4" fill="var(--lang-red)" />
+    </svg>
+  )
+}
+
+
+/* ----------------------------------------------------------------------------
+ * variant="rain" (v2 only, 2026-11-09, Figma 235:27 "②' 雨の線の対・幾何学版").
+ * JA = ukiyo-e as Japanese eyes saw it: Hiroshige's rain ("大はしあたけの夕立", 1857) as a regular
+ *      rain stripe — equal dashes in parallel columns at 76°, every other column half a step down.
+ * EN = ukiyo-e as foreign eyes saw it: Van Gogh's copy ("Bridge in the Rain", 1887) — a vertical
+ *      stroke crossed at its midpoint by an equal stroke at 60° (not a symmetrical X).
+ * The meaning is carried by the letters (あ / EN); the history lives in the pattern.
+ * Static (owner, 2026-11-09: the falling-rain animation was too small to notice — removed).
+ * -------------------------------------------------------------------------- */
+// The pattern is drawn in the 40-unit box below and scaled up around the centre (owner, 2026-11-09:
+// "模様が小さすぎる"). Lines scale with it (1.2 → 2.4 units). The button itself keeps its size, so the whole pattern reads larger.
+const RAIN_SCALE = 2
+const RAIN_T = `translate(20 20) scale(${RAIN_SCALE}) translate(-20 -20)`
+const RAIN_A = 76 * Math.PI / 180
+const UX = -Math.cos(RAIN_A), UY = Math.sin(RAIN_A)
+const JA_COLS = Array.from({ length: 13 }, (_, i) => {
+  const c = i - 3, px = c * 5.5 + 8, py = -2
+  return { x1: px - UX * 21, y1: py - UY * 21, x2: px + UX * 60, y2: py + UY * 60, o: c % 2 ? 3.5 : 0 }
+})
+const EN_COLS = Array.from({ length: 14 }, (_, k) => ({ x: -1 + k * 3.5, o: k % 2 ? 7 : 0 }))
+const EN_CROSS = []
+for (let row = 0; row < 7; row++) for (let c = 0; c < 7; c++) {
+  const cx = c * 7 + (row % 2 ? 3.5 : 0) - 1, cy = row * 7 + 1.5
+  EN_CROSS.push(`M${(cx + 1.25).toFixed(2)} ${(cy - 2.165).toFixed(2)}L${(cx - 1.25).toFixed(2)} ${(cy + 2.165).toFixed(2)}`)
+}
+
+function RainJapanese() {
+  return (
+    <svg className="lang-mark lang-mark--rain" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+      <g className="lang-rain" transform={RAIN_T}>
+        {JA_COLS.map((l, i) => (
+          <line key={i} className="lang-rain__col" x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2}
+            strokeDasharray="4.5 2.5" strokeDashoffset={l.o} />
+        ))}
+      </g>
+      <text className="lang-rain__label lang-rain__label--ja" x="20" y="21">あ</text>
+    </svg>
+  )
+}
+
+function RainEnglish() {
+  return (
+    <svg className="lang-mark lang-mark--rain" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+      <g className="lang-rain" transform={RAIN_T}>
+        {EN_COLS.map((l, i) => (
+          <line key={i} className="lang-rain__col" x1={l.x} y1={-29} x2={l.x} y2={55}
+            strokeDasharray="5 9" strokeDashoffset={l.o} />
+        ))}
+        <path className="lang-rain__cross" d={EN_CROSS.join('')} />
+      </g>
+      <text className="lang-rain__label lang-rain__label--en" x="20" y="21">EN</text>
     </svg>
   )
 }
@@ -43,14 +99,19 @@ const OPTIONS = [
   { code: 'ja', label: '日本語', htmlLang: 'ja', Mark: JapaneseMark },
   { code: 'en', label: 'English', htmlLang: 'en', Mark: EnglishMark },
 ]
+const RAIN_MARKS = { ja: RainJapanese, en: RainEnglish }
 
-export default function LanguageToggle() {
+/** variant: 'mark' (live pages: flags reduced to marks) | 'rain' (v2: あ / EN with the rain pattern) */
+
+export default function LanguageToggle({ variant = 'mark' }) {
   const { language, setLanguage } = useLanguage()
+  const rain = variant === 'rain'
 
   return (
-    <div className="language-toggle" role="group" aria-label="Language / 言語">
-      {OPTIONS.map(({ code, label, htmlLang, Mark }) => {
+    <div className={`language-toggle${rain ? ' language-toggle--rain' : ''}`} role="group" aria-label="Language / 言語">
+      {OPTIONS.map(({ code, label, htmlLang, Mark: FlagMark }) => {
         const active = language === code
+        const Mark = rain ? RAIN_MARKS[code] : FlagMark
         return (
           <button
             key={code}

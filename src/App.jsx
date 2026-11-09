@@ -1,5 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from 'react'
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route, Link, Navigate, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { duration, easing } from './constants/motion'
 import { LanguageProvider } from './context/LanguageContext'
@@ -21,6 +21,23 @@ const LayerAnimationPage = lazy(() => import('./pages/LayerAnimationPage'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 // Redesign prototype (2026-11-07): /v2 and /v2/timeline. The live routes are unchanged.
 const TimelineV2 = lazy(() => import('./pages/v2/TimelineV2'))
+
+/** Old addresses of the redesign (/v2, /v2/timeline) → the new ones, keeping #era-… anchors. */
+function RedirectKeepHash({ to }) {
+  const { hash } = useLocation()
+  return <Navigate to={`${to}${hash}`} replace />
+}
+
+/** The previous design (direction A), kept at /a for the record — out of search results. */
+function NoindexRoute({ children }) {
+  useEffect(() => {
+    const m = document.createElement('meta')
+    m.name = 'robots'; m.content = 'noindex'
+    document.head.appendChild(m)
+    return () => m.remove()
+  }, [])
+  return children
+}
 
 function AppContent({ skipIntro = false }) {
   const [data, setData] = useState([])
@@ -310,13 +327,17 @@ export default function App() {
         <Suspense fallback={<div className="loading"><div className="washi-bg" /></div>}>
           <main>
             <Routes>
-              <Route path="/" element={<LayerAnimationPage />} />
+              {/* 2026-11-09: the redesign (v2) becomes the live site (owner's decision).
+                  The previous design stays at /a and /a/timeline (noindex), nothing is deleted. */}
+              <Route path="/" element={<LayerAnimationPage variant="v2" />} />
+              <Route path="/timeline" element={<TimelineV2 />} />
+              <Route path="/a" element={<NoindexRoute><LayerAnimationPage /></NoindexRoute>} />
+              <Route path="/a/timeline" element={<NoindexRoute><TimelinePage /></NoindexRoute>} />
+              <Route path="/v2" element={<RedirectKeepHash to="/" />} />
+              <Route path="/v2/timeline" element={<RedirectKeepHash to="/timeline" />} />
               <Route path="/dawn" element={<DawnManualPage />} />
-              <Route path="/timeline" element={<TimelinePage />} />
               <Route path="/logo-preview" element={<LogoPreview />} />
               <Route path="/layer-animation" element={<LayerAnimationPage />} />
-              <Route path="/v2" element={<LayerAnimationPage variant="v2" />} />
-              <Route path="/v2/timeline" element={<TimelineV2 />} />
               {/* 旧実装をアーカイブ: /timeline-old で水平スクロール版にアクセス可能 */}
               <Route path="/timeline-old" element={<MainPageWithHashRouting skipIntro />} />
               <Route path="*" element={<NotFound />} />

@@ -7,7 +7,8 @@ import { useLanguage } from '../context/LanguageContext'
 import { TECHNIQUES } from '../data/techniques'
 import './LayerAnimationPage.css'
 import { EraIndex } from './v2/TopAdditions'
-import { useNoindex } from './v2/v2Data'
+import { CANONICAL_SLOTS } from './v2/v2Data'
+import SlotStrip from './v2/SlotStrip'
 
 // ============================================================
 // Asset paths
@@ -705,7 +706,6 @@ function NishikieMultiLayerAnimation() {
 export default function LayerAnimationPage({ variant } = {}) {
   const { language } = useLanguage()
   const isV2 = variant === 'v2'
-  useNoindex(isV2)
   const heroVisualRef = useRef(null)
   const [heroVisible, setHeroVisible] = useState(false)
 
@@ -726,10 +726,10 @@ export default function LayerAnimationPage({ variant } = {}) {
     <div className="layer-anim-page">
       <header className="layer-anim-page__header">
         <div className="layer-anim-page__header-inner">
-          <Link to="/" className="layer-anim-page__logo">
+          <Link to={isV2 ? '/' : '/a'} className="layer-anim-page__logo">
             <img src="/images/logo-square.svg?v=20260707" alt="浮世絵" className="logo-kanji-image" />
           </Link>
-          <LanguageToggle />
+          <LanguageToggle variant={isV2 ? 'rain' : 'mark'} />
         </div>
       </header>
 
@@ -885,15 +885,24 @@ export default function LayerAnimationPage({ variant } = {}) {
       {isV2 && <EraIndex lang={language} />}
 
       {/* フッター */}
-      <section className="layer-anim__footer">
+      <section className={`layer-anim__footer${isV2 ? ' layer-anim__footer--v2' : ''}`}>
         <div className="layer-anim__footer-inner">
-          <div className="layer-anim__footer-swatches" aria-hidden="true">
-            {TECHNIQUES.flatMap(t => t.colors).map((hex, i) => (
-              <div key={i} className="layer-anim__footer-swatch" style={{ background: hex }} />
-            ))}
-          </div>
+          {isV2 ? (
+            // v2: the same 10 colour slots and swatch design as the timeline (owner, 2026-11-09:
+            // the old 9 unframed chips were left over from the live page)
+            <div className="layer-anim__footer-slots">
+              <SlotStrip active={CANONICAL_SLOTS.map((s) => s.id)} lang={language} showLabels
+                label={language === 'ja' ? `浮世絵の色: ${CANONICAL_SLOTS.length}色` : `The colours of ukiyo-e: ${CANONICAL_SLOTS.length}`} />
+            </div>
+          ) : (
+            <div className="layer-anim__footer-swatches" aria-hidden="true">
+              {TECHNIQUES.flatMap(t => t.colors).map((hex, i) => (
+                <div key={i} className="layer-anim__footer-swatch" style={{ background: hex }} />
+              ))}
+            </div>
+          )}
           <nav className="layer-anim__footer-nav">
-            <Link to={isV2 ? '/v2/timeline' : '/timeline'} className="layer-anim__nav-link">
+            <Link to={isV2 ? '/timeline' : '/a/timeline'} className="layer-anim__nav-link">
               <span className="layer-anim__nav-link-text">
                 {language === 'ja' ? '時代ごとの作品を見る' : 'Browse works by era'}
               </span>
