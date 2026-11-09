@@ -52,6 +52,10 @@ function EnglishMark() {
  * runs its dash offset down two periods and eases to a stop (rain stopping), then — for EN — the
  * 60° strokes fade in to make the crosses. Keyframes in App.css (.language-toggle--rain).
  * -------------------------------------------------------------------------- */
+// The pattern is drawn in the 40-unit box below and scaled up around the centre (owner, 2026-11-09:
+// "模様が小さすぎる"). Lines scale with it (1.2 → 1.8 units), so the whole pattern reads larger.
+const RAIN_SCALE = 1.5
+const RAIN_T = `translate(20 20) scale(${RAIN_SCALE}) translate(-20 -20)`
 const RAIN_A = 76 * Math.PI / 180
 const UX = -Math.cos(RAIN_A), UY = Math.sin(RAIN_A)
 const JA_COLS = Array.from({ length: 13 }, (_, i) => {
@@ -68,7 +72,7 @@ for (let row = 0; row < 7; row++) for (let c = 0; c < 7; c++) {
 function RainJapanese() {
   return (
     <svg className="lang-mark lang-mark--rain" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
-      <g className="lang-rain">
+      <g className="lang-rain" transform={RAIN_T}>
         {JA_COLS.map((l, i) => (
           <line key={i} className="lang-rain__col" x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2}
             strokeDasharray="4.5 2.5" style={{ '--o': l.o, '--run': 21, strokeDashoffset: l.o }} />
@@ -82,7 +86,7 @@ function RainJapanese() {
 function RainEnglish() {
   return (
     <svg className="lang-mark lang-mark--rain" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
-      <g className="lang-rain">
+      <g className="lang-rain" transform={RAIN_T}>
         {EN_COLS.map((l, i) => (
           <line key={i} className="lang-rain__col" x1={l.x} y1={-29} x2={l.x} y2={55}
             strokeDasharray="5 9" style={{ '--o': l.o, '--run': 28, strokeDashoffset: l.o }} />
