@@ -101,3 +101,19 @@ export function EraNumber({ n, lang, className = '' }) {
     ? <span className={`v2-num v2-num--kanji ${className}`}>{kanjiNumber(n)}</span>
     : <span className={`v2-num ${className}`}>{String(n).padStart(2, '0')}</span>
 }
+
+
+/**
+ * PrintStack: the mark for "more prints from this era" — three sheets of paper, one on top of the
+ * others (24px box, 2px line like every outline). Closed: the sheets lie close; open: the two
+ * behind slide out a little, as if the pile were being spread to look through (CSS, v2.css).
+ */
+export function PrintStack({ className = '' }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="miter">
+      <path className="v2-stack__back" d="M10 2H21V15" />
+      <path className="v2-stack__mid" d="M7 5H18V18" />
+      <rect className="v2-stack__front" x="3" y="8" width="11" height="14" />
+    </svg>
+  )
+}

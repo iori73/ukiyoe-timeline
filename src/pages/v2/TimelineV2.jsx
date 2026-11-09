@@ -4,7 +4,7 @@ import { useLanguage } from '../../context/LanguageContext'
 import { useNoindex, usePeriods, slotsForPeriod, newSlotsForPeriod, getArtworksForPeriod, getMoreArtworksForPeriod, field, t, sourceOf, sized, CANONICAL_SLOTS } from './v2Data'
 import SlotStrip from './SlotStrip'
 import LanguageToggle from '../../components/LanguageToggle'
-import { Hishi, Fan, EraNumber } from './Marks'
+import { Hishi, Fan, PrintStack, EraNumber } from './Marks'
 import './v2.css'
 
 /**
@@ -159,7 +159,10 @@ function ArtworkSheet({ item, lang, onClose, onStep, eraLabel }) {
           {t(lang, art.artist_ja, art.artist_en)}
           {art.year && <span className="v2-sheet__year">{art.year}</span>}
         </p>
-        {(art.description_ja || art.description_en) && <p className="v2-sheet__desc">{t(lang, art.description_ja, art.description_en)}</p>}
+        {/* description, or the short summary built from the museum's medium line + subject (build_artworks_v2.py) */}
+        {(art.description_ja || art.description_en || art.summary_ja) && (
+          <p className="v2-sheet__desc">{t(lang, art.description_ja || art.summary_ja, art.description_en || art.summary_en)}</p>
+        )}
         {(art.collection_en || art.collection) ? (
           // New-format records carry the holding museum, accession number and licence.
           <p className="v2-sheet__credit">
@@ -310,7 +313,8 @@ export default function TimelineV2() {
             {more.length > 0 && (
               <details className="v2-era-sec__more v2-more">
                 <summary>
-                  <Fan className="v2-fanmark" />
+                  {/* stacked prints, not the fan: the fan already means "read the background" (owner, 2026-11-09) */}
+                  <PrintStack className="v2-fanmark v2-stack" />
                   {t(lang, `この時代の作品をもっと見る（${more.length}点）`, `More prints from this era (${more.length})`)}
                 </summary>
                 <ol className="v2-works">

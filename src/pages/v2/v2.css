@@ -100,6 +100,9 @@
 .v2-tl .v2-slot { color: var(--washi); --chip-outline: var(--outline-on-dark); --slot-label: var(--on-dark-body); }
 /* the 9-label legend wraps: English names (Gold / Ochre, Prussian Blue…) are too wide for a phone */
 .v2-tl__legend .v2-slots { flex-wrap: wrap; row-gap: var(--space-sm); }
+/* wrapped rows of a labelled strip: room for the new-colour lozenge (7px + 4px) plus a 16px gap,
+   so the lozenge belongs to its chip, not to the name above (owner, 2026-11-09, SP) */
+.v2-slots.v2-slots--labels { row-gap: calc(7px + var(--space-2xs) + var(--space-sm)); }
 
 /* Header: same as the live /timeline, but on a solid ground so nothing shows between it and the ruler */
 .v2-tl__header { background: var(--sumi-iro); }
@@ -162,6 +165,11 @@
 /* open/close mark: line pictogram fan "B" (Marks.jsx Fan). 24px box; the open fan (~84°)
    may spill ~1px past the box, so overflow stays visible. */
 .v2-fanmark { width: 24px; height: 24px; flex: none; overflow: visible; }
+/* "more prints": the sheets behind slide out a little when open */
+.v2-stack__back, .v2-stack__mid { transition: transform 600ms var(--ease-ukiyoe); }
+details[open] > summary .v2-stack__mid { transform: translate(1px, -1px); }
+details[open] > summary .v2-stack__back { transform: translate(2px, -2px); }
+@media (prefers-reduced-motion: reduce) { .v2-stack__back, .v2-stack__mid { transition: none; } }
 .v2-fan__outline { fill: none; stroke: var(--washi); stroke-width: 2; stroke-linejoin: round; }
 .v2-fan__ribs { fill: none; stroke: var(--washi); stroke-width: 2; stroke-linecap: round; }
 .v2-fan__hub { fill: var(--washi); }
