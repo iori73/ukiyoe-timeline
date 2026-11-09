@@ -56,7 +56,7 @@
 .v2-era__num { font-family: var(--font-serif); }
 .v2-era__name { font-family: var(--font-serif); font-size: var(--type-title-sm); line-height: 1.5; }
 /* inside an era tile the strip fits the tile width (9 equal columns, chips up to 16px) */
-.v2-era .v2-slots { display: grid; grid-template-columns: repeat(9, minmax(0, 16px)); gap: 4px; }
+.v2-era .v2-slots { display: grid; grid-template-columns: repeat(10, minmax(0, 16px)); gap: 3px; }
 .v2-era .v2-slot__chip { width: 100%; height: auto; aspect-ratio: 1; }
 
 @media (max-width: 900px) {
@@ -127,6 +127,10 @@
 .v2-era-sec__num { font-family: var(--font-serif); font-size: var(--type-title-md); opacity: 0.85; }
 .v2-era-sec__years { font-family: var(--font-serif); font-size: var(--type-title-sm); letter-spacing: 0.06em; }
 .v2-era-sec__title { grid-column: 1 / -1; font-family: var(--font-serif); font-size: var(--type-title-xl); font-weight: 500; margin: var(--space-xs) 0 0; line-height: 1.4; }
+.v2-era-sec__lead { grid-column: 1 / -1; margin: 0; font-size: var(--type-body-lg, 17px); line-height: 1.7; color: rgba(245, 240, 230, 0.9); }
+/* the rest of the era's works, behind the same fan control */
+.v2-more { margin: var(--space-md) 0 0; }
+.v2-more > .v2-works { margin-top: var(--space-xl); }
 .v2-era-sec__artists { grid-column: 1 / -1; margin: 0; color: rgba(245, 240, 230, 0.75); font-size: var(--type-body-md); }
 .v2-era-sec__palette { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--space-md); align-items: center; margin-top: var(--space-sm); }
 .v2-era-sec__fresh { font-size: 13px; color: rgba(245, 240, 230, 0.85); }

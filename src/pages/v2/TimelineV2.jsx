@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useLanguage } from '../../context/LanguageContext'
-import { useNoindex, usePeriods, slotsForPeriod, newSlotsForPeriod, getArtworksForPeriod, field, t, sourceOf, sized, CANONICAL_SLOTS } from './v2Data'
+import { useNoindex, usePeriods, slotsForPeriod, newSlotsForPeriod, getArtworksForPeriod, getMoreArtworksForPeriod, field, t, sourceOf, sized, CANONICAL_SLOTS } from './v2Data'
 import SlotStrip from './SlotStrip'
 import LanguageToggle from '../../components/LanguageToggle'
 import { Hishi, Fan, EraNumber } from './Marks'
@@ -159,13 +159,13 @@ function ArtworkSheet({ item, lang, onClose, onStep, eraLabel }) {
           {t(lang, art.artist_ja, art.artist_en)}
           {art.year && <span className="v2-sheet__year">{art.year}</span>}
         </p>
-        <p className="v2-sheet__desc">{t(lang, art.description_ja, art.description_en)}</p>
-        {art.collection ? (
+        {(art.description_ja || art.description_en) && <p className="v2-sheet__desc">{t(lang, art.description_ja, art.description_en)}</p>}
+        {(art.collection_en || art.collection) ? (
           // New-format records carry the holding museum, accession number and licence.
           <p className="v2-sheet__credit">
             {art.source_url
-              ? <a href={art.source_url} target="_blank" rel="noopener noreferrer">{art.collection}</a>
-              : art.collection}
+              ? <a href={art.source_url} target="_blank" rel="noopener noreferrer">{t(lang, art.collection_ja, art.collection_en)}</a>
+              : t(lang, art.collection_ja, art.collection_en)}
             {art.accession && ` ${art.accession}`}
             {art.license && ` · ${art.license}`}
           </p>
@@ -198,7 +198,7 @@ export default function TimelineV2() {
     return () => document.body.classList.remove('v2-dark')
   }, [])
 
-  const flat = useMemo(() => periods.flatMap((p) => getArtworksForPeriod(p.year_start).map((art) => ({ art, era: p }))), [periods])
+  const flat = useMemo(() => periods.flatMap((p) => [...getArtworksForPeriod(p.year_start), ...getMoreArtworksForPeriod(p.year_start)].map((art) => ({ art, era: p }))), [periods])
 
   useEffect(() => {
     if (!periods.length) return undefined
@@ -236,7 +236,7 @@ export default function TimelineV2() {
             `Most ukiyo-e were prints that townspeople bought casually. Here are ${flat.length} works across ${periods.length} eras, in the order the palette grew.`)}
         </p>
         <div className="v2-tl__legend">
-          <SlotStrip active={CANONICAL_SLOTS.map((s) => s.id)} lang={lang} size="sm" showLabels label={t(lang, '9色の枠', 'The nine colour slots')} />
+          <SlotStrip active={CANONICAL_SLOTS.map((s) => s.id)} lang={lang} size="sm" showLabels label={t(lang, `${CANONICAL_SLOTS.length}色の枠`, `The ${CANONICAL_SLOTS.length} colour slots`)} />
           <span>
             {t(lang, '色の枠は、その時代の作品に使われた色。', 'Each strip shows the colours used in that era. ')}
             <Hishi className="v2-hishi--inline" />
@@ -251,6 +251,7 @@ export default function TimelineV2() {
       <div className="v2-tl__eras">
       {periods.map((p, i) => {
         const arts = getArtworksForPeriod(p.year_start)
+        const more = getMoreArtworksForPeriod(p.year_start)
         const fresh = newSlotsForPeriod(p.year_start)
         const freshNames = fresh.map((id) => t(lang, CANONICAL_SLOTS.find((s) => s.id === id)?.label_ja, CANONICAL_SLOTS.find((s) => s.id === id)?.label_en)).join(t(lang, '・', ', '))
         return (
@@ -259,6 +260,7 @@ export default function TimelineV2() {
               <EraNumber n={i + 1} lang={lang} className="v2-era-sec__num" />
               <span className="v2-era-sec__years">{p.year_start} — {p.year_end}</span>
               <h2 id={`era-title-${p.year_start}`} className="v2-era-sec__title">{field(p, 'key_event', lang)}</h2>
+              <p className="v2-era-sec__lead">{field(p, 'lead', lang)}</p>
               <p className="v2-era-sec__artists">{field(p, 'artists', lang)}</p>
               <div className="v2-era-sec__palette">
                 <SlotStrip active={slotsForPeriod(p.year_start)} fresh={fresh} lang={lang} />
@@ -283,6 +285,20 @@ export default function TimelineV2() {
                 return <ArtworkCard key={art.id} art={art} lang={lang} index={k} onOpen={() => openAt(idx)} />
               })}
             </ol>
+            {more.length > 0 && (
+              <details className="v2-era-sec__more v2-more">
+                <summary>
+                  <Fan className="v2-fanmark" />
+                  {t(lang, `この時代の作品をもっと見る（${more.length}点）`, `More prints from this era (${more.length})`)}
+                </summary>
+                <ol className="v2-works">
+                  {more.map((art, k) => {
+                    const idx = counter++
+                    return <ArtworkCard key={art.id} art={art} lang={lang} index={k + 2} onOpen={() => openAt(idx)} />
+                  })}
+                </ol>
+              </details>
+            )}
           </section>
         )
       })}

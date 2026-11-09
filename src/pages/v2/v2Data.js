@@ -1,39 +1,47 @@
 /**
- * Shared data helpers for the v2 redesign prototype (2026-11-07).
- * Everything here is derived from the existing sources of truth:
- *  - periods: public/ukiyoe_for_figma_with_images_rows_duplicate_rows.csv (via loadUkiyoeData)
- *  - artworks: src/data/ukiyoe.js PERIOD_ARTWORKS (45 = 9 periods × 5)
- *  - colours: src/data/periodColors.js CANONICAL_SLOTS / PERIOD_COLORS (the 9-slot palette)
+ * Shared data helpers for the v2 timeline.
+ * Since 2026-11-09 v2 reads its own data (the live pages keep the old CSV / ukiyoe.js / periodColors.js):
+ *  - eras: src/data/v2/eras.js (7 eras split by technique, texts, colours used, 10 colour slots)
+ *  - artworks: src/data/v2/artworks.json, built by scripts/build_artworks_v2.py from the verified
+ *    candidate list (year, holding museum, accession, licence, source page for every work)
  */
-import { useEffect, useState } from 'react'
-import { loadUkiyoeData, getArtworksForPeriod } from '../../data/ukiyoe'
-import { CANONICAL_SLOTS, PERIOD_COLORS } from '../../data/periodColors'
+import { useEffect } from 'react'
+import { ERAS, SLOTS } from '../../data/v2/eras'
+import ARTWORKS from '../../data/v2/artworks.json'
 
-export { CANONICAL_SLOTS, getArtworksForPeriod }
+/** The colour slots, in order (kept under the old name so the components stay unchanged). */
+export const CANONICAL_SLOTS = SLOTS
 
-/** One row per period, de-duplicated by year_start (the CSV contains duplicate rows). */
-export function usePeriods() {
-  const [periods, setPeriods] = useState([])
-  useEffect(() => {
-    let alive = true
-    loadUkiyoeData().then((rows) => {
-      const seen = new Map()
-      for (const r of rows) if (!seen.has(r.year_start)) seen.set(r.year_start, r)
-      if (alive) setPeriods([...seen.values()].sort((a, b) => +a.year_start - +b.year_start))
-    })
-    return () => { alive = false }
-  }, [])
-  return periods
+/** Eras shaped like the old period rows, so field(p, 'key_event', lang) etc. keep working. */
+const PERIODS = ERAS.map((e) => ({
+  ...e,
+  key_event_ja: e.name_ja, key_event_en: e.name_en,
+  lead_ja: e.key_ja, lead_en: e.key_en,
+}))
+export function usePeriods() { return PERIODS }
+
+const byEra = (yearStart) => ERAS.find((e) => e.year_start === Number(yearStart))
+
+/** The era's featured works (shown first; the first is the era's entry work). */
+export function getArtworksForPeriod(yearStart) {
+  const e = byEra(yearStart)
+  return e ? ARTWORKS.filter((w) => w.era === e.id && w.featured) : []
+}
+
+/** The rest of the era's works ("この時代の作品をもっと見る"). */
+export function getMoreArtworksForPeriod(yearStart) {
+  const e = byEra(yearStart)
+  return e ? ARTWORKS.filter((w) => w.era === e.id && !w.featured) : []
 }
 
 export function slotsForPeriod(yearStart) {
-  return PERIOD_COLORS.find((p) => p.year_start === Number(yearStart))?.activeSlots ?? []
+  return byEra(yearStart)?.activeSlots ?? []
 }
 
 /** Slots that appear for the first time in this period (shown as "初登場 / new"). */
 export function newSlotsForPeriod(yearStart) {
   const y = Number(yearStart)
-  const earlier = new Set(PERIOD_COLORS.filter((p) => p.year_start < y).flatMap((p) => p.activeSlots))
+  const earlier = new Set(ERAS.filter((e) => e.year_start < y).flatMap((e) => e.activeSlots))
   return slotsForPeriod(y).filter((s) => !earlier.has(s))
 }
 
