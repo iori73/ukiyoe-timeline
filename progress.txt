@@ -468,3 +468,5 @@
 - 「時代ごとの作品を見る / Browse works by era」: 2 行に折り返し行間も広かった → v2 では 1 行（nowrap、line-height 1.4）。
 - SP の言語切り替え: 間と内側の余白を 4px に（河野さんが DevTools で試した値）。
 - Figma 177:27 の /v2 PC・SP を撮り直し（254:27・255:27）。
+
+### 2026-11-09 20:45 — /timeline の時代の見出し: 番号と年の間 24px → 8px（トップと同じ）。Figma の timeline 4 枚も 28 か所直した。

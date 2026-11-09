@@ -148,7 +148,7 @@
 
 /* Era sections */
 .v2-era-sec { max-width: 1100px; margin: 0 auto; padding: var(--space-3xl) var(--space-xl) 0; scroll-margin-top: calc(var(--v2-header-h, 96px) + 16px); }
-.v2-era-sec__head { display: grid; grid-template-columns: auto auto 1fr; gap: var(--space-xs) var(--space-md); align-items: baseline; margin-bottom: var(--space-xl); }
+.v2-era-sec__head { display: grid; grid-template-columns: auto auto 1fr; gap: var(--space-xs); align-items: center; margin-bottom: var(--space-xl); } /* number ↔ years 8px, same as the top page cards (owner, 11-09; was 24px) */
 .v2-era-sec__num { font-family: var(--font-serif); font-size: var(--type-title-md); opacity: 0.85; }
 .v2-era-sec__years { font-family: var(--font-serif); font-size: var(--type-title-sm); letter-spacing: 0.06em; }
 .v2-era-sec__title { grid-column: 1 / -1; font-family: var(--font-serif); font-size: var(--type-title-xl); font-weight: 500; margin: var(--space-xs) 0 0; line-height: 1.4; }
