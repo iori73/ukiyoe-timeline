@@ -62,17 +62,21 @@
 .v2-era__thumb { display: block; aspect-ratio: 4 / 3; overflow: hidden; background: #e6dfd2; }
 .v2-era__thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--duration-slow) var(--ease-ukiyoe); }
 .v2-era:hover .v2-era__thumb img { transform: scale(1.03); }
-.v2-era__meta { display: flex; gap: var(--space-sm); font-size: var(--text-min); color: rgba(45, 45, 45, 0.75); }
+.v2-era__meta { display: flex; align-items: center; gap: var(--space-xs); font-size: var(--text-min); color: rgba(45, 45, 45, 0.75); } /* number ↔ year 8px (owner, 11-09) */
 .v2-era__num { font-family: var(--font-serif); }
 .v2-era__name { font-family: var(--font-serif); font-size: var(--type-title-sm); line-height: 1.5; }
-/* inside an era tile the strip fits the tile width (9 equal columns, chips up to 16px) */
-.v2-era .v2-slots { display: grid; grid-template-columns: repeat(10, minmax(0, 16px)); gap: 3px; }
-.v2-era .v2-slot { --chip-outline: rgba(45, 45, 45, 0.75); }
-.v2-era .v2-slot__chip { width: 100%; height: auto; aspect-ratio: 1; }
+/* inside an era tile: the same swatches as /v2/timeline (owner, 2026-11-09) — 24px chips with names,
+   5 per row (墨〜緑 / 青灰〜紙), on the washi ground */
+.v2-era .v2-slots { display: grid; grid-template-columns: repeat(5, max-content); column-gap: var(--space-xs); margin-top: var(--space-xs); }
+.v2-era .v2-slot { color: var(--sumi-iro); --chip-outline: rgba(45, 45, 45, 0.75); --slot-label: rgba(45, 45, 45, 0.85); }
 
 @media (max-width: 900px) {
   .v2-eras { padding: var(--space-2xl) var(--space-md); }
   .v2-eras__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-sm); }
+}
+/* phone: a two-up card is ~165px, too narrow for 5 named swatches (252px) → one card per row */
+@media (max-width: 600px) {
+  .v2-eras__grid { grid-template-columns: 1fr; gap: var(--space-lg); }
 }
 
 /* ==========================================================================

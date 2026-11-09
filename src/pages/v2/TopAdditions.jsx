@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { usePeriods, slotsForPeriod, getArtworksForPeriod, field, t, sized } from './v2Data'
+import { usePeriods, slotsForPeriod, newSlotsForPeriod, getArtworksForPeriod, field, t, sized, CANONICAL_SLOTS } from './v2Data'
 import { EraNumber } from './Marks'
 import SlotStrip from './SlotStrip'
 import './v2.css'
@@ -43,7 +43,11 @@ export function EraIndex({ lang }) {
                   <span className="v2-era__years">{p.year_start}–{p.year_end}</span>
                 </span>
                 <span className="v2-era__name">{field(p, 'key_event', lang)}</span>
-                <SlotStrip active={slotsForPeriod(p.year_start)} lang={lang} size="sm" />
+                {/* same swatches as /v2/timeline (owner, 2026-11-09): 24px chips, names under them, lozenge on new colours */}
+                <SlotStrip active={slotsForPeriod(p.year_start)} fresh={newSlotsForPeriod(p.year_start)} lang={lang} showLabels
+                  label={t(lang,
+                    `使われた色: ${slotsForPeriod(p.year_start).length}色${newSlotsForPeriod(p.year_start).length ? `（初登場: ${newSlotsForPeriod(p.year_start).map((id) => CANONICAL_SLOTS.find((x) => x.id === id)?.label_ja).join('・')}）` : ''}`,
+                    `Colours used: ${slotsForPeriod(p.year_start).length}${newSlotsForPeriod(p.year_start).length ? ` (new: ${newSlotsForPeriod(p.year_start).map((id) => CANONICAL_SLOTS.find((x) => x.id === id)?.label_en).join(', ')})` : ''}`)} />
               </Link>
             </li>
           )
