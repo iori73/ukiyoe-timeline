@@ -3491,6 +3491,11 @@ body.v2-dark .language-toggle--rain { --lang-page: var(--sumi-iro); }
     gap: 8px;
     padding: 0px;
   }
+  /* v2 (rain): the backing needs a little room around the tiles; 4px gap and padding (owner, 2026-11-09) */
+  .language-toggle.language-toggle--rain {
+    gap: var(--space-2xs);
+    padding: var(--space-2xs);
+  }
 
   .language-toggle .language-button {
     width: 44px;
