@@ -25,6 +25,27 @@
 
   /* 地色（紙の色） - Paper Colors */
   --washi: #f5f0e6;           /* 和紙 - Washi paper */
+
+  /* ---- Lines & outlines (DS, 2026-11-09; see docs/DESIGN_SYSTEM.md「線と枠」) ----
+     One outline weight for everything drawn: the logo's stroke (4 on a 100 grid at 48px ≈ 2px).
+     Hairlines only for quiet separators. */
+  --stroke-outline: var(--border-normal);   /* 2px — outlines of controls, chips, number boxes, ruler, icons, language mark */
+  --stroke-hair: var(--border-thin);        /* 1px — separators only (rules under strips, tile bottoms) */
+  --stroke-focus: 2px;     /* keyboard focus ring (with 2px offset) */
+
+  /* ---- Ink on the dark (sumi) ground: 4 text levels + lines ---- */
+  --on-dark: #f5f0e6;                        /* headings, active */
+  --on-dark-body: rgba(245, 240, 230, 0.9);  /* body text */
+  --on-dark-sub: rgba(245, 240, 230, 0.75);  /* secondary: artists, labels, credits (≈ 8:1) */
+  --on-dark-meta: rgba(245, 240, 230, 0.6);  /* years, small meta (≈ 5.6:1) */
+  --outline-on-dark: rgba(245, 240, 230, 0.75); /* outlines of controls on dark */
+  --line-on-dark: rgba(245, 240, 230, 0.4);  /* ruler line */
+  --hair-on-dark: rgba(245, 240, 230, 0.15); /* separators */
+  --surface-on-dark: rgba(245, 240, 230, 0.05); /* image wells */
+
+  /* ---- Sizes ---- */
+  --icon-size: 24px;
+  --control-height: 44px;   /* minimum touch target */
   --awayuki: #fefefe;         /* 淡雪 - Light snow */
   --echizen: #ebdcbd;         /* 越前 - Dawn page background */
   --washi-translucent: rgba(245, 240, 230, 0.95); /* 和紙（半透明） */
@@ -498,7 +519,7 @@ body {
 }
 
 .language-toggle .language-button.language-button--mark:focus-visible {
-  outline: 2px solid var(--ai-iro);
+  outline: var(--stroke-focus) solid var(--ai-iro);
   outline-offset: 2px;
 }
 
@@ -512,7 +533,7 @@ body {
      the same 2px in both states, and it comes into Figma as a stroke. */
   box-sizing: border-box;
   background-color: transparent;
-  border: 2px solid var(--lang-line);
+  border: var(--stroke-outline) solid var(--lang-line);
   border-radius: 0;
   /* Switching OFF: the fill and mark leave first (160ms), then the disc returns to a square line. */
   transition: border-radius var(--lang-morph) var(--ease-ukiyoe) 140ms,

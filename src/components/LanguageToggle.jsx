@@ -33,7 +33,7 @@ function EnglishMark() {
   return (
     <svg className="lang-mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
       <rect x="0" y="0" width="20" height="20" fill="var(--lang-blue)" />
-      <path d="M0 0L20 20" stroke="var(--lang-ground)" strokeWidth="2.5" />
+      <path d="M0 0L20 20" stroke="var(--lang-ground)" strokeWidth="2" />
       <rect x="0" y="22" width="40" height="4" fill="var(--lang-red)" />
     </svg>
   )
