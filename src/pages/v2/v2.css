@@ -156,8 +156,8 @@
 .v2-era-sec__palette { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--space-md); align-items: center; margin-top: var(--space-sm); }
 .v2-era-sec__more { grid-column: 1 / -1; margin-top: var(--space-sm); }
 .v2-era-sec__more summary {
-  /* owner's spacing (Figma 190:112): 8px sides, 4px between the fan and the label */
-  display: inline-flex; align-items: center; gap: 4px;
+  /* owner's spacing: 8px sides; icon ↔ label 8px (was 4px, Figma 190:112 → owner 2026-11-09) */
+  display: inline-flex; align-items: center; gap: var(--space-xs);
   min-height: 44px; padding: 0 8px; cursor: pointer; list-style: none;
   border: var(--stroke-outline) solid var(--outline-on-dark); font-size: 14px;
 }

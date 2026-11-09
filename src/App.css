@@ -118,7 +118,7 @@
   --tracking-widest: 0.2em;
   
   /* スペーシング - Spacing (8の倍数) */
-  --space-2xs: 4px;        /* Half step (DS 2026-11-09): icon ↔ label, mark ↔ chip */
+  --space-2xs: 4px;        /* Half step (DS 2026-11-09): mark ↔ chip (icon ↔ label is --space-xs since 11-09) */
   --space-xs: 8px;         /* Internal spacing within small components (padding in boxes) */
   --space-sm: 16px;        /* Tight groupings - related elements like card text, form fields */
   --space-md: 24px;        /* Moderate gaps between sub-sections */
