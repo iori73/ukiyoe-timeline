@@ -176,9 +176,9 @@ function ArtworkSheet({ item, lang, onClose, onStep, eraLabel }) {
           </p>
         )}
         <div className="v2-sheet__nav">
-          <button type="button" onClick={() => onStep(-1)}>{t(lang, '← 前の作品', '← Previous')}</button>
+          <button type="button" aria-label={t(lang, '前の作品', 'Previous work')} title={t(lang, '前の作品', 'Previous work')} onClick={() => onStep(-1)}><StepArrow dir={-1} /></button>
           <span>{pos} / {total}</span>
-          <button type="button" onClick={() => onStep(1)}>{t(lang, '次の作品 →', 'Next →')}</button>
+          <button type="button" aria-label={t(lang, '次の作品', 'Next work')} title={t(lang, '次の作品', 'Next work')} onClick={() => onStep(1)}><StepArrow dir={1} /></button>
         </div>
       </div>
     </div>
@@ -354,5 +354,14 @@ export default function TimelineV2() {
         />
       )}
     </div>
+  )
+}
+
+/** Arrow for the sheet's prev/next buttons: a line icon in the 24px icon box, same 2px stroke as the outlines. */
+function StepArrow({ dir }) {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false" style={dir < 0 ? { transform: 'scaleX(-1)' } : undefined}>
+      <path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" />
+    </svg>
   )
 }

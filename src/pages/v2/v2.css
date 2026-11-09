@@ -218,11 +218,12 @@
 .v2-sheet__desc { line-height: 1.9; margin: 0 0 var(--space-md); color: var(--on-dark-body); }
 .v2-sheet__credit { font-size: var(--text-min); color: var(--on-dark-sub); margin: 0 0 var(--space-lg); }
 .v2-sheet__credit a { color: var(--washi); }
-.v2-sheet__nav { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: var(--space-xs); font-size: var(--text-min); }
+.v2-sheet__nav { display: grid; grid-template-columns: auto auto auto; justify-content: center; align-items: center; gap: var(--space-md); font-size: var(--text-min); }
 /* labels and the counter never wrap (they broke onto two lines on a 393px phone) */
 .v2-sheet__nav > * { white-space: nowrap; }
 .v2-sheet__nav > span { text-align: center; font-variant-numeric: tabular-nums; }
-.v2-sheet__nav button { min-height: var(--control-height); padding: 0 var(--space-xs); border: var(--stroke-outline) solid var(--outline-on-dark); background: none; cursor: pointer; color: var(--washi); font: inherit; }
+/* arrow-only (owner, 2026-11-09): the label lives in aria-label/title; square hit area = control height */
+.v2-sheet__nav button { display: inline-flex; align-items: center; justify-content: center; width: var(--control-height); height: var(--control-height); padding: 0; border: var(--stroke-outline) solid var(--outline-on-dark); background: none; cursor: pointer; color: var(--washi); font: inherit; }
 
 @media (max-width: 900px) {
   .v2-tl__intro { padding: 128px var(--space-md) var(--space-lg); }
