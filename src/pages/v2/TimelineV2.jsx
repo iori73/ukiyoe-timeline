@@ -235,8 +235,28 @@ export default function TimelineV2() {
           {t(lang, `浮世絵の多くは、町の人が気軽に買った刷り物でした。${periods.length}つの時代の${flat.length}点を、色が一つずつ増えていく順に並べています。`,
             `Most ukiyo-e were prints that townspeople bought casually. Here are ${flat.length} works across ${periods.length} eras, in the order the palette grew.`)}
         </p>
+        {/* Print shops of Edo (owner, Figma 169:389): the prints were everyday goods sold at shop fronts.
+            Tokyo Metropolitan Library images are public domain; title and holder are credited as the library asks. */}
+        <div className="v2-tl__shops">
+          <figure className="v2-shop">
+            <img src="/images/intro/hokusai-ezoshidana-1802.jpg" width="669" height="1047" loading="eager"
+              alt={t(lang, '店先に刷り物が並ぶ絵草紙屋と、品定めをする客', 'A print shop with sheets on display and customers browsing')} />
+            <figcaption>
+              {t(lang, '葛飾北斎『画本東都遊』より「絵草紙店」1802年。蔦屋耕書堂の店先。', 'Katsushika Hokusai, “Print shop” from Ehon Azuma asobi, 1802: the front of Tsutaya Kōshodō.')}
+              <span className="v2-shop__credit">{t(lang, '東京都立中央図書館蔵', 'Tokyo Metropolitan Central Library')}</span>
+            </figcaption>
+          </figure>
+          <figure className="v2-shop">
+            <img src="/images/intro/yoshiiku-ezoshimise-1861.jpg" width="940" height="1400" loading="eager"
+              alt={t(lang, '錦絵を吊るした絵双紙見世の前に集まる町の女性たち', 'Townswomen gathered at a shop hung with colour prints')} />
+            <figcaption>
+              {t(lang, '落合芳幾「江戸土産之内 絵双紙見世」1861年。浅草蔵前の絵草紙店「森本」。', 'Ochiai Yoshiiku, “Picture-book shop” from Souvenirs of Edo, 1861: the Morimoto shop in Asakusa Kuramae.')}
+              <span className="v2-shop__credit">{t(lang, '東京都立中央図書館蔵', 'Tokyo Metropolitan Central Library')}</span>
+            </figcaption>
+          </figure>
+        </div>
         <div className="v2-tl__legend">
-          <SlotStrip active={CANONICAL_SLOTS.map((s) => s.id)} lang={lang} size="sm" showLabels label={t(lang, `${CANONICAL_SLOTS.length}色の枠`, `The ${CANONICAL_SLOTS.length} colour slots`)} />
+          <SlotStrip active={CANONICAL_SLOTS.map((s) => s.id)} lang={lang} showLabels label={t(lang, `${CANONICAL_SLOTS.length}色の枠`, `The ${CANONICAL_SLOTS.length} colour slots`)} />
           <span>
             {t(lang, '色の枠は、その時代の作品に使われた色。', 'Each strip shows the colours used in that era. ')}
             <Hishi className="v2-hishi--inline" />
@@ -263,8 +283,10 @@ export default function TimelineV2() {
               <p className="v2-era-sec__lead">{field(p, 'lead', lang)}</p>
               <p className="v2-era-sec__artists">{field(p, 'artists', lang)}</p>
               <div className="v2-era-sec__palette">
-                <SlotStrip active={slotsForPeriod(p.year_start)} fresh={fresh} lang={lang} />
-                {fresh.length > 0 && <span className="v2-era-sec__fresh"><Hishi className="v2-hishi--inline" /> {t(lang, `初登場: ${freshNames}`, `New: ${freshNames}`)}</span>}
+                {/* names sit under the chips (owner: no eye jump to a separate "new" line);
+                    the lozenge marks first appearances, and the strip's label says which */}
+                <SlotStrip active={slotsForPeriod(p.year_start)} fresh={fresh} lang={lang} showLabels
+                  label={t(lang, `使われた色: ${slotsForPeriod(p.year_start).length}色${fresh.length ? `（初登場: ${freshNames}）` : ''}`, `Colours used: ${slotsForPeriod(p.year_start).length}${fresh.length ? ` (new: ${freshNames})` : ''}`)} />
               </div>
               <details className="v2-era-sec__more">
                 <summary>

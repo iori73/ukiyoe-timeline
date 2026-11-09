@@ -46,6 +46,7 @@
   /* ---- Sizes ---- */
   --icon-size: 24px;
   --control-height: 44px;   /* minimum touch target */
+  --text-min: 14px;         /* smallest text on the site (labels, years, credits) */
   --awayuki: #fefefe;         /* 淡雪 - Light snow */
   --echizen: #ebdcbd;         /* 越前 - Dawn page background */
   --washi-translucent: rgba(245, 240, 230, 0.95); /* 和紙（半透明） */
@@ -117,6 +118,7 @@
   --tracking-widest: 0.2em;
   
   /* スペーシング - Spacing (8の倍数) */
+  --space-2xs: 4px;        /* Half step (DS 2026-11-09): icon ↔ label, mark ↔ chip */
   --space-xs: 8px;         /* Internal spacing within small components (padding in boxes) */
   --space-sm: 16px;        /* Tight groupings - related elements like card text, form fields */
   --space-md: 24px;        /* Moderate gaps between sub-sections */

@@ -4,26 +4,36 @@
    --font-serif / --font-sans, --ease-ukiyoe, --duration-*.
    ========================================================================== */
 
-/* ---------- Shared: 9-slot strip ---------- */
-/* Sizes raised 2026-11-08 (owner: "too small to read"): chip 24px (sm 16px), labels 13px. */
-.v2-slots { display: flex; gap: 6px; align-items: flex-end; padding-top: 12px; }
-.v2-slot { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+/* ---------- Shared: colour-slot strip ---------- */
+/* DS 2026-11-09: chip 24px (sm 16px); every chip has the 2px outline (an ink-black chip on the
+   sumi ground was 1.26:1 — WCAG 1.4.11 wants 3:1); names sit under the chips; the first-appearance
+   lozenge sits --space-2xs (4px) above its chip. */
+.v2-slots { display: flex; flex-wrap: wrap; gap: var(--space-xs); align-items: flex-start; padding-top: calc(7px + var(--space-2xs)); }
+.v2-slot { position: relative; display: flex; flex-direction: column; align-items: center; gap: var(--space-2xs); }
+/* every slot is as wide as the longest name, ベロ藍 (3 characters at --text-min), so the chips sit
+   on an even rhythm (owner: the width followed each name's length) */
+.v2-slots--labels .v2-slot { width: calc(var(--text-min) * 3 + 2px); }
+.v2-slots--labels .v2-slot__label { text-align: center; }
+/* English names are longer: a fixed 64px slot, names wrap to two lines */
+:lang(en) .v2-slots--labels .v2-slot { width: 64px; }
+:lang(en) .v2-slots--labels .v2-slot__label { white-space: normal; line-height: 1.25; }
 .v2-slot__chip {
   display: block;
   width: 24px; height: 24px;
-  box-shadow: inset 0 0 0 var(--stroke-outline) currentColor;
-  opacity: 0.32; /* unused slot = ghost */
+  box-shadow: inset 0 0 0 var(--stroke-outline) var(--chip-outline, currentColor);
 }
 .v2-slots--sm .v2-slot__chip { width: 16px; height: 16px; }
-.v2-slot.is-on .v2-slot__chip { opacity: 1; box-shadow: none; }
-/* first appearance: the owner's flat lozenge above the chip */
-.v2-slot__new { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); width: 12px; height: 7px; color: currentColor; }
+.v2-slot:not(.is-on) .v2-slot__chip { opacity: 0.32; box-shadow: inset 0 0 0 var(--stroke-outline) currentColor; }
+/* first appearance: the owner's flat lozenge, 4px above the chip */
+.v2-slot__new { position: absolute; top: calc(-1 * (7px + var(--space-2xs))); left: 50%; transform: translateX(-50%); width: 12px; height: 7px; color: currentColor; }
 .v2-hishi { display: inline-block; fill: currentColor; }
 .v2-hishi--inline { width: 14px; height: 8px; vertical-align: middle; }
-.v2-slot__label { font-size: 13px; letter-spacing: 0.02em; opacity: 0.9; white-space: nowrap; }
+.v2-slot__label { font-size: var(--text-min); line-height: 1.3; letter-spacing: 0.02em; white-space: nowrap; color: var(--slot-label, currentColor); }
+.v2-slot:not(.is-on) .v2-slot__label { opacity: 0.55; }
 
 /* Era number in a hairline square: kanji in Japanese, two digits in English (both boxed) */
 .v2-num {
+  font-weight: 700; /* owner: the hairline kanji was hard to read */
   display: inline-grid; place-items: center;
   min-width: 1.9em; height: 1.9em; padding: 0 0.25em;
   border: var(--stroke-outline) solid currentColor; line-height: 1;
@@ -52,11 +62,12 @@
 .v2-era__thumb { display: block; aspect-ratio: 4 / 3; overflow: hidden; background: #e6dfd2; }
 .v2-era__thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--duration-slow) var(--ease-ukiyoe); }
 .v2-era:hover .v2-era__thumb img { transform: scale(1.03); }
-.v2-era__meta { display: flex; gap: var(--space-sm); font-size: 13px; color: rgba(45, 45, 45, 0.7); }
+.v2-era__meta { display: flex; gap: var(--space-sm); font-size: var(--text-min); color: rgba(45, 45, 45, 0.75); }
 .v2-era__num { font-family: var(--font-serif); }
 .v2-era__name { font-family: var(--font-serif); font-size: var(--type-title-sm); line-height: 1.5; }
 /* inside an era tile the strip fits the tile width (9 equal columns, chips up to 16px) */
 .v2-era .v2-slots { display: grid; grid-template-columns: repeat(10, minmax(0, 16px)); gap: 3px; }
+.v2-era .v2-slot { --chip-outline: rgba(45, 45, 45, 0.75); }
 .v2-era .v2-slot__chip { width: 100%; height: auto; aspect-ratio: 1; }
 
 @media (max-width: 900px) {
@@ -79,8 +90,14 @@
 .v2-tl__kicker { font-family: var(--font-serif); letter-spacing: 0.12em; opacity: 0.7; margin: 0 0 var(--space-xs); }
 .v2-tl__title { font-family: var(--font-serif); font-size: var(--type-title-xl); font-weight: 500; margin: 0 0 var(--space-sm); }
 .v2-tl__lead { font-size: var(--type-body-md); line-height: 1.9; max-width: 44em; margin: 0 0 var(--space-lg); color: var(--on-dark-body); }
-.v2-tl__legend { display: flex; flex-wrap: wrap; gap: var(--space-md); align-items: flex-end; font-size: 13px; color: var(--on-dark-sub); }
-.v2-tl .v2-slot { color: var(--washi); }
+.v2-tl__legend { display: flex; flex-wrap: wrap; gap: var(--space-md); align-items: flex-end; font-size: var(--text-min); color: var(--on-dark-sub); }
+/* print shops of Edo, in the intro */
+.v2-tl__shops { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); align-items: end; max-width: 880px; margin: 0 0 var(--space-xl); }
+.v2-shop { margin: 0; display: grid; gap: var(--space-xs); }
+.v2-shop img { display: block; width: 100%; height: auto; max-height: 520px; object-fit: contain; object-position: left bottom; background: var(--surface-on-dark); }
+.v2-shop figcaption { font-size: var(--text-min); line-height: 1.6; color: var(--on-dark-body); }
+.v2-shop__credit { display: block; color: var(--on-dark-sub); }
+.v2-tl .v2-slot { color: var(--washi); --chip-outline: var(--outline-on-dark); --slot-label: var(--on-dark-body); }
 /* the 9-label legend wraps: English names (Gold / Ochre, Prussian Blue…) are too wide for a phone */
 .v2-tl__legend .v2-slots { flex-wrap: wrap; row-gap: var(--space-sm); }
 
@@ -134,7 +151,6 @@
 .v2-more > .v2-works { margin-top: var(--space-xl); }
 .v2-era-sec__artists { grid-column: 1 / -1; margin: 0; color: var(--on-dark-sub); font-size: var(--type-body-md); }
 .v2-era-sec__palette { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--space-md); align-items: center; margin-top: var(--space-sm); }
-.v2-era-sec__fresh { font-size: 13px; color: var(--on-dark-body); }
 .v2-era-sec__more { grid-column: 1 / -1; margin-top: var(--space-sm); }
 .v2-era-sec__more summary {
   /* owner's spacing (Figma 190:112): 8px sides, 4px between the fan and the label */
@@ -152,7 +168,7 @@
 .v2-fan__rivet { fill: var(--washi); }
 .v2-era-sec__more summary:focus-visible { outline: var(--stroke-focus) solid var(--washi); outline-offset: 2px; }
 .v2-era-sec__more dl { display: grid; grid-template-columns: 8em 1fr; gap: var(--space-sm) var(--space-md); max-width: 52em; margin: var(--space-md) 0 0; line-height: 1.9; }
-.v2-era-sec__more dt { color: var(--on-dark-sub); font-size: 13px; padding-top: 3px; }
+.v2-era-sec__more dt { color: var(--on-dark-sub); font-size: var(--text-min); padding-top: 3px; }
 .v2-era-sec__more dd { margin: 0; color: var(--on-dark-body); }
 
 /* Works: natural proportions, a loose staggered run (a print seller's front, not a grid) */
@@ -164,8 +180,8 @@
 .v2-work__btn:hover .v2-work__img img { transform: translateY(-4px); }
 .v2-work__btn:focus-visible { outline: var(--stroke-focus) solid var(--washi); outline-offset: 4px; }
 .v2-work__title { font-family: var(--font-serif); font-size: var(--type-title-sm); line-height: 1.5; }
-.v2-work__artist { font-size: 13px; color: var(--on-dark-sub); }
-.v2-work__year { font-size: 12px; color: var(--on-dark-meta); font-variant-numeric: tabular-nums; }
+.v2-work__artist { font-size: var(--text-min); color: var(--on-dark-sub); }
+.v2-work__year { font-size: var(--text-min); color: var(--on-dark-sub); /* 7.5:1, WCAG AAA */ font-variant-numeric: tabular-nums; }
 
 /* Palette summary */
 .v2-summary { max-width: 1100px; margin: var(--space-4xl) auto 0; padding: 0 var(--space-xl); }
@@ -191,7 +207,7 @@
 }
 @keyframes v2-sheet-in { from { transform: translateX(24px); opacity: 0; } to { transform: none; opacity: 1; } }
 .v2-sheet__bar { display: flex; justify-content: space-between; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-md); }
-.v2-sheet__era { font-size: 13px; color: var(--on-dark-sub); }
+.v2-sheet__era { font-size: var(--text-min); color: var(--on-dark-sub); }
 .v2-sheet__close { min-width: 44px; min-height: 44px; border: var(--stroke-outline) solid var(--outline-on-dark); background: none; font-size: 22px; cursor: pointer; color: var(--washi); }
 .v2-sheet__close:focus-visible, .v2-sheet__nav button:focus-visible, .v2-sheet__credit a:focus-visible { outline: var(--stroke-focus) solid var(--washi); outline-offset: 2px; }
 .v2-sheet__img { background: var(--surface-on-dark); display: flex; justify-content: center; }
@@ -200,16 +216,23 @@
 .v2-sheet__artist { margin: 0 0 var(--space-md); color: var(--on-dark-sub); }
 .v2-sheet__year { margin-left: 0.75em; font-variant-numeric: tabular-nums; }
 .v2-sheet__desc { line-height: 1.9; margin: 0 0 var(--space-md); color: var(--on-dark-body); }
-.v2-sheet__credit { font-size: 13px; color: var(--on-dark-sub); margin: 0 0 var(--space-lg); }
+.v2-sheet__credit { font-size: var(--text-min); color: var(--on-dark-sub); margin: 0 0 var(--space-lg); }
 .v2-sheet__credit a { color: var(--washi); }
-.v2-sheet__nav { display: flex; justify-content: space-between; align-items: center; gap: var(--space-sm); font-size: 13px; }
-.v2-sheet__nav button { min-height: 44px; padding: 0 var(--space-md); border: var(--stroke-outline) solid var(--outline-on-dark); background: none; cursor: pointer; color: var(--washi); font: inherit; }
+.v2-sheet__nav { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: var(--space-xs); font-size: var(--text-min); }
+/* labels and the counter never wrap (they broke onto two lines on a 393px phone) */
+.v2-sheet__nav > * { white-space: nowrap; }
+.v2-sheet__nav > span { text-align: center; font-variant-numeric: tabular-nums; }
+.v2-sheet__nav button { min-height: var(--control-height); padding: 0 var(--space-xs); border: var(--stroke-outline) solid var(--outline-on-dark); background: none; cursor: pointer; color: var(--washi); font: inherit; }
 
 @media (max-width: 900px) {
   .v2-tl__intro { padding: 128px var(--space-md) var(--space-lg); }
   /* Phone: the ruler is a horizontal strip stuck flush under the header (height measured in JS),
      scrolling itself so the current era stays in the middle (TimelineV2 EraRuler). */
   .v2-tl__body { display: block; }
+  .v2-tl__shops { grid-template-columns: 1fr; gap: var(--space-md); }
+  /* 10 chips + names fit one row at 375px with the half-step gap */
+  /* phone: 5 per row so the even slots never wrap unevenly */
+  .v2-tl .v2-slots--labels { display: grid; grid-template-columns: repeat(5, max-content); column-gap: var(--space-xs); }
   .v2-ruler {
     top: var(--v2-header-h, 80px); height: auto; padding: var(--space-xs) 0;
     overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
@@ -221,7 +244,7 @@
   .v2-ruler__line { top: 9px; bottom: auto; left: 0; right: 0; width: auto; height: var(--stroke-outline); }
   .v2-ruler__stop {
     top: 0; left: var(--pos); transform: translateX(-50%);
-    flex-direction: column; gap: 6px; padding: 4px 0 0; font-size: 13px;
+    flex-direction: column; gap: 6px; padding: 4px 0 0; font-size: var(--text-min);
   }
   .v2-ruler__stop.is-alt .v2-ruler__year { margin-left: 0; transform: translateY(16px); }
   .v2-era-sec { padding: var(--space-2xl) var(--space-md) 0; scroll-margin-top: calc(var(--v2-header-h, 80px) + 76px); }

@@ -9,7 +9,7 @@ import { Hishi } from './Marks'
  */
 export default function SlotStrip({ active = [], fresh = [], lang, size = 'md', showLabels = false, label }) {
   return (
-    <div className={`v2-slots v2-slots--${size}`} role="img" aria-label={label ?? t(lang, `使われた色: ${active.length} / ${CANONICAL_SLOTS.length}`, `Colours in use: ${active.length} of ${CANONICAL_SLOTS.length}`)}>
+    <div className={`v2-slots v2-slots--${size}${showLabels ? ' v2-slots--labels' : ''}`} role="img" aria-label={label ?? t(lang, `使われた色: ${active.length} / ${CANONICAL_SLOTS.length}`, `Colours in use: ${active.length} of ${CANONICAL_SLOTS.length}`)}>
       {CANONICAL_SLOTS.map((s) => {
         const on = active.includes(s.id)
         const isNew = fresh.includes(s.id)
