@@ -107,7 +107,7 @@ function TimelineHeader() {
             <img src="/images/logo-square-white.svg?v=20260707" alt="浮世絵" className="logo-kanji-image" width="48" height="48" />
           </span>
         </Link>
-        <LanguageToggle />
+        <LanguageToggle variant="rain" />
       </div>
     </header>
   )
