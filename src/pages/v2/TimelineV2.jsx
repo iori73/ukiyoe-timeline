@@ -122,7 +122,7 @@ function ArtworkCard({ art, lang, onOpen, index }) {
         </span>
         <span className="v2-work__title">{t(lang, art.title_ja, art.title_en)}</span>
         <span className="v2-work__artist">{t(lang, art.artist_ja, art.artist_en)}</span>
-        {art.year && <span className="v2-work__year">{art.year}</span>}
+        {art.year && <span className="v2-work__year">{t(lang, art.year_ja || art.year, art.year)}</span>}
       </button>
     </li>
   )
@@ -157,7 +157,7 @@ function ArtworkSheet({ item, lang, onClose, onStep, eraLabel }) {
         <h3 className="v2-sheet__title">{t(lang, art.title_ja, art.title_en)}</h3>
         <p className="v2-sheet__artist">
           {t(lang, art.artist_ja, art.artist_en)}
-          {art.year && <span className="v2-sheet__year">{art.year}</span>}
+          {art.year && <span className="v2-sheet__year">{t(lang, art.year_ja || art.year, art.year)}</span>}
         </p>
         {/* description, or the short summary built from the museum's medium line + subject (build_artworks_v2.py) */}
         {(art.description_ja || art.description_en || art.summary_ja) && (
