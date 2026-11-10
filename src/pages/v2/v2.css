@@ -293,10 +293,17 @@ body.v2-dark .language-toggle { --lang-line: var(--washi); --lang-edge: transpar
 /* the timeline's swatches on the sumi ground: 10 in a row on PC, 5 + 5 on phones */
 .layer-anim__footer-slots { display: flex; justify-content: center; margin-bottom: var(--space-xl); }
 .layer-anim__footer--v2 .v2-slot { color: var(--washi); --chip-outline: var(--outline-on-dark); --slot-label: var(--on-dark-body); }
-.layer-anim__footer--v2 .v2-slots { justify-content: center; }
+/* never 9 + 1 (owner, 2026-11-10: the English row left "Paper" alone on a second line). The footer's
+   inner box is 640px but 10 English slots need 712px: let the strip be as wide as it needs, in one row;
+   where 10 cannot fit, switch to an even 5 + 5 (below). */
+.layer-anim__footer--v2 .layer-anim__footer-inner { max-width: none; }
+.layer-anim__footer--v2 .v2-slots { justify-content: center; flex-wrap: nowrap; }
 /* the CTA reads as one line (owner: two lines with a tall line-height did not read as one phrase) */
 .layer-anim__footer--v2 .layer-anim__nav-link-text { white-space: nowrap; line-height: 1.4; }
-@media (max-width: 600px) {
+/* 5 + 5 wherever one row of 10 (712px in English + the footer's side padding) does not fit */
+@media (max-width: 860px) {
   .layer-anim__footer--v2 .v2-slots { display: grid; grid-template-columns: repeat(5, max-content); column-gap: var(--space-xs); }
+}
+@media (max-width: 600px) {
   .layer-anim__footer--v2 .layer-anim__nav-link { padding: 0 var(--space-md); }
 }
