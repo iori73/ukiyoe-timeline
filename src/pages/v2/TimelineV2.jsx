@@ -332,7 +332,7 @@ export default function TimelineV2() {
 
       {periods.length > 0 && (
         <section className="v2-summary" aria-labelledby="v2-summary-title">
-          <h2 id="v2-summary-title" className="v2-summary__title">{t(lang, '色が増えていく', 'How the palette grew')}</h2>
+          <h2 id="v2-summary-title" className="v2-summary__title">{t(lang, '色の多様化', 'A widening palette')}</h2>
           <ol className="v2-summary__rows">
             {periods.map((p) => (
               <li key={p.year_start}>
