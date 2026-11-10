@@ -107,6 +107,44 @@ def summary(c, era):
     return ''.join(ja), ' '.join(en)
 
 
+# Japanese form of the museum's date line (owner, 2026-11-10: "jp なのに年代が About とか c とか英語").
+# The English page keeps the museum's own wording; every pattern in use is covered, and an unknown one
+# stops the build instead of leaking English onto the Japanese page.
+import re as _re
+_ORD = {'first': 1, 'second': 2, 'third': 3, 'fourth': 4, 'fifth': 5, 'sixth': 6, 'seventh': 7,
+        'eighth': 8, 'ninth': 9, 'tenth': 10, 'eleventh': 11, 'twelfth': 12}
+
+
+def year_ja(text):
+    t = text.strip()
+    approx = False
+    m = _re.match(r'^(?:c\.|ca\.|about)\s*(.*)$', t, _re.I)
+    if m:
+        approx, t = True, m.group(1).strip()
+    suffix = '頃' if approx else ''
+    m = _re.match(r'^(\d{4}),\s*(\w+)\s+month$', t)
+    if m and m.group(2).lower() in _ORD:
+        return f'{m.group(1)}年{_ORD[m.group(2).lower()]}月' + suffix
+    m = _re.match(r'^(\d{4}) or (\d{4})$', t)
+    if m:
+        return f'{m.group(1)}年または{m.group(2)}年' + suffix
+    m = _re.match(r'^(early|mid|late)[-\s]+(\d{3}0)s$', t, _re.I)
+    if m:
+        part = {'early': '前半', 'mid': '半ば', 'late': '後半'}[m.group(1).lower()]
+        return f'{m.group(2)}年代{part}' + suffix
+    m = _re.match(r'^(\d{3}0)s$', t)
+    if m:
+        return f'{m.group(1)}年代' + suffix
+    m = _re.match(r'^(\d{4})\s*[–\-/]\s*(\d{2,4})(s?)$', t)
+    if m:
+        a, b, dec = m.groups()
+        return f'{a}〜{b}年{"代" if dec else ""}' + suffix
+    m = _re.match(r'^(\d{4})$', t)
+    if m:
+        return f'{t}年' + suffix
+    raise ValueError(f'year_ja: no rule for {text!r}')
+
+
 def local_aic(acc):
     dst = os.path.join(AIC_DIR, f'{acc}.jpg')
     if os.path.exists(dst):
@@ -153,6 +191,7 @@ def main():
                 'artist_ja': c.get('artist_ja') or c['artist_en'],
                 'artist_en': c['artist_en'],
                 'year': c['date_text'],
+                'year_ja': year_ja(c['date_text']),
                 'year_sort': c['year_sort'],
                 'format': c.get('format'),
                 'summary_ja': sum_ja,
