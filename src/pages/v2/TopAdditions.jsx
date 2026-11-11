@@ -17,7 +17,7 @@ export function EraIndex({ lang }) {
       <div className="v2-eras__head">
         <h2 id="v2-eras-title" className="v2-eras__title">{t(lang, '時代から探す', 'Start from an era')}</h2>
         <p className="v2-eras__lead">
-          {t(lang, '色の枠は、その時代の作品に使われた色。左から右へ、墨一色から色が増えていきます。',
+          {t(lang, '色の枠は、その時代の作品に使われた色。左から右へ、墨一色から色が多様になっていきます。',
             'The strip shows the colours used in each era. Read left to right: from ink alone to a full palette.')}
         </p>
       </div>

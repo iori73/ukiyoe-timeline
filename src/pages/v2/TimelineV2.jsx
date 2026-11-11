@@ -234,8 +234,8 @@ export default function TimelineV2() {
         <p className="v2-tl__kicker">{periods.length ? `${periods[0].year_start} — ${periods[periods.length - 1].year_end || periods[periods.length - 1].year_start}` : ''}</p>
         <h1 className="v2-tl__title">{t(lang, '時代ごとの作品', 'Prints by era')}</h1>
         <p className="v2-tl__lead">
-          {t(lang, `浮世絵の多くは、町の人が気軽に買った刷り物でした。${periods.length}つの時代の${flat.length}点を、色が一つずつ増えていく順に並べています。`,
-            `Most ukiyo-e were prints that townspeople bought casually. Here are ${flat.length} works across ${periods.length} eras, in the order the palette grew.`)}
+          {t(lang, `浮世絵の多くは、町の人が気軽に買った刷り物でした。${periods.length}つの時代の${flat.length}点を、刷りの技法が移り変わる順に並べています。`,
+            `Most ukiyo-e were prints that townspeople bought casually. Here are ${flat.length} works across ${periods.length} eras, in the order the printing techniques changed.`)}
         </p>
         {/* Print shops of Edo (owner, Figma 169:389): the prints were everyday goods sold at shop fronts.
             Tokyo Metropolitan Library images are public domain; title and holder are credited as the library asks. */}
@@ -332,7 +332,7 @@ export default function TimelineV2() {
 
       {periods.length > 0 && (
         <section className="v2-summary" aria-labelledby="v2-summary-title">
-          <h2 id="v2-summary-title" className="v2-summary__title">{t(lang, '色が増えていく', 'How the palette grew')}</h2>
+          <h2 id="v2-summary-title" className="v2-summary__title">{t(lang, '色の多様化', 'A widening palette')}</h2>
           <ol className="v2-summary__rows">
             {periods.map((p) => (
               <li key={p.year_start}>
