@@ -6,7 +6,7 @@ import LanguageToggle from '../components/LanguageToggle'
 import { useLanguage } from '../context/LanguageContext'
 import { TECHNIQUES } from '../data/techniques'
 import './LayerAnimationPage.css'
-import { EraIndex } from './v2/TopAdditions'
+import { EraIndex, SceneEras } from './v2/TopAdditions'
 import { CANONICAL_SLOTS } from './v2/v2Data'
 import SlotStrip from './v2/SlotStrip'
 
@@ -283,7 +283,7 @@ function TechniqueTimeline({ language }) {
 // 黒摺絵（Sumizuri-e）静止アイソメトリックビュー
 // アニメーション無し・墨一色
 // ============================================================
-function SumizurieStatic() {
+function SumizurieStatic({ v2 = false }) {
   const { language } = useLanguage()
   const subtitle = language === 'ja' ? '墨一色で摺った版画' : 'Woodblock prints in monochrome ink'
   return (
@@ -335,6 +335,10 @@ function SumizurieStatic() {
               ? '墨摺絵は、墨（黒）一色だけで摺った木版画です。17世紀後半、菱川師宣によって浮世絵は独立した芸術として確立されました。線の強弱と濃淡だけで、着物の質感や人物の表情まで表現する、シンプルでありながら力強い技法です。'
               : 'Sumizuri-e are woodblock prints made with black ink alone. In the late 17th century, Hishikawa Moronobu established ukiyo-e as an independent art form. Using only the weight and tone of each line, this simple yet powerful technique captures the texture of kimono and the subtlety of human expression.'}
           </p>
+          {v2 && (
+            <SceneEras lang={language} eras={[1, 2, 3]}
+              note={{ ja: '二と三は、墨で摺ったあとに筆で色を塗ったもの。色はまだ版では摺りません。', en: 'Eras 2 and 3 are ink prints coloured by hand; colour is not yet printed from blocks.' }} />
+          )}
         </div>
       </div>
     </section>
@@ -344,7 +348,7 @@ function SumizurieStatic() {
 // ============================================================
 // 3-Layer Isometric Animation
 // ============================================================
-function NishikieAnimation() {
+function NishikieAnimation({ v2 = false }) {
   const { language } = useLanguage()
   const containerRef = useRef(null)
   const [hasAnimated, setHasAnimated] = useState(false)
@@ -427,6 +431,7 @@ function NishikieAnimation() {
               ? '紅摺絵は、紅色と緑色など、2〜3色の版木を重ねて摺った木版画です。18世紀なかばに広まり、墨摺絵に色が加わることで、役者絵や美人画がより華やかに。少ない色数ながら、当時の人々を魅了しました。'
               : 'Benizuri-e are woodblock prints made by overprinting two or three color blocks, typically red and green, over black ink. Spreading in the mid-18th century, they brought color to sumizuri-e and made actor prints and beauties more vivid. With just a few hues, they captivated the people of the time.'}
           </p>
+          {v2 && <SceneEras lang={language} eras={[4]} />}
         </motion.div>
       </div>
     </section>
@@ -609,7 +614,7 @@ function NkThickBeigeLayer() {
 // ============================================================
 // 錦絵 Multi-Layer Isometric Animation
 // ============================================================
-function NishikieMultiLayerAnimation() {
+function NishikieMultiLayerAnimation({ v2 = false }) {
   const { language } = useLanguage()
   const containerRef = useRef(null)
   const [hasAnimated, setHasAnimated] = useState(false)
@@ -690,6 +695,7 @@ function NishikieMultiLayerAnimation() {
               ? '錦絵は、10色以上の版木を精密に重ねた多色摺り木版画です。1765年頃、鈴木春信らによって確立され、「錦」のように鮮やかな色彩が可能になりました。ぼかしや空摺りなどの技法も発達し、浮世絵の技術はここで頂点を迎えます。'
               : 'Nishiki-e are full polychrome woodblock prints made by precisely overprinting ten or more blocks. Established around 1765 by Suzuki Harunobu and others, they achieved colors as vivid as brocade ("nishiki"). Techniques such as gradation (bokashi) and embossing (karazuri) also developed, and ukiyo-e printing reached its technical peak here.'}
           </p>
+          {v2 && <SceneEras lang={language} eras={[5, 6, 7]} />}
         </motion.div>
       </div>
     </section>
@@ -874,13 +880,13 @@ export default function LayerAnimationPage({ variant } = {}) {
       {/* v2 (2026-11-08, owner): the two entry cards and the sticky palette rail were removed —
           the technique scenes run as before on both / and /v2. */}
       {/* 黒摺絵（静止） */}
-      <SumizurieStatic />
+      <SumizurieStatic v2={isV2} />
 
       {/* 紅摺絵アニメーション */}
-      <NishikieAnimation />
+      <NishikieAnimation v2={isV2} />
 
       {/* 錦絵アニメーション */}
-      <NishikieMultiLayerAnimation />
+      <NishikieMultiLayerAnimation v2={isV2} />
 
       {isV2 && <EraIndex lang={language} />}
 

@@ -17,7 +17,7 @@ measure 99.7–99.98% sumi. Colour prints not yet validated.
 
 Usage:
   python scripts/measure_period_colors.py works.json out.json
-  works.json: [{"id": "...", "era": "01", "path": "local/image.jpg", "blue": "ai|bero|none"}, ...]
+  works.json: [{"id": "...", "era": "01", "path": "local/image.jpg", "blue": "ai|bero|none", "allowed": ["sumi", ...]}, ...]
 Images are read from local files only (nothing is downloaded).
 """
 import json
@@ -26,9 +26,9 @@ import sys
 import numpy as np
 from PIL import Image
 
-# Same values as src/data/periodColors.js CANONICAL_SLOTS
+# Same values as src/data/v2/eras.js SLOTS (10 slots; 丹 added 2026-11-09)
 SLOTS = [
-    ("sumi", "#1a1a1a"), ("beni", "#c04545"), ("kin", "#c9a050"), ("midori", "#7a9060"),
+    ("sumi", "#1a1a1a"), ("tan", "#d27a3f"), ("beni", "#c04545"), ("kin", "#c9a050"), ("midori", "#7a9060"),
     ("ao", "#607888"), ("ai", "#2a3848"), ("bero", "#2d4f6e"), ("gin", "#b8b0a4"), ("hada", "#d9c5b8"),
 ]
 BLUES = {"ai", "bero"}
@@ -82,7 +82,7 @@ def hex_lab(h):
 SLOT_LAB = [(sid, hex_lab(hx)) for sid, hx in SLOTS]
 
 
-def measure(path, blue):
+def measure(path, blue, allowed=None):
     im = Image.open(path).convert("RGB")
     im.thumbnail((MAX_SIDE, MAX_SIDE))
     px = np.asarray(im, dtype=np.float64) / 255
@@ -111,8 +111,11 @@ def measure(path, blue):
     total = ink_cnt + len(ink)
     if total == 0:
         return {"ground_lab": ground.round(1).tolist(), "printed_share": 0.0, "slots": {}}
-    d = np.stack([ciede2000(ink, l) for _, l in SLOT_LAB], 1) if len(ink) else np.zeros((0, len(SLOT_LAB)))
-    nearest = np.concatenate([np.array([SLOT_LAB[i][0] for i in d.argmin(1)], dtype=object), np.array(["sumi"] * ink_cnt, dtype=object)])
+    # 2026-11-12: a pixel may only go to a slot the era USES (eras.js activeSlots, from records and
+    # technique history). Without this, faded reds and browned paper land on slots the print never had.
+    cand = [(sid, l) for sid, l in SLOT_LAB if not allowed or sid in allowed or (sid in BLUES and blue in BLUES)]
+    d = np.stack([ciede2000(ink, l) for _, l in cand], 1) if len(ink) else np.zeros((0, len(cand)))
+    nearest = np.concatenate([np.array([cand[i][0] for i in d.argmin(1)], dtype=object), np.array(["sumi"] * ink_cnt, dtype=object)])
     if blue in BLUES:
         nearest = np.where(np.isin(nearest, list(BLUES)), blue, nearest)
     elif blue == "none":
@@ -128,14 +131,14 @@ def main(src, dst):
     works = json.load(open(src, encoding="utf-8"))
     per_work, per_era = [], {}
     for wk in works:
-        r = measure(wk["path"], wk.get("blue", "none"))
+        r = measure(wk["path"], wk.get("blue", "none"), wk.get("allowed"))
         per_work.append({"id": wk["id"], "era": wk["era"], **r})
         per_era.setdefault(wk["era"], []).append(r["slots"])
     eras = {}
     for era, rows in per_era.items():
         rows = [r for r in rows if r]
         eras[era] = {sid: round(float(np.mean([r[sid] for r in rows])), 4) for sid, _ in SLOTS} if rows else {}
-    out = {"method": "paper ground removed (border median, CIEDE2000 > %.0f); nearest canonical slot by CIEDE2000; blue assigned from records; faded state as photographed" % GROUND_DE,
+    out = {"method": "paper ground removed (border median, CIEDE2000 > %.0f); nearest of the era's recorded slots by CIEDE2000; blue assigned from records; faded state as photographed" % GROUND_DE,
            "works": per_work, "eras": eras}
     json.dump(out, open(dst, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
     print(f"measured {len(per_work)} works in {len(eras)} eras -> {dst}")

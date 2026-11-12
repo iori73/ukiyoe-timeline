@@ -1,6 +1,6 @@
 {
   "generated": "2026-11-08",
-  "sources_note": "Every record below was re-fetched live from the museum API on 2026-11-08 (Met collectionapi v1 objects, AIC api.artic.edu, Cleveland openaccess-api). title_ja is inferred unless title_ja_source=\"museum\". The Met v1 /search endpoint was retired on 2026-10-01; v1.1/search was used.",
+  "sources_note": "Every record below was re-fetched live from the museum API on 2026-11-08 (Met collectionapi v1 objects, AIC api.artic.edu, Cleveland openaccess-api). title_ja_source (checked 2026-11-12 against the museum APIs, the ARC Ukiyo-e Portal via jpsearch/cultural.jp, ukiyo-e.org and ColBase): \"recorded\" = the title as recorded by a source (title_ja_ref); \"descriptive\" = no recorded Japanese title, a short description; \"unsure\" = not settled (see title_ja_note). The Met v1 /search endpoint was retired on 2026-10-01; v1.1/search was used.",
   "eras": [
     {
       "id": "01",
@@ -19,7 +19,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Pleasure with the Beauties of Japan (Wakoku bijin asobi)",
           "title_ja": "和国美人あそび",
-          "title_ja_source": "inferred",
+          "title_ja_source": "unsure",
           "artist_en": "Hishikawa Moronobu",
           "artist_ja": "菱川師宣",
           "date_text": "c. 1673",
@@ -33,7 +33,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 204059
+          "api_id": 204059,
+          "title_ja_ref": "https://www.artic.edu/artworks/204059",
+          "title_ja_note": "AICのローマ字はWakoku bijin asobi。「和国美人」は確実だが、asobiの表記（あそび／遊）を日本側の資料で確認できなかった"
         },
         {
           "museum": "The Met",
@@ -43,7 +45,7 @@
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "The Tales of Ise with Annotations (Ise Monogatari tōsho shō) 伊勢物語頭書抄",
           "title_ja": "伊勢物語頭書抄",
-          "title_ja_source": "museum",
+          "title_ja_source": "recorded",
           "artist_en": "Hishikawa Moronobu",
           "artist_ja": "菱川師宣",
           "date_text": "1679, third month",
@@ -57,7 +59,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 57744
+          "api_id": 57744,
+          "title_ja_ref": "https://www.metmuseum.org/art/collection/search/57744",
+          "title_ja_note": "Metの記録に漢字で記載"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -67,7 +71,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Scene in the Yoshiwara, from the series \"Views of Yoshiwara\"",
           "title_ja": "吉原の体 吉原風景",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Hishikawa Moronobu",
           "artist_ja": "菱川師宣",
           "date_text": "About 1680",
@@ -83,7 +87,9 @@
           "flags": [
             "substitute_for_current_1670-02 (same Yoshiwara series)"
           ],
-          "api_id": 44098
+          "api_id": 44098,
+          "title_ja_ref": "https://cultural.jp/en/item/arc_nishikie-AIC_1942_60_",
+          "title_ja_note": "ARCは仮題[よしはらの体]（MFAはよしわらの躰）。シリーズ名は合っている。「吉原風景」は説明的な副題"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -92,8 +98,8 @@
           "image_url": "https://www.artic.edu/iiif/2/eef345fe-5270-8be8-c02d-48ad307c4bd3/full/843,/0/default.jpg",
           "license": "CC0 (is_public_domain=true)",
           "title_en": "A Collection of Japanese Paintings (Yamato e-zukushi)",
-          "title_ja": "大和絵つくし",
-          "title_ja_source": "inferred",
+          "title_ja": "大和絵づくし",
+          "title_ja_source": "recorded",
           "artist_en": "Hishikawa Moronobu",
           "artist_ja": "菱川師宣",
           "date_text": "1680",
@@ -107,7 +113,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 188953
+          "api_id": 188953,
+          "title_ja_ref": "https://www.metmuseum.org/art/collection/search/57743",
+          "title_ja_note": "Metの同じ師宣の絵本の記録は「大和絵づくし」（1686年刊）。AICは1680年。原本の仮名は濁点なしの場合もある。軽微な表記の違い"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -117,7 +125,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Emon Hill, from the series \"The Appearance of Yoshiwara (Yoshiwara no tei)\"",
           "title_ja": "吉原の体 衣紋坂",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Hishikawa Moronobu",
           "artist_ja": "菱川師宣",
           "date_text": "c. 1681/84",
@@ -131,7 +139,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 44092
+          "api_id": 44092,
+          "title_ja_ref": "https://cultural.jp/en/item/arc_nishikie-AIC_1942_59_",
+          "title_ja_note": "ARCは仮題[よしはらの体]。「衣紋坂」はAICの英題(Emon Hill)に基づく説明的な副題"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -141,7 +151,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Flower-Viewing Party with Crest-Bearing Curtain, from the series \"Flower Viewing at Ueno (Ueno hanami no tei)\"",
           "title_ja": "上野花見の躰 幕の内の花見",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Hishikawa Moronobu",
           "artist_ja": "菱川師宣",
           "date_text": "c. 1681/84",
@@ -155,7 +165,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 19016
+          "api_id": 19016,
+          "title_ja_ref": "https://www.artic.edu/artworks/19016",
+          "title_ja_note": "シリーズ名「上野花見の躰」はAICのローマ字(Ueno hanami no tei)とフリーアの記録で確認。場面名は説明的なもの"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -165,7 +177,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "A Passing Palanquin, from the series \"Scenes of Flower-viewing at Ueno (Ueno hanami no tei)\"",
           "title_ja": "上野花見の躰 通りかかる乗物",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Hishikawa Moronobu",
           "artist_ja": "菱川師宣",
           "date_text": "c. 1681/84",
@@ -179,7 +191,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 29453
+          "api_id": 29453,
+          "title_ja_ref": "https://www.artic.edu/artworks/29453",
+          "title_ja_note": "シリーズ名はAICのローマ字で確認。場面名は説明的なもの"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -188,8 +202,8 @@
           "image_url": "https://www.artic.edu/iiif/2/69c2bda0-dd52-ca61-cc74-ed64b3a87ba9/full/843,/0/default.jpg",
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Narihira's Eastern Journey, from the illustrated book \"Panorama of Paintings on Screens and Hanging Scrolls (Byobu kakemono ekagami)\"",
-          "title_ja": "屏風画尽 業平東下り",
-          "title_ja_source": "inferred",
+          "title_ja": "屏風掛物絵鑑 業平東下り",
+          "title_ja_source": "recorded",
           "artist_en": "Hishikawa Moronobu",
           "artist_ja": "菱川師宣",
           "date_text": "1682",
@@ -205,7 +219,9 @@
           "flags": [
             "medium_does_not_state_sumizuri"
           ],
-          "api_id": 79373
+          "api_id": 79373,
+          "title_ja_ref": "https://www.artic.edu/artworks/79373",
+          "title_ja_note": "AICの書名ローマ字はByobu kakemono ekagami＝屏風掛物絵鑑。「屏風画尽」は根拠がない。ARCは「Isemonogatari asama」（伊勢物語 あさま）とローマ字だけで記録。副題は説明的なもの"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -240,8 +256,8 @@
           "image_url": "https://www.artic.edu/iiif/2/76cb834b-c890-625f-efc5-401d760cb788/full/843,/0/default.jpg",
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Yoshitsune's Encouter with Princess Joruri, from \"The Tale of Joruri in Twelve Episodes (Joruri Junidan Zoshi)\"",
-          "title_ja": "浄瑠璃十二段 義経と浄瑠璃姫",
-          "title_ja_source": "inferred",
+          "title_ja": "十二段 よしつねたびのなさけ",
+          "title_ja_source": "recorded",
           "artist_en": "Sugimura Jihei",
           "artist_ja": "杉村治兵衛",
           "date_text": "c. 1684/1704",
@@ -255,7 +271,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 28973
+          "api_id": 28973,
+          "title_ja_ref": "https://cultural.jp/en/item/arc_nishikie-AIC_1968_150_",
+          "title_ja_note": "ARCの書入れの題は「十二段よしつねたびのなさけ」。物語の名前は浄瑠璃十二段草子（AICのJoruri Junidan Zoshi）"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -265,7 +283,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "A Parade of Courtesans",
           "title_ja": "遊女道中図",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Hishikawa Moronobu",
           "artist_ja": "菱川師宣",
           "date_text": "c. 1690",
@@ -279,7 +297,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 19061
+          "api_id": 19061,
+          "title_ja_ref": "https://cultural.jp/en/item/arc_nishikie-AIC_1925_1702_",
+          "title_ja_note": "ARCにある「うつせみ」「かすが野」「とら御ぜん」「そかの十郎すけ成」は人物名の書入れで、題ではない。題は説明的なもの"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -289,7 +309,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "The Tengu King Training his Pupils",
           "title_ja": "天狗の王と弟子",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Hishikawa Moronobu",
           "artist_ja": "菱川師宣",
           "date_text": "c. 1690",
@@ -305,7 +325,8 @@
           "flags": [
             "medium_does_not_state_sumizuri"
           ],
-          "api_id": 140940
+          "api_id": 140940,
+          "title_ja_note": "記録された日本語題は見つからない。英題からの説明的な題"
         },
         {
           "museum": "The Met",
@@ -315,7 +336,7 @@
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "One Hundred Women of Japan (Wakoku hyakujo) 和国百女",
           "title_ja": "和国百女",
-          "title_ja_source": "museum",
+          "title_ja_source": "recorded",
           "artist_en": "Hishikawa Moronobu",
           "artist_ja": "菱川師宣",
           "date_text": "ca. 1695",
@@ -329,7 +350,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 45061
+          "api_id": 45061,
+          "title_ja_ref": "https://www.metmuseum.org/art/collection/search/45061",
+          "title_ja_note": "Metの記録に漢字で記載"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -339,7 +362,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "The Actor Nakamura Denkuro I",
           "title_ja": "初代中村伝九郎",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Torii Kiyonobu I",
           "artist_ja": "鳥居清信",
           "date_text": "c. 1700",
@@ -353,7 +376,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 8947
+          "api_id": 8947,
+          "title_ja_note": "役者絵で題はない。英題からの説明的な題"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -363,7 +387,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Matsukaze, from \"Album of Courtesans (Keisei ehon)\"",
           "title_ja": "傾城絵本 松風",
-          "title_ja_source": "inferred",
+          "title_ja_source": "recorded",
           "artist_en": "Torii Kiyonobu I",
           "artist_ja": "鳥居清信",
           "date_text": "c. 1700",
@@ -377,7 +401,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 19786
+          "api_id": 19786,
+          "title_ja_ref": "https://cultural.jp/en/item/arc_nishikie-AIC_1925_1945_",
+          "title_ja_note": "ARCの書入れの題は「松風」。書名「傾城絵本」はMFAの記録とAICのKeisei ehonで確認"
         }
       ]
     },
@@ -397,8 +423,8 @@
           "image_url": "https://images.metmuseum.org/CRDImages/as/web-large/DP146875.jpg",
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "Actor Sawamura Kodenji as a Woman at the Time of the Tanabata Festival",
-          "title_ja": "沢村小伝次 七夕の女",
-          "title_ja_source": "inferred",
+          "title_ja": "沢村小伝次の七夕の女",
+          "title_ja_source": "descriptive",
           "artist_en": "Torii Kiyonobu I",
           "artist_ja": "鳥居清信",
           "date_text": "1698",
@@ -414,7 +440,8 @@
           "flags": [
             "date_borderline"
           ],
-          "api_id": 45060
+          "api_id": 45060,
+          "title_ja_note": "Metの英題からの説明的な題"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -424,7 +451,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "The Actor Hanaoka Miyako",
           "title_ja": "花岡都",
-          "title_ja_source": "inferred",
+          "title_ja_source": "unsure",
           "artist_en": "Torii Kiyonobu I",
           "artist_ja": "鳥居清信",
           "date_text": "c. 1700",
@@ -438,7 +465,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 19094
+          "api_id": 19094,
+          "title_ja_ref": "https://cultural.jp/en/item/arc_nishikie-AIC_1925_1711_",
+          "title_ja_note": "ARCはローマ字（Hanaokamiyako）だけ。役者名の漢字（都／みやこ）を確認できなかった"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -448,7 +477,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "The Actor Tsutsui Kichijuro",
           "title_ja": "筒井吉十郎",
-          "title_ja_source": "inferred",
+          "title_ja_source": "recorded",
           "artist_en": "Torii Kiyomasu I",
           "artist_ja": "鳥居清倍",
           "date_text": "c. 1704",
@@ -464,7 +493,9 @@
           "flags": [
             "substitute_for_current_1700-01: same actor, AIC attributes to Kiyomasu I; not confirmed to be the same design"
           ],
-          "api_id": 19157
+          "api_id": 19157,
+          "title_ja_ref": "https://cultural.jp/en/item/arc_nishikie-AIC_1925_1731_",
+          "title_ja_note": "ARCの仮題[筒井吉十郎]と一致"
         },
         {
           "museum": "The Met",
@@ -473,8 +504,8 @@
           "image_url": "https://images.metmuseum.org/CRDImages/as/web-large/DP124269.jpg",
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "The Actor Ikushima Daikichi as a Woman Standing under an Ume Tree",
-          "title_ja": "生島大吉 梅の木の下の女",
-          "title_ja_source": "inferred",
+          "title_ja": "生島大吉の梅の木の下に立つ女",
+          "title_ja_source": "descriptive",
           "artist_en": "Torii Kiyonobu I",
           "artist_ja": "鳥居清信",
           "date_text": "ca. 1705",
@@ -490,7 +521,8 @@
           "flags": [
             "medium_does_not_state_tan-e"
           ],
-          "api_id": 37127
+          "api_id": 37127,
+          "title_ja_note": "Metの英題からの説明的な題"
         },
         {
           "museum": "The Met",
@@ -500,7 +532,7 @@
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "The Actor Kakimura Kichisaburo as a Dancing Girl",
           "title_ja": "柿村吉三郎の踊り子",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Torii Kiyonobu I",
           "artist_ja": "鳥居清信",
           "date_text": "ca. 1705",
@@ -516,7 +548,8 @@
           "flags": [
             "medium_does_not_state_tan-e"
           ],
-          "api_id": 37128
+          "api_id": 37128,
+          "title_ja_note": "Metの英題からの説明的な題。役者名の漢字は確認できていない"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -526,7 +559,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "The Actor Takii Hannosuke as an effeminate youth",
           "title_ja": "滝井半之助",
-          "title_ja_source": "inferred",
+          "title_ja_source": "recorded",
           "artist_en": "Torii Kiyonobu I",
           "artist_ja": "鳥居清信",
           "date_text": "c. 1707",
@@ -540,7 +573,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 19172
+          "api_id": 19172,
+          "title_ja_ref": "https://cultural.jp/en/item/arc_nishikie-AIC_1925_1736_",
+          "title_ja_note": "ARCの仮題[滝井半之助]と一致"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -549,8 +584,8 @@
           "image_url": "https://www.artic.edu/iiif/2/5e04323c-464d-585e-86bd-f5aef1466560/full/843,/0/default.jpg",
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Eight Scenes of Kanazawa (Kanazawa hakkei): The Dance of Asahina and Umejumaru (Asaina Umejumaru mai no dan)",
-          "title_ja": "金沢八景 朝比奈と梅寿丸の舞",
-          "title_ja_source": "inferred",
+          "title_ja": "金沢八景 あさいな梅寿丸舞の段",
+          "title_ja_source": "recorded",
           "artist_en": "Torii Kiyonobu I",
           "artist_ja": "鳥居清信",
           "date_text": "c. 1707",
@@ -564,7 +599,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 82554
+          "api_id": 82554,
+          "title_ja_ref": "https://cultural.jp/en/item/arc_nishikie-AIC_1955_8_",
+          "title_ja_note": "ARCの書入れの題は「金沢八景あさいな梅寿丸舞の段」"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -574,7 +611,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Courtesan Walking",
           "title_ja": "遊女立姿",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Kaigetsudo Anchi",
           "artist_ja": "懐月堂安知",
           "date_text": "c. 1714",
@@ -588,7 +625,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 127635
+          "api_id": 127635,
+          "title_ja_note": "落款だけで題はない。説明的な題"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -598,7 +636,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Standing Beauty",
           "title_ja": "立美人",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Kaigetsudo Anchi",
           "artist_ja": "懐月堂安知",
           "date_text": "About 1714",
@@ -614,7 +652,8 @@
           "flags": [
             "no_tan_colour: sumizuri"
           ],
-          "api_id": 21710
+          "api_id": 21710,
+          "title_ja_note": "英題からの説明的な題"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -623,8 +662,8 @@
           "image_url": "https://www.artic.edu/iiif/2/4ffbe40a-9c17-b5d2-b876-46e77a2a9e55/full/843,/0/default.jpg",
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Sakata Kintoki Wrestling with a Tengu",
-          "title_ja": "坂田金時と天狗の相撲",
-          "title_ja_source": "inferred",
+          "title_ja": "天狗をとりひしぐ荒武者",
+          "title_ja_source": "recorded",
           "artist_en": "Torii Kiyomasu I",
           "artist_ja": "鳥居清倍",
           "date_text": "1715-18",
@@ -638,7 +677,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 19137
+          "api_id": 19137,
+          "title_ja_ref": "https://cultural.jp/en/item/arc_nishikie-AIC_1925_1726_",
+          "title_ja_note": "ARCの仮題（[]付き＝目録側で付けた題）。AICは人物を坂田金時としている。金時の名前を残したいなら説明的な題「坂田金時と天狗の相撲」も可"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -647,8 +688,8 @@
           "image_url": "https://www.artic.edu/iiif/2/7521a8a1-a247-abff-efcf-cc2db068baf9/full/843,/0/default.jpg",
           "license": "CC0 (is_public_domain=true)",
           "title_en": "The Actor Ichikawa Danjuro II as Soga no Goro and Nakamura Takesaburo I as Kewaizaka no Shosho in the play \"Bando Ichi Kotobuki Soga,\" performed at the Nakamura Theater in the first month, 1715",
-          "title_ja": "二代目市川團十郎の曽我五郎と中村竹三郎",
-          "title_ja_source": "inferred",
+          "title_ja": "二代目市川團十郎のこも僧（曽我五郎）と初代中村竹三郎の化粧坂少将",
+          "title_ja_source": "descriptive",
           "artist_en": "Torii Kiyonobu I",
           "artist_ja": "鳥居清信",
           "date_text": "1715",
@@ -662,7 +703,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 8935
+          "api_id": 8935,
+          "title_ja_ref": "https://cultural.jp/en/item/arc_nishikie-AIC_1931_494_",
+          "title_ja_note": "ARCにある書入れは「少将 竹三郎」「こも僧 団十郎」で、役名の札。題ではない。説明的な題"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -671,8 +714,8 @@
           "image_url": "https://www.artic.edu/iiif/2/6235ed1f-a58a-ee29-82ae-874e3cb8a1d9/full/843,/0/default.jpg",
           "license": "CC0 (is_public_domain=true)",
           "title_en": "A Hawk Capturing a Crane in Flight",
-          "title_ja": "鶴を捕える鷹",
-          "title_ja_source": "inferred",
+          "title_ja": "飛ぶ鶴を捕える鷹",
+          "title_ja_source": "descriptive",
           "artist_en": "Torii Kiyomasu I",
           "artist_ja": "鳥居清倍",
           "date_text": "c. 1715",
@@ -686,7 +729,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 19165
+          "api_id": 19165,
+          "title_ja_note": "英題からの説明的な題"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -696,7 +740,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Courtesan Playing with a Cat",
           "title_ja": "猫と戯れる遊女",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Kaigetsudo Dohan",
           "artist_ja": "懐月堂度繁",
           "date_text": "c. 1715",
@@ -710,7 +754,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 158921
+          "api_id": 158921,
+          "title_ja_note": "落款（日本戯画懐月末葉度繁図）だけで題はない。説明的な題"
         },
         {
           "museum": "The Met",
@@ -720,7 +765,7 @@
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "Ichikawa Danjūrō II in the Scene \"Wait a Moment\" (Shibaraku)",
           "title_ja": "二代目市川團十郎の暫",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Torii Kiyotada",
           "artist_ja": "鳥居清忠",
           "date_text": "ca. 1715",
@@ -734,7 +779,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 56555
+          "api_id": 56555,
+          "title_ja_note": "Metの英題からの説明的な題"
         },
         {
           "museum": "Cleveland Museum of Art",
@@ -744,7 +790,7 @@
           "license": "CC0",
           "title_en": "Fujimura Handayu as a Courtesan",
           "title_ja": "藤村半太夫の遊女",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Torii Kiyomasu (Japanese)",
           "artist_ja": "鳥居清倍",
           "date_text": "mid 1710s",
@@ -758,7 +804,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 95393
+          "api_id": 95393,
+          "title_ja_note": "落款だけ。CMAの英題からの説明的な題"
         }
       ]
     },
@@ -778,8 +825,8 @@
           "image_url": "https://www.artic.edu/iiif/2/630b167e-004a-937b-67b4-d2aa0dbada7e/full/843,/0/default.jpg",
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Golden Pheasant (Kinkeicho)",
-          "title_ja": "金鶏鳥",
-          "title_ja_source": "inferred",
+          "title_ja": "錦鶏鳥",
+          "title_ja_source": "recorded",
           "artist_en": "Okumura Masanobu",
           "artist_ja": "奥村政信",
           "date_text": "c. 1720/25",
@@ -793,7 +840,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 19812
+          "api_id": 19812,
+          "title_ja_ref": "https://cultural.jp/en/item/arc_nishikie-AIC_1925_1955_",
+          "title_ja_note": "ARCの書入れの題は「錦鶏鳥」（AICのKinkeichoと同じ読み）"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -803,7 +852,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Shoki the Demon Queller Sharpening His Sword",
           "title_ja": "剣を研ぐ鍾馗",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Okumura Masanobu",
           "artist_ja": "奥村政信",
           "date_text": "c. 1725",
@@ -817,7 +866,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 44164
+          "api_id": 44164,
+          "title_ja_note": "AIC は英題のみ（署名: 奥村政信筆）。和題の記録なし"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -826,8 +876,8 @@
           "image_url": "https://www.artic.edu/iiif/2/5a1230ab-27eb-e6d1-31cb-d5c4c1e02130/full/843,/0/default.jpg",
           "license": "CC0 (is_public_domain=true)",
           "title_en": "The Courtesan Yugiri of Ibarakiya, Osaka, from a triptych of beauties of the three capitals",
-          "title_ja": "三都美人 大坂茨木屋夕霧",
-          "title_ja_source": "inferred",
+          "title_ja": "大坂茨木屋夕霧（三都の美人三幅対のうち）",
+          "title_ja_source": "descriptive",
           "artist_en": "Okumura Masanobu",
           "artist_ja": "奥村政信",
           "date_text": "c. 1725/30",
@@ -841,7 +891,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 8212
+          "api_id": 8212,
+          "title_ja_note": "AIC は英題のみ。「三都美人」は資料にない推測のシリーズ名なので、題として名乗らず説明として扱う"
         },
         {
           "museum": "Cleveland Museum of Art",
@@ -851,7 +902,7 @@
           "license": "CC0",
           "title_en": "Child Reaching for a Fishbowl",
           "title_ja": "金魚鉢に手を伸ばす子",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Nishimura Shigenaga (Japanese, 1697?-1756)",
           "artist_ja": "西村重長",
           "date_text": "c. mid 1720s",
@@ -865,7 +916,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 152531
+          "api_id": 152531,
+          "title_ja_note": "落款だけ。説明的な題"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -875,7 +927,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Oshichi Carrying a Blossoming Cherry Branch",
           "title_ja": "桜の枝を持つお七",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Okumura Toshinobu",
           "artist_ja": "奥村利信",
           "date_text": "c. 1727/30",
@@ -889,7 +941,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 19229
+          "api_id": 19229,
+          "title_ja_note": "AIC は英題のみ。短冊に「恋桜（Koi zakura）」とある。作者は AIC で「伝 奥村利信」"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -899,7 +952,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Puppeteer",
           "title_ja": "人形遣い",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Okumura Toshinobu",
           "artist_ja": "奥村利信",
           "date_text": "c. 1730",
@@ -913,7 +966,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 8223
+          "api_id": 8223,
+          "title_ja_note": "AIC は英題のみ。作者は AIC で「伝 奥村利信」"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -923,7 +977,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "The Courtesan Komurasaki (Tayu Komurasaki)",
           "title_ja": "太夫小紫",
-          "title_ja_source": "inferred",
+          "title_ja_source": "recorded",
           "artist_en": "Torii Kiyotada I",
           "artist_ja": "鳥居清忠",
           "date_text": "c. 1730",
@@ -937,7 +991,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 44154
+          "api_id": 44154,
+          "title_ja_ref": "https://www.artic.edu/artworks/44154",
+          "title_ja_note": "AIC の題に Tayu Komurasaki とローマ字表記あり"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -946,8 +1002,8 @@
           "image_url": "https://www.artic.edu/iiif/2/43f64a7a-598a-7406-114e-6b235ea00cdc/full/843,/0/default.jpg",
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Saigyo Hoshi gazing at Mt. Fuji",
-          "title_ja": "富士を眺める西行法師",
-          "title_ja_source": "inferred",
+          "title_ja": "富士見西行",
+          "title_ja_source": "descriptive",
           "artist_en": "Nishimura Shigenaga",
           "artist_ja": "西村重長",
           "date_text": "c. 1730s",
@@ -961,7 +1017,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 44176
+          "api_id": 44176,
+          "title_ja_note": "記録された題は見つからない。「富士見西行」は定まった画題の名前で、説明的な題として使う"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -971,7 +1028,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Courtesan Riding a Carp (parody of the Daoist Immortal Kinko [Chinese: Qin Gao])",
           "title_ja": "鯉に乗る遊女（見立琴高）",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Nishimura Shigenaga",
           "artist_ja": "西村重長",
           "date_text": "c. 1730s",
@@ -985,7 +1042,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 19411
+          "api_id": 19411,
+          "title_ja_note": "AIC は英題のみ（琴高仙人の見立て、と英題に明記）。和題の記録なし"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -994,8 +1052,8 @@
           "image_url": "https://www.artic.edu/iiif/2/19a115b7-07ed-4946-4f75-3cc865e7133f/full/843,/0/default.jpg",
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Summer: Planting Rice (Natsu: taue no zu), No. 2 from the series \"The Four Seasons of Farmers (Shiki no hyakusho)\"",
-          "title_ja": "農耕四季 夏 田植の図",
-          "title_ja_source": "inferred",
+          "title_ja": "四季の百性 二 夏 田植之図",
+          "title_ja_source": "recorded",
           "artist_en": "Torii Kiyomasu II",
           "artist_ja": "二代鳥居清倍",
           "date_text": "c. 1730s",
@@ -1009,7 +1067,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 5150
+          "api_id": 5150,
+          "title_ja_ref": "https://cultural.jp/en/item/arc_nishikie-AIC_1957_7_",
+          "title_ja_note": "ARCの書入れの題は「四季の百性」「二」「夏」「田植之図」（百性は版面の表記のまま。百姓の意）。「農耕四季」は根拠のないシリーズ名"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -1019,7 +1079,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Knocking the snow from a pair of clogs",
           "title_ja": "下駄の雪を払う",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Torii Kiyomasu II",
           "artist_ja": "二代鳥居清倍",
           "date_text": "c. 1730s",
@@ -1033,7 +1093,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 88884
+          "api_id": 88884,
+          "title_ja_note": "AIC は英題のみ。和題の記録なし"
         },
         {
           "museum": "The Met",
@@ -1042,8 +1103,8 @@
           "image_url": "https://images.metmuseum.org/CRDImages/as/web-large/DP124527.jpg",
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "Cover From a Japanese Illustrated Book",
-          "title_ja": "絵本表紙",
-          "title_ja_source": "inferred",
+          "title_ja": "絵本の表紙",
+          "title_ja_source": "descriptive",
           "artist_en": "Okumura Masanobu",
           "artist_ja": "奥村政信",
           "date_text": "ca. 1739",
@@ -1057,7 +1118,8 @@
           "current": true,
           "current_id": "1720-01",
           "flags": [],
-          "api_id": 56423
+          "api_id": 56423,
+          "title_ja_note": "Met は英題のみ。和題・書名の記録なし"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -1066,8 +1128,8 @@
           "image_url": "https://www.artic.edu/iiif/2/663626a1-5bc7-8829-64da-c6729897ace2/full/843,/0/default.jpg",
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Large Perspective Picture of the Kaomise Performance on the Kabuki Stage (Shibai kyogen butai kaomise o uki-e)",
-          "title_ja": "芝居狂言舞台顔見世大浮絵",
-          "title_ja_source": "inferred",
+          "title_ja": "芝居狂言舞台顔見せ大浮絵",
+          "title_ja_source": "recorded",
           "artist_en": "Okumura Masanobu",
           "artist_ja": "奥村政信",
           "date_text": "c. 1740",
@@ -1081,7 +1143,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 21561
+          "api_id": 21561,
+          "title_ja_ref": "https://cultural.jp/en/item/arc_nishikie-AIC_1925_2285_",
+          "title_ja_note": "ARCの書入れの題は「顔見せ」（送り仮名あり）。AICも題が版面に書かれていると記録"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -1091,7 +1155,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Enjoying the Evening Cool near Ryogoku Bridge (Ryogoku bashi yusuzumi uki-e)",
           "title_ja": "両国橋夕涼み浮絵",
-          "title_ja_source": "inferred",
+          "title_ja_source": "recorded",
           "artist_en": "Okumura Masanobu",
           "artist_ja": "奥村政信",
           "date_text": "c. 1740",
@@ -1105,7 +1169,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 13690
+          "api_id": 13690,
+          "title_ja_ref": "https://www.artic.edu/artworks/13690",
+          "title_ja_note": "AIC に Ryogoku bashi yusuzumi uki-e とあり。送り仮名の有無（夕涼/夕涼み）は表記の揺れ"
         },
         {
           "museum": "The Met",
@@ -1115,7 +1181,7 @@
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "The Actor Nakamuro Tomijuro as a Mounted Warrior",
           "title_ja": "中村富十郎の騎馬武者",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Okumura Masanobu",
           "artist_ja": "奥村政信",
           "date_text": "1740",
@@ -1129,7 +1195,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 37318
+          "api_id": 37318,
+          "title_ja_note": "Metの英題からの説明的な題（Metの綴りNakamuroはNakamuraの誤り）"
         }
       ]
     },
@@ -1150,7 +1217,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "The Autumn Shower, from \"Sharing an Umbrella: A Set of Three (Aigasa sanpukutsui)\"",
           "title_ja": "相合傘三幅対 秋の時雨",
-          "title_ja_source": "inferred",
+          "title_ja_source": "unsure",
           "artist_en": "Okumura Masanobu",
           "artist_ja": "奥村政信",
           "date_text": "c. 1748",
@@ -1164,7 +1231,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 19499
+          "api_id": 19499,
+          "title_ja_ref": "https://www.artic.edu/artworks/19499",
+          "title_ja_note": "シリーズ名は AIC の Aigasa sanpukutsui で確定。「秋の時雨」は英題 The Autumn Shower の訳で、図中の題は未確認"
         },
         {
           "museum": "The Met",
@@ -1174,7 +1243,7 @@
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "Summer Willow in the Breeze",
           "title_ja": "夏柳",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Ishikawa Toyonobu",
           "artist_ja": "石川豊信",
           "date_text": "ca. 1748",
@@ -1190,7 +1259,8 @@
           "flags": [
             "medium_does_not_state_benizuri-e"
           ],
-          "api_id": 37138
+          "api_id": 37138,
+          "title_ja_note": "Met は英題のみ（Summer Willow in the Breeze）。和題の記録なし"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -1200,7 +1270,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "The Actors Onoe Kikugoro I and Sanogawa Ichimatsu I dressed as mendicant monks (komuso)",
           "title_ja": "虚無僧姿の初代尾上菊五郎と初代佐野川市松",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Ishikawa Toyonobu",
           "artist_ja": "石川豊信",
           "date_text": "c. 1749",
@@ -1214,7 +1284,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 7613
+          "api_id": 7613,
+          "title_ja_note": "AIC は英題のみ"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -1224,7 +1295,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "The Hobby Horse Dance (harugoma odori)",
           "title_ja": "春駒踊り",
-          "title_ja_source": "inferred",
+          "title_ja_source": "recorded",
           "artist_en": "Ishikawa Toyonobu",
           "artist_ja": "石川豊信",
           "date_text": "c. 1750",
@@ -1238,7 +1309,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 19752
+          "api_id": 19752,
+          "title_ja_ref": "https://www.artic.edu/artworks/19752",
+          "title_ja_note": "AIC に harugoma odori とあり"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -1248,7 +1321,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Sugoroku Players",
           "title_ja": "双六遊び",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Torii Kiyohiro",
           "artist_ja": "鳥居清広",
           "date_text": "c. 1750",
@@ -1262,7 +1335,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 19696
+          "api_id": 19696,
+          "title_ja_note": "AIC は英題のみ"
         },
         {
           "museum": "The Met",
@@ -1272,7 +1346,7 @@
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "Legendary Strongman Sakata Kinpira (Kintoki) Drinking Sake",
           "title_ja": "酒を飲む坂田金平",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Ishikawa Toyonobu",
           "artist_ja": "石川豊信",
           "date_text": "ca. 1750",
@@ -1288,7 +1362,8 @@
           "flags": [
             "medium_does_not_state_benizuri-e"
           ],
-          "api_id": 45288
+          "api_id": 45288,
+          "title_ja_note": "Met は英題のみ"
         },
         {
           "museum": "The Met",
@@ -1298,7 +1373,7 @@
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "Young Man (Wakashu) with a Miniature Flower Cart",
           "title_ja": "花車を持つ若衆",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Ishikawa Toyonobu",
           "artist_ja": "石川豊信",
           "date_text": "ca. 1750–60s",
@@ -1315,7 +1390,8 @@
             "medium_does_not_state_benizuri-e",
             "current_used_a_Honolulu_copy; resolved to the Met impression of the same title"
           ],
-          "api_id": 55776
+          "api_id": 55776,
+          "title_ja_note": "Met は英題のみ"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -1324,8 +1400,8 @@
           "image_url": "https://www.artic.edu/iiif/2/47e95f90-35a2-12fa-f37b-0add30565a0e/full/843,/0/default.jpg",
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Enjoying the Evening Cool at Ryogoku - A Set of Three (Ryogoku suzumi sanpukutsui)",
-          "title_ja": "両国涼み三幅対",
-          "title_ja_source": "inferred",
+          "title_ja": "両国涼見三幅対",
+          "title_ja_source": "recorded",
           "artist_en": "Ishikawa Toyonobu",
           "artist_ja": "石川豊信",
           "date_text": "c. 1752",
@@ -1339,7 +1415,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 19770
+          "api_id": 19770,
+          "title_ja_ref": "https://ukiyo-e.org/image/jaodb/Toyonobu_Ishikawa-No_Series-Enjoing_the_Cooling_at_Ryogoku-00028829-020219-F12",
+          "title_ja_note": "AIC は Ryogoku suzumi sanpukutsui。同図の別摺り（版元 上村・署名 石川豊信筆、AIC と一致）の画題が「両国涼見三幅対 中」（Japanese Art Open Database）。どの1枚かは AIC 側で未特定"
         },
         {
           "museum": "The Met",
@@ -1349,7 +1427,7 @@
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "A Woman Seated in a Kago",
           "title_ja": "駕籠の美人",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Ishikawa Toyonobu",
           "artist_ja": "石川豊信",
           "date_text": "ca. 1752",
@@ -1365,7 +1443,8 @@
           "flags": [
             "medium_does_not_state_benizuri-e"
           ],
-          "api_id": 54501
+          "api_id": 54501,
+          "title_ja_note": "Met は英題のみ"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -1375,7 +1454,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "A picnic under cherry trees",
           "title_ja": "花見の宴",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Torii Kiyomitsu I",
           "artist_ja": "鳥居清満",
           "date_text": "c. 1755/64",
@@ -1389,7 +1468,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 19904
+          "api_id": 19904,
+          "title_ja_note": "AIC は英題のみ"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -1398,8 +1478,8 @@
           "image_url": "https://www.artic.edu/iiif/2/2fde4283-8117-ff80-9962-e76faad6b259/full/843,/0/default.jpg",
           "license": "CC0 (is_public_domain=true)",
           "title_en": "The Actor Segawa Kikunojo II as Shirabyoshi Renri in the play \"Imayo Dojoji\" performed at the Ichimura Theater in the eleventh month, 1756",
-          "title_ja": "二代目瀬川菊之丞の白拍子",
-          "title_ja_source": "inferred",
+          "title_ja": "二代目瀬川菊之丞の白拍子れんり（今様道成寺）",
+          "title_ja_source": "descriptive",
           "artist_en": "Torii Kiyomitsu I",
           "artist_ja": "鳥居清満",
           "date_text": "1756",
@@ -1413,7 +1493,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 90448
+          "api_id": 90448,
+          "title_ja_note": "AIC 英題に役名 Shirabyoshi Renri と外題 Imayo Dojoji（市村座 1756年11月）。役名の漢字は未確認のため仮名"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -1423,7 +1504,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Beauty Reading a Letter",
           "title_ja": "文を読む美人",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Ishikawa Toyonobu",
           "artist_ja": "石川豊信",
           "date_text": "c. 1758",
@@ -1437,7 +1518,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 19777
+          "api_id": 19777,
+          "title_ja_note": "AIC は英題のみ"
         },
         {
           "museum": "The Met",
@@ -1447,7 +1529,7 @@
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "Women and a Small Boy Gathering Shells on a Beach by the Sea",
           "title_ja": "潮干狩り",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Ishikawa Toyonobu",
           "artist_ja": "石川豊信",
           "date_text": "ca. 1758",
@@ -1463,7 +1545,8 @@
           "flags": [
             "medium_does_not_state_benizuri-e"
           ],
-          "api_id": 54505
+          "api_id": 54505,
+          "title_ja_note": "Met は英題のみ"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -1473,7 +1556,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Abalone Diver",
           "title_ja": "鮑取り",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Ishikawa Toyonobu",
           "artist_ja": "石川豊信",
           "date_text": "c. 1760",
@@ -1487,7 +1570,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 23296
+          "api_id": 23296,
+          "title_ja_note": "AIC は英題のみ"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -1497,7 +1581,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Chasing Fireflies",
           "title_ja": "蛍狩り",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Torii Kiyomitsu I",
           "artist_ja": "鳥居清満",
           "date_text": "c. 1761",
@@ -1511,7 +1595,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 23267
+          "api_id": 23267,
+          "title_ja_note": "AIC は英題のみ"
         }
       ]
     },
@@ -1532,7 +1617,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "A Young Woman in a Summer Shower",
           "title_ja": "夕立",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Suzuki Harunobu",
           "artist_ja": "鈴木春信",
           "date_text": "1765",
@@ -1546,7 +1631,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 6805
+          "api_id": 6805,
+          "title_ja_ref": "https://ukiyo-e.org/image/ritsumei/Z0165-150",
+          "title_ja_note": "AIC は英題のみ。立命館 ARC の春信作品で「（夕立）」が付いた作が複数ある（括弧は整理用の題で、図中の題ではない）。同じ図かは画像で未照合"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -1556,7 +1643,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Young Woman at a Loom",
           "title_ja": "機織り",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Suzuki Harunobu",
           "artist_ja": "鈴木春信",
           "date_text": "1765",
@@ -1570,7 +1657,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 30072
+          "api_id": 30072,
+          "title_ja_note": "AIC は英題のみ"
         },
         {
           "museum": "The Met",
@@ -1580,7 +1668,7 @@
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "The Bijin Kinko",
           "title_ja": "見立琴高",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Suzuki Harunobu",
           "artist_ja": "鈴木春信",
           "date_text": "ca. 1766",
@@ -1594,7 +1682,8 @@
           "current": true,
           "current_id": "1765-02",
           "flags": [],
-          "api_id": 54543
+          "api_id": 54543,
+          "title_ja_note": "Met 英題は The Bijin Kinko（美人の琴高）。和題の記録なし"
         },
         {
           "museum": "Cleveland Museum of Art",
@@ -1604,7 +1693,7 @@
           "license": "CC0",
           "title_en": "Young Woman Looking at a Pot of Pinks",
           "title_ja": "撫子の鉢を見る娘",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Suzuki Harunobu (Japanese, 1724–1770)",
           "artist_ja": "鈴木春信",
           "date_text": "c. 1767",
@@ -1618,7 +1707,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 152481
+          "api_id": 152481,
+          "title_ja_note": "CMA は英題のみ（title_in_original_language なし）"
         },
         {
           "museum": "The Met",
@@ -1628,7 +1718,7 @@
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "The Gossips",
           "title_ja": "噂話",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Suzuki Harunobu",
           "artist_ja": "鈴木春信",
           "date_text": "ca. 1767",
@@ -1644,7 +1734,8 @@
           "flags": [
             "current_title_does_not_match_museum_title"
           ],
-          "api_id": 37268
+          "api_id": 37268,
+          "title_ja_note": "Met は英題のみ"
         },
         {
           "museum": "The Met",
@@ -1654,7 +1745,7 @@
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "See Them Fly",
           "title_ja": "見て飛ぶ",
-          "title_ja_source": "inferred",
+          "title_ja_source": "unsure",
           "artist_en": "Suzuki Harunobu",
           "artist_ja": "鈴木春信",
           "date_text": "ca. 1767",
@@ -1670,7 +1761,8 @@
           "flags": [
             "current_title_does_not_match_museum_title"
           ],
-          "api_id": 54554
+          "api_id": 54554,
+          "title_ja_note": "Met 英題 See Them Fly のみ。直訳で日本語として不自然。図（鳥・植物・女性）を見て、例:「飛ぶ鳥を見る娘」などの説明的な題にするのがよい"
         },
         {
           "museum": "Cleveland Museum of Art",
@@ -1680,7 +1772,7 @@
           "license": "CC0",
           "title_en": "Young Woman Admiring a Snow Rabbit",
           "title_ja": "雪兎を眺める娘",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Suzuki Harunobu (Japanese, 1724–1770)",
           "artist_ja": "鈴木春信",
           "date_text": "late 1760s",
@@ -1694,7 +1786,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 152483
+          "api_id": 152483,
+          "title_ja_note": "CMA は英題のみ"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -1704,7 +1797,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Clearing Weather at Asakusa (Asakusa no seiran), from the series \"Eight Fashionable Views of Edo (Furyu Edo hakkei)\"",
           "title_ja": "風流江戸八景 浅草晴嵐",
-          "title_ja_source": "inferred",
+          "title_ja_source": "recorded",
           "artist_en": "Suzuki Harunobu",
           "artist_ja": "鈴木春信",
           "date_text": "c. 1768/69",
@@ -1718,7 +1811,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 21022
+          "api_id": 21022,
+          "title_ja_ref": "https://ukiyo-e.org/image/ritsumei/Z0165-059",
+          "title_ja_note": "AIC の Asakusa no seiran、立命館 ARC の「風流江戸八景（浅草晴嵐）」"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -1727,8 +1822,8 @@
           "image_url": "https://www.artic.edu/iiif/2/f8d2f861-aa89-a846-c260-d8cd24300279/full/843,/0/default.jpg",
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Returning Sails at Shinagawa (Shinagawa no kihan), from the series \"Eight Fashionable Views of Edo (Furyu Edo hakkei)\"",
-          "title_ja": "風流江戸八景 品川帰帆",
-          "title_ja_source": "inferred",
+          "title_ja": "風流江戸八景 品川の帰帆",
+          "title_ja_source": "recorded",
           "artist_en": "Suzuki Harunobu",
           "artist_ja": "鈴木春信",
           "date_text": "c. 1768/69",
@@ -1742,7 +1837,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 20999
+          "api_id": 20999,
+          "title_ja_ref": "https://ukiyo-e.org/image/ritsumei/Z0165-065",
+          "title_ja_note": "AIC の Shinagawa no kihan と、立命館 ARC の「風流江戸八景（品川の帰帆）」の両方が「の」入り"
         },
         {
           "museum": "The Met",
@@ -1752,7 +1849,7 @@
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "Reluctant Leave-taking",
           "title_ja": "別れを惜しむ",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Suzuki Harunobu",
           "artist_ja": "鈴木春信",
           "date_text": "late 1760s",
@@ -1768,7 +1865,8 @@
           "flags": [
             "current_title_does_not_match_museum_title"
           ],
-          "api_id": 54551
+          "api_id": 54551,
+          "title_ja_note": "Met は英題のみ"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -1778,7 +1876,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "The Tea Stall - Kagiya Osen",
           "title_ja": "笠森お仙",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Suzuki Harunobu",
           "artist_ja": "鈴木春信",
           "date_text": "c. 1769",
@@ -1792,7 +1890,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 36609
+          "api_id": 36609,
+          "title_ja_ref": "https://ukiyo-e.org/image/ritsumei/Z0166-296",
+          "title_ja_note": "AIC 英題 The Tea Stall - Kagiya Osen（鍵屋お仙）。「笠森お仙」は通称。立命館 ARC の春信作で「（お仙茶屋）」の例あり（同じ図かは未照合）"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -1802,7 +1902,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Exchange of Gifts (Yuino), the second sheet of the series \"Marriage in Brocade Prints, the Carriage of the Virtuous Woman (Konrei nishiki misao-guruma)\"",
           "title_ja": "婚礼錦貞女車 結納",
-          "title_ja_source": "inferred",
+          "title_ja_source": "recorded",
           "artist_en": "Suzuki Harunobu",
           "artist_ja": "鈴木春信",
           "date_text": "c. 1769",
@@ -1816,7 +1916,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 21130
+          "api_id": 21130,
+          "title_ja_ref": "https://jpsearch.go.jp/item/arc_nishikie-MFA_21_4453",
+          "title_ja_note": "同じ揃物の同図（ボストン美術館本）がARCで「婚礼錦貞女車」「結納」。AIC自体もKonrei nishiki misao-guruma / Yuinoと記載"
         },
         {
           "museum": "The Met",
@@ -1826,7 +1928,7 @@
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "On the Veranda",
           "title_ja": "縁側",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Suzuki Harunobu",
           "artist_ja": "鈴木春信",
           "date_text": "1769 or 1770",
@@ -1840,7 +1942,8 @@
           "current": true,
           "current_id": "1765-01",
           "flags": [],
-          "api_id": 37017
+          "api_id": 37017,
+          "title_ja_note": "Metに和文・ローマ字題なし。ARCにも該当なし。英題の訳の説明題"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -1849,8 +1952,8 @@
           "image_url": "https://www.artic.edu/iiif/2/dadabea0-c07e-b5b7-f39e-f877d31bb1b4/full/843,/0/default.jpg",
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Beauty Under an Umbrella in the Snow",
-          "title_ja": "雪中相合傘美人",
-          "title_ja_source": "inferred",
+          "title_ja": "雪中傘をさす美人",
+          "title_ja_source": "descriptive",
           "artist_en": "Suzuki Harunobu",
           "artist_ja": "鈴木春信",
           "date_text": "c. 1770",
@@ -1864,7 +1967,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 22935
+          "api_id": 22935,
+          "title_ja_note": "記録された和題なし。英題は美人1人（Beauty）で、「相合傘」（2人で1本の傘）は英題からは言えないので外した"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -1873,8 +1977,8 @@
           "image_url": "https://www.artic.edu/iiif/2/7bea79e9-da69-788f-927c-ff2743af58ca/full/843,/0/default.jpg",
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Double-page Illustration from Vol. 2 of \"Picture Book of Spring Brocades (Ehon haru no nishiki)\"",
-          "title_ja": "絵本春の錦",
-          "title_ja_source": "inferred",
+          "title_ja": "絵本春の錦 松間月",
+          "title_ja_source": "recorded",
           "artist_en": "Suzuki Harunobu",
           "artist_ja": "鈴木春信",
           "date_text": "1771",
@@ -1890,7 +1994,9 @@
           "flags": [
             "date_borderline"
           ],
-          "api_id": 13133
+          "api_id": 13133,
+          "title_ja_ref": "https://www.dh-jac.net/db/nishikie/AIC-1961.130./portal/",
+          "title_ja_note": "ARC（AIC本そのもの）が図題を「松間月」と記録。別の同図（Ronin Gallery）もARCで（「絵本春の錦」）（「松間月」）。二巻の見開き図"
         }
       ]
     },
@@ -1911,7 +2017,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Puppies in the Snow",
           "title_ja": "雪中の子犬",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Isoda Koryusai",
           "artist_ja": "礒田湖龍斎",
           "date_text": "c. 1773",
@@ -1925,7 +2031,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 21174
+          "api_id": 21174,
+          "title_ja_note": "記録された和題なし（AIC・ARCとも）。英題の訳"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -1934,8 +2041,8 @@
           "image_url": "https://www.artic.edu/iiif/2/0df1290b-255b-766e-2bc9-d413b57640f0/full/843,/0/default.jpg",
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Two Courtesans on a Moonlit Balcony at a House of Pleasure in Shinagawa, from the series \"Nan'eki Shufu\"",
-          "title_ja": "品川の妓楼の月見",
-          "title_ja_source": "inferred",
+          "title_ja": "南駅秋風 品川の妓楼の月見",
+          "title_ja_source": "recorded",
           "artist_en": "Katsukawa Shunsho",
           "artist_ja": "勝川春章",
           "date_text": "c. 1774",
@@ -1951,7 +2058,9 @@
           "flags": [
             "echo_shinagawa"
           ],
-          "api_id": 36268
+          "api_id": 36268,
+          "title_ja_ref": "https://www.dh-jac.net/db/nishikie/AIC-1939.2167./portal/",
+          "title_ja_note": "ARC（AIC本そのもの）が「南駅秋風」と記録（Nan'eki shufu）。後半は説明題。版元 鱗形屋孫兵衛"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -1961,7 +2070,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "The Actor Nakamura Nakazo I as Ono Sadakuro in the Play Kanadehon Chushingura, Performed at the Nakamura Theater in the Fifth Month, 1776",
           "title_ja": "初代中村仲蔵の斧定九郎",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Katsukawa Shunsho",
           "artist_ja": "勝川春章",
           "date_text": "c. 1776",
@@ -1975,7 +2084,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 12725
+          "api_id": 12725,
+          "title_ja_note": "無題の役者絵。ARCにAIC本なし。役者名・役名は英題どおり"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -1985,7 +2095,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Hamaya of the Asahimaruya, from the series \"Models for Fashion: New Designs as Fresh as Young Leaves (Hinagata wakana no hatsu moyo)\"",
           "title_ja": "雛形若菜の初模様 朝日丸屋浜屋",
-          "title_ja_source": "inferred",
+          "title_ja_source": "recorded",
           "artist_en": "Isoda Koryusai",
           "artist_ja": "礒田湖龍斎",
           "date_text": "c. 1778/80",
@@ -1999,7 +2109,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 21355
+          "api_id": 21355,
+          "title_ja_ref": "https://www.dh-jac.net/db/nishikie/AIC-1925.2223./portal/",
+          "title_ja_note": "揃物名「雛形若菜の初模様」はARC（AIC本）で確認。「朝日丸屋浜屋」の表記（画中は仮名の可能性）は未確認"
         },
         {
           "museum": "The Met",
@@ -2008,8 +2120,8 @@
           "image_url": "https://images.metmuseum.org/CRDImages/as/web-large/DP144654.jpg",
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "A Party of Merrymakers in a Tea-house at Shinagawa",
-          "title_ja": "品川の茶屋の遊興",
-          "title_ja_source": "inferred",
+          "title_ja": "美南見十二候 品川の茶屋の遊興",
+          "title_ja_source": "recorded",
           "artist_en": "Torii Kiyonaga",
           "artist_ja": "鳥居清長",
           "date_text": "ca. 1783",
@@ -2026,7 +2138,9 @@
             "echo_shinagawa",
             "substitute_for_current_1770-04 (Moon at Shinagawa image could not be resolved)"
           ],
-          "api_id": 36607
+          "api_id": 36607,
+          "title_ja_ref": "https://www.dh-jac.net/db/nishikie/MET-DP144654/portal/",
+          "title_ja_note": "ARC（Met本そのもの）が揃物「美南見十二候」と記録。図の題（何月か）はARCにもなく、後半は説明題"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -2036,7 +2150,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "A Lady with Three Servants, from the series \"A Brocade of Eastern Manners (Fuzoku Azuma no nishiki)\"",
           "title_ja": "風俗東之錦 婦人と三人の供",
-          "title_ja_source": "inferred",
+          "title_ja_source": "recorded",
           "artist_en": "Torii Kiyonaga",
           "artist_ja": "鳥居清長",
           "date_text": "c. 1783/84",
@@ -2050,7 +2164,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 22573
+          "api_id": 22573,
+          "title_ja_ref": "https://www.dh-jac.net/db/nishikie/AIC-1925.2606./portal/",
+          "title_ja_note": "揃物名「風俗東之錦」はARC（AIC本）で確認。後半は説明題"
         },
         {
           "museum": "Cleveland Museum of Art",
@@ -2060,7 +2176,7 @@
           "license": "CC0",
           "title_en": "Boating Party on the Sumida River",
           "title_ja": "隅田川船遊び",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Torii Kiyonaga (Japanese, 1752–1815)",
           "artist_ja": "鳥居清長",
           "date_text": "1789",
@@ -2074,7 +2190,9 @@
           "current": true,
           "current_id": "1770-02",
           "flags": [],
-          "api_id": 134277
+          "api_id": 134277,
+          "title_ja_ref": "https://jpsearch.go.jp/item/arc_nishikie-tnm_C0082322",
+          "title_ja_note": "CMAに和題なし。東博に清長「隅田川船遊び」という登録題があるが、同じ図かは未確認。画中の題ではない"
         },
         {
           "museum": "The Met",
@@ -2084,7 +2202,7 @@
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "Three Beauties of the Kwansei Period",
           "title_ja": "寛政三美人",
-          "title_ja_source": "inferred",
+          "title_ja_source": "unsure",
           "artist_en": "Kitagawa Utamaro",
           "artist_ja": "喜多川歌麿",
           "date_text": "ca. 1791",
@@ -2100,7 +2218,8 @@
           "flags": [
             "current_image_url_shows_a_different_work"
           ],
-          "api_id": 55639
+          "api_id": 55639,
+          "title_ja_note": "Metに和題なし、ARCにMet本なし。「寛政三美人」は通称。歌麿の三美人図で揃物名が記録されたものは「当時三美人」（c.1793、ボストン本などARC）だが、Metのca.1791の本図が同じ図か未確認"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -2110,7 +2229,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Reflective Love, from the series \"Anthology of Poems: The Love Section (Kasen koi no bu) (Mono-omou koi)\"",
           "title_ja": "歌撰恋之部 物思恋",
-          "title_ja_source": "inferred",
+          "title_ja_source": "recorded",
           "artist_en": "Kitagawa Utamaro",
           "artist_ja": "喜多川歌麿",
           "date_text": "c. 1793/94",
@@ -2126,7 +2245,9 @@
           "flags": [
             "substitute_for_current_1790-04 (same series)"
           ],
-          "api_id": 77443
+          "api_id": 77443,
+          "title_ja_ref": "https://jpsearch.go.jp/item/tokyomuseumcolection-edo_tokyo_museumjbD16200003",
+          "title_ja_note": "江戸東京博物館・大英博物館・ボストン本で「歌撰恋之部」「物思恋」。AICもKasen koi no bu / Mono-omou koi"
         },
         {
           "museum": "The Met",
@@ -2136,7 +2257,7 @@
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "Kabuki Actor Ōtani Oniji III as Yakko Edobei",
           "title_ja": "三代目大谷鬼次の奴江戸兵衛",
-          "title_ja_source": "inferred",
+          "title_ja_source": "recorded",
           "artist_en": "Tōshūsai Sharaku",
           "artist_ja": "東洲斎写楽",
           "date_text": "1794",
@@ -2150,7 +2271,9 @@
           "current": true,
           "current_id": "1790-02",
           "flags": [],
-          "api_id": 37358
+          "api_id": 37358,
+          "title_ja_ref": "https://jpsearch.go.jp/item/arc_nishikie-tnm_C0004149",
+          "title_ja_note": "東京国立博物館本が「三世大谷鬼次の奴江戸兵衛」（ColBaseでは三代目表記）。Met本に和題なしのため他館の同図で確認"
         },
         {
           "museum": "The Met",
@@ -2159,8 +2282,8 @@
           "image_url": "https://images.metmuseum.org/CRDImages/as/web-large/DP130248.jpg",
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "Segawa Tomisaburō II as Yadorigi in the Play \"Hana Ayame Bunroku Soga\"",
-          "title_ja": "二代目瀬川富三郎の宿木",
-          "title_ja_source": "inferred",
+          "title_ja": "二代目瀬川富三郎の大岸蔵人妻やどり木",
+          "title_ja_source": "recorded",
           "artist_en": "Tōshūsai Sharaku",
           "artist_ja": "東洲斎写楽",
           "date_text": "1794",
@@ -2176,7 +2299,9 @@
           "flags": [
             "current_image_url_shows_a_different_work"
           ],
-          "api_id": 37366
+          "api_id": 37366,
+          "title_ja_ref": "https://jpsearch.go.jp/item/cobas-49100",
+          "title_ja_note": "東博（ColBase）の登録題。役名は「大岸蔵人妻やどり木」（仮名書き）。東博の別本は「石井源蔵妻やどり木」とするものもある"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -2185,8 +2310,8 @@
           "image_url": "https://www.artic.edu/iiif/2/da98e557-2fb5-0306-bc82-f7411d966309/full/843,/0/default.jpg",
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Tachibanaya: Ichikawa Yaozo III as Fuwa Banzaemon, from the series \"Portraits of Actors on Stage (Yakusha butai no sugata-e)\"",
-          "title_ja": "役者舞台之姿絵 橘屋（三代目市川八百蔵の不破伴左衛門）",
-          "title_ja_source": "inferred",
+          "title_ja": "役者舞台之姿絵 たち花や（三代目市川八百蔵の不破伴左衛門）",
+          "title_ja_source": "recorded",
           "artist_en": "Utagawa Toyokuni I",
           "artist_ja": "歌川豊国",
           "date_text": "1794",
@@ -2200,7 +2325,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 3562
+          "api_id": 3562,
+          "title_ja_ref": "https://www.dh-jac.net/db/nishikie/AIC-1929.729./portal/",
+          "title_ja_note": "ARC（AIC本そのもの）は「役者舞台之姿絵」「たち花や」。画中の屋号は仮名まじり。括弧内は説明"
         },
         {
           "museum": "The Met",
@@ -2210,7 +2337,7 @@
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "Takashima Ohisa Using Two Mirrors to Observe Her Coiffure",
           "title_ja": "高島おひさ 合わせ鏡",
-          "title_ja_source": "inferred",
+          "title_ja_source": "descriptive",
           "artist_en": "Kitagawa Utamaro",
           "artist_ja": "喜多川歌麿",
           "date_text": "ca. 1795",
@@ -2226,7 +2353,8 @@
           "flags": [
             "current_image_url_shows_a_different_work"
           ],
-          "api_id": 36624
+          "api_id": 36624,
+          "title_ja_note": "Met本の和題記録なし。他館の歌麿の同人物図は「高島おひさ」と登録（江戸東京博物館など）。「合わせ鏡」は英題からの説明"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -2235,8 +2363,8 @@
           "image_url": "https://www.artic.edu/iiif/2/f0999777-7341-b8fc-cf9f-bc6a10452388/full/843,/0/default.jpg",
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Artist, Block Carver, Applying Sizing (Eshi, hangashi, dosa-biki), from the series The Cultivation of Brocade Prints, a Famous Product of Edo (Edo meibutsu nishiki-e kosaku)",
-          "title_ja": "職人尽 絵師・彫師・礬水引",
-          "title_ja_source": "inferred",
+          "title_ja": "江戸名物錦画耕作（画師・板木師・礬水引）",
+          "title_ja_source": "recorded",
           "artist_en": "Kitagawa Utamaro",
           "artist_ja": "喜多川歌麿",
           "date_text": "About 1803",
@@ -2250,7 +2378,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 36175
+          "api_id": 36175,
+          "title_ja_ref": "https://www.dh-jac.net/db/nishikie/AIC-1939.2141./portal/",
+          "title_ja_note": "揃物名は「職人尽」ではなく「江戸名物錦画耕作」（ARC、AIC本そのもの）。短くするなら「江戸名物錦画耕作 画師・板木師・礬水引」"
         },
         {
           "museum": "Cleveland Museum of Art",
@@ -2259,8 +2389,8 @@
           "image_url": "https://openaccess-cdn.clevelandart.org/1985.333/1985.333_web.jpg",
           "license": "CC0",
           "title_en": "Ichikawa Danjuro VII as Kan Shojo in the Mt. Tenpai Scene, from the series Famous Kabuki Plays",
-          "title_ja": "七代目市川團十郎の菅丞相",
-          "title_ja_source": "inferred",
+          "title_ja": "七代目市川團十郎の菅丞相（天拝山の場）",
+          "title_ja_source": "descriptive",
           "artist_en": "Utagawa Kunisada (Japanese, 1786–1865)",
           "artist_ja": "歌川国貞",
           "date_text": "1814",
@@ -2274,7 +2404,8 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 152513
+          "api_id": 152513,
+          "title_ja_note": "CMAに和題なし、ARCで見つからず。英題の揃物 Famous Kabuki Plays の和名は不明なので書かない"
         }
       ]
     },
@@ -2295,7 +2426,7 @@
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "Under the Wave off Kanagawa (Kanagawa oki nami ura), also known as The Great Wave, from the series Thirty-six Views of Mount Fuji (Fugaku sanjūrokkei)",
           "title_ja": "冨嶽三十六景 神奈川沖浪裏",
-          "title_ja_source": "inferred",
+          "title_ja_source": "recorded",
           "artist_en": "Katsushika Hokusai",
           "artist_ja": "葛飾北斎",
           "date_text": "ca. 1830–32",
@@ -2309,7 +2440,9 @@
           "current": true,
           "current_id": "1800-01",
           "flags": [],
-          "api_id": 45434
+          "api_id": 45434,
+          "title_ja_ref": "https://www.dh-jac.net/db/nishikie/MET-DP130155/portal/",
+          "title_ja_note": "Met本そのもののARC記録。Metもローマ字で Kanagawa oki nami ura"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -2319,7 +2452,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Kajikazawa in Kai Province (Koshu Kajikazawa), from the series \"Thirty-six Views of Mount Fuji (Fugaku sanjurokkei)\"",
           "title_ja": "冨嶽三十六景 甲州石班澤",
-          "title_ja_source": "inferred",
+          "title_ja_source": "recorded",
           "artist_en": "Katsushika Hokusai",
           "artist_ja": "葛飾北斎",
           "date_text": "c. 1830/33",
@@ -2333,7 +2466,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 18969
+          "api_id": 18969,
+          "title_ja_ref": "https://www.dh-jac.net/db/nishikie/AIC-1934.261./portal/",
+          "title_ja_note": "ARC（AIC本）は「甲州 石斑沢」と翻字。画中は「石班沢」で一般にもこの表記なので現状のまま"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -2343,7 +2478,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Snowy Morning from Koishikawa (Koishikawa yuki no ashita), from the series \"Thirty-six Views of Mount Fuji (Fugaku sanjurokkei)\"",
           "title_ja": "冨嶽三十六景 礫川雪ノ旦",
-          "title_ja_source": "inferred",
+          "title_ja_source": "recorded",
           "artist_en": "Katsushika Hokusai",
           "artist_ja": "葛飾北斎",
           "date_text": "c. 1830/33",
@@ -2359,7 +2494,9 @@
           "flags": [
             "echo_snow_rooftops_fuji"
           ],
-          "api_id": 13265
+          "api_id": 13265,
+          "title_ja_ref": "https://www.dh-jac.net/db/nishikie/AIC-1961.170./portal/",
+          "title_ja_note": "ARC（AIC本）「礫川 雪ノ旦」"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -2369,7 +2506,7 @@
           "license": "CC0 (is_public_domain=true)",
           "title_en": "The Mitsui Shop in Surugacho in Edo (Koto Surugacho Mitsui mise ryakuzu), from the series \"Thirty-six Views of Mount Fuji (Fugaku sanjurokkei)\"",
           "title_ja": "冨嶽三十六景 江都駿河町三井見世略図",
-          "title_ja_source": "inferred",
+          "title_ja_source": "recorded",
           "artist_en": "Katsushika Hokusai",
           "artist_ja": "葛飾北斎",
           "date_text": "c. 1830/33",
@@ -2385,7 +2522,9 @@
           "flags": [
             "echo_fuji_beyond_rooftops"
           ],
-          "api_id": 24712
+          "api_id": 24712,
+          "title_ja_ref": "https://www.dh-jac.net/db/nishikie/AIC-1925.3264./portal/",
+          "title_ja_note": "ARC（AIC本）で確認"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -2394,8 +2533,8 @@
           "image_url": "https://www.artic.edu/iiif/2/7861e903-25d0-c779-7382-7055de763691/full/843,/0/default.jpg",
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Casting a Mantra on the Waves at Kakuta on His Exile to Sado Island (Sashu rukei Kakuta nami daimoku), from the series \"Concise Illustrated Biography of the Great Priest [Nichiren] (Koso go ichidai ryakuzu)\"",
-          "title_ja": "高祖御一代略図 佐州流刑角田浪題目",
-          "title_ja_source": "inferred",
+          "title_ja": "高祖御一代略図 佐州流刑角田波題目",
+          "title_ja_source": "recorded",
           "artist_en": "Utagawa Kuniyoshi",
           "artist_ja": "歌川国芳",
           "date_text": "c. 1830/35",
@@ -2409,7 +2548,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 9845
+          "api_id": 9845,
+          "title_ja_ref": "https://jpsearch.go.jp/item/cobas-51120",
+          "title_ja_note": "「浪」ではなく「波」。東博（ColBase）・大英博物館・Met本のARC記録がすべて「佐州流刑角田波題目」。揃物名はARC（AIC本）でも確認"
         },
         {
           "museum": "Cleveland Museum of Art",
@@ -2419,7 +2560,7 @@
           "license": "CC0",
           "title_en": "South Wind, Clear Sky, from Thirty-Six Views of Mount Fuji",
           "title_ja": "冨嶽三十六景 凱風快晴",
-          "title_ja_source": "inferred",
+          "title_ja_source": "recorded",
           "artist_en": "Katsushika Hokusai (Japanese, 1760–1849)",
           "artist_ja": "葛飾北斎",
           "date_text": "early 1830s",
@@ -2433,7 +2574,9 @@
           "current": true,
           "current_id": "1800-02",
           "flags": [],
-          "api_id": 111654
+          "api_id": 111654,
+          "title_ja_ref": "https://clevelandart.org/art/1930.189",
+          "title_ja_note": "CMAの記録（title in original language）が「冨嶽三十六景 凱風快晴」"
         },
         {
           "museum": "Cleveland Museum of Art",
@@ -2443,7 +2586,7 @@
           "license": "CC0",
           "title_en": "Evening Snow at Kambara (number sixteen of the series Fifty-three Stations of the Tokaido)",
           "title_ja": "東海道五拾三次之内 蒲原 夜之雪",
-          "title_ja_source": "inferred",
+          "title_ja_source": "recorded",
           "artist_en": "Utagawa Hiroshige (Japanese, 1797–1858)",
           "artist_ja": "歌川広重",
           "date_text": "1833",
@@ -2457,7 +2600,9 @@
           "current": true,
           "current_id": "1800-03",
           "flags": [],
-          "api_id": 152495
+          "api_id": 152495,
+          "title_ja_ref": "https://jpsearch.go.jp/item/cobas-183916",
+          "title_ja_note": "東博（ColBase）ほかで同題"
         },
         {
           "museum": "Cleveland Museum of Art",
@@ -2467,7 +2612,7 @@
           "license": "CC0",
           "title_en": "Picture of the Lake at Hakone, from the series 53 Stations of the Tokaido",
           "title_ja": "東海道五拾三次之内 箱根 湖水図",
-          "title_ja_source": "inferred",
+          "title_ja_source": "recorded",
           "artist_en": "Utagawa Hiroshige (Japanese, 1797–1858)",
           "artist_ja": "歌川広重",
           "date_text": "1833",
@@ -2481,7 +2626,9 @@
           "current": true,
           "current_id": "1800-05",
           "flags": [],
-          "api_id": 120221
+          "api_id": 120221,
+          "title_ja_ref": "https://jpsearch.go.jp/item/cobas-183452",
+          "title_ja_note": "東博（ColBase）ほかで同題"
         },
         {
           "museum": "The Met",
@@ -2491,7 +2638,7 @@
           "license": "CC0 / Public Domain (isPublicDomain=true)",
           "title_en": "Daybreak at Shinagawa",
           "title_ja": "東海道五拾三次之内 品川 日之出",
-          "title_ja_source": "inferred",
+          "title_ja_source": "recorded",
           "artist_en": "Utagawa Hiroshige",
           "artist_ja": "歌川広重",
           "date_text": "ca. 1834",
@@ -2507,7 +2654,9 @@
           "flags": [
             "echo_shinagawa"
           ],
-          "api_id": 36923
+          "api_id": 36923,
+          "title_ja_ref": "https://www.dh-jac.net/db/nishikie/MET-DP122175/portal/",
+          "title_ja_note": "Met本そのもののARC記録"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -2516,8 +2665,8 @@
           "image_url": "https://www.artic.edu/iiif/2/2b06cf9d-d3e4-cc86-ab72-8c387ed201fc/full/843,/0/default.jpg",
           "license": "CC0 (is_public_domain=true)",
           "title_en": "No. 15: Itahana (Jugo: Itahana), from the series \"Sixty-nine Stations of the Kisokaido (Kisokaido rokujukyu tsugi no uchi)\"",
-          "title_ja": "木曽街道六拾九次之内 板鼻",
-          "title_ja_source": "inferred",
+          "title_ja": "木曽海道六拾九次之内 板鼻",
+          "title_ja_source": "recorded",
           "artist_en": "Keisai Eisen",
           "artist_ja": "渓斎英泉",
           "date_text": "c. 1835/36",
@@ -2531,7 +2680,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 36440
+          "api_id": 36440,
+          "title_ja_ref": "https://www.dh-jac.net/db/nishikie/AIC-1939.2210./portal/",
+          "title_ja_note": "画中の揃物名は「街道」ではなく「木曽海道六拾九次之内」（十五 板鼻）。作者はAIC・ボストン・大英・東博が英泉、ARCのAIC本記録は広重〈1〉と食い違う。作者は英泉のまま（要注意）"
         },
         {
           "museum": "Cleveland Museum of Art",
@@ -2541,7 +2692,7 @@
           "license": "CC0",
           "title_en": "Night Rain at the Azuma Shrine (from the series Eight Views of the Environs of Edo)",
           "title_ja": "江戸近郊八景之内 吾嬬杜夜雨",
-          "title_ja_source": "inferred",
+          "title_ja_source": "recorded",
           "artist_en": "Utagawa Hiroshige (Japanese, 1797–1858)",
           "artist_ja": "歌川広重",
           "date_text": "mid-1830s",
@@ -2555,7 +2706,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 121618
+          "api_id": 121618,
+          "title_ja_ref": "https://jpsearch.go.jp/item/cobas-183443",
+          "title_ja_note": "東博（ColBase）ほか多数で同題。CMA本はARCになし"
         },
         {
           "museum": "Cleveland Museum of Art",
@@ -2565,7 +2718,7 @@
           "license": "CC0",
           "title_en": "The Fuji River in the Snow",
           "title_ja": "富士川雪景",
-          "title_ja_source": "inferred",
+          "title_ja_source": "unsure",
           "artist_en": "Utagawa Hiroshige (Japanese, 1797–1858)",
           "artist_ja": "歌川広重",
           "date_text": "1841",
@@ -2579,7 +2732,9 @@
           "current": false,
           "current_id": null,
           "flags": [],
-          "api_id": 95368
+          "api_id": 95368,
+          "title_ja_ref": "https://jpsearch.go.jp/item/dignl-1301508",
+          "title_ja_note": "CMAに和題なし。国立国会図書館の広重の図に〔木曽富士川雪景〕（補記題）がある。広く「富士川雪景」と呼ばれる掛物絵だが、画中の題としては未確認"
         },
         {
           "museum": "Art Institute of Chicago",
@@ -2588,8 +2743,8 @@
           "image_url": "https://www.artic.edu/iiif/2/ddc57b70-e852-c1d5-c60f-c433e3fae794/full/843,/0/default.jpg",
           "license": "CC0 (is_public_domain=true)",
           "title_en": "Surugacho, from the series \"One Hundred Famous Views of Edo (Meisho Edo hyakkei)\"",
-          "title_ja": "名所江戸百景 駿河町",
-          "title_ja_source": "inferred",
+          "title_ja": "名所江戸百景 する賀てふ",
+          "title_ja_source": "recorded",
           "artist_en": "Utagawa Hiroshige",
           "artist_ja": "歌川広重",
           "date_text": "1856",
@@ -2605,7 +2760,9 @@
           "flags": [
             "echo_fuji_beyond_rooftops"
           ],
-          "api_id": 34209
+          "api_id": 34209,
+          "title_ja_ref": "https://www.dh-jac.net/db/nishikie/AIC-1939.1454./portal/",
+          "title_ja_note": "画中の題は仮名で「する賀てふ」（ARC、AIC本）。意味は駿河町なので、読みやすさ優先なら現状も可"
         },
         {
           "museum": "Cleveland Museum of Art",
@@ -2615,7 +2772,7 @@
           "license": "CC0",
           "title_en": "Sudden Shower over Shin-Ōhashi Bridge and Atake, from the series One Hundred Famous Views of Edo",
           "title_ja": "名所江戸百景 大はしあたけの夕立",
-          "title_ja_source": "inferred",
+          "title_ja_source": "recorded",
           "artist_en": "Utagawa Hiroshige (Japanese, 1797–1858)",
           "artist_ja": "歌川広重",
           "date_text": "1857",
@@ -2629,7 +2786,9 @@
           "current": true,
           "current_id": "1800-04",
           "flags": [],
-          "api_id": 152496
+          "api_id": 152496,
+          "title_ja_ref": "https://clevelandart.org/art/1985.318",
+          "title_ja_note": "CMAの別題に Ohashi Atake no yudachi / Meisho Edo hyakkei。東博・江戸東京博物館も同題"
         }
       ]
     }
