@@ -56,3 +56,32 @@ export function EraIndex({ lang }) {
     </section>
   )
 }
+
+/**
+ * Under each technique scene on the top page (v2 only): where that technique sits on the timeline's
+ * seven eras. The scenes show three techniques; the timeline divides the same span into seven
+ * (owner's question, 2026-11-10: how do the three relate to the seven?).
+ */
+export function SceneEras({ lang, eras, note }) {
+  const periods = usePeriods()
+  return (
+    <div className="v2-scene-eras">
+      <p className="v2-scene-eras__lead">{t(lang, 'タイムラインでは', 'On the timeline')}</p>
+      <ul className="v2-scene-eras__list">
+        {eras.map((n) => {
+          const p = periods[n - 1]
+          if (!p) return null
+          return (
+            <li key={n}>
+              <Link to={`/timeline#era-${p.year_start}`} className="v2-scene-eras__link">
+                <EraNumber n={n} lang={lang} className="v2-scene-eras__num" />
+                <span>{field(p, 'key_event', lang)}</span>
+              </Link>
+            </li>
+          )
+        })}
+      </ul>
+      {note && <p className="v2-scene-eras__note">{t(lang, note.ja, note.en)}</p>}
+    </div>
+  )
+}

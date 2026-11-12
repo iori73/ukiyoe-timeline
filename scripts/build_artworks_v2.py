@@ -187,6 +187,7 @@ def main():
                 'url': url,
                 'title_ja': c.get('title_ja') or c['title_en'],
                 'title_ja_source': c.get('title_ja_source', 'museum'),
+                'title_ja_ref': c.get('title_ja_ref'),
                 'title_en': c['title_en'],
                 'artist_ja': c.get('artist_ja') or c['artist_en'],
                 'artist_en': c['artist_en'],

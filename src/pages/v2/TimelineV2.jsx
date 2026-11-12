@@ -159,6 +159,16 @@ function ArtworkSheet({ item, lang, onClose, onStep, eraLabel }) {
           {t(lang, art.artist_ja, art.artist_en)}
           {art.year && <span className="v2-sheet__year">{t(lang, art.year_ja || art.year, art.year)}</span>}
         </p>
+        {/* where the Japanese title comes from (checked 2026-11-12). English titles are the museum's own, so nothing is shown in EN */}
+        {lang === 'ja' && art.title_ja_source === 'descriptive' && (
+          <p className="v2-sheet__titlenote">日本語の題は記録にないため、英語の題と図から付けた仮の題です。</p>
+        )}
+        {lang === 'ja' && art.title_ja_source === 'unsure' && (
+          <p className="v2-sheet__titlenote">日本語の題は確認中です。</p>
+        )}
+        {lang === 'ja' && art.title_ja_source === 'recorded' && art.title_ja_ref && (
+          <p className="v2-sheet__titlenote"><a href={art.title_ja_ref} target="_blank" rel="noopener noreferrer">日本語の題の出典</a></p>
+        )}
         {/* description, or the short summary built from the museum's medium line + subject (build_artworks_v2.py) */}
         {(art.description_ja || art.description_en || art.summary_ja) && (
           <p className="v2-sheet__desc">{t(lang, art.description_ja || art.summary_ja, art.description_en || art.summary_en)}</p>
